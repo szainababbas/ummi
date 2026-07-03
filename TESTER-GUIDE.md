@@ -34,7 +34,7 @@ Please tell me about anything, big or small:
 - **Habits** — did you actually open it each day? If not, what would have brought you back?
 - **Wishes** — anything you kept wanting that isn't there.
 
-Send feedback to: **[YOUR CONTACT — WhatsApp / email]**
+Send feedback to: **[szainabab@gmail.com]**
 A quick message whenever you notice something is perfect; I'll also check in weekly.
 
 Jazakallah khair for testing! 🌙
