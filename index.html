@@ -1,0 +1,917 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="theme-color" content="#FAF6EE">
+<link rel="manifest" href="manifest.json">
+<link rel="icon" type="image/png" href="icon-192.png">
+<link rel="apple-touch-icon" href="icon-192.png">
+<title>Ummi — Pregnancy & Faith</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Fraunces:opsz,wght@9..144,400;9..144,600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --cream:#FAF6EE; --cream2:#F3EDDF; --card:#FFFFFF;
+  --green:#2E5E4E; --green-deep:#1F4438; --green-soft:#E4EEE8;
+  --gold:#C2A14D; --gold-soft:#F2E8CF; --gold-deep:#9A7B2E;
+  --ink:#2B2B26; --ink-soft:#6E6A5E; --line:#E8E1D1;
+  --danger:#B05B4C; --radius:18px;
+}
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+body{font-family:'Inter',sans-serif;background:var(--cream);color:var(--ink);min-height:100vh}
+#app{max-width:480px;margin:0 auto;min-height:100vh;position:relative;padding-bottom:84px}
+.screen{display:none;padding:20px 20px 24px;animation:fade .25s ease}
+.screen.active{display:block}
+@keyframes fade{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+h1,h2,h3,.serif{font-family:'Fraunces',serif;font-weight:600;color:var(--green-deep)}
+.arabic{font-family:'Amiri',serif;font-size:1.55rem;line-height:2.15;direction:rtl;text-align:center}
+.card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:18px;margin-bottom:14px;box-shadow:0 1px 3px rgba(43,43,38,.04)}
+.muted{color:var(--ink-soft);font-size:.85rem;line-height:1.55}
+.pill{display:inline-block;background:var(--gold-soft);color:var(--gold-deep);font-size:.72rem;font-weight:600;padding:4px 10px;border-radius:99px;letter-spacing:.03em}
+.pill.green{background:var(--green-soft);color:var(--green)}
+.btn{display:block;width:100%;background:var(--green);color:#fff;border:none;border-radius:14px;padding:15px;font-size:1rem;font-weight:600;font-family:'Inter',sans-serif;cursor:pointer}
+.btn:active{transform:scale(.985)}
+.btn.ghost{background:transparent;color:var(--green);border:1.5px solid var(--green)}
+input,select{width:100%;padding:14px;border:1.5px solid var(--line);border-radius:14px;font-size:1rem;font-family:'Inter',sans-serif;background:#fff;color:var(--ink)}
+input:focus,select:focus{outline:none;border-color:var(--gold)}
+label{display:block;font-size:.82rem;font-weight:600;color:var(--ink-soft);margin:14px 0 6px}
+.ornament{text-align:center;color:var(--gold);font-size:1.1rem;letter-spacing:.5em;margin:6px 0}
+
+/* nav */
+#nav{position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:100%;max-width:480px;background:rgba(255,255,255,.96);backdrop-filter:blur(10px);border-top:1px solid var(--line);display:none;justify-content:space-around;padding:8px 4px calc(10px + env(safe-area-inset-bottom));z-index:50}
+#nav button{background:none;border:none;font-family:'Inter',sans-serif;font-size:.68rem;font-weight:600;color:var(--ink-soft);cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:3px;width:64px}
+#nav button .ic{font-size:1.25rem;line-height:1}
+#nav button.on{color:var(--green)}
+#nav button.on .ic{transform:scale(1.1)}
+
+/* gate */
+.gate-hero{padding:56px 0 18px;text-align:center}
+.gate-hero .logo{font-size:2.6rem}
+.gate-hero h1{font-size:2.2rem;margin-top:6px}
+.gate-hero p{color:var(--ink-soft);margin-top:8px;font-size:.95rem;line-height:1.6}
+
+/* today hero */
+.hero{background:linear-gradient(160deg,var(--green) 0%,var(--green-deep) 100%);border-radius:22px;padding:22px;color:#fff;margin-bottom:14px;position:relative;overflow:hidden}
+.hero::after{content:"۞";position:absolute;right:-14px;top:-22px;font-size:7rem;opacity:.08}
+.hero .wknum{font-family:'Fraunces',serif;font-size:2.4rem;color:var(--gold-soft);line-height:1.05}
+.hero .sub{opacity:.85;font-size:.82rem;margin-top:2px}
+.hero .sizeline{display:flex;align-items:center;gap:10px;margin-top:14px;background:rgba(255,255,255,.1);border-radius:14px;padding:12px 14px}
+.hero .sizeline .em{font-size:2rem}
+.hero .sizeline b{font-family:'Fraunces',serif;font-weight:600;font-size:1.05rem;color:#fff;display:block}
+.hero .sizeline span{font-size:.72rem;opacity:.8}
+.hpills{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+.hpills .hp{background:rgba(255,255,255,.12);border-radius:99px;padding:6px 12px;font-size:.74rem;font-weight:600;color:var(--gold-soft)}
+.progressbar{height:6px;background:rgba(255,255,255,.18);border-radius:99px;margin-top:14px;overflow:hidden}
+.progressbar i{display:block;height:100%;background:var(--gold);border-radius:99px}
+
+/* today dua card */
+.duatoday{background:linear-gradient(160deg,#245043,#1B3B31);border-radius:var(--radius);padding:18px;color:#fff;margin-bottom:14px}
+.duatoday .lbl{font-size:.66rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--gold-soft)}
+.duatoday .arabic{color:#fff;margin:12px 0 4px}
+.duatoday .tl{font-style:italic;font-size:.9rem;color:var(--gold-soft);line-height:1.5;text-align:center}
+.duatoday .mn{font-size:.9rem;line-height:1.6;margin-top:10px;opacity:.95}
+.duatoday .sr{font-size:.72rem;color:var(--gold-soft);opacity:.85;margin-top:10px;font-style:italic}
+.duatoday .rec{margin-top:14px;width:100%;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.25);color:#fff;border-radius:12px;padding:12px;font-family:'Inter',sans-serif;font-weight:600;cursor:pointer}
+.duatoday .rec.done{background:var(--gold);border-color:var(--gold);color:var(--green-deep)}
+
+/* checklist */
+.task{display:flex;align-items:flex-start;gap:12px;padding:12px 0;border-bottom:1px solid var(--line);cursor:pointer}
+.task:last-child{border-bottom:none}
+.task .box{flex-shrink:0;width:24px;height:24px;border:2px solid var(--gold);border-radius:8px;margin-top:1px;display:flex;align-items:center;justify-content:center;font-size:.85rem;color:#fff;transition:.15s}
+.task.done .box{background:var(--green);border-color:var(--green)}
+.task .t b{display:block;font-size:.92rem;font-weight:600}
+.task.done .t b{text-decoration:line-through;color:var(--ink-soft)}
+.task .t span{font-size:.78rem;color:var(--ink-soft)}
+.cat{font-size:.66rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--gold-deep)}
+
+/* bulleted lists */
+.blist{list-style:none;margin-top:8px}
+.blist li{position:relative;padding:7px 0 7px 20px;font-size:.9rem;line-height:1.55;border-bottom:1px solid var(--line)}
+.blist li:last-child{border-bottom:none}
+.blist li::before{content:"";position:absolute;left:2px;top:14px;width:7px;height:7px;border-radius:50%;background:var(--gold)}
+
+/* week nav */
+.weeknav{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px}
+.weeknav button{background:#fff;border:1px solid var(--line);border-radius:12px;width:42px;height:42px;font-size:1.1rem;color:var(--green);cursor:pointer}
+.weeknav .wk{text-align:center}
+.weeknav .wk b{font-family:'Fraunces',serif;font-size:1.3rem;color:var(--green-deep)}
+.weeknav .wk span{display:block;font-size:.72rem;color:var(--ink-soft)}
+.sizebox{display:flex;align-items:center;gap:16px}
+.sizebox .fruit{font-size:2.6rem}
+.statrow{display:flex;gap:10px;margin-top:2px}
+.statrow div{flex:1;background:var(--cream2);border-radius:12px;padding:9px;text-align:center}
+.statrow b{display:block;font-size:.9rem;color:var(--green-deep)}
+.statrow span{font-size:.66rem;color:var(--ink-soft)}
+
+/* dua library */
+.duacard{cursor:pointer}
+.duacard .head{display:flex;justify-content:space-between;align-items:center;gap:10px}
+.duacard .head h3{font-size:1rem}
+.duacard .body{display:none;margin-top:12px;border-top:1px dashed var(--line);padding-top:12px}
+.duacard.open .body{display:block}
+.duacard .chev{color:var(--gold);transition:.2s}
+.duacard.open .chev{transform:rotate(90deg)}
+.src{font-size:.72rem;color:var(--gold-deep);margin-top:10px;font-style:italic}
+.translit{font-size:.86rem;color:var(--green);margin-top:8px;font-style:italic;line-height:1.5;text-align:center}
+.tabs{display:flex;gap:8px;overflow-x:auto;padding-bottom:10px;margin-bottom:6px;-webkit-overflow-scrolling:touch}
+.tabs button{flex-shrink:0;background:#fff;border:1px solid var(--line);border-radius:99px;padding:8px 14px;font-size:.8rem;font-weight:600;color:var(--ink-soft);cursor:pointer;font-family:'Inter',sans-serif}
+.tabs button.on{background:var(--green);border-color:var(--green);color:#fff}
+
+/* food */
+.foodgrid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.fooditem{background:#fff;border:1px solid var(--line);border-radius:var(--radius);padding:14px;text-align:center}
+.fooditem .em{font-size:1.8rem}
+.fooditem b{display:block;font-size:.85rem;margin-top:6px;color:var(--green-deep)}
+.fooditem span{font-size:.7rem;color:var(--ink-soft);display:block;margin-top:3px;line-height:1.45}
+.avoid{border-left:3px solid var(--danger);padding:10px 14px;background:#fff;border-radius:0 14px 14px 0;margin-bottom:8px}
+.avoid b{font-size:.88rem}
+.avoid span{display:block;font-size:.76rem;color:var(--ink-soft);margin-top:2px}
+
+/* names */
+.namegrid{display:grid;grid-template-columns:1fr;gap:8px}
+.nameitem{background:#fff;border:1px solid var(--line);border-radius:14px;padding:12px 14px}
+.nameitem b{font-family:'Fraunces',serif;color:var(--green-deep);font-size:1rem}
+.nameitem span{display:block;font-size:.78rem;color:var(--ink-soft);margin-top:2px;line-height:1.45}
+
+.note{background:var(--gold-soft);border-radius:14px;padding:12px 14px;font-size:.76rem;color:var(--gold-deep);line-height:1.55;margin:14px 0}
+.callout{background:var(--green-soft);border-radius:14px;padding:12px 14px;font-size:.82rem;color:var(--green-deep);line-height:1.55;margin-top:6px}
+.toprow{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px}
+.toprow h2{font-size:1.45rem}
+.settings-link{background:none;border:none;font-size:1.3rem;cursor:pointer;color:var(--ink-soft)}
+.listrow{display:flex;justify-content:space-between;align-items:center;padding:14px 0;border-bottom:1px solid var(--line);font-size:.92rem}
+.listrow:last-child{border:none}
+.navrow{cursor:pointer}
+.navrow .chev{color:var(--gold)}
+.backlink{background:none;border:none;color:var(--green);font-family:'Inter',sans-serif;font-weight:600;font-size:.9rem;cursor:pointer;padding:0;margin-bottom:8px}
+.sechead{font-family:'Fraunces',serif;font-weight:600;color:var(--green-deep);font-size:1.05rem;margin-top:4px}
+</style>
+</head>
+<body>
+<div id="app">
+
+  <!-- EMAIL GATE -->
+  <section class="screen" id="s-gate">
+    <div class="gate-hero">
+      <div class="logo">🌙</div>
+      <h1>Ummi</h1>
+      <div class="ornament">✦ ✦ ✦</div>
+      <p>A week-by-week pregnancy companion rooted in science and the teachings of the Ahlulbayt (as).</p>
+    </div>
+    <div class="card">
+      <label>Email address</label>
+      <input id="g-email" type="email" placeholder="you@email.com" autocomplete="email">
+      <label>Your due date <span style="font-weight:400">(or leave blank if unsure)</span></label>
+      <input id="g-due" type="date">
+      <label>…or current week of pregnancy</label>
+      <select id="g-week"><option value="">Select week</option></select>
+      <label>Your name <span style="font-weight:400">(optional)</span></label>
+      <input id="g-name" type="text" placeholder="e.g. Fatima" autocomplete="name">
+      <div style="height:18px"></div>
+      <button class="btn" onclick="App.signup()">Begin the journey</button>
+      <p class="muted" style="text-align:center;margin-top:12px;font-size:.72rem">Free, always. Your email is used only for Ummi updates — no spam.</p>
+    </div>
+  </section>
+
+  <!-- TODAY -->
+  <section class="screen" id="s-today">
+    <div class="toprow"><h2 id="t-greeting">Salaam</h2><button class="settings-link" onclick="App.go('more')">⚙︎</button></div>
+    <div class="hero" id="t-hero"></div>
+
+    <div class="duatoday" id="t-dua"></div>
+
+    <div class="card">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:4px">
+        <h3>Today's checklist</h3><span class="pill green" id="t-count"></span>
+      </div>
+      <div id="t-tasks"></div>
+    </div>
+    <div class="card" id="t-weekpeek"></div>
+  </section>
+
+  <!-- WEEK -->
+  <section class="screen" id="s-week">
+    <div class="toprow"><h2>Your journey</h2></div>
+    <div class="weeknav">
+      <button onclick="App.shiftWeek(-1)">‹</button>
+      <div class="wk"><b id="w-num">Week —</b><span id="w-tri"></span></div>
+      <button onclick="App.shiftWeek(1)">›</button>
+    </div>
+    <div class="card sizebox">
+      <div class="fruit" id="w-fruit">🍋</div>
+      <div>
+        <span class="cat">Baby this week</span>
+        <p id="w-size-sentence" style="font-size:.95rem;line-height:1.5;margin-top:4px;font-family:'Fraunces',serif;color:var(--green-deep)"></p>
+        <div class="statrow" style="margin-top:10px">
+          <div><b id="w-len">—</b><span>Length</span></div>
+          <div><b id="w-wt">—</b><span>Weight</span></div>
+        </div>
+      </div>
+    </div>
+    <div class="card">
+      <span class="cat">Baby's development</span>
+      <ul class="blist" id="w-dev"></ul>
+    </div>
+    <div class="card">
+      <span class="cat">Your body</span>
+      <ul class="blist" id="w-body"></ul>
+      <div class="callout" id="w-normal"></div>
+    </div>
+    <div class="card"><span class="cat">Faith focus</span><p id="w-faith" style="font-size:.9rem;line-height:1.6;margin-top:6px"></p></div>
+    <div class="card"><span class="cat">This week's tip</span><p id="w-tip" style="font-size:.9rem;line-height:1.6;margin-top:6px"></p></div>
+    <p class="muted" style="text-align:center" id="w-back"></p>
+  </section>
+
+  <!-- DUAS -->
+  <section class="screen" id="s-duas">
+    <div class="toprow"><h2>Duas & A'maal</h2></div>
+    <div class="tabs" id="d-tabs"></div>
+    <div id="d-list"></div>
+    <div class="note">Sources: <i>A Mother's Prayer</i> (Islamic Publishing House) and <i>From Marriage to Parenthood — The Heavenly Path</i> (World Federation of KSIMC), via al-islam.org, together with widely narrated traditions of the Ahlulbayt (as). Recitations are recommended acts (mustahab) — follow your own marja' for specific rulings.</div>
+  </section>
+
+  <!-- FOOD -->
+  <section class="screen" id="s-food">
+    <div class="toprow"><h2>Nourishment</h2></div>
+    <h3 style="margin:4px 0 10px">From the Ahlulbayt (as)</h3>
+    <div class="foodgrid" id="f-sunnah"></div>
+    <h3 style="margin:20px 0 10px">Everyday essentials</h3>
+    <div class="foodgrid" id="f-med"></div>
+    <h3 style="margin:20px 0 10px">Best avoided</h3>
+    <div id="f-avoid"></div>
+    <div class="note">Food traditions are drawn from narrations of the Ahlulbayt (as) and the books <i>From Marriage to Parenthood</i> and <i>A Mother’s Prayer</i> (al-islam.org); medical guidance reflects NHS/ACOG recommendations. Always confirm with your doctor or midwife.</div>
+  </section>
+
+  <!-- NAMES (sub-menu, not main nav) -->
+  <section class="screen" id="s-names">
+    <button class="backlink" onclick="App.go('more')">‹ Back</button>
+    <div class="toprow"><h2>Baby names</h2></div>
+    <div class="tabs" id="n-tabs"></div>
+    <div class="namegrid" id="n-list"></div>
+    <div class="note">A small selection of names honouring the Prophet (s), the Ahlulbayt (as) and their companions. Meanings are indicative — choose with love and a good niyyah.</div>
+  </section>
+
+  <!-- MORE -->
+  <section class="screen" id="s-more">
+    <div class="toprow"><h2>More</h2></div>
+    <div class="card">
+      <div class="listrow navrow" onclick="App.go('names')"><span>🍼 Baby names</span><b class="chev">›</b></div>
+      <div class="listrow navrow" onclick="App.go('duas')"><span>📿 Duas & A'maal</span><b class="chev">›</b></div>
+    </div>
+    <div class="card">
+      <label>Due date</label><input type="date" id="m-due">
+      <div style="height:12px"></div>
+      <button class="btn ghost" onclick="App.saveDue()">Update due date</button>
+    </div>
+    <div class="card">
+      <div class="listrow"><span>Signed in as</span><b id="m-email" style="font-size:.85rem"></b></div>
+      <div class="listrow"><span>Daily reminder</span><b class="muted" style="font-size:.8rem">Add Ummi to your home screen & enable notifications in the native app (coming soon)</b></div>
+    </div>
+    <div class="card">
+      <span class="cat">Backup</span>
+      <p class="muted" style="margin:8px 0">Your progress is stored on this device only. Save a backup now and then, especially before clearing browser data.</p>
+      <button class="btn ghost" onclick="App.exportData()">Download backup</button>
+      <div style="height:10px"></div>
+      <button class="btn ghost" onclick="document.getElementById('m-import').click()">Restore from backup</button>
+      <input id="m-import" type="file" accept=".json,application/json" style="display:none" onchange="App.importData(event)">
+    </div>
+    <div class="card">
+      <span class="cat">A gentle reflection (optional)</span>
+      <p class="muted" style="margin:8px 0">One line, whenever you feel like it. Never required.</p>
+      <input id="m-journal" type="text" placeholder="What am I grateful for today?">
+      <div style="height:10px"></div>
+      <button class="btn ghost" onclick="App.saveJournal()">Save reflection</button>
+      <div id="m-journal-list" style="margin-top:10px"></div>
+    </div>
+    <button class="btn ghost" style="border-color:var(--danger);color:var(--danger)" onclick="App.reset()">Reset app</button>
+    <p class="muted" style="text-align:center;margin-top:16px;font-size:.7rem">Ummi is for guidance and comfort — it is not a substitute for medical care or the rulings of your marja'.</p>
+  </section>
+
+</div>
+
+<nav id="nav">
+  <button data-s="today" class="on" onclick="App.go('today')"><span class="ic">🌙</span>Today</button>
+  <button data-s="week" onclick="App.go('week')"><span class="ic">🤍</span>Week</button>
+  <button data-s="duas" onclick="App.go('duas')"><span class="ic">📿</span>Duas</button>
+  <button data-s="food" onclick="App.go('food')"><span class="ic">🍎</span>Food</button>
+  <button data-s="more" onclick="App.go('more')"><span class="ic">☰</span>More</button>
+</nav>
+
+<script>
+/* ============ CONFIG ============ */
+const CONFIG = {
+  // Optional: paste a Formspree/Mailchimp endpoint to collect emails remotely.
+  // e.g. "https://formspree.io/f/xxxxxx"  — leave "" to store locally only.
+  SIGNUP_ENDPOINT: ""
+};
+
+/* ============ DATA: WEEKS ============ */
+/* Each week: fruit, size, len, wt, milestone (optional short sub note),
+   dev[] (baby development bullets), body[] (your body bullets),
+   normal (what's normal callout), faith, tip */
+const WEEKS = {
+ 4:{fruit:'🌱',size:'Poppy seed',len:'2 mm',wt:'<1 g',
+   dev:['The neural tube — baby’s future brain and spinal cord — is beginning to form.','Implantation into the womb lining is complete.','The placenta is starting to develop.'],
+   body:['You may have just missed your period.','Early tiredness and tender breasts are common.'],
+   normal:'A missed period and mild cramping are completely normal now — your body is quietly getting to work.',
+   faith:'Begin with a niyyah — a quiet du’a of gratitude for this amanah (trust) placed in your care.',
+   tip:'Take a daily folic acid supplement (400mcg) if you haven’t started.'},
+ 5:{fruit:'⚙️',size:'Sesame seed',len:'3 mm',wt:'<1 g',
+   dev:['A tiny heart begins to beat.','The earliest blood vessels are forming.','Layers that will become organs are developing.'],
+   body:['Nausea may begin and your sense of smell can sharpen.','You might feel more tired than usual.'],
+   normal:'Waves of nausea and sudden tiredness are normal — rest whenever you can.',
+   faith:'Say Bismillah before eating and drinking — nourishing baby with what is halal and tayyib.',
+   tip:'Sip water often and keep plain crackers by the bed for morning sickness.'},
+ 6:{fruit:'🫘',size:'Lentil',len:'5 mm',wt:'<1 g',
+   dev:['Facial features and limb buds are forming.','The heart is beating steadily now.','The brain is developing rapidly.'],
+   body:['Fatigue and more frequent trips to the loo are common.','Breasts may feel fuller and more sensitive.'],
+   normal:'Needing the loo more often is normal — your blood flow is increasing.',
+   faith:'Keep your tongue moist with dhikr — “SubhanAllah wa bihamdihi” through the day.',
+   tip:'Rest when you can — growing a person is real work.'},
+ 7:{fruit:'🫐',size:'Blueberry',len:'1 cm',wt:'<1 g',
+   dev:['The brain is developing fast.','Hands and feet look like tiny paddles.','Kidneys are getting ready to work.'],
+   body:['Nausea may peak now, along with mood shifts.','Food aversions can come and go.'],
+   normal:'Mood swings are normal — pregnancy hormones are rising quickly.',
+   faith:'The Ahlulbayt (as) encouraged reciting Qur’an aloud so baby hears it — start with short surahs.',
+   tip:'Small, frequent meals ease sickness better than large ones.'},
+ 8:{fruit:'🫘',size:'Kidney bean',len:'1.6 cm',wt:'1 g',
+   dev:['Fingers and toes are webbed.','Tiny movements begin, though you can’t feel them yet.','Baby’s heartbeat is strong.'],
+   body:['Bloating and breast changes are common.','You may notice more saliva or a metallic taste.'],
+   normal:'A metallic taste and extra saliva are odd but normal early signs.',
+   faith:'Recite Surah al-Fatiha over your water and drink it with a calm heart.',
+   tip:'Book your first midwife (booking) appointment if you haven’t.'},
+ 9:{fruit:'🍒',size:'Cherry',len:'2.3 cm',wt:'2 g',
+   dev:['All essential organs have formed.','The heartbeat is strong and steady.','Baby is starting to look more human.'],
+   body:['Waistbands feel tighter; tiredness lingers.','Headaches can come with hormone changes.'],
+   normal:'Mild headaches are common — rest, water and fresh air often help.',
+   faith:'Give a small sadaqah for baby’s wellbeing — even a coin set aside daily.',
+   tip:'Gentle walking helps digestion and lifts your mood.'},
+ 10:{fruit:'🍓',size:'Strawberry',len:'3.1 cm',wt:'4 g',
+   dev:['Now officially a fetus.','Vital organs are already working.','Tiny nails are starting to form.'],
+   body:['For many, nausea starts to ease from here.','You may feel bloated as digestion slows.'],
+   normal:'Slower digestion and bloating are normal — fibre and water help.',
+   faith:'Recite Ayatul Kursi morning and night for protection.',
+   tip:'Keep hydrated — aim for around 8 glasses of water a day.'},
+ 11:{fruit:'🫒',size:'Fig',len:'4.1 cm',wt:'7 g',
+   dev:['Fingers and toes separate.','Tooth buds are appearing.','Baby can open and close their fists.'],
+   body:['Your appetite may be returning.','Skin may look brighter as blood flow rises.'],
+   normal:'A returning appetite is a welcome, normal sign the first trimester is easing.',
+   faith:'The Ahlulbayt (as) praised quince (safarjal) — narrated to gladden the heart.',
+   tip:'Add fruit and fibre to help ease constipation.'},
+ 12:{fruit:'🍋',size:'Lime',len:'5.4 cm',wt:'14 g',milestone:'first trimester ending',
+   dev:['Reflexes are developing — baby can curl fingers and toes.','Kidneys begin producing urine.','Vital systems are all in place.'],
+   body:['The end of the first trimester is near.','Nausea often begins to fade.'],
+   normal:'Feeling more like yourself again is normal as hormones settle.',
+   faith:'A du’a of shukr — the hardest weeks are passing, alhamdulillah.',
+   tip:'Your first scan usually happens around now.'},
+ 13:{fruit:'🍋',size:'Lemon',len:'7.4 cm',wt:'23 g',
+   dev:['Fingerprints are forming.','Vocal cords are developing.','Baby’s intestines move into the abdomen.'],
+   body:['Energy often returns this week.','Your waistline may be thickening.'],
+   normal:'A rise in energy is normal — enjoy it, but don’t overdo things.',
+   faith:'Recite Surah Yusuf — traditionally read for a child of beauty and good character.',
+   tip:'Start thinking about comfortable, roomier clothing.'},
+ 14:{fruit:'🍑',size:'Peach',len:'8.7 cm',wt:'43 g',milestone:'second trimester begins',
+   dev:['Baby can squint, frown and grimace.','Fine hair (lanugo) is forming.','The liver and spleen start working.'],
+   body:['Welcome to the second trimester — often the “golden” phase.','Aches from stretching ligaments may appear.'],
+   normal:'Mild aches as things stretch are normal — gentle movement eases them.',
+   faith:'Keep wudhu when you can; a state of purity is its own comfort.',
+   tip:'Gentle stretching eases back and hip aches.'},
+ 15:{fruit:'🍎',size:'Apple',len:'10 cm',wt:'70 g',
+   dev:['Baby can sense light through closed eyelids.','Fine hair is growing all over.','Baby is moving lots, though you may not feel it yet.'],
+   body:['Your bump may be starting to show.','Nasal congestion is common in pregnancy.'],
+   normal:'A stuffy nose (“pregnancy rhinitis”) is a normal, harmless nuisance.',
+   faith:'Speak kindly and avoid anger — a mother’s calm state nourishes her baby.',
+   tip:'Keep moving daily; swimming is gentle and wonderful now.'},
+ 16:{fruit:'🥑',size:'Avocado',len:'11.6 cm',wt:'100 g',
+   dev:['Baby can hear muffled sounds.','The heart is pumping lots of blood each day.','Facial muscles let baby make expressions.'],
+   body:['You may feel the first flutters soon.','Skin and hair often look their best now.'],
+   normal:'First flutters (“quickening”) can feel like bubbles — totally normal.',
+   faith:'Recite Qur’an and talk to your baby — they are beginning to hear you.',
+   tip:'Sleep on your side as your bump grows.'},
+ 17:{fruit:'🍐',size:'Pear',len:'13 cm',wt:'140 g',
+   dev:['Fat stores are beginning to form.','The skeleton is hardening from cartilage to bone.','Baby’s sense of hearing is sharpening.'],
+   body:['Appetite is up as your bump grows.','You may feel warmer than usual.'],
+   normal:'Feeling hotter is normal — your blood volume and metabolism are up.',
+   faith:'Eat dates — beloved of the Prophet (s) and full of goodness.',
+   tip:'Iron-rich foods help as your blood volume rises.'},
+ 18:{fruit:'🫑',size:'Bell pepper',len:'14.2 cm',wt:'190 g',
+   dev:['Baby is yawning, hiccupping and stretching.','Ears are in their final position.','A protective layer of myelin forms around nerves.'],
+   body:['Many mums feel the first real kicks now.','You may notice mild dizziness at times.'],
+   normal:'Occasional dizziness is normal — rise slowly and stay hydrated.',
+   faith:'Give thanks at each movement — a sign of life and a gift.',
+   tip:'Your anomaly scan is usually around 18–21 weeks.'},
+ 19:{fruit:'🥭',size:'Mango',len:'15.3 cm',wt:'240 g',
+   dev:['A protective coating (vernix) now covers the skin.','The brain is developing areas for the senses.','Baby has regular sleep and wake times.'],
+   body:['Round ligament aches are common as things stretch.','Leg cramps may start, especially at night.'],
+   normal:'Sharp, brief aches down the sides of your bump are normal ligament stretching.',
+   faith:'Recite Surah Maryam — narrated for ease in pregnancy and delivery.',
+   tip:'Moisturise your bump and stay comfortable.'},
+ 20:{fruit:'🍌',size:'Banana',len:'16.4 cm',wt:'300 g',milestone:'halfway there',
+   dev:['You may feel the first flutters of movement — quickening.','Baby is developing a sleep-and-wake rhythm.','A protective coating (vernix) now covers the skin.'],
+   body:['First kicks, mild backache and occasional heartburn.','Your bump is clearly showing now.'],
+   normal:'Those first flutters are a quiet conversation between you and baby — pause and enjoy them.',
+   faith:'A halfway du’a — thank Allah and ask for a safe rest of the journey.',
+   tip:'Pelvic floor exercises now really pay off later.'},
+ 21:{fruit:'🥕',size:'Carrot',len:'26.7 cm',wt:'360 g',
+   dev:['Eyebrows and eyelids are fully formed.','Baby’s movements are becoming stronger.','The digestive system is practising for milk.'],
+   body:['Kicks are getting stronger.','You may notice stretch marks appearing.'],
+   normal:'Stretch marks are normal and very common — moisturising can ease itching.',
+   faith:'Pomegranate is praised in narrations — eat it with the niyyah of a good-natured child.',
+   tip:'Keep healthy snacks handy; hunger comes on fast.'},
+ 22:{fruit:'🥥',size:'Coconut',len:'27.8 cm',wt:'430 g',
+   dev:['Baby’s sense of touch is developing.','Fine details like eyebrows are visible.','Baby is starting to look like a newborn.'],
+   body:['You may notice practice (Braxton Hicks) tightenings.','Swollen feet and ankles can appear.'],
+   normal:'Painless tightenings that come and go are normal practice contractions.',
+   faith:'Read a portion of Qur’an aloud daily — a rhythm baby will recognise after birth.',
+   tip:'Rest your legs to ease any swelling.'},
+ 23:{fruit:'🍈',size:'Grapefruit',len:'28.9 cm',wt:'501 g',
+   dev:['Tiny blood vessels in the lungs are developing.','Baby can hear your voice and heartbeat clearly.','Skin is still wrinkled as fat fills in.'],
+   body:['Skin changes like the linea nigra may appear.','Your bump feels firmer and higher.'],
+   normal:'A dark line down the belly (linea nigra) is normal and usually fades after birth.',
+   faith:'Keep a daily dhikr — the tasbih of Sayyida Fatima (as) after each salah.',
+   tip:'Stay gently active to help sleep and mood.'},
+ 24:{fruit:'🌽',size:'Corn',len:'30 cm',wt:'600 g',milestone:'viability milestone',
+   dev:['A viability milestone — a big developmental marker.','The inner ear is now fully formed, aiding balance.','Lungs are developing branches and cells.'],
+   body:['Your bump is measured at check-ups from around now.','Backache is common as your posture shifts.'],
+   normal:'A growing lower-back ache is normal — supportive shoes and good posture help.',
+   faith:'Sadaqah wards off harm — give with the intention of protection for baby.',
+   tip:'Glucose screening often happens around this time.'},
+ 25:{fruit:'🥬',size:'Rutabaga',len:'34.6 cm',wt:'660 g',
+   dev:['Baby is responding to the sound of your voice.','Hands are now fully developed and active.','Baby is gaining baby fat, smoothing the skin.'],
+   body:['Backache and a bigger appetite are common.','Hands may tingle (carpal tunnel) at times.'],
+   normal:'Mild tingling in the hands is a normal effect of pregnancy swelling.',
+   faith:'Say your du’as and salawat aloud — baby’s hearing is sharpening.',
+   tip:'Support your lower back when sitting.'},
+ 26:{fruit:'🥬',size:'Lettuce',len:'35.6 cm',wt:'760 g',
+   dev:['Baby’s eyes will start to open soon.','Lungs are producing surfactant to help breathing later.','Brain activity is increasing.'],
+   body:['You may feel pressure in your ribs and back.','Braxton Hicks may become more noticeable.'],
+   normal:'Rib pressure as baby grows upward is normal — gentle stretches give relief.',
+   faith:'Recite Surah al-Mulk at night — a surah of protection.',
+   tip:'Practise slow, deep breathing to relax.'},
+ 27:{fruit:'🥦',size:'Cauliflower',len:'36.6 cm',wt:'875 g',milestone:'third trimester begins',
+   dev:['Sleep-wake cycles are forming and baby hiccups often.','The brain is very active now.','Baby can open and close their eyes.'],
+   body:['The third trimester begins.','Tiredness and heartburn may return.'],
+   normal:'Feeling more tired again as you enter the third trimester is completely normal.',
+   faith:'Renew your niyyah for the final stretch — patience (sabr) is worship.',
+   tip:'Start noting baby’s movement patterns.'},
+ 28:{fruit:'🍆',size:'Aubergine',len:'37.6 cm',wt:'1 kg',
+   dev:['Baby’s eyes can now open and blink.','Eyelashes have formed.','Baby is adding fat and muscle steadily.'],
+   body:['Braxton Hicks may be more noticeable.','Shortness of breath can come as baby grows.'],
+   normal:'Getting a little breathless is normal — your lungs have less room now.',
+   faith:'The book recommends frankincense (kundur), chewed by the mother — linked in narrations to the child’s intelligence and memory.',
+   tip:'Antenatal appointments become more frequent now.'},
+ 29:{fruit:'🎃',size:'Butternut squash',len:'38.6 cm',wt:'1.15 kg',
+   dev:['Muscles and lungs are maturing.','Baby’s head is growing to fit the developing brain.','Bones are fully formed but still soft.'],
+   body:['Heartburn and tiredness may increase.','You may need the loo more as baby presses down.'],
+   normal:'More frequent loo trips are normal as baby settles lower.',
+   faith:'Recite Ayatul Kursi and gently blow over yourself and your bump.',
+   tip:'Smaller meals help ease heartburn.'},
+ 30:{fruit:'🥒',size:'Cucumber',len:'39.9 cm',wt:'1.3 kg',
+   dev:['Baby is gaining fat and the brain is growing quickly.','Bone marrow now makes red blood cells.','Baby’s grip is getting stronger.'],
+   body:['You may feel more short of breath.','Sleep can become harder to find.'],
+   normal:'Broken sleep is normal now — nap when you can and use pillows for support.',
+   faith:'A gratitude note a day keeps the heart soft.',
+   tip:'Prop yourself up with pillows to sleep.'},
+ 31:{fruit:'🥥',size:'Coconut',len:'41.1 cm',wt:'1.5 kg',
+   dev:['All five senses are now working.','Baby can turn their head from side to side.','The brain is making rapid connections.'],
+   body:['Frequent urination often returns.','Your breasts may start to leak colostrum.'],
+   normal:'A little leaking of early milk (colostrum) is a normal sign your body is preparing.',
+   faith:'Send salawat upon Muhammad and his family — a light for mother and child.',
+   tip:'Start lightly packing your hospital bag.'},
+ 32:{fruit:'🎃',size:'Squash',len:'42.4 cm',wt:'1.7 kg',
+   dev:['Baby is practising breathing movements.','Toenails and fingernails have formed.','Baby likely settles into a head-down position soon.'],
+   body:['Your bump sits high with less room inside.','Braxton Hicks may feel stronger.'],
+   normal:'Stronger practice contractions are normal — rest and hydration usually settle them.',
+   faith:'Recite Surah Yasin — known as the heart of the Qur’an.',
+   tip:'Keep monitoring baby’s movements each day.'},
+ 33:{fruit:'🍍',size:'Pineapple',len:'43.7 cm',wt:'1.9 kg',
+   dev:['Bones are hardening (except the soft skull plates).','The immune system is building with your antibodies.','Baby’s pupils can respond to light.'],
+   body:['Aches and tiredness are common.','You may feel warm and swollen.'],
+   normal:'Some swelling in feet and hands is normal — raise your feet when you rest.',
+   faith:'Begin the du’as for a safe and easy delivery now.',
+   tip:'Rest often and conserve your energy.'},
+ 34:{fruit:'🍈',size:'Cantaloupe',len:'45 cm',wt:'2.1 kg',
+   dev:['Baby is often head-down now.','The central nervous system is maturing.','Lungs are nearly ready for the first breath.'],
+   body:['Swelling and fatigue may increase.','Pelvic pressure can build as baby drops.'],
+   normal:'A feeling of pressure low down is normal as baby moves into position.',
+   faith:'Increase sadaqah as delivery nears — protection for a safe birth.',
+   tip:'Learn the warning signs and when to call your midwife.'},
+ 35:{fruit:'🍈',size:'Honeydew',len:'46.2 cm',wt:'2.4 kg',
+   dev:['Kidneys and liver are working well.','Baby is gaining weight quickly now.','Most development is complete — mainly growing now.'],
+   body:['Your bump feels heavy and full.','You may feel Braxton Hicks more often.'],
+   normal:'Feeling large and slow is normal — listen to your body and rest.',
+   faith:'Recite Surah al-Inshiqaq — narrated to ease childbirth.',
+   tip:'Finalise your birth plan.'},
+ 36:{fruit:'🥬',size:'Romaine',len:'47.4 cm',wt:'2.6 kg',
+   dev:['Likely head-down and settling into position.','Baby is shedding the vernix and lanugo.','The digestive system is ready for milk.'],
+   body:['Baby may “drop”, easing your breathing.','You may feel more pressure on your bladder.'],
+   normal:'Easier breathing but more loo trips is normal once baby drops (“lightening”).',
+   faith:'Keep dates nearby — echoing Maryam (as), who ate them near delivery.',
+   tip:'Have your hospital bag ready.'},
+ 37:{fruit:'🍉',size:'Winter melon',len:'48.6 cm',wt:'2.9 kg',milestone:'early term',
+   dev:['Baby is now considered early term.','Practising breathing, sucking and gripping.','The brain and lungs continue to mature.'],
+   body:['Pelvic pressure and a nesting urge are common.','You may notice more discharge.'],
+   normal:'A sudden burst of energy to tidy and prepare (nesting) is a normal late sign.',
+   faith:'A du’a of tawakkul — place your trust in Allah for the birth.',
+   tip:'Rest, hydrate and stay calm.'},
+ 38:{fruit:'🎃',size:'Small pumpkin',len:'49.8 cm',wt:'3.1 kg',
+   dev:['A firm grasp and organs ready for life outside.','Baby’s skin is now smooth.','Baby is building the last of their fat stores.'],
+   body:['Waiting mode; tiredness is normal.','You may feel cramps or a dull backache.'],
+   normal:'A come-and-go backache and cramps are normal as your body prepares.',
+   faith:'Recite Surah Maryam and Surah al-Inshiqaq for ease.',
+   tip:'Know the early signs of labour.'},
+ 39:{fruit:'🍉',size:'Watermelon',len:'50.7 cm',wt:'3.3 kg',milestone:'full term',
+   dev:['Baby is full term and building a little more fat.','Lungs are ready to breathe air.','The brain is still growing rapidly.'],
+   body:['Cramps and a “show” may appear.','You may feel period-like tightenings.'],
+   normal:'Losing the mucus plug (a “show”) is a normal sign labour may be near.',
+   faith:'Continuous dhikr and salawat keep the heart steady.',
+   tip:'Eat dates daily — traditionally said to soften labour.'},
+ 40:{fruit:'🍉',size:'Watermelon',len:'51.2 cm',wt:'3.5 kg',milestone:'your due week',
+   dev:['Baby is ready to meet you — everything is in place.','The soft skull plates allow an easier birth.','Baby is fully developed.'],
+   body:['Labour could begin any time now.','You may feel strong, regular tightenings.'],
+   normal:'Going a little past your due date is normal — most babies arrive within a week or two.',
+   faith:'A mother’s du’a at this time is precious — ask freely, for yourself and your child.',
+   tip:'Trust your body; call your team when contractions become regular.'}
+};
+
+/* ============ DATA: TODAY'S DUA (featured, rotates daily) ============ */
+const DUA_TODAY = [
+ {lbl:'For a righteous child',arabic:'رَبِّ هَبْ لِي مِنْ لَدُنْكَ ذُرِّيَّةً طَيِّبَةً',tl:'Rabbi hab lī min ladunka dhurriyyatan ṭayyibah',mn:'“My Lord, grant me from Yourself a goodly, pure offspring. Indeed, You are the Hearer of supplication.”',sr:'Sūrah Āl ‘Imrān 3:38 · recommended in A Mother’s Prayer'},
+ {lbl:'Comfort of the eyes',arabic:'رَبَّنَا هَبْ لَنَا مِنْ أَزْوَاجِنَا وَذُرِّيَّاتِنَا قُرَّةَ أَعْيُنٍ',tl:'Rabbanā hab lanā min azwājinā wa dhurriyyātinā qurrata a‘yun',mn:'“Our Lord, grant us from our spouses and offspring comfort to our eyes, and make us leaders of the righteous.”',sr:'Sūrah al-Furqān 25:74 · recommended in A Mother’s Prayer'},
+ {lbl:'A child from the righteous',arabic:'رَبِّ هَبْ لِي مِنَ الصَّالِحِينَ',tl:'Rabbi hab lī minaṣ-ṣāliḥīn',mn:'“My Lord, grant me a child from among the righteous.”',sr:'Sūrah aṣ-Ṣāffāt 37:100'},
+ {lbl:'Steadfast in prayer',arabic:'رَبِّ اجْعَلْنِي مُقِيمَ الصَّلَاةِ وَمِنْ ذُرِّيَّتِي',tl:'Rabbi-j‘alnī muqīmaṣ-ṣalāti wa min dhurriyyatī',mn:'“My Lord, make me an establisher of prayer, and many from my descendants. Our Lord, accept my supplication.”',sr:'Sūrah Ibrāhīm 14:40'},
+ {lbl:'Gratitude & good offspring',arabic:'رَبِّ أَوْزِعْنِي أَنْ أَشْكُرَ نِعْمَتَكَ وَأَصْلِحْ لِي فِي ذُرِّيَّتِي',tl:'Rabbi awzi‘nī an ashkura ni‘matak… wa aṣliḥ lī fī dhurriyyatī',mn:'“My Lord, enable me to be grateful for Your favour, and make righteous for me my offspring.”',sr:'Sūrah al-Aḥqāf 46:15 · recommended in A Mother’s Prayer'},
+ {lbl:'For ease',arabic:'رَبِّ اشْرَحْ لِي صَدْرِي وَيَسِّرْ لِي أَمْرِي',tl:'Rabbi-shraḥ lī ṣadrī wa yassir lī amrī',mn:'“My Lord, expand for me my chest, and ease for me my task.”',sr:'Sūrah Ṭā Hā 20:25–26'},
+ {lbl:'Protection for mother & child',arabic:'وَإِنِّي أُعِيذُهَا بِكَ وَذُرِّيَّتَهَا مِنَ الشَّيْطَانِ الرَّجِيمِ',tl:'Wa innī u‘īdhuhā bika wa dhurriyyatahā minash-shayṭānir-rajīm',mn:'“I seek refuge for her and her offspring in You from Satan, the outcast.” — the prayer of the mother of Maryam (as).',sr:'Sūrah Āl ‘Imrān 3:36 · recommended in A Mother’s Prayer'},
+ {lbl:'With hardship comes ease',arabic:'فَإِنَّ مَعَ الْعُسْرِ يُسْرًا ۝ إِنَّ مَعَ الْعُسْرِ يُسْرًا',tl:'Fa-inna ma‘al-‘usri yusrā, inna ma‘al-‘usri yusrā',mn:'“For indeed, with hardship comes ease. Indeed, with hardship comes ease.” A verse to hold onto in the hardest moments of pregnancy and labour.',sr:'Sūrah ash-Sharḥ 94:5–6 · recommended in A Mother’s Prayer'}
+];
+
+/* ============ DATA: DUAS LIBRARY ============ */
+const DUAS = {
+ 'Pregnancy':[
+   {title:'Surah Yusuf',translit:'Recite Surah Yusuf (chapter 12) regularly.',body:'Traditionally recited during pregnancy so that Allah blesses the mother with a child of beauty and good character.',when:'Regularly through pregnancy',src:'From Marriage to Parenthood (KSIMC), al-islam.org'},
+   {title:'Surah Maryam',translit:'Recite Surah Maryam (chapter 19).',body:'Narrated to bring ease during pregnancy and delivery, and comfort to the heart of the mother.',when:'Regularly, especially later weeks',src:'Traditions of the Ahlulbayt (as)'},
+   {title:'Ayatul Kursi',arabic:'اللَّهُ لَا إِلَٰهَ إِلَّا هُوَ الْحَيُّ الْقَيُّومُ',translit:'Allahu la ilaha illa huwal-Hayyul-Qayyum…',body:'A powerful ayah of protection. Recite morning and evening over yourself and your bump.',when:'Morning & night',src:'Qur’an 2:255'},
+   {title:'Du’a for a righteous child',arabic:'رَبِّ هَبْ لِي مِنْ لَدُنْكَ ذُرِّيَّةً طَيِّبَةً',translit:'Rabbi hab lī min ladunka dhurriyyatan ṭayyibah',body:'“My Lord, grant me from Yourself a goodly, pure offspring.” The prayer of Zakariyya (as) for a righteous child.',when:'Anytime, from the heart',src:'Sūrah Āl ‘Imrān 3:38 · A Mother’s Prayer'},
+   {title:'Surah al-Mulk',translit:'Recite Surah al-Mulk (chapter 67) at night.',body:'A surah of protection and blessing, recommended before sleep.',when:'Before sleep',src:'Traditions of the Ahlulbayt (as)'},
+   {title:'Surah al-Qadr',translit:'Recite Surah al-Qadr (chapter 97) often.',body:'The book recommends reciting Surah al-Qadr continuously throughout pregnancy as a means of blessing and protection.',when:'Throughout pregnancy',src:'A Mother’s Prayer, Ch.2'},
+   {title:'Surah al-Fatiha (continuous)',translit:'Keep Surah al-Fatiha on your tongue.',body:'Reciting Surah al-Fatiha regularly through the whole pregnancy is recommended for the wellbeing of mother and child.',when:'Throughout pregnancy',src:'A Mother’s Prayer, Ch.2'},
+   {title:'Ayah for the child (Yasin 36:36)',translit:'Recite verse 36 of Surah Yasin.',body:'The book mentions reciting Yasin 36:36 forty times a day for forty days as a devoted practice — or simply keep it as a regular dhikr for your child.',when:'Daily practice',src:'A Mother’s Prayer, Ch.2'}
+ ],
+ 'Easy delivery':[
+   {title:'Surah al-Inshiqaq',translit:'Recite (or keep written) Surah al-Inshiqaq (chapter 84).',body:'Narrated as a means of ease during childbirth for the mother.',when:'From week 35 and during labour',src:'From Marriage to Parenthood (KSIMC), al-islam.org'},
+   {title:'Du’a for ease',arabic:'رَبِّ اشْرَحْ لِي صَدْرِي وَيَسِّرْ لِي أَمْرِي',translit:'Rabbi-shraḥ lī ṣadrī wa yassir lī amrī',body:'“My Lord, expand for me my chest and ease for me my task.” A beautiful du’a for calm and ease in labour.',when:'During labour',src:'Sūrah Ṭā Hā 20:25–26 · A Mother’s Prayer'},
+   {title:'Recitations during labour',translit:'Ayatul Kursi, Qur’an 7:54 and the two surahs of refuge (al-Falaq & an-Nas).',body:'It is narrated that these were recited over the mother during the births within the household of the Prophet (s). A companion may recite them over you during labour.',when:'During labour',src:'Narrated traditions of the Ahlulbayt (as)'},
+   {title:'Eating dates',translit:'Keep dates to hand as delivery nears.',body:'Echoing the words to Maryam (as): “Shake the trunk of the palm tree towards you, it will drop fresh, ripe dates.” Dates give gentle, natural energy.',when:'Late pregnancy & labour',src:'Qur’an 19:25'},
+   {title:'Sadaqah before delivery',translit:'Give charity with the niyyah of a safe birth.',body:'Giving sadaqah is narrated to remove hardship and invite Allah’s protection.',when:'As delivery nears',src:'Traditions of the Ahlulbayt (as)'},
+   {title:'Surah Maryam over the mother',translit:'Recite Surah Maryam (esp. 19:23) over the mother.',body:'Recited over the woman in labour, recalling Maryam (as) at the moment of delivery — a source of calm and ease.',when:'During labour',src:'A Mother’s Prayer, Ch.4'},
+   {title:'Du’a Yastashir (9th month)',translit:'Recite the supplication of Yastashir daily in the ninth month.',body:'A supplication of praise recommended regularly through pregnancy, and every day in the ninth month, for ease as delivery approaches.',when:'Ninth month',src:'A Mother’s Prayer, Ch.2'}
+ ],
+ 'After birth':[
+   {title:'Adhan & Iqamah',translit:'Adhan in the baby’s right ear, Iqamah in the left.',body:'A recommended act so the first words the newborn hears are the name of Allah and the message of tawhid.',when:'Soon after birth',src:'Sunnah of the Prophet (s)'},
+   {title:'Tahnik',translit:'Gently rub the baby’s palate with something sweet.',body:'A little date (or honey) softened and rubbed on the palate — a recommended sunnah of blessing. Note: avoid honey for infants under one year.',when:'After birth',src:'Sunnah of the Prophet (s)'},
+   {title:'A good name',translit:'Choose a beautiful, meaningful name.',body:'Giving a good name is among the first rights of the child. See the Baby names section for suggestions honouring the Ahlulbayt (as).',when:'By the 7th day',src:'Traditions of the Ahlulbayt (as)'},
+   {title:'Aqiqah',translit:'Perform the aqiqah, ideally on the 7th day.',body:'A recommended sacrifice with the meat distributed as charity; the baby’s head is shaved and the weight of the hair given in silver as sadaqah.',when:'7th day (or when able)',src:'Sunnah of the Prophet (s)'},
+   {title:'Du’a of shukr',translit:'Alhamdulillahi rabbil ‘alamin.',body:'A du’a of thanks for a safe delivery and the gift of your child.',when:'After a safe birth',src:'General supplication'},
+   {title:'Prayers for breastfeeding',translit:'Recite in gratitude and ask for barakah in your milk.',body:'Breastfeeding is a right of the child. The book includes supplications asking Allah to bless and increase the mother’s milk — pair them with rest, hydration and du’a.',when:'While nursing',src:'A Mother’s Prayer, breastfeeding chapter'}
+ ],
+ 'Daily dhikr':[
+   {title:'Tasbih of Sayyida Fatima (as)',translit:'34× Allahu Akbar, 33× Alhamdulillah, 33× SubhanAllah.',body:'Recited after each of the five daily prayers — a gift from the Prophet (s) to his daughter (as), full of reward.',when:'After every salah',src:'Sunnah of the Prophet (s)'},
+   {title:'Salawat',arabic:'اللَّهُمَّ صَلّ عَلَى مُحَمَّدٍ وَآلِ مُحَمَّد',translit:'Allahumma salli ‘ala Muhammadin wa Aali Muhammad.',body:'Sending blessings on the Prophet and his family — a light for you and your baby.',when:'Throughout the day',src:'Sunnah of the Prophet (s)'},
+   {title:'SubhanAllahi wa bihamdihi',translit:'SubhanAllahi wa bihamdihi (100×).',body:'A short, weighty dhikr to keep the tongue busy with the remembrance of Allah.',when:'Daily',src:'Sunnah of the Prophet (s)'},
+   {title:'Istighfar',translit:'Astaghfirullaha Rabbi wa atubu ilayh.',body:'Seeking forgiveness softens the heart and invites mercy and ease.',when:'Daily',src:'General supplication'}
+ ]
+};
+
+/* ============ DATA: FOOD ============ */
+const FOOD = {
+ sunnah:[
+   {em:'🍐',name:'Quince (Safarjal)',note:'Narrated to gladden the heart and beautify the child.'},
+   {em:'🌿',name:'Dates (Tamr)',note:'Beloved of the Prophet (s); eaten near delivery, as with Maryam (as).'},
+   {em:'🍎',name:'Pomegranate (Rumman)',note:'For a beautiful, good-natured child. Tradition: recite Surah Yasin over it, then eat.'},
+   {em:'🍏',name:'Apple (Tuffah)',note:'Cleansing and refreshing. Tradition: recite Surah Yusuf over it, then eat.'},
+   {em:'🍇',name:'Grapes (‘Inab)',note:'Strengthening and nourishing; praised in traditions.'},
+   {em:'🌿',name:'Frankincense (Kundur)',note:'Chewed by the mother — linked to the child’s intelligence & memory.'},
+   {em:'🥛',name:'Milk (Laban)',note:'Recommended and rich in calcium for you and baby.'},
+   {em:'🍯',name:'Honey (‘Asal)',note:'“Healing for people” (16:69). Avoid giving to babies under one.'}
+ ],
+ med:[
+   {em:'🥬',name:'Leafy greens',note:'Folate for baby’s neural development.'},
+   {em:'🥩',name:'Iron-rich foods',note:'Lean meat, beans & lentils support rising blood volume.'},
+   {em:'🧀',name:'Dairy / calcium',note:'For baby’s bones and teeth.'},
+   {em:'🍳',name:'Protein',note:'Eggs, beans and lean meat for steady growth.'},
+   {em:'🐟',name:'Oily fish (low-mercury)',note:'Omega-3 for brain & eyes; 1–2 portions a week.'},
+   {em:'🌾',name:'Wholegrains & fibre',note:'Steady energy and easier digestion.'},
+   {em:'🍊',name:'Vitamin C fruits',note:'Helps your body absorb iron.'},
+   {em:'💧',name:'Water',note:'Aim for around 8 glasses a day.'}
+ ],
+ avoid:[
+   {name:'Raw or undercooked meat & eggs',note:'Risk of infection — cook thoroughly.'},
+   {name:'Unpasteurised & mould-ripened cheeses',note:'Listeria risk — e.g. soft blue and brie-style cheeses.'},
+   {name:'High-mercury fish',note:'Avoid shark, swordfish & marlin; limit tuna.'},
+   {name:'Liver & high-dose vitamin A',note:'Too much vitamin A can harm baby.'},
+   {name:'Alcohol',note:'No amount is considered safe in pregnancy.'},
+   {name:'Excess caffeine',note:'Keep under about 200mg a day (≈ 2 mugs of tea/coffee).'},
+   {name:'Smoking & shisha',note:'Best avoided completely for baby’s health.'}
+ ]
+};
+
+/* ============ DATA: BABY NAMES ============ */
+const NAMES = {
+ 'Boys':[
+   {n:'Muhammad',m:'The praised one — the Prophet (s).'},
+   {n:'Ahmad',m:'Most praiseworthy.'},
+   {n:'Ali',m:'Exalted, noble — Imam Ali (as).'},
+   {n:'Hasan',m:'Good, handsome — Imam Hasan (as).'},
+   {n:'Husayn',m:'Beautiful, beloved — Imam Husayn (as).'},
+   {n:'Abbas',m:'Lion; brave — the standard-bearer of Karbala.'},
+   {n:'Ja’far',m:'Flowing stream — Imam Ja’far as-Sadiq (as).'},
+   {n:'Musa',m:'Prophet Musa (as); Imam Musa al-Kadhim (as).'},
+   {n:'Rida',m:'Contentment — Imam Ali ar-Ridha (as).'},
+   {n:'Taha',m:'A name of the Prophet (s).'},
+   {n:'Yusuf',m:'Prophet Yusuf (as); beauty.'},
+   {n:'Ibrahim',m:'Prophet Ibrahim (as); father of nations.'},
+   {n:'Mahdi',m:'The rightly guided — Imam al-Mahdi (aj).'},
+   {n:'Kadhim',m:'One who restrains anger.'},
+   {n:'Baqir',m:'One who opens knowledge — Imam al-Baqir (as).'},
+   {n:'Hamza',m:'Lion — the beloved uncle of the Prophet (s).'},
+   {n:'Karim',m:'Generous, noble.'},
+   {n:'Zain',m:'Beauty, adornment.'}
+ ],
+ 'Girls':[
+   {n:'Fatima',m:'One who abstains from evil — Sayyida Fatima az-Zahra (as).'},
+   {n:'Zahra',m:'Radiant, luminous — a title of Sayyida Fatima (as).'},
+   {n:'Zaynab',m:'Fragrant flower — Sayyida Zaynab (as).'},
+   {n:'Ruqayya',m:'Gentle, ascending — daughter of the Prophet (s).'},
+   {n:'Sakina',m:'Tranquility — daughter of Imam Husayn (as).'},
+   {n:'Maryam',m:'Pious and devoted — Maryam (as).'},
+   {n:'Khadija',m:'Noble; the beloved first wife of the Prophet (s).'},
+   {n:'Amina',m:'Trustworthy, safe — the Prophet’s mother.'},
+   {n:'Masuma',m:'Infallible, pure — Sayyida Masuma of Qom (as).'},
+   {n:'Marziyya',m:'One who is pleasing to Allah.'},
+   {n:'Nargis',m:'Narcissus flower — mother of Imam al-Mahdi (aj).'},
+   {n:'Rabab',m:'Devoted wife of Imam Husayn (as).'},
+   {n:'Batul',m:'Pure and devoted — a title of Sayyida Fatima (as).'},
+   {n:'Tahira',m:'Pure — a title of Sayyida Khadija (as).'},
+   {n:'Sumayya',m:'The first martyr of Islam.'},
+   {n:'Hawra',m:'Of paradise; pure-hearted.'},
+   {n:'Yasmin',m:'Jasmine flower.'},
+   {n:'Nur',m:'Light.'}
+ ]
+};
+
+/* ============ APP ============ */
+const App = (function(){
+  const KEY='ummi_v1';
+  const DAY=86400000;
+  let state={};
+  let viewWeek=null;
+  let duaTab='Pregnancy';
+  let nameTab='Boys';
+
+  function load(){ try{state=JSON.parse(localStorage.getItem(KEY))||{};}catch(e){state={};} }
+  function save(){ localStorage.setItem(KEY,JSON.stringify(state)); }
+  function localISO(d){ return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0'); }
+  function todayKey(){ return localISO(new Date()); }
+  function esc(s){ return String(s).replace(/[&<>"']/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c];}); }
+  function dayIndex(){ const d=new Date(); const start=new Date(d.getFullYear(),0,0); return Math.floor((d-start)/DAY); }
+
+  // ---- week maths ----
+  function clampWeek(w){ return Math.max(4,Math.min(40,w)); }
+  function currentWeek(){
+    if(!state.dueDate) return 4;
+    const due=new Date(state.dueDate+'T00:00:00');
+    const now=new Date(); now.setHours(0,0,0,0);
+    const daysToDue=Math.round((due-now)/DAY);
+    const gestDays=280-daysToDue;
+    return clampWeek(Math.floor(gestDays/7));
+  }
+  function daysToGo(){
+    if(!state.dueDate) return null;
+    const due=new Date(state.dueDate+'T00:00:00');
+    const now=new Date(); now.setHours(0,0,0,0);
+    return Math.max(0,Math.round((due-now)/DAY));
+  }
+  function trimester(w){ return w<14?'First':(w<28?'Second':'Third'); }
+  function trimesterShort(w){ return w<14?'1st trimester':(w<28?'2nd trimester':'3rd trimester'); }
+  function article(s){ return /^[aeiou]/i.test(s)?'an ':'a '; }
+  function sizeSentence(d){ return 'About the size of ' + article(d.size) + d.size.toLowerCase(); }
+  function dueFmt(){ if(!state.dueDate) return '—'; const d=new Date(state.dueDate+'T00:00:00'); return d.toLocaleDateString('en-GB',{day:'numeric',month:'short'}); }
+
+  // ---- navigation ----
+  function go(s,fromPop){
+    document.querySelectorAll('.screen').forEach(el=>el.classList.remove('active'));
+    const sc=document.getElementById('s-'+s); if(sc) sc.classList.add('active');
+    document.querySelectorAll('#nav button').forEach(b=>b.classList.toggle('on',b.dataset.s===s));
+    document.getElementById('nav').style.display = (s==='gate')?'none':'flex';
+    window.scrollTo(0,0);
+    if(s==='today') renderToday();
+    if(s==='week'){ viewWeek=viewWeek||currentWeek(); renderWeek(); }
+    if(s==='duas') renderDuas();
+    if(s==='food') renderFood();
+    if(s==='names') renderNames();
+    if(s==='more') renderMore();
+    // keep browser/Android back button on-app instead of exiting
+    if(s!=='gate' && !fromPop){
+      if(history.state && history.state.s && history.state.s!==s) history.pushState({s:s},'');
+      else history.replaceState({s:s},'');
+    }
+  }
+  window.addEventListener('popstate',function(e){ if(e.state && e.state.s) go(e.state.s,true); });
+
+  // ---- signup ----
+  function fillWeekSelect(){
+    const sel=document.getElementById('g-week');
+    for(let w=4;w<=40;w++){ const o=document.createElement('option'); o.value=w; o.textContent='Week '+w; sel.appendChild(o); }
+  }
+  function deriveDueFromWeek(w){
+    const now=new Date(); now.setHours(0,0,0,0);
+    const due=new Date(now.getTime()+(40-w)*7*DAY);
+    return localISO(due);
+  }
+  function signup(){
+    const email=document.getElementById('g-email').value.trim();
+    const name=document.getElementById('g-name').value.trim();
+    const due=document.getElementById('g-due').value;
+    const wk=document.getElementById('g-week').value;
+    if(!email||email.indexOf('@')<1){ alert('Please enter a valid email address.'); return; }
+    if(!due && !wk){ alert('Please add your due date or your current week.'); return; }
+    state.email=email; state.name=name;
+    state.dueDate = due ? due : deriveDueFromWeek(parseInt(wk,10));
+    state.joined=todayKey();
+    save();
+    if(CONFIG.SIGNUP_ENDPOINT){
+      try{ fetch(CONFIG.SIGNUP_ENDPOINT,{method:'POST',headers:{'Content-Type':'application/json',Accept:'application/json'},body:JSON.stringify({email:email,name:name,dueDate:state.dueDate})}); }catch(e){}
+    }
+    viewWeek=currentWeek();
+    go('today');
+  }
+
+  // ---- checklist ----
+  const TASKS=[
+    {id:'quran',cat:'Faith',t:'Recite a portion of Qur’an',s:'Even a short surah — baby is listening'},
+    {id:'salah',cat:'Faith',t:'Pray your daily salah on time',s:'A steady anchor through your day'},
+    {id:'salawat',cat:'Faith',t:'Send salawat',s:'Allahumma salli ‘ala Muhammad wa Aali Muhammad'},
+    {id:'water',cat:'Wellness',t:'Drink your water',s:'Aim for around 8 glasses today'},
+    {id:'walk',cat:'Wellness',t:'Gentle movement',s:'A short walk or stretch eases aches'},
+    {id:'supp',cat:'Wellness',t:'Take your supplement',s:'Folic acid / prenatal vitamin'}
+  ];
+  function doneToday(){ state.done=state.done||{}; return state.done[todayKey()]||[]; }
+  function toggleTask(id){
+    state.done=state.done||{}; const k=todayKey();
+    const arr=state.done[k]||[]; const i=arr.indexOf(id);
+    if(i>=0) arr.splice(i,1); else arr.push(id);
+    state.done[k]=arr; save(); renderToday();
+  }
+  function duaRecitedToday(){ state.duaDone=state.duaDone||{}; return !!state.duaDone[todayKey()]; }
+  function toggleDua(){ state.duaDone=state.duaDone||{}; const k=todayKey(); state.duaDone[k]=!state.duaDone[k]; save(); renderToday(); }
+
+  // ---- renders ----
+  function renderToday(){
+    const w=currentWeek(); const d=WEEKS[w];
+    const hour=new Date().getHours();
+    const greet = hour<12?'Good morning':(hour<18?'Good afternoon':'Good evening');
+    document.getElementById('t-greeting').textContent = state.name? greet+', '+state.name : 'Salaam';
+
+    // hero
+    const dtg=daysToGo();
+    const sub = trimesterShort(w) + (d.milestone? ' · '+d.milestone : '');
+    document.getElementById('t-hero').innerHTML =
+      '<div class="wknum">Week '+w+'</div><div class="sub">'+sub+'</div>'+
+      '<div class="sizeline"><div class="em">'+d.fruit+'</div><div><b>'+sizeSentence(d)+'</b><span>'+d.len+' · ~'+d.wt+'</span></div></div>'+
+      '<div class="hpills"><span class="hp">'+trimester(w)+' trimester</span>'+
+      (dtg!==null?'<span class="hp">'+dtg+' days to go</span>':'')+
+      (state.dueDate?'<span class="hp">due ≈ '+dueFmt()+'</span>':'')+'</div>'+
+      '<div class="progressbar"><i style="width:'+Math.round(w/40*100)+'%"></i></div>';
+
+    // today's dua
+    const q=DUA_TODAY[dayIndex()%DUA_TODAY.length]; const rec=duaRecitedToday();
+    document.getElementById('t-dua').innerHTML =
+      '<div class="lbl">Today’s dua · '+q.lbl+'</div>'+
+      '<div class="arabic">'+q.arabic+'</div>'+
+      '<div class="tl">'+q.tl+'</div>'+
+      '<div class="mn">'+q.mn+'</div>'+
+      '<div class="sr">'+q.sr+'</div>'+
+      '<button class="rec'+(rec?' done':'')+'" onclick="App.toggleDua()">'+(rec?'✓ Recited today':'Mark as recited')+'</button>';
+
+    // checklist
+    const done=doneToday();
+    document.getElementById('t-count').textContent=done.length+' / '+TASKS.length+' done';
+    document.getElementById('t-tasks').innerHTML=TASKS.map(function(x){
+      const on=done.indexOf(x.id)>=0;
+      return '<div class="task'+(on?' done':'')+'" onclick="App.toggleTask(\''+x.id+'\')"><div class="box">'+(on?'✓':'')+'</div><div class="t"><span class="cat">'+x.cat+'</span><b>'+x.t+'</b><span>'+x.s+'</span></div></div>';
+    }).join('');
+
+    // week peek
+    document.getElementById('t-weekpeek').innerHTML='<div style="display:flex;gap:14px;align-items:center"><div style="font-size:2.4rem">'+d.fruit+'</div><div><span class="cat">Baby this week</span><p style="font-size:.9rem;line-height:1.55;margin-top:4px">'+d.dev[0]+'</p><a onclick="App.go(\'week\')" style="color:var(--green);font-weight:600;font-size:.82rem;cursor:pointer">See full week ›</a></div></div>';
+  }
+
+  function renderWeek(){
+    const w=clampWeek(viewWeek); viewWeek=w; const d=WEEKS[w];
+    document.getElementById('w-num').textContent='Week '+w;
+    document.getElementById('w-tri').textContent=trimesterShort(w)+(d.milestone?' · '+d.milestone:'');
+    document.getElementById('w-fruit').textContent=d.fruit;
+    document.getElementById('w-size-sentence').textContent=sizeSentence(d);
+    document.getElementById('w-len').textContent=d.len;
+    document.getElementById('w-wt').textContent='~'+d.wt;
+    document.getElementById('w-dev').innerHTML=d.dev.map(function(x){return '<li>'+x+'</li>';}).join('');
+    document.getElementById('w-body').innerHTML=d.body.map(function(x){return '<li>'+x+'</li>';}).join('');
+    document.getElementById('w-normal').innerHTML='<b>What’s normal:</b> '+d.normal;
+    document.getElementById('w-faith').textContent=d.faith;
+    document.getElementById('w-tip').textContent=d.tip;
+    const cur=currentWeek();
+    document.getElementById('w-back').textContent = (w!==cur)? 'You are currently in week '+cur : 'This is your current week';
+  }
+  function shiftWeek(n){ viewWeek=clampWeek((viewWeek||currentWeek())+n); renderWeek(); }
+
+  function renderDuas(){
+    const tabs=document.getElementById('d-tabs');
+    tabs.innerHTML=Object.keys(DUAS).map(function(k){return '<button class="'+(k===duaTab?'on':'')+'" onclick="App.setDuaTab(\''+k+'\')">'+k+'</button>';}).join('');
+    const list=document.getElementById('d-list');
+    list.innerHTML=DUAS[duaTab].map(function(d){
+      return '<div class="card duacard" onclick="this.classList.toggle(\'open\')"><div class="head"><h3>'+d.title+'</h3><span class="chev">›</span></div>'+
+        '<div class="body">'+
+        (d.arabic?'<div class="arabic" style="color:var(--green-deep)">'+d.arabic+'</div>':'')+
+        (d.translit?'<div class="translit">'+d.translit+'</div>':'')+
+        '<p style="font-size:.88rem;line-height:1.6;margin-top:10px">'+d.body+'</p>'+
+        '<p class="muted" style="margin-top:8px"><b>When:</b> '+d.when+'</p>'+
+        '<div class="src">'+d.src+'</div>'+
+        '</div></div>';
+    }).join('');
+  }
+  function setDuaTab(k){ duaTab=k; renderDuas(); }
+
+  function renderFood(){
+    document.getElementById('f-sunnah').innerHTML=FOOD.sunnah.map(function(f){return '<div class="fooditem"><div class="em">'+f.em+'</div><b>'+f.name+'</b><span>'+f.note+'</span></div>';}).join('');
+    document.getElementById('f-med').innerHTML=FOOD.med.map(function(f){return '<div class="fooditem"><div class="em">'+f.em+'</div><b>'+f.name+'</b><span>'+f.note+'</span></div>';}).join('');
+    document.getElementById('f-avoid').innerHTML=FOOD.avoid.map(function(f){return '<div class="avoid"><b>'+f.name+'</b><span>'+f.note+'</span></div>';}).join('');
+  }
+
+  function renderNames(){
+    const tabs=document.getElementById('n-tabs');
+    tabs.innerHTML=Object.keys(NAMES).map(function(k){return '<button class="'+(k===nameTab?'on':'')+'" onclick="App.setNameTab(\''+k+'\')">'+k+'</button>';}).join('');
+    document.getElementById('n-list').innerHTML=NAMES[nameTab].map(function(x){return '<div class="nameitem"><b>'+x.n+'</b><span>'+x.m+'</span></div>';}).join('');
+  }
+  function setNameTab(k){ nameTab=k; renderNames(); }
+
+  function renderMore(){
+    document.getElementById('m-email').textContent=state.email||'—';
+    if(state.dueDate) document.getElementById('m-due').value=state.dueDate;
+    renderJournal();
+  }
+  function saveDue(){
+    const v=document.getElementById('m-due').value;
+    if(!v){ alert('Please pick a date.'); return; }
+    state.dueDate=v; save(); viewWeek=currentWeek(); alert('Due date updated.'); go('today');
+  }
+  function saveJournal(){
+    const el=document.getElementById('m-journal'); const v=el.value.trim();
+    if(!v) return;
+    state.journal=state.journal||[]; state.journal.unshift({d:todayKey(),t:v}); save(); el.value=''; renderJournal();
+  }
+  function renderJournal(){
+    const list=document.getElementById('m-journal-list'); const j=state.journal||[];
+    list.innerHTML=j.slice(0,8).map(function(x){return '<div class="muted" style="padding:8px 0;border-bottom:1px solid var(--line)"><b style="color:var(--green)">'+esc(x.d)+'</b> — '+esc(x.t)+'</div>';}).join('');
+  }
+  function reset(){ if(confirm('Reset Ummi and clear your data on this device?')){ localStorage.removeItem(KEY); state={}; location.reload(); } }
+
+  // ---- backup ----
+  function exportData(){
+    const blob=new Blob([JSON.stringify(state,null,2)],{type:'application/json'});
+    const a=document.createElement('a');
+    a.href=URL.createObjectURL(blob);
+    a.download='ummi-backup-'+todayKey()+'.json';
+    document.body.appendChild(a); a.click(); a.remove();
+    setTimeout(function(){ URL.revokeObjectURL(a.href); },1000);
+  }
+  function importData(ev){
+    const f=ev.target.files && ev.target.files[0]; if(!f) return;
+    const r=new FileReader();
+    r.onload=function(){
+      try{
+        const d=JSON.parse(r.result);
+        if(!d || typeof d!=='object' || !d.email || !d.dueDate) throw new Error('bad');
+        state=d; save();
+        alert('Backup restored.');
+        location.reload();
+      }catch(e){ alert('That file doesn\'t look like an Ummi backup.'); }
+    };
+    r.readAsText(f);
+    ev.target.value='';
+  }
+
+  function init(){
+    load(); fillWeekSelect();
+    if(state.email && state.dueDate){ viewWeek=currentWeek(); go('today'); }
+    else { go('gate'); }
+    if('serviceWorker' in navigator){ navigator.serviceWorker.register('sw.js').catch(function(){}); }
+    if(navigator.storage && navigator.storage.persist){ navigator.storage.persist().catch(function(){}); }
+  }
+
+  return {init:init,go:go,signup:signup,toggleTask:toggleTask,toggleDua:toggleDua,shiftWeek:shiftWeek,setDuaTab:setDuaTab,setNameTab:setNameTab,saveDue:saveDue,saveJournal:saveJournal,reset:reset,exportData:exportData,importData:importData};
+})();
+window.addEventListener('DOMContentLoaded',App.init);
+</script>
+</body>
+</html>
