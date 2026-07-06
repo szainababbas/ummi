@@ -4,8 +4,8 @@ Thank you for helping test Ummi, a week-by-week pregnancy companion with duas an
 
 ## Installing on your Android phone
 
-1. Open this link in **Chrome** on your phone: **[[Ummi](https://szainababbas.github.io/ummi/)]**
-2. Fill in the welcome screen — your email, and either your due date or your current week of pregnancy.
+1. Open this link in **Chrome** on your phone: **[APP LINK HERE]**
+2. Fill in the welcome screen — either your due date or your current week of pregnancy (name is optional).
 3. Tap the **⋮ menu** (top right of Chrome) → **"Add to Home screen"** (on some phones it says **"Install app"**) → confirm.
 4. From now on, **open Ummi from the icon on your home screen**, not from the browser. It will look and feel like a normal app.
 
@@ -34,7 +34,7 @@ Please tell me about anything, big or small:
 - **Habits** — did you actually open it each day? If not, what would have brought you back?
 - **Wishes** — anything you kept wanting that isn't there.
 
-Send feedback to: **[szainabab@gmail.com]**
+Send feedback to: **[YOUR CONTACT — WhatsApp / email]**
 A quick message whenever you notice something is perfect; I'll also check in weekly.
 
 Jazakallah khair for testing! 🌙

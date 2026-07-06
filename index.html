@@ -4,44 +4,55 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="theme-color" content="#FAF6EE">
+<meta name="theme-color" content="#F7F3EA" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#14120F" media="(prefers-color-scheme: dark)">
 <link rel="manifest" href="manifest.json">
 <link rel="icon" type="image/png" href="icon-192.png">
 <link rel="apple-touch-icon" href="icon-192.png">
 <title>Ummi — Pregnancy & Faith</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Fraunces:opsz,wght@9..144,400;9..144,600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Literata:opsz,wght@7..72,400;7..72,600&family=Figtree:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
+/* Mushaf palette — matches the main app's lib/theme/app_theme.dart tokens. */
 :root{
-  --cream:#FAF6EE; --cream2:#F3EDDF; --card:#FFFFFF;
-  --green:#2E5E4E; --green-deep:#1F4438; --green-soft:#E4EEE8;
-  --gold:#C2A14D; --gold-soft:#F2E8CF; --gold-deep:#9A7B2E;
-  --ink:#2B2B26; --ink-soft:#6E6A5E; --line:#E8E1D1;
+  --cream:#F7F3EA; --cream2:#EFE9DA; --card:#FDFBF5; --card-translucent:rgba(253,251,245,.92);
+  --green:#2D4A3E; --green-fill:#2D4A3E; --green-deep:#1F362C; --green-soft:#DDE7E0;
+  --gold:#B08D57; --gold-soft:#EFE3CB; --gold-deep:#7A5B32; --gold-pale:#F2E8CF;
+  --ink:#1F1D1A; --ink-soft:#6B6455; --line:#E3DCCC;
   --danger:#B05B4C; --radius:18px;
 }
+@media (prefers-color-scheme: dark){
+  :root{
+    --cream:#14120F; --cream2:#201C17; --card:#1C1915; --card-translucent:rgba(28,25,21,.90);
+    --green:#8AAC9A; --green-fill:#2D4A3E; --green-deep:#1B2D25; --green-soft:#243B32;
+    --gold:#B08D57; --gold-soft:#3A2E1C; --gold-deep:#D8B87A;
+    --ink:#E8E2D5; --ink-soft:#9C9484; --line:#2A261F;
+    --danger:#D08776;
+  }
+}
 *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
-body{font-family:'Inter',sans-serif;background:var(--cream);color:var(--ink);min-height:100vh}
+body{font-family:'Figtree',sans-serif;background:var(--cream);color:var(--ink);min-height:100vh}
 #app{max-width:480px;margin:0 auto;min-height:100vh;position:relative;padding-bottom:84px}
 .screen{display:none;padding:20px 20px 24px;animation:fade .25s ease}
 .screen.active{display:block}
 @keyframes fade{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
-h1,h2,h3,.serif{font-family:'Fraunces',serif;font-weight:600;color:var(--green-deep)}
+h1,h2,h3,.serif{font-family:'Literata',serif;font-weight:600;color:var(--green-deep)}
 .arabic{font-family:'Amiri',serif;font-size:1.55rem;line-height:2.15;direction:rtl;text-align:center}
-.card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:18px;margin-bottom:14px;box-shadow:0 1px 3px rgba(43,43,38,.04)}
+.card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:18px;margin-bottom:14px}
 .muted{color:var(--ink-soft);font-size:.85rem;line-height:1.55}
 .pill{display:inline-block;background:var(--gold-soft);color:var(--gold-deep);font-size:.72rem;font-weight:600;padding:4px 10px;border-radius:99px;letter-spacing:.03em}
 .pill.green{background:var(--green-soft);color:var(--green)}
-.btn{display:block;width:100%;background:var(--green);color:#fff;border:none;border-radius:14px;padding:15px;font-size:1rem;font-weight:600;font-family:'Inter',sans-serif;cursor:pointer}
+.btn{display:block;width:100%;background:var(--green-fill);color:#fff;border:none;border-radius:14px;padding:15px;font-size:1rem;font-weight:600;font-family:'Figtree',sans-serif;cursor:pointer}
 .btn:active{transform:scale(.985)}
 .btn.ghost{background:transparent;color:var(--green);border:1.5px solid var(--green)}
-input,select{width:100%;padding:14px;border:1.5px solid var(--line);border-radius:14px;font-size:1rem;font-family:'Inter',sans-serif;background:#fff;color:var(--ink)}
+input,select{width:100%;padding:14px;border:1.5px solid var(--line);border-radius:14px;font-size:1rem;font-family:'Figtree',sans-serif;background:var(--card);color:var(--ink)}
 input:focus,select:focus{outline:none;border-color:var(--gold)}
 label{display:block;font-size:.82rem;font-weight:600;color:var(--ink-soft);margin:14px 0 6px}
 .ornament{text-align:center;color:var(--gold);font-size:1.1rem;letter-spacing:.5em;margin:6px 0}
 
 /* nav */
-#nav{position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:100%;max-width:480px;background:rgba(255,255,255,.96);backdrop-filter:blur(10px);border-top:1px solid var(--line);display:none;justify-content:space-around;padding:8px 4px calc(10px + env(safe-area-inset-bottom));z-index:50}
-#nav button{background:none;border:none;font-family:'Inter',sans-serif;font-size:.68rem;font-weight:600;color:var(--ink-soft);cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:3px;width:64px}
+#nav{position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:100%;max-width:480px;background:var(--card-translucent);backdrop-filter:blur(10px);border-top:1px solid var(--line);display:none;justify-content:space-around;padding:8px 4px calc(10px + env(safe-area-inset-bottom));z-index:50}
+#nav button{background:none;border:none;font-family:'Figtree',sans-serif;font-size:.68rem;font-weight:600;color:var(--ink-soft);cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:3px;width:64px}
 #nav button .ic{font-size:1.25rem;line-height:1}
 #nav button.on{color:var(--green)}
 #nav button.on .ic{transform:scale(1.1)}
@@ -53,34 +64,34 @@ label{display:block;font-size:.82rem;font-weight:600;color:var(--ink-soft);margi
 .gate-hero p{color:var(--ink-soft);margin-top:8px;font-size:.95rem;line-height:1.6}
 
 /* today hero */
-.hero{background:linear-gradient(160deg,var(--green) 0%,var(--green-deep) 100%);border-radius:22px;padding:22px;color:#fff;margin-bottom:14px;position:relative;overflow:hidden}
+.hero{background:linear-gradient(160deg,var(--green-fill) 0%,var(--green-deep) 100%);border-radius:22px;padding:22px;color:#fff;margin-bottom:14px;position:relative;overflow:hidden}
 .hero::after{content:"۞";position:absolute;right:-14px;top:-22px;font-size:7rem;opacity:.08}
-.hero .wknum{font-family:'Fraunces',serif;font-size:2.4rem;color:var(--gold-soft);line-height:1.05}
+.hero .wknum{font-family:'Literata',serif;font-size:2.4rem;color:var(--gold-pale);line-height:1.05}
 .hero .sub{opacity:.85;font-size:.82rem;margin-top:2px}
 .hero .sizeline{display:flex;align-items:center;gap:10px;margin-top:14px;background:rgba(255,255,255,.1);border-radius:14px;padding:12px 14px}
 .hero .sizeline .em{font-size:2rem}
-.hero .sizeline b{font-family:'Fraunces',serif;font-weight:600;font-size:1.05rem;color:#fff;display:block}
+.hero .sizeline b{font-family:'Literata',serif;font-weight:600;font-size:1.05rem;color:#fff;display:block}
 .hero .sizeline span{font-size:.72rem;opacity:.8}
 .hpills{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
-.hpills .hp{background:rgba(255,255,255,.12);border-radius:99px;padding:6px 12px;font-size:.74rem;font-weight:600;color:var(--gold-soft)}
+.hpills .hp{background:rgba(255,255,255,.12);border-radius:99px;padding:6px 12px;font-size:.74rem;font-weight:600;color:var(--gold-pale)}
 .progressbar{height:6px;background:rgba(255,255,255,.18);border-radius:99px;margin-top:14px;overflow:hidden}
 .progressbar i{display:block;height:100%;background:var(--gold);border-radius:99px}
 
 /* today dua card */
 .duatoday{background:linear-gradient(160deg,#245043,#1B3B31);border-radius:var(--radius);padding:18px;color:#fff;margin-bottom:14px}
-.duatoday .lbl{font-size:.66rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--gold-soft)}
+.duatoday .lbl{font-size:.66rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--gold-pale)}
 .duatoday .arabic{color:#fff;margin:12px 0 4px}
-.duatoday .tl{font-style:italic;font-size:.9rem;color:var(--gold-soft);line-height:1.5;text-align:center}
+.duatoday .tl{font-style:italic;font-size:.9rem;color:var(--gold-pale);line-height:1.5;text-align:center}
 .duatoday .mn{font-size:.9rem;line-height:1.6;margin-top:10px;opacity:.95}
-.duatoday .sr{font-size:.72rem;color:var(--gold-soft);opacity:.85;margin-top:10px;font-style:italic}
-.duatoday .rec{margin-top:14px;width:100%;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.25);color:#fff;border-radius:12px;padding:12px;font-family:'Inter',sans-serif;font-weight:600;cursor:pointer}
+.duatoday .sr{font-size:.72rem;color:var(--gold-pale);opacity:.85;margin-top:10px;font-style:italic}
+.duatoday .rec{margin-top:14px;width:100%;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.25);color:#fff;border-radius:12px;padding:12px;font-family:'Figtree',sans-serif;font-weight:600;cursor:pointer}
 .duatoday .rec.done{background:var(--gold);border-color:var(--gold);color:var(--green-deep)}
 
 /* checklist */
 .task{display:flex;align-items:flex-start;gap:12px;padding:12px 0;border-bottom:1px solid var(--line);cursor:pointer}
 .task:last-child{border-bottom:none}
 .task .box{flex-shrink:0;width:24px;height:24px;border:2px solid var(--gold);border-radius:8px;margin-top:1px;display:flex;align-items:center;justify-content:center;font-size:.85rem;color:#fff;transition:.15s}
-.task.done .box{background:var(--green);border-color:var(--green)}
+.task.done .box{background:var(--green-fill);border-color:var(--green-fill)}
 .task .t b{display:block;font-size:.92rem;font-weight:600}
 .task.done .t b{text-decoration:line-through;color:var(--ink-soft)}
 .task .t span{font-size:.78rem;color:var(--ink-soft)}
@@ -94,9 +105,9 @@ label{display:block;font-size:.82rem;font-weight:600;color:var(--ink-soft);margi
 
 /* week nav */
 .weeknav{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px}
-.weeknav button{background:#fff;border:1px solid var(--line);border-radius:12px;width:42px;height:42px;font-size:1.1rem;color:var(--green);cursor:pointer}
+.weeknav button{background:var(--card);border:1px solid var(--line);border-radius:12px;width:42px;height:42px;font-size:1.1rem;color:var(--green);cursor:pointer}
 .weeknav .wk{text-align:center}
-.weeknav .wk b{font-family:'Fraunces',serif;font-size:1.3rem;color:var(--green-deep)}
+.weeknav .wk b{font-family:'Literata',serif;font-size:1.3rem;color:var(--green-deep)}
 .weeknav .wk span{display:block;font-size:.72rem;color:var(--ink-soft)}
 .sizebox{display:flex;align-items:center;gap:16px}
 .sizebox .fruit{font-size:2.6rem}
@@ -116,23 +127,23 @@ label{display:block;font-size:.82rem;font-weight:600;color:var(--ink-soft);margi
 .src{font-size:.72rem;color:var(--gold-deep);margin-top:10px;font-style:italic}
 .translit{font-size:.86rem;color:var(--green);margin-top:8px;font-style:italic;line-height:1.5;text-align:center}
 .tabs{display:flex;gap:8px;overflow-x:auto;padding-bottom:10px;margin-bottom:6px;-webkit-overflow-scrolling:touch}
-.tabs button{flex-shrink:0;background:#fff;border:1px solid var(--line);border-radius:99px;padding:8px 14px;font-size:.8rem;font-weight:600;color:var(--ink-soft);cursor:pointer;font-family:'Inter',sans-serif}
-.tabs button.on{background:var(--green);border-color:var(--green);color:#fff}
+.tabs button{flex-shrink:0;background:var(--card);border:1px solid var(--line);border-radius:99px;padding:8px 14px;font-size:.8rem;font-weight:600;color:var(--ink-soft);cursor:pointer;font-family:'Figtree',sans-serif}
+.tabs button.on{background:var(--green-fill);border-color:var(--green-fill);color:#fff}
 
 /* food */
 .foodgrid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-.fooditem{background:#fff;border:1px solid var(--line);border-radius:var(--radius);padding:14px;text-align:center}
+.fooditem{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:14px;text-align:center}
 .fooditem .em{font-size:1.8rem}
 .fooditem b{display:block;font-size:.85rem;margin-top:6px;color:var(--green-deep)}
 .fooditem span{font-size:.7rem;color:var(--ink-soft);display:block;margin-top:3px;line-height:1.45}
-.avoid{border-left:3px solid var(--danger);padding:10px 14px;background:#fff;border-radius:0 14px 14px 0;margin-bottom:8px}
+.avoid{border-left:3px solid var(--danger);padding:10px 14px;background:var(--card);border-radius:0 14px 14px 0;margin-bottom:8px}
 .avoid b{font-size:.88rem}
 .avoid span{display:block;font-size:.76rem;color:var(--ink-soft);margin-top:2px}
 
 /* names */
 .namegrid{display:grid;grid-template-columns:1fr;gap:8px}
-.nameitem{background:#fff;border:1px solid var(--line);border-radius:14px;padding:12px 14px}
-.nameitem b{font-family:'Fraunces',serif;color:var(--green-deep);font-size:1rem}
+.nameitem{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:12px 14px}
+.nameitem b{font-family:'Literata',serif;color:var(--green-deep);font-size:1rem}
 .nameitem span{display:block;font-size:.78rem;color:var(--ink-soft);margin-top:2px;line-height:1.45}
 
 .note{background:var(--gold-soft);border-radius:14px;padding:12px 14px;font-size:.76rem;color:var(--gold-deep);line-height:1.55;margin:14px 0}
@@ -144,8 +155,8 @@ label{display:block;font-size:.82rem;font-weight:600;color:var(--ink-soft);margi
 .listrow:last-child{border:none}
 .navrow{cursor:pointer}
 .navrow .chev{color:var(--gold)}
-.backlink{background:none;border:none;color:var(--green);font-family:'Inter',sans-serif;font-weight:600;font-size:.9rem;cursor:pointer;padding:0;margin-bottom:8px}
-.sechead{font-family:'Fraunces',serif;font-weight:600;color:var(--green-deep);font-size:1.05rem;margin-top:4px}
+.backlink{background:none;border:none;color:var(--green);font-family:'Figtree',sans-serif;font-weight:600;font-size:.9rem;cursor:pointer;padding:0;margin-bottom:8px}
+.sechead{font-family:'Literata',serif;font-weight:600;color:var(--green-deep);font-size:1.05rem;margin-top:4px}
 </style>
 </head>
 <body>
@@ -160,8 +171,6 @@ label{display:block;font-size:.82rem;font-weight:600;color:var(--ink-soft);margi
       <p>A week-by-week pregnancy companion rooted in science and the teachings of the Ahlulbayt (as).</p>
     </div>
     <div class="card">
-      <label>Email address</label>
-      <input id="g-email" type="email" placeholder="you@email.com" autocomplete="email">
       <label>Your due date <span style="font-weight:400">(or leave blank if unsure)</span></label>
       <input id="g-due" type="date">
       <label>…or current week of pregnancy</label>
@@ -170,7 +179,7 @@ label{display:block;font-size:.82rem;font-weight:600;color:var(--ink-soft);margi
       <input id="g-name" type="text" placeholder="e.g. Fatima" autocomplete="name">
       <div style="height:18px"></div>
       <button class="btn" onclick="App.signup()">Begin the journey</button>
-      <p class="muted" style="text-align:center;margin-top:12px;font-size:.72rem">Free, always. Your email is used only for Ummi updates — no spam.</p>
+      <p class="muted" style="text-align:center;margin-top:12px;font-size:.72rem">Free, always. Nothing leaves your device.</p>
     </div>
   </section>
 
@@ -202,7 +211,7 @@ label{display:block;font-size:.82rem;font-weight:600;color:var(--ink-soft);margi
       <div class="fruit" id="w-fruit">🍋</div>
       <div>
         <span class="cat">Baby this week</span>
-        <p id="w-size-sentence" style="font-size:.95rem;line-height:1.5;margin-top:4px;font-family:'Fraunces',serif;color:var(--green-deep)"></p>
+        <p id="w-size-sentence" style="font-size:.95rem;line-height:1.5;margin-top:4px;font-family:'Literata',serif;color:var(--green-deep)"></p>
         <div class="statrow" style="margin-top:10px">
           <div><b id="w-len">—</b><span>Length</span></div>
           <div><b id="w-wt">—</b><span>Weight</span></div>
@@ -265,7 +274,7 @@ label{display:block;font-size:.82rem;font-weight:600;color:var(--ink-soft);margi
       <button class="btn ghost" onclick="App.saveDue()">Update due date</button>
     </div>
     <div class="card">
-      <div class="listrow"><span>Signed in as</span><b id="m-email" style="font-size:.85rem"></b></div>
+      <div class="listrow"><span>Name</span><b id="m-name" style="font-size:.85rem"></b></div>
       <div class="listrow"><span>Daily reminder</span><b class="muted" style="font-size:.8rem">Add Ummi to your home screen & enable notifications in the native app (coming soon)</b></div>
     </div>
     <div class="card">
@@ -299,13 +308,6 @@ label{display:block;font-size:.82rem;font-weight:600;color:var(--ink-soft);margi
 </nav>
 
 <script>
-/* ============ CONFIG ============ */
-const CONFIG = {
-  // Optional: paste a Formspree/Mailchimp endpoint to collect emails remotely.
-  // e.g. "https://formspree.io/f/xxxxxx"  — leave "" to store locally only.
-  SIGNUP_ENDPOINT: ""
-};
-
 /* ============ DATA: WEEKS ============ */
 /* Each week: fruit, size, len, wt, milestone (optional short sub note),
    dev[] (baby development bullets), body[] (your body bullets),
@@ -731,19 +733,14 @@ const App = (function(){
     return localISO(due);
   }
   function signup(){
-    const email=document.getElementById('g-email').value.trim();
     const name=document.getElementById('g-name').value.trim();
     const due=document.getElementById('g-due').value;
     const wk=document.getElementById('g-week').value;
-    if(!email||email.indexOf('@')<1){ alert('Please enter a valid email address.'); return; }
     if(!due && !wk){ alert('Please add your due date or your current week.'); return; }
-    state.email=email; state.name=name;
+    state.name=name;
     state.dueDate = due ? due : deriveDueFromWeek(parseInt(wk,10));
     state.joined=todayKey();
     save();
-    if(CONFIG.SIGNUP_ENDPOINT){
-      try{ fetch(CONFIG.SIGNUP_ENDPOINT,{method:'POST',headers:{'Content-Type':'application/json',Accept:'application/json'},body:JSON.stringify({email:email,name:name,dueDate:state.dueDate})}); }catch(e){}
-    }
     viewWeek=currentWeek();
     go('today');
   }
@@ -856,7 +853,7 @@ const App = (function(){
   function setNameTab(k){ nameTab=k; renderNames(); }
 
   function renderMore(){
-    document.getElementById('m-email').textContent=state.email||'—';
+    document.getElementById('m-name').textContent=state.name||'—';
     if(state.dueDate) document.getElementById('m-due').value=state.dueDate;
     renderJournal();
   }
@@ -891,7 +888,7 @@ const App = (function(){
     r.onload=function(){
       try{
         const d=JSON.parse(r.result);
-        if(!d || typeof d!=='object' || !d.email || !d.dueDate) throw new Error('bad');
+        if(!d || typeof d!=='object' || !d.dueDate) throw new Error('bad');
         state=d; save();
         alert('Backup restored.');
         location.reload();
@@ -903,7 +900,7 @@ const App = (function(){
 
   function init(){
     load(); fillWeekSelect();
-    if(state.email && state.dueDate){ viewWeek=currentWeek(); go('today'); }
+    if(state.dueDate){ viewWeek=currentWeek(); go('today'); }
     else { go('gate'); }
     if('serviceWorker' in navigator){ navigator.serviceWorker.register('sw.js').catch(function(){}); }
     if(navigator.storage && navigator.storage.persist){ navigator.storage.persist().catch(function(){}); }
