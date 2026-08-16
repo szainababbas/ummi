@@ -1,0 +1,419 @@
+{
+ "surahs": {
+  "1": {
+   "number": 1,
+   "name": "سُورَةُ ٱلْفَاتِحَةِ",
+   "englishName": "Al-Faatiha",
+   "englishNameTranslation": "The Opening",
+   "verses": [
+    {
+     "n": 1,
+     "ar": "﻿بِسْمِ ٱللَّهِ ٱلرَّحْمَٰنِ ٱلرَّحِيمِ",
+     "tl": "Bismillaahir Rahmaanir Raheem",
+     "qarai": "In the Name of Allah, the All-beneficent, the All-merciful.",
+     "sarwar": "In the Name of Allah, the Beneficent, the Merciful"
+    },
+    {
+     "n": 2,
+     "ar": "ٱلْحَمْدُ لِلَّهِ رَبِّ ٱلْعَٰلَمِينَ",
+     "tl": "Alhamdu lillaahi Rabbil 'aalameen",
+     "qarai": "All praise belongs to Allah, Lord of all the worlds,",
+     "sarwar": "All praise belongs to God, Lord of the Universe,"
+    },
+    {
+     "n": 3,
+     "ar": "ٱلرَّحْمَٰنِ ٱلرَّحِيمِ",
+     "tl": "Ar-Rahmaanir-Raheem",
+     "qarai": "the All-beneficent, the All-merciful,",
+     "sarwar": "the Beneficent, the Merciful"
+    },
+    {
+     "n": 4,
+     "ar": "مَٰلِكِ يَوْمِ ٱلدِّينِ",
+     "tl": "Maaliki Yawmid-Deen",
+     "qarai": "Master of the Day of Retribution.",
+     "sarwar": "and Master of the Day of Judgment"
+    },
+    {
+     "n": 5,
+     "ar": "إِيَّاكَ نَعْبُدُ وَإِيَّاكَ نَسْتَعِينُ",
+     "tl": "Iyyaaka na'budu wa lyyaaka nasta'een",
+     "qarai": "You [alone] do we worship, and to You [alone] do we turn for help.",
+     "sarwar": "(Lord), You alone We do worship and from You alone we do seek assistance"
+    },
+    {
+     "n": 6,
+     "ar": "ٱهْدِنَا ٱلصِّرَٰطَ ٱلْمُسْتَقِيمَ",
+     "tl": "Ihdinas-Siraatal-Mustaqeem",
+     "qarai": "Guide us on the straight path,",
+     "sarwar": "(Lord), guide us to the right path,"
+    },
+    {
+     "n": 7,
+     "ar": "صِرَٰطَ ٱلَّذِينَ أَنْعَمْتَ عَلَيْهِمْ غَيْرِ ٱلْمَغْضُوبِ عَلَيْهِمْ وَلَا ٱلضَّآلِّينَ",
+     "tl": "Siraatal-lazeena an'amta 'alaihim ghayril-maghdoobi 'alaihim wa lad-daaalleen",
+     "qarai": "the path of those whom You have blessed — such as have not incurred Your wrath, nor are astray.",
+     "sarwar": "the path of those to whom You have granted blessings, those who are neither subject to Your anger nor have gone astray."
+    }
+   ]
+  },
+  "95": {
+   "number": 95,
+   "name": "سُورَةُ التِّينِ",
+   "englishName": "At-Tin",
+   "englishNameTranslation": "The Fig",
+   "verses": [
+    {
+     "n": 1,
+     "ar": "بِّسْمِ ٱللَّهِ ٱلرَّحْمَٰنِ ٱلرَّحِيمِ وَٱلتِّينِ وَٱلزَّيْتُونِ",
+     "tl": "Wat teeni waz zaitoon",
+     "qarai": "By the fig and the olive,",
+     "sarwar": "By the fig, by the olive,"
+    },
+    {
+     "n": 2,
+     "ar": "وَطُورِ سِينِينَ",
+     "tl": "Wa toori sineen",
+     "qarai": "by Mount Sinai,",
+     "sarwar": "by Mount Sinai"
+    },
+    {
+     "n": 3,
+     "ar": "وَهَٰذَا ٱلْبَلَدِ ٱلْأَمِينِ",
+     "tl": "Wa haazal balad-il ameen",
+     "qarai": "and by this secure town:",
+     "sarwar": "and by this inviolable city, Mecca."
+    },
+    {
+     "n": 4,
+     "ar": "لَقَدْ خَلَقْنَا ٱلْإِنسَٰنَ فِىٓ أَحْسَنِ تَقْوِيمٍۢ",
+     "tl": "Laqad khalaqnal insaana fee ahsani taqweem",
+     "qarai": "We certainly created man in the best of forms;",
+     "sarwar": "We have created the human being in the best form"
+    },
+    {
+     "n": 5,
+     "ar": "ثُمَّ رَدَدْنَٰهُ أَسْفَلَ سَٰفِلِينَ",
+     "tl": "Thumma ra dad naahu asfala saafileen",
+     "qarai": "then We relegated him to the lowest of the low,",
+     "sarwar": "and We shall make him the lowest of low"
+    },
+    {
+     "n": 6,
+     "ar": "إِلَّا ٱلَّذِينَ ءَامَنُوا۟ وَعَمِلُوا۟ ٱلصَّٰلِحَٰتِ فَلَهُمْ أَجْرٌ غَيْرُ مَمْنُونٍۢ",
+     "tl": "Ill-lal lazeena aamanoo wa 'amilus saalihaati; falahum ajrun ghairu mamnoon",
+     "qarai": "except those who have faith and do righteous deeds. There will be an everlasting reward for them.",
+     "sarwar": "except the righteously striving believers who will have a never ending reward."
+    },
+    {
+     "n": 7,
+     "ar": "فَمَا يُكَذِّبُكَ بَعْدُ بِٱلدِّينِ",
+     "tl": "Fama yu kaz zibuka b'adu bid deen",
+     "qarai": "So what makes you deny the Retribution?",
+     "sarwar": "After (knowing) this, what makes you still disbelieve in the Day of Judgment?"
+    },
+    {
+     "n": 8,
+     "ar": "أَلَيْسَ ٱللَّهُ بِأَحْكَمِ ٱلْحَٰكِمِينَ",
+     "tl": "Alai sal laahu bi-ahkamil haakimeen",
+     "qarai": "Is not Allah the fairest of all judges?",
+     "sarwar": "Is God not the best of the Judges?"
+    }
+   ]
+  },
+  "97": {
+   "number": 97,
+   "name": "سُورَةُ القَدۡرِ",
+   "englishName": "Al-Qadr",
+   "englishNameTranslation": "The Power, Fate",
+   "verses": [
+    {
+     "n": 1,
+     "ar": "بِّسْمِ ٱللَّهِ ٱلرَّحْمَٰنِ ٱلرَّحِيمِ إِنَّآ أَنزَلْنَٰهُ فِى لَيْلَةِ ٱلْقَدْرِ",
+     "tl": "Innaa anzalnaahu fee lailatil qadr",
+     "qarai": "Indeed We sent it down on the Night of Ordainment.",
+     "sarwar": "We revealed the Quran on the Night of Destiny."
+    },
+    {
+     "n": 2,
+     "ar": "وَمَآ أَدْرَىٰكَ مَا لَيْلَةُ ٱلْقَدْرِ",
+     "tl": "Wa maa adraaka ma lailatul qadr",
+     "qarai": "And what will show you what is the Night of Ordainment?",
+     "sarwar": "Would that you knew what the Night of Destiny is!"
+    },
+    {
+     "n": 3,
+     "ar": "لَيْلَةُ ٱلْقَدْرِ خَيْرٌۭ مِّنْ أَلْفِ شَهْرٍۢ",
+     "tl": "Lailatul qadri khairum min alfee shahr",
+     "qarai": "The Night of Ordainment is better than a thousand months.",
+     "sarwar": "(Worship) on the Night of Destiny is better than (worship) for a thousand months."
+    },
+    {
+     "n": 4,
+     "ar": "تَنَزَّلُ ٱلْمَلَٰٓئِكَةُ وَٱلرُّوحُ فِيهَا بِإِذْنِ رَبِّهِم مِّن كُلِّ أَمْرٍۢ",
+     "tl": "Tanaz zalul malaa-ikatu war roohu feeha bi izni-rab bihim min kulli amr",
+     "qarai": "In it the angels and the Spirit descend, by the leave of their Lord, with every command.",
+     "sarwar": "On this Night, the angels and the spirit descend by the permission of their Lord with His decree (to determine everyone's destiny)."
+    },
+    {
+     "n": 5,
+     "ar": "سَلَٰمٌ هِىَ حَتَّىٰ مَطْلَعِ ٱلْفَجْرِ",
+     "tl": "Salaamun hiya hattaa mat la'il fajr",
+     "qarai": "It is peaceful until the rising of the dawn.",
+     "sarwar": "This Night is all peace until the break of dawn."
+    }
+   ]
+  },
+  "103": {
+   "number": 103,
+   "name": "سُورَةُ العَصۡرِ",
+   "englishName": "Al-Asr",
+   "englishNameTranslation": "The Declining Day, Epoch",
+   "verses": [
+    {
+     "n": 1,
+     "ar": "بِسْمِ ٱللَّهِ ٱلرَّحْمَٰنِ ٱلرَّحِيمِ وَٱلْعَصْرِ",
+     "tl": "Wal' asr",
+     "qarai": "By Time!",
+     "sarwar": "By the time (of the advent of Islam),"
+    },
+    {
+     "n": 2,
+     "ar": "إِنَّ ٱلْإِنسَٰنَ لَفِى خُسْرٍ",
+     "tl": "Innal insaana lafee khusr",
+     "qarai": "Man is indeed in loss,",
+     "sarwar": "the human being is doomed to suffer loss,"
+    },
+    {
+     "n": 3,
+     "ar": "إِلَّا ٱلَّذِينَ ءَامَنُوا۟ وَعَمِلُوا۟ ٱلصَّٰلِحَٰتِ وَتَوَاصَوْا۟ بِٱلْحَقِّ وَتَوَاصَوْا۟ بِٱلصَّبْرِ",
+     "tl": "Il lal lazeena aamanu wa 'amilus saali haati wa tawa saw bil haqqi wa tawa saw bis sabr",
+     "qarai": "except those who have faith and do righteous deeds, and enjoin one another to [follow] the truth, and enjoin one another to patience.",
+     "sarwar": "except the righteously striving believers who exhort each other to truthful purposes and to patience."
+    }
+   ]
+  },
+  "108": {
+   "number": 108,
+   "name": "سُورَةُ الكَوۡثَرِ",
+   "englishName": "Al-Kawthar",
+   "englishNameTranslation": "Abundance",
+   "verses": [
+    {
+     "n": 1,
+     "ar": "بِسْمِ ٱللَّهِ ٱلرَّحْمَٰنِ ٱلرَّحِيمِ إِنَّآ أَعْطَيْنَٰكَ ٱلْكَوْثَرَ",
+     "tl": "Innaa a'taina kal kauthar",
+     "qarai": "Indeed We have given you abundance.",
+     "sarwar": "(Muhammad), We have granted you abundant virtue."
+    },
+    {
+     "n": 2,
+     "ar": "فَصَلِّ لِرَبِّكَ وَٱنْحَرْ",
+     "tl": "Fa salli li rabbika wanhar",
+     "qarai": "So pray to your Lord, and sacrifice [the sacrificial camel].",
+     "sarwar": "So worship your Lord and make sacrificial offerings."
+    },
+    {
+     "n": 3,
+     "ar": "إِنَّ شَانِئَكَ هُوَ ٱلْأَبْتَرُ",
+     "tl": "Inna shani-aka huwal abtar",
+     "qarai": "Indeed it is your enemy who is without posterity.",
+     "sarwar": "Whoever hates you will himself remain childless."
+    }
+   ]
+  },
+  "110": {
+   "number": 110,
+   "name": "سُورَةُ النَّصۡرِ",
+   "englishName": "An-Nasr",
+   "englishNameTranslation": "Divine Support",
+   "verses": [
+    {
+     "n": 1,
+     "ar": "بِسْمِ ٱللَّهِ ٱلرَّحْمَٰنِ ٱلرَّحِيمِ إِذَا جَآءَ نَصْرُ ٱللَّهِ وَٱلْفَتْحُ",
+     "tl": "Iza jaa-a nas rullahi walfath",
+     "qarai": "When Allah’s help comes with victory,",
+     "sarwar": "(Muhammad), when help and victory comes from God,"
+    },
+    {
+     "n": 2,
+     "ar": "وَرَأَيْتَ ٱلنَّاسَ يَدْخُلُونَ فِى دِينِ ٱللَّهِ أَفْوَاجًۭا",
+     "tl": "Wa ra-aitan naasa yadkhuloona fee deenil laahi afwajah",
+     "qarai": "and you see the people entering Allah’s religion in throngs,",
+     "sarwar": "you will see large groups of people embracing the religion of God."
+    },
+    {
+     "n": 3,
+     "ar": "فَسَبِّحْ بِحَمْدِ رَبِّكَ وَٱسْتَغْفِرْهُ ۚ إِنَّهُۥ كَانَ تَوَّابًۢا",
+     "tl": "Fa sab bih bihamdi rabbika was taghfir, innahu kaana tawwaaba",
+     "qarai": "celebrate the praise of your Lord, and plead to Him for forgiveness. Indeed, He is all-clement.",
+     "sarwar": "Glorify your Lord with praise and ask Him for forgivenes. He accepts repentance."
+    }
+   ]
+  },
+  "112": {
+   "number": 112,
+   "name": "سُورَةُ الإِخۡلَاصِ",
+   "englishName": "Al-Ikhlaas",
+   "englishNameTranslation": "Sincerity",
+   "verses": [
+    {
+     "n": 1,
+     "ar": "بِسْمِ ٱللَّهِ ٱلرَّحْمَٰنِ ٱلرَّحِيمِ قُلْ هُوَ ٱللَّهُ أَحَدٌ",
+     "tl": "Qul huwal laahu ahad",
+     "qarai": "Say, ‘He is Allah, the One.",
+     "sarwar": "(Muhammad), say, \"He is the only God."
+    },
+    {
+     "n": 2,
+     "ar": "ٱللَّهُ ٱلصَّمَدُ",
+     "tl": "Allah hus-samad",
+     "qarai": "Allah is the All-embracing.",
+     "sarwar": "God is Absolute."
+    },
+    {
+     "n": 3,
+     "ar": "لَمْ يَلِدْ وَلَمْ يُولَدْ",
+     "tl": "Lam yalid wa lam yoolad",
+     "qarai": "He neither begat, nor was begotten,",
+     "sarwar": "He neither begets nor was He begotten."
+    },
+    {
+     "n": 4,
+     "ar": "وَلَمْ يَكُن لَّهُۥ كُفُوًا أَحَدٌۢ",
+     "tl": "Wa lam yakul-lahu kufuwan ahad",
+     "qarai": "nor has He any equal.’",
+     "sarwar": "There is no one equal to Him."
+    }
+   ]
+  }
+ },
+ "ayahs": {
+  "2:255": {
+   "ar": "ٱللَّهُ لَآ إِلَٰهَ إِلَّا هُوَ ٱلْحَىُّ ٱلْقَيُّومُ ۚ لَا تَأْخُذُهُۥ سِنَةٌۭ وَلَا نَوْمٌۭ ۚ لَّهُۥ مَا فِى ٱلسَّمَٰوَٰتِ وَمَا فِى ٱلْأَرْضِ ۗ مَن ذَا ٱلَّذِى يَشْفَعُ عِندَهُۥٓ إِلَّا بِإِذْنِهِۦ ۚ يَعْلَمُ مَا بَيْنَ أَيْدِيهِمْ وَمَا خَلْفَهُمْ ۖ وَلَا يُحِيطُونَ بِشَىْءٍۢ مِّنْ عِلْمِهِۦٓ إِلَّا بِمَا شَآءَ ۚ وَسِعَ كُرْسِيُّهُ ٱلسَّمَٰوَٰتِ وَٱلْأَرْضَ ۖ وَلَا يَـُٔودُهُۥ حِفْظُهُمَا ۚ وَهُوَ ٱلْعَلِىُّ ٱلْعَظِيمُ",
+   "tl": "Allahu laaa ilaaha illaa Huwal Haiyul Qaiyoom; laa taakhuzuhoo sinatunw wa laa nawm; lahoo maa fissamaawaati wa maa fil ard; man zal lazee yashfa'u indahooo illaa bi-iznih; ya'lamu maa baina aydeehim wa mww khalfahum wa laa yuheetoona bishai'im min 'ilmihee illaa bimaa shaaa'; wasi'a Kursiyyuhus samaawaati wal arda wa laa ya'ooduho hifzuhumaa; wa Huwal Aliyyul 'Azeem",
+   "qarai": "Allah—there is no god except Him—is the Living One, the All-sustainer. Neither drowsiness befalls Him nor sleep. To Him belongs whatever is in the heavens and whatever is on the earth. Who is it that may intercede with Him except with His permission? He knows what is before them and what is behind them, and they do not comprehend anything of His knowledge except what He wishes. His seat embraces the heavens and the earth and He is not wearied by their preservation, and He is the All-exalted, the All-supreme.",
+   "sarwar": "God exists. There is no God but He, the Everlasting and the Guardian of life. Drowsiness or sleep do not seize him. To Him belongs all that is in the heavens and the earth. No one can intercede with Him for others except by His permission. He knows about people's present and past. No one can grasp anything from His knowledge besides what He has permitted them to grasp. The heavens and the earth are under His dominion. He does not experience fatigue in preserving them both. He is the Highest and the Greatest.",
+   "surah": "Al-Baqara",
+   "surahNum": 2,
+   "ayahNum": 255
+  },
+  "3:36": {
+   "ar": "فَلَمَّا وَضَعَتْهَا قَالَتْ رَبِّ إِنِّى وَضَعْتُهَآ أُنثَىٰ وَٱللَّهُ أَعْلَمُ بِمَا وَضَعَتْ وَلَيْسَ ٱلذَّكَرُ كَٱلْأُنثَىٰ ۖ وَإِنِّى سَمَّيْتُهَا مَرْيَمَ وَإِنِّىٓ أُعِيذُهَا بِكَ وَذُرِّيَّتَهَا مِنَ ٱلشَّيْطَٰنِ ٱلرَّجِيمِ",
+   "tl": "Falammaa waqa'athaa qaalat Rabbi innee wada'tuhaaa unsaa wallaahu a'lamu bimaa wada'at wa laisaz zakaru kalunsaa wa innee sammaituhaa Maryama wa innee u'eezuhaa bika wa zurriyyatahaa minash Shaitaanir Rajeem",
+   "qarai": "When she bore her, she said, ‘My Lord, I have borne a female [child]’—and Allah knew better what she had borne, and the male [child she expected] was no match for the female [child she had borne] —‘and I have named her Mary, and I commend her and her offspring to Your care against [the evil of] the outcast Satan.’",
+   "sarwar": "When the baby was born she said, \"Lord, it is a female.\" God knew this. Male and female are not alike. \"I have named her Mary. I pray that You will keep her and her offspring safe from Satan, the condemned one.\"",
+   "surah": "Aal-i-Imraan",
+   "surahNum": 3,
+   "ayahNum": 36
+  },
+  "3:38": {
+   "ar": "هُنَالِكَ دَعَا زَكَرِيَّا رَبَّهُۥ ۖ قَالَ رَبِّ هَبْ لِى مِن لَّدُنكَ ذُرِّيَّةًۭ طَيِّبَةً ۖ إِنَّكَ سَمِيعُ ٱلدُّعَآءِ",
+   "tl": "Hunaaalika da'aa Zakariyyaa Rabbahoo qaala Rabbi hab lee mil ladunka zurriyyatan taiyibatan innaka samee'ud du'aaa'",
+   "qarai": "Thereat Zechariah supplicated his Lord. He said, ‘My Lord! Grant me a good offspring from You! Indeed You hear all supplications.’",
+   "sarwar": "Zachariah prayed to his Lord there, saying, \"Lord, grant me, by Your Grace, virtuous offspring. You hear all prayers\".",
+   "surah": "Aal-i-Imraan",
+   "surahNum": 3,
+   "ayahNum": 38
+  },
+  "14:40": {
+   "ar": "رَبِّ ٱجْعَلْنِى مُقِيمَ ٱلصَّلَوٰةِ وَمِن ذُرِّيَّتِى ۚ رَبَّنَا وَتَقَبَّلْ دُعَآءِ",
+   "tl": "Rabbij 'alnee muqeemas Salaati wa min zurriyyatee Rabbanaa wa taqabbal du'aaa'",
+   "qarai": "My Lord! Make me a maintainer of prayer, and my descendants [as well]. Our Lord, accept my supplication.",
+   "sarwar": "Lord, make me and my offspring steadfast in prayer and accept our worship.",
+   "surah": "Ibrahim",
+   "surahNum": 14,
+   "ayahNum": 40
+  },
+  "16:69": {
+   "ar": "ثُمَّ كُلِى مِن كُلِّ ٱلثَّمَرَٰتِ فَٱسْلُكِى سُبُلَ رَبِّكِ ذُلُلًۭا ۚ يَخْرُجُ مِنۢ بُطُونِهَا شَرَابٌۭ مُّخْتَلِفٌ أَلْوَٰنُهُۥ فِيهِ شِفَآءٌۭ لِّلنَّاسِ ۗ إِنَّ فِى ذَٰلِكَ لَءَايَةًۭ لِّقَوْمٍۢ يَتَفَكَّرُونَ",
+   "tl": "Summma kulee min kullis samaraati faslukee subula Rabbiki zululaa; yakhruju mim butoonihaa sharaabum mukh talifun alwaanuhoo feehi shifaaa'ul linnaas, innna fee zaalika la Aayatal liqawminy yatafakkaroon",
+   "qarai": "Then eat from every [kind of] fruit and follow meekly the ways of your Lord.’ There issues from its belly a juice of diverse hues, in which there is a cure for the people. There is indeed a sign in that for a people who reflect.",
+   "sarwar": "then eat of every fruit and follow the path of your Lord submissively.\" From out of their bellies comes a drink of different color in which there is a cure for the human being. In this there is evidence (of the truth) for the people of understanding.",
+   "surah": "An-Nahl",
+   "surahNum": 16,
+   "ayahNum": 69
+  },
+  "19:25": {
+   "ar": "وَهُزِّىٓ إِلَيْكِ بِجِذْعِ ٱلنَّخْلَةِ تُسَٰقِطْ عَلَيْكِ رُطَبًۭا جَنِيًّۭا",
+   "tl": "Wa huzzeee ilaiki bijiz 'in nakhlati tusaaqit 'alaiki rutaban janiyyaa",
+   "qarai": "Shake the trunk of the palm tree, freshly picked dates will drop upon you.",
+   "sarwar": "If you shake the trunk of the palm tree, it will provide you with fresh ripe dates.",
+   "surah": "Maryam",
+   "surahNum": 19,
+   "ayahNum": 25
+  },
+  "20:25": {
+   "ar": "قَالَ رَبِّ ٱشْرَحْ لِى صَدْرِى",
+   "tl": "Qaala Rabbish rah lee sadree",
+   "qarai": "He said, ‘My Lord! Open my breast for me.",
+   "sarwar": "Moses said, \"Lord, grant me courage.",
+   "surah": "Taa-Haa",
+   "surahNum": 20,
+   "ayahNum": 25
+  },
+  "20:26": {
+   "ar": "وَيَسِّرْ لِىٓ أَمْرِى",
+   "tl": "Wa yassir leee amree",
+   "qarai": "Make my task easy for me.",
+   "sarwar": "Make my task easy",
+   "surah": "Taa-Haa",
+   "surahNum": 20,
+   "ayahNum": 26
+  },
+  "25:74": {
+   "ar": "وَٱلَّذِينَ يَقُولُونَ رَبَّنَا هَبْ لَنَا مِنْ أَزْوَٰجِنَا وَذُرِّيَّٰتِنَا قُرَّةَ أَعْيُنٍۢ وَٱجْعَلْنَا لِلْمُتَّقِينَ إِمَامًا",
+   "tl": "Wallazeena yaqooloona Rabbanaa hab lanaa min azwaajinaa wa zurriyaatinaa qurrata a'yuninw waj 'alnaa lilmuttaqeena Imaamaa",
+   "qarai": "And those who say, ‘Our Lord! Give us joy and comfort in our spouses and offspring, and make us imams of the Godwary.’",
+   "sarwar": "They pray, \"Lord, let our spouses and children be the delight of our eyes and ourselves examples for the pious ones.\"",
+   "surah": "Al-Furqaan",
+   "surahNum": 25,
+   "ayahNum": 74
+  },
+  "36:36": {
+   "ar": "سُبْحَٰنَ ٱلَّذِى خَلَقَ ٱلْأَزْوَٰجَ كُلَّهَا مِمَّا تُنۢبِتُ ٱلْأَرْضُ وَمِنْ أَنفُسِهِمْ وَمِمَّا لَا يَعْلَمُونَ",
+   "tl": "Subhaanal lazee khalaqal azwaaja kullahaa mimmaa tumbitul ardu wa min anfusihim wa mimmaa laa ya'lamoon",
+   "qarai": "Immaculate is He who has created all the kinds of what the earth grows, and of themselves, and of what they do not know.",
+   "sarwar": "All glory belongs to the One Who has created pairs out of what grow from the earth, out of their soul and out of that which they do not know.",
+   "surah": "Yaseen",
+   "surahNum": 36,
+   "ayahNum": 36
+  },
+  "37:100": {
+   "ar": "رَبِّ هَبْ لِى مِنَ ٱلصَّٰلِحِينَ",
+   "tl": "Rabbi hab lee minas saaliheen",
+   "qarai": "‘My Lord! Give me [an heir], one of the righteous.’",
+   "sarwar": "Abraham prayed, \"Lord, grant me a righteous son\".",
+   "surah": "As-Saaffaat",
+   "surahNum": 37,
+   "ayahNum": 100
+  },
+  "46:15": {
+   "ar": "وَوَصَّيْنَا ٱلْإِنسَٰنَ بِوَٰلِدَيْهِ إِحْسَٰنًا ۖ حَمَلَتْهُ أُمُّهُۥ كُرْهًۭا وَوَضَعَتْهُ كُرْهًۭا ۖ وَحَمْلُهُۥ وَفِصَٰلُهُۥ ثَلَٰثُونَ شَهْرًا ۚ حَتَّىٰٓ إِذَا بَلَغَ أَشُدَّهُۥ وَبَلَغَ أَرْبَعِينَ سَنَةًۭ قَالَ رَبِّ أَوْزِعْنِىٓ أَنْ أَشْكُرَ نِعْمَتَكَ ٱلَّتِىٓ أَنْعَمْتَ عَلَىَّ وَعَلَىٰ وَٰلِدَىَّ وَأَنْ أَعْمَلَ صَٰلِحًۭا تَرْضَىٰهُ وَأَصْلِحْ لِى فِى ذُرِّيَّتِىٓ ۖ إِنِّى تُبْتُ إِلَيْكَ وَإِنِّى مِنَ ٱلْمُسْلِمِينَ",
+   "tl": "Wa wassainal insaana biwaalidaihi ihsaanan hamalathu ummuhoo kurhanw-wa wada'athu kurhanw wa hamluhoo wa fisaaluhoo salaasoona shahraa; hattaaa izaa balagha ashuddahoo wa balagho arba'eena sanatan qaala Rabbi aqzi'neee an ashkura ni'matakal lateee an'amta 'alaiya wa 'alaa waalidaiya wa an a'mala saalihan tardaahu wa aslih lee fee zurriyyatee innee tubtu ilaika wa innee minal muslimeen",
+   "qarai": "We have enjoined man to be kind to his parents. His mother has carried him in travail, and bore him in travail, and his gestation and weaning take thirty months. When he comes of age and reaches forty years, he says, ‘My Lord! Inspire me to give thanks for Your blessing with which You have blessed me and my parents, and that I may do righteous deeds which please You, and invest my descendants with righteousness. Indeed I have turned to you in penitence, and I am one of the Muslims.’",
+   "sarwar": "We have advised the human being to be kind to his parents; his mother bore him with hardship and delivered him while suffering a great deal of pain. The period in which his mother bore and weaned him lasted for thirty months. When he grew-up to manhood and became forty years old, he then said, \"Lord, inspire me to give You thanks for the bounties you have granted to me and my parents, and to act righteously to please You. Lord, make my offspring virtuous. Lord I turn to you in repentance; I am a Muslim\".",
+   "surah": "Al-Ahqaf",
+   "surahNum": 46,
+   "ayahNum": 15
+  },
+  "94:5": {
+   "ar": "فَإِنَّ مَعَ ٱلْعُسْرِ يُسْرًا",
+   "tl": "Fa inna ma'al usri yusra",
+   "qarai": "Indeed ease accompanies hardship.",
+   "sarwar": "After every difficulty there is relief.",
+   "surah": "Ash-Sharh",
+   "surahNum": 94,
+   "ayahNum": 5
+  },
+  "94:6": {
+   "ar": "إِنَّ مَعَ ٱلْعُسْرِ يُسْرًۭا",
+   "tl": "Inna ma'al 'usri yusra",
+   "qarai": "Indeed ease accompanies hardship.",
+   "sarwar": "Certainly, after every difficulty there comes relief.",
+   "surah": "Ash-Sharh",
+   "surahNum": 94,
+   "ayahNum": 6
+  }
+ }
+}
