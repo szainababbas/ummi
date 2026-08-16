@@ -325,6 +325,9 @@ label{display:block;font-size:.82rem;font-weight:600;color:var(--ink-soft);margi
       <button class="btn ghost" onclick="App.exportData()">Download backup</button>
       <div style="height:10px"></div>
       <button class="btn ghost" onclick="document.getElementById('m-import').click()">Restore from backup</button>
+      <div style="height:10px"></div>
+      <button class="btn ghost" onclick="App.exportHistory()">Download a readable record</button>
+      <p class="muted" style="margin-top:8px">The backup file is what you carry to a new phone; restore it there and everything comes back. The readable record is a plain text copy of your days and reflections to keep, which the app does not need.</p>
       <input id="m-import" type="file" accept=".json,application/json" style="display:none" onchange="App.importData(event)">
     </div>
     <div class="card">
@@ -1342,26 +1345,62 @@ const App = (function(){
     setTimeout(function(){ URL.revokeObjectURL(a.href); },1000);
   }
 
-  // ---- backup ----
-  function exportData(){
-    const blob=new Blob([JSON.stringify(state,null,2)],{type:'application/json'});
+  /* ---- backup ----
+     Everything lives on this device, so the backup file is the only way onto a new
+     phone. It is wrapped with a name and a schema number so a future version can
+     tell what it is reading; restore still accepts the older bare-state files. */
+  const SCHEMA=1;
+  function download(name,text,mime){
+    const blob=new Blob([text],{type:mime});
     const a=document.createElement('a');
     a.href=URL.createObjectURL(blob);
-    a.download='ummi-backup-'+todayKey()+'.json';
+    a.download=name;
     document.body.appendChild(a); a.click(); a.remove();
     setTimeout(function(){ URL.revokeObjectURL(a.href); },1000);
   }
+  function backupPayload(){
+    return {app:'ummi',schema:SCHEMA,exportedAt:new Date().toISOString(),state:state};
+  }
+  /* Returns the state to restore, or null if the file is not one of ours.
+     Accepts both the wrapped format and the bare state written by earlier versions. */
+  function readBackup(text){
+    let d;
+    try{ d=JSON.parse(text); }catch(e){ return null; }
+    if(!d || typeof d!=='object') return null;
+    const s=(d.app==='ummi' && d.state && typeof d.state==='object') ? d.state : d;
+    if(!s || typeof s!=='object' || typeof s.dueDate!=='string' || !/^\d{4}-\d{2}-\d{2}$/.test(s.dueDate)) return null;
+    return s;
+  }
+  /* A readable copy of what she has actually done, for keeping outside the app. */
+  function historyText(){
+    const lines=['Ummi — your record','Exported '+todayKey(),''];
+    lines.push('Due date: '+(state.dueDate||'not set'));
+    if(state.name) lines.push('Name: '+state.name);
+    lines.push('');
+    const done=state.done||{}; const duaDone=state.duaDone||{};
+    const days=Object.keys(done).concat(Object.keys(duaDone))
+      .filter(function(d,i,a){return a.indexOf(d)===i;}).sort();
+    lines.push('DAILY RECORD ('+days.length+' days)');
+    days.forEach(function(d){
+      const n=(done[d]||[]).length;
+      lines.push('  '+d+' — '+n+' item'+(n===1?'':'s')+' ticked'+(duaDone[d]?', dua recited':''));
+    });
+    const j=state.journal||[];
+    lines.push('','REFLECTIONS ('+j.length+')');
+    j.slice().reverse().forEach(function(x){ lines.push('  '+x.d+' — '+x.t); });
+    return lines.join('\n')+'\n';
+  }
+  function exportData(){ download('ummi-backup-'+todayKey()+'.json',JSON.stringify(backupPayload(),null,2),'application/json'); }
+  function exportHistory(){ download('ummi-history-'+todayKey()+'.txt',historyText(),'text/plain;charset=utf-8'); }
   function importData(ev){
     const f=ev.target.files && ev.target.files[0]; if(!f) return;
     const r=new FileReader();
     r.onload=function(){
-      try{
-        const d=JSON.parse(r.result);
-        if(!d || typeof d!=='object' || !d.dueDate) throw new Error('bad');
-        state=d; save();
-        alert('Backup restored.');
-        location.reload();
-      }catch(e){ alert('That file doesn\'t look like an Ummi backup.'); }
+      const s=readBackup(r.result);
+      if(!s){ alert('That file doesn\'t look like an Ummi backup.'); return; }
+      state=s; save();
+      alert('Backup restored.');
+      location.reload();
     };
     r.readAsText(f);
     ev.target.value='';
@@ -1375,9 +1414,20 @@ const App = (function(){
     if(navigator.storage && navigator.storage.persist){ navigator.storage.persist().catch(function(){}); }
   }
 
+  /* Internals exposed for the suite in tests/. Nothing in the app reads this; it is
+     here so the tests drive the real logic rather than a copy that can drift. */
+  const __test={monthOf:monthOf,actsFor:actsFor,todaysActs:todaysActs,featuredAct:featuredAct,
+    tasksToday:tasksToday,currentWeek:currentWeek,clampWeek:clampWeek,daysToGo:daysToGo,
+    trimester:trimester,buildICS:buildICS,icsFold:icsFold,icsEscape:icsEscape,
+    backupPayload:backupPayload,readBackup:readBackup,historyText:historyText,
+    getState:function(){return state;},setState:function(s){state=s;},
+    renderers:{today:renderToday,week:renderWeek,month:renderMonth,duas:renderDuas,
+               food:renderFood,names:renderNames,more:renderMore}};
+
   return {init:init,go:go,signup:signup,toggleTask:toggleTask,toggleDua:toggleDua,shiftWeek:shiftWeek,
-          shiftMonth:shiftMonth,openText:openText,closeText:closeText,exportICS:exportICS,
-          setDuaTab:setDuaTab,setNameTab:setNameTab,saveDue:saveDue,saveJournal:saveJournal,reset:reset,exportData:exportData,importData:importData};
+          shiftMonth:shiftMonth,openText:openText,closeText:closeText,exportICS:exportICS,exportHistory:exportHistory,
+          setDuaTab:setDuaTab,setNameTab:setNameTab,saveDue:saveDue,saveJournal:saveJournal,reset:reset,exportData:exportData,importData:importData,
+          __test:__test};
 })();
 window.addEventListener('DOMContentLoaded',App.init);
 </script>

@@ -17,6 +17,12 @@ Your progress is saved **on your phone only** (nothing is sent anywhere).
 - **Don't clear Chrome's browsing data** during the test — that would erase your progress.
 - Once a week, go to **More → Backup → Download backup**. If anything ever goes wrong, "Restore from backup" brings everything back.
 
+**Changing phone?** Take a backup on the old phone, open the same link on the new one, then **More → Restore from backup**. Your due date, your ticked days and your reflections all come across.
+
+**Updates arrive on their own.** Open the app with a signal and it picks up the new version; you never reinstall, and an update never touches your saved progress.
+
+There is also **Download a readable record**: a plain text copy of your days and reflections, to keep or print. The app does not need it, it is just yours to have.
+
 ## Using the app
 
 - **Today** — your current week at a glance, a featured dua (tap "Mark as recited"), and today's checklist. The checklist is built from the month you are in: the acts that apply *today* only, so a month of guidance arrives a day at a time instead of as one long list. It resets each morning. Items with a **Read ›** link open the actual text.
