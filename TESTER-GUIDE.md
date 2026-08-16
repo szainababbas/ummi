@@ -19,11 +19,20 @@ Your progress is saved **on your phone only** (nothing is sent anywhere).
 
 ## Using the app
 
-- **Today** — your current week at a glance, a featured dua (tap "Mark as recited"), and a daily checklist of small faith and wellness habits. The checklist resets each morning.
+- **Today** — your current week at a glance, a featured dua (tap "Mark as recited"), and today's checklist. The checklist is built from the month you are in: the acts that apply *today* only, so a month of guidance arrives a day at a time instead of as one long list. It resets each morning. Items with a **Read ›** link open the actual text.
+- **This month's practice** — from Today, or from More. Everything recommended for the month you are in, grouped into recitations, surahs, foods and wellness, each marked with the days it applies. Use ‹ › to look at other months.
 - **Week** — what's happening with baby and your body this week. Use ‹ › to look at other weeks.
-- **Duas** — the full library: pregnancy, easy delivery, after birth, and daily dhikr.
+- **Duas** — the full library: pregnancy, easy delivery, after birth, daily dhikr, and a **Qurʾān** tab with the short surahs in full (Arabic, transliteration and translation) plus the individual ayahs the guide asks for. This is where "recite Surah al-Fatihah over an egg" stops being an instruction you have to look up elsewhere.
 - **Food** — foods from the traditions, everyday essentials, and what's best avoided.
-- **More** — baby names, a one-line gratitude journal, your due date, and backups.
+- **More** — this month's practice, baby names, **export to calendar**, a one-line gratitude journal, your due date, and backups.
+
+## Putting it in your calendar
+
+**More → Export to calendar (.ics)** builds the whole pregnancy from your due date: one all-day entry per day, with that day's main act as the title and the rest of the day's list in the notes. Import the file into Google Calendar, Apple Calendar or Outlook. Nothing is uploaded anywhere; the file is made on your phone.
+
+## About the texts
+
+Qurʾān is the Uthmani Arabic with the translation of ʿAlī Qulī Qaraʾī. The month-by-month acts, foods and recitations come from the Shiʿi pregnancy planner, with its citations kept on each item (Biḥār al-Anwār, Mustadrak al-Wasāʾil and others). Weekly baby and body notes are NHS. These are recommended acts (mustaḥab); follow your own marjaʿ on specific rulings.
 
 ## Giving feedback
 
