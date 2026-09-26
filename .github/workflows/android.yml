@@ -26,31 +26,13 @@ jobs:
           distribution: "temurin"
           java-version: "17"
 
-      # ubuntu-latest runners ship a pre-installed Android SDK, but not
-      # necessarily this project's exact platform/build-tools versions.
-      # Installing them directly (rather than via android-actions/setup-android,
-      # which also tries to install a "tools" package Google removed years
-      # ago, and fails outright when it can't find it) only adds what's
-      # actually missing.
-      - name: Install the Android SDK platform and build-tools this project needs
-        run: |
-          set -eu
-          # ubuntu-latest ships the SDK on disk at this path but doesn't
-          # necessarily export ANDROID_HOME/ANDROID_SDK_ROOT as env vars, and
-          # Gradle needs one of those (or local.properties, which isn't
-          # committed) to find it.
-          SDK_ROOT="${ANDROID_HOME:-${ANDROID_SDK_ROOT:-/usr/local/lib/android/sdk}}"
-          echo "ANDROID_HOME=$SDK_ROOT" >> "$GITHUB_ENV"
-          echo "ANDROID_SDK_ROOT=$SDK_ROOT" >> "$GITHUB_ENV"
-
-          SDKMANAGER=$(find "$SDK_ROOT/cmdline-tools" -maxdepth 2 -name sdkmanager -path "*/bin/*" 2>/dev/null | sort -V | tail -1)
-          if [ -z "$SDKMANAGER" ]; then
-            echo "::error::No sdkmanager found under $SDK_ROOT/cmdline-tools"
-            exit 1
-          fi
-          echo "Using $SDKMANAGER"
-          yes | "$SDKMANAGER" --licenses > /dev/null
-          "$SDKMANAGER" "platforms;android-34" "build-tools;34.0.0"
+      # The runner image has no Android SDK of its own; this action installs
+      # cmdline-tools, sets ANDROID_HOME and accepts the licences. Its default
+      # `packages` includes "tools", which Google no longer publishes, so the
+      # action fails unless that default is overridden.
+      - uses: android-actions/setup-android@v3
+        with:
+          packages: "platform-tools platforms;android-34 build-tools;34.0.0"
 
       - name: Build debug APK
         run: ./gradlew assembleDebug --no-daemon
