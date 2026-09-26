@@ -55,8 +55,8 @@ fun TodayScreen(
     onOpenReminders: () -> Unit,
     onOpenWeek: (Int) -> Unit,
     onOpenMonth: () -> Unit,
+    today: LocalDate = LocalDate.now(),
 ) {
-    val today = LocalDate.now()
     val dueDate = PregnancyMath.parseDueDate(appState.dueDate)
     val week = PregnancyMath.currentWeek(dueDate, today)
     val trimester = PregnancyMath.trimester(week)

@@ -36,8 +36,18 @@ jobs:
         with:
           packages: "platform-tools platforms;android-34 build-tools;34.0.0"
 
-      - name: Unit tests
-        run: ./gradlew testDebugUnitTest --no-daemon
+      # All unit tests, with Paparazzi in record mode so every screen, light
+      # and dark, is saved as an image as well as checked to render.
+      - name: Unit tests and screenshots
+        run: ./gradlew recordPaparazziDebug --no-daemon
+
+      - name: Upload screenshots
+        if: success() || failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: screenshots
+          path: android/app/src/test/snapshots/images/
+          if-no-files-found: warn
 
       - name: Build debug APK
         run: ./gradlew assembleDebug --no-daemon

@@ -68,6 +68,12 @@ backup written by either app must restore in the other, and `tests/run.js`
 fails if the Android app's copy of the content drifts from `index.html`. Both
 suites run in CI on every pull request.
 
+Screenshot tests (Paparazzi) render every Android screen, light and dark, on
+the JVM with no emulator. Each CI run uploads them as the `screenshots`
+artifact on the "Android build" run, next to the APK. Locally:
+`cd android && ./gradlew recordPaparazziDebug`, then look in
+`android/app/src/test/snapshots/images/`.
+
 ## Deploying
 
 GitHub Pages serves `main` directly, so a push is the deploy. Bump `CACHE` in

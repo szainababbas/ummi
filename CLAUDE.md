@@ -21,4 +21,10 @@ either way is not a test.
   `tests/run.js` also fails if `android/app/src/main/assets/ummi-data.json`
   drifts from the constants in `index.html`.
 
+**Screens:** `android/app/src/test/.../ui/screenshots/ScreenshotTest.kt` renders
+every screen in light and dark with Paparazzi (no emulator). A new or changed
+screen gets a snapshot there. CI uploads the images as the `screenshots`
+artifact; look at them before calling UI work done, since a screen that
+renders without crashing can still be unreadable.
+
 CI runs both suites on every pull request (`.github/workflows/`).
