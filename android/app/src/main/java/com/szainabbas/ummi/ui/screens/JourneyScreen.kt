@@ -28,6 +28,7 @@ import com.szainabbas.ummi.data.model.ActEntry
 import com.szainabbas.ummi.data.model.FoodItem
 import com.szainabbas.ummi.data.model.ReaderKey
 import com.szainabbas.ummi.data.model.UmmiData
+import com.szainabbas.ummi.domain.PregnancyMath
 import com.szainabbas.ummi.ui.theme.Literata
 import com.szainabbas.ummi.ui.theme.UmmiIcons
 import com.szainabbas.ummi.ui.theme.Ummi
@@ -101,7 +102,7 @@ private fun WeekTab(data: UmmiData, currentWeek: Int, onOpenReader: (ReaderKey) 
             RoundIconButton(UmmiIcons.prevWeek, "Previous week") { if (week > 4) week-- }
             Column(horizontalAlignment = Alignment.CenterHorizontally) {
                 Text("Week $week", fontFamily = Literata, fontWeight = FontWeight.SemiBold, fontSize = 22.sp, color = Ummi.colors.ink)
-                Text("this week", fontSize = 13.sp, color = Ummi.colors.ink2)
+                Text(PregnancyMath.weekSubtitle(week, currentWeek), fontSize = 13.sp, color = Ummi.colors.ink2)
             }
             RoundIconButton(UmmiIcons.nextWeek, "Next week") { if (week < 41) week++ }
         }
@@ -115,8 +116,13 @@ private fun WeekTab(data: UmmiData, currentWeek: Int, onOpenReader: (ReaderKey) 
             )
         }
         if (info != null) {
-            Card {
-                Text("${info.size} · ${info.len} · ${info.wt}", fontFamily = Literata, fontWeight = FontWeight.SemiBold, fontSize = 20.sp, color = Ummi.colors.ink)
+            Card(title = "Baby this week") {
+                Text(PregnancyMath.sizeSentence(info.size), fontFamily = Literata, fontWeight = FontWeight.SemiBold, fontSize = 20.sp, color = Ummi.colors.ink)
+                Spacer(Modifier.height(12.dp))
+                Row(horizontalArrangement = Arrangement.spacedBy(10.dp)) {
+                    StatTile("Length", info.len, Modifier.weight(1f))
+                    StatTile("Weight", info.wt, Modifier.weight(1f))
+                }
             }
             Card(title = "Baby's development") { BulletList(info.dev) }
             Card(title = "Your body") {
@@ -253,6 +259,18 @@ private fun Card(title: String? = null, icon: androidx.compose.ui.graphics.vecto
             Spacer(Modifier.height(8.dp))
         }
         content()
+    }
+}
+
+@Composable
+private fun StatTile(label: String, value: String, modifier: Modifier = Modifier) {
+    Column(
+        modifier = modifier
+            .background(Ummi.colors.surface2, RoundedCornerShape(14.dp))
+            .padding(horizontal = 14.dp, vertical = 10.dp),
+    ) {
+        Text(label.uppercase(), fontSize = 11.sp, fontWeight = FontWeight.Bold, letterSpacing = 1.sp, color = Ummi.colors.accentText)
+        Text(value, fontFamily = Literata, fontWeight = FontWeight.SemiBold, fontSize = 18.sp, color = Ummi.colors.ink)
     }
 }
 

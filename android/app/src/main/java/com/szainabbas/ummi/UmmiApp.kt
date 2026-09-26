@@ -78,6 +78,13 @@ fun UmmiApp(viewModel: UmmiViewModel = viewModel()) {
             context.contentResolver.openOutputStream(uri)?.use { it.write(text.toByteArray()) }
         }
     }
+    val exportCalendarLauncher = rememberLauncherForActivityResult(ActivityResultContracts.CreateDocument("text/calendar")) { uri: Uri? ->
+        if (uri == null) return@rememberLauncherForActivityResult
+        val ics = viewModel.calendarIcs() ?: return@rememberLauncherForActivityResult
+        scope.launch(Dispatchers.IO) {
+            context.contentResolver.openOutputStream(uri)?.use { it.write(ics.toByteArray()) }
+        }
+    }
     val importBackupLauncher = rememberLauncherForActivityResult(ActivityResultContracts.OpenDocument()) { uri: Uri? ->
         if (uri == null) return@rememberLauncherForActivityResult
         scope.launch(Dispatchers.IO) {
@@ -125,6 +132,7 @@ fun UmmiApp(viewModel: UmmiViewModel = viewModel()) {
                     onExportBackup = { exportBackupLauncher.launch("ummi-backup-${PregnancyMath.todayKey()}.json") },
                     onExportHistory = { exportHistoryLauncher.launch("ummi-history-${PregnancyMath.todayKey()}.txt") },
                     onImportBackup = { importBackupLauncher.launch(arrayOf("application/json", "text/plain", "*/*")) },
+                    onExportCalendar = { exportCalendarLauncher.launch("ummi-pregnancy.ics") },
                 )
             }
         }
@@ -150,6 +158,7 @@ private fun UmmiMainScaffold(
     onExportBackup: () -> Unit,
     onExportHistory: () -> Unit,
     onImportBackup: () -> Unit,
+    onExportCalendar: () -> Unit,
 ) {
     val navController = rememberNavController()
     val backStackEntry by navController.currentBackStackEntryAsState()
@@ -215,6 +224,7 @@ private fun UmmiMainScaffold(
                     onExportBackup = onExportBackup,
                     onExportHistory = onExportHistory,
                     onImportBackup = onImportBackup,
+                    onExportCalendar = onExportCalendar,
                     onResetApp = viewModel::resetAll,
                     onOpenReminders = { navController.navigate(Routes.REMINDERS) },
                 )

@@ -37,6 +37,17 @@ object PregnancyMath {
         else -> 3
     }
 
+    /** The PWA's `trimesterShort`: "1st trimester" / "2nd trimester" / "3rd trimester". */
+    fun trimesterShort(week: Int): String = when (trimester(week)) {
+        1 -> "1st trimester"
+        2 -> "2nd trimester"
+        else -> "3rd trimester"
+    }
+
+    /** Journey's week subtitle; "this week" only when the week shown is the current one. */
+    fun weekSubtitle(week: Int, currentWeek: Int): String =
+        trimesterShort(week) + if (week == currentWeek) " · this week" else ""
+
     /** Mirrors the PWA's `monthOf(w)`: the month whose range holds the week, else 1 below every range and 9 above. */
     fun currentMonthNumber(week: Int, months: Map<String, MonthEntry>): Int {
         for (m in 1..9) {

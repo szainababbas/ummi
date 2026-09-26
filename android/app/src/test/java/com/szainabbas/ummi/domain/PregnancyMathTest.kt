@@ -60,6 +60,20 @@ class PregnancyMathTest {
     }
 
     @Test
+    fun `names the trimester the way the web app does`() {
+        assertEquals("1st trimester", PregnancyMath.trimesterShort(13))
+        assertEquals("2nd trimester", PregnancyMath.trimesterShort(14))
+        assertEquals("3rd trimester", PregnancyMath.trimesterShort(28))
+    }
+
+    @Test
+    fun `says this week only for the current week`() {
+        assertEquals("3rd trimester · this week", PregnancyMath.weekSubtitle(28, currentWeek = 28))
+        assertEquals("3rd trimester", PregnancyMath.weekSubtitle(30, currentWeek = 28))
+        assertEquals("2nd trimester", PregnancyMath.weekSubtitle(20, currentWeek = 28))
+    }
+
+    @Test
     fun `maps weeks to the guide's months at every boundary`() {
         assertEquals(1, PregnancyMath.currentMonthNumber(4, months))
         assertEquals(2, PregnancyMath.currentMonthNumber(5, months))

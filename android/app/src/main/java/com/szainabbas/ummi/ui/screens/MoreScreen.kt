@@ -56,6 +56,7 @@ fun MoreScreen(
     onExportBackup: () -> Unit,
     onExportHistory: () -> Unit,
     onImportBackup: () -> Unit,
+    onExportCalendar: () -> Unit,
     onResetApp: () -> Unit,
     onOpenReminders: () -> Unit,
     scrollState: ScrollState = rememberScrollState(),
@@ -77,7 +78,7 @@ fun MoreScreen(
             SettingRow(
                 label = "Due date: " + (PregnancyMath.parseDueDate(appState.dueDate)?.let(PregnancyMath::longDate) ?: "not set"),
             ) { showDuePicker = true }
-            SettingRow(label = "Export to calendar (.ics)") {}
+            SettingRow(label = "Export to calendar (.ics)", onClick = onExportCalendar)
         }
 
         SectionCard(title = "A gentle reflection") {

@@ -26,6 +26,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Color
@@ -64,7 +65,6 @@ fun TodayScreen(
 ) {
     val dueDate = PregnancyMath.parseDueDate(appState.dueDate)
     val week = PregnancyMath.currentWeek(dueDate, today)
-    val trimester = PregnancyMath.trimester(week)
     val daysToGo = PregnancyMath.daysToGo(dueDate, today)
     val weekInfo = data.weeks[week.toString()]
     val monthNo = PregnancyMath.currentMonthNumber(week, data.months)
@@ -88,7 +88,7 @@ fun TodayScreen(
         WeekStrip(currentWeek = week, onWeekClick = onOpenWeek)
 
         Text(
-            text = "Trimester $trimester" + (dueDate?.let { " · Due ≈ ${PregnancyMath.shortDate(it)}" } ?: ""),
+            text = PregnancyMath.trimesterShort(week) + (dueDate?.let { " · Due ≈ ${PregnancyMath.shortDate(it)}" } ?: ""),
             fontSize = 13.sp,
             color = Ummi.colors.ink2,
             modifier = Modifier.padding(horizontal = 20.dp, vertical = 8.dp),
@@ -134,10 +134,10 @@ fun TodayScreen(
 
         Text(
             text = "Month $monthNo of the guide →",
+            modifier = Modifier.clickable(onClick = onOpenMonth).padding(20.dp),
             fontWeight = FontWeight.Bold,
             fontSize = 14.sp,
             color = Ummi.colors.primary,
-            modifier = Modifier.padding(20.dp),
         )
     }
 }
@@ -351,6 +351,7 @@ private fun TaskRow(act: ActEntry, done: Boolean, isUpNext: Boolean, onToggle: (
             .padding(horizontal = 16.dp, vertical = 4.dp)
             .border(if (isUpNext) 1.dp else 1.dp, if (isUpNext) Ummi.colors.primary else Ummi.colors.line, RoundedCornerShape(16.dp))
             .background(Ummi.colors.surface, RoundedCornerShape(16.dp))
+            .alpha(if (done) 0.55f else 1f)
             .padding(14.dp),
         verticalAlignment = Alignment.CenterVertically,
     ) {

@@ -11,6 +11,7 @@ import com.szainabbas.ummi.data.model.UmmiData
 import com.szainabbas.ummi.data.withDuaRecitedToggled
 import com.szainabbas.ummi.data.withJournalEntry
 import com.szainabbas.ummi.data.withTaskToggled
+import com.szainabbas.ummi.domain.CalendarExport
 import com.szainabbas.ummi.domain.PregnancyMath
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -69,6 +70,14 @@ class UmmiViewModel(application: Application) : AndroidViewModel(application) {
     fun exportBackupJson(): String = BackupCodec.encodeBackup(_uiState.value.appState, Instant.now())
 
     fun historyText(): String = BackupCodec.historyText(_uiState.value.appState, LocalDate.now())
+
+    /** The .ics for the whole pregnancy, or null before a due date is set. */
+    fun calendarIcs(): String? {
+        val state = _uiState.value
+        val due = PregnancyMath.parseDueDate(state.appState.dueDate) ?: return null
+        val data = state.data ?: return null
+        return CalendarExport.build(due, data.months, LocalDate.now())
+    }
 
     /** Returns false (and leaves state untouched) if [text] isn't a recognised Ummi backup. */
     fun importBackupJson(text: String): Boolean {

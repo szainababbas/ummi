@@ -124,6 +124,7 @@ class ScreenshotTest {
             onExportBackup = {},
             onExportHistory = {},
             onImportBackup = {},
+            onExportCalendar = {},
             onResetApp = {},
             onOpenReminders = {},
             scrollState = it,

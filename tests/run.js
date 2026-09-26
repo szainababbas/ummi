@@ -640,6 +640,14 @@ describe('android app compatibility', () => {
     for (const k of Object.keys(fixture.androidBackup.state)) eq(s[k], fixture.androidBackup.state[k], 'field ' + k);
   });
 
+  it('writes the same calendar file as the Android app', () => {
+    // android/.../CalendarExportTest checks its own output against this file too
+    const expected = fs.readFileSync(path.join(__dirname, 'fixtures', 'calendar-2026-12-15.ics'), 'utf8');
+    T.setState({ dueDate: '2026-12-15' });
+    const ics = T.buildICS().replace(/^DTSTAMP:.*$/gm, 'DTSTAMP:20260926T000000Z');
+    ok(ics === expected, 'buildICS no longer matches tests/fixtures/calendar-2026-12-15.ics; regenerate it and make the Android test pass too');
+  });
+
   it('writes the same readable record as the Android app', () => {
     T.setState(JSON.parse(JSON.stringify(fixture.history.state)));
     eq(T.historyText().replace(/^Exported .*$/m, 'Exported ' + fixture.history.today), fixture.history.text);
