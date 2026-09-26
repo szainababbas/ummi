@@ -2,17 +2,24 @@ package com.szainabbas.ummi
 
 import android.net.Uri
 import android.widget.Toast
+import androidx.activity.ComponentActivity
+import androidx.activity.SystemBarStyle
 import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.enableEdgeToEdge
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -21,12 +28,12 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
-import androidx.lifecycle.viewmodel.compose.viewModel
 import com.szainabbas.ummi.data.AppState
 import com.szainabbas.ummi.data.model.ReaderKey
 import com.szainabbas.ummi.data.model.UmmiData
@@ -42,11 +49,12 @@ import com.szainabbas.ummi.ui.screens.MoreScreen
 import com.szainabbas.ummi.ui.screens.TodayScreen
 import com.szainabbas.ummi.ui.theme.UmmiTheme
 import com.szainabbas.ummi.ui.theme.UmmiThemeMode
+import com.szainabbas.ummi.ui.theme.isDark
+import java.io.BufferedReader
+import java.io.InputStreamReader
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import java.io.BufferedReader
-import java.io.InputStreamReader
 
 @Composable
 fun UmmiApp(viewModel: UmmiViewModel = viewModel()) {
@@ -88,25 +96,37 @@ fun UmmiApp(viewModel: UmmiViewModel = viewModel()) {
     }
 
     val themeMode = parseThemeMode(uiState.appState.theme)
+    val dark = themeMode.isDark()
+    val activity = context as? ComponentActivity
+    // Status-bar icons follow the app's own Light/Dark setting, not the phone's.
+    LaunchedEffect(dark) {
+        val transparent = android.graphics.Color.TRANSPARENT
+        val style = if (dark) SystemBarStyle.dark(transparent) else SystemBarStyle.light(transparent, transparent)
+        activity?.enableEdgeToEdge(statusBarStyle = style, navigationBarStyle = style)
+    }
 
     UmmiTheme(mode = themeMode) {
-        val data = uiState.data
-        val appState = uiState.appState
-        when {
-            uiState.loading || data == null -> Unit // blank while the first load completes
-            appState.dueDate == null -> DueDateGateScreen(onSetDueDate = { viewModel.setDueDate(it) })
-            else -> UmmiMainScaffold(
-                viewModel = viewModel,
-                data = data,
-                appState = appState,
-                themeMode = themeMode,
-                readerKey = readerKey,
-                onOpenReader = { readerKey = it },
-                onDismissReader = { readerKey = null },
-                onExportBackup = { exportBackupLauncher.launch("ummi-backup-${PregnancyMath.todayKey()}.json") },
-                onExportHistory = { exportHistoryLauncher.launch("ummi-history-${PregnancyMath.todayKey()}.txt") },
-                onImportBackup = { importBackupLauncher.launch(arrayOf("application/json", "text/plain", "*/*")) },
-            )
+        // Every screen, including the start screen outside the Scaffold, sits on
+        // the theme's background; without it the window's white showed through.
+        Surface(color = MaterialTheme.colorScheme.background, modifier = Modifier.fillMaxSize()) {
+            val data = uiState.data
+            val appState = uiState.appState
+            when {
+                uiState.loading || data == null -> Unit // blank while the first load completes
+                appState.dueDate == null -> DueDateGateScreen(onSetDueDate = { viewModel.setDueDate(it) })
+                else -> UmmiMainScaffold(
+                    viewModel = viewModel,
+                    data = data,
+                    appState = appState,
+                    themeMode = themeMode,
+                    readerKey = readerKey,
+                    onOpenReader = { readerKey = it },
+                    onDismissReader = { readerKey = null },
+                    onExportBackup = { exportBackupLauncher.launch("ummi-backup-${PregnancyMath.todayKey()}.json") },
+                    onExportHistory = { exportHistoryLauncher.launch("ummi-history-${PregnancyMath.todayKey()}.txt") },
+                    onImportBackup = { importBackupLauncher.launch(arrayOf("application/json", "text/plain", "*/*")) },
+                )
+            }
         }
     }
 }

@@ -1,6 +1,11 @@
 package com.szainabbas.ummi.data.model
 
 import com.szainabbas.ummi.TestFiles
+import com.szainabbas.ummi.data.BackupCodec
+import kotlinx.serialization.json.Json
+import kotlinx.serialization.json.jsonArray
+import kotlinx.serialization.json.jsonObject
+import kotlinx.serialization.json.jsonPrimitive
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertNotNull
 import org.junit.Assert.assertTrue
@@ -27,9 +32,28 @@ class UmmiDataTest {
     }
 
     @Test
-    fun `gives every act a unique id`() {
-        val dupes = acts.groupBy { it.id }.filterValues { it.size > 1 }.keys
+    fun `gives every act and every-day task a unique id`() {
+        val dupes = (acts + data.baseTasks).groupBy { it.id }.filterValues { it.size > 1 }.keys
         assertTrue("duplicate act ids: $dupes", dupes.isEmpty())
+    }
+
+    @Test
+    fun `has the web app's every-day tasks`() {
+        assertEquals(listOf("salah", "water", "walk"), data.baseTasks.map { it.id })
+        data.baseTasks.forEach { assertEquals("${it.id} is pinned to weekdays", null, it.days) }
+    }
+
+    /** Otherwise a tick restored from a web backup is kept but never shown. */
+    @Test
+    fun `can show every task a shared backup has ticked`() {
+        val known = (acts + data.baseTasks).map { it.id }.toSet()
+        val fixture = Json.parseToJsonElement(TestFiles.backupCompat).jsonObject
+        val ticked = fixture["valid"]!!.jsonArray
+            .mapNotNull { BackupCodec.decodeBackup(it.jsonObject["file"]!!.jsonPrimitive.content) }
+            .flatMap { it.done.values.flatten() }
+            .toSet()
+        check("salah" in ticked)
+        assertEquals("ticked in the fixture but not a task in either list", emptySet<String>(), ticked - known)
     }
 
     @Test

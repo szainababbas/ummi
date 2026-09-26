@@ -14,15 +14,18 @@ enum class UmmiThemeMode { LIGHT, DARK, SYSTEM }
 val LocalUmmiColors = compositionLocalOf { LightUmmiColors }
 
 @Composable
+fun UmmiThemeMode.isDark(): Boolean = when (this) {
+    UmmiThemeMode.LIGHT -> false
+    UmmiThemeMode.DARK -> true
+    UmmiThemeMode.SYSTEM -> isSystemInDarkTheme()
+}
+
+@Composable
 fun UmmiTheme(
     mode: UmmiThemeMode = UmmiThemeMode.SYSTEM,
     content: @Composable () -> Unit,
 ) {
-    val dark = when (mode) {
-        UmmiThemeMode.LIGHT -> false
-        UmmiThemeMode.DARK -> true
-        UmmiThemeMode.SYSTEM -> isSystemInDarkTheme()
-    }
+    val dark = mode.isDark()
     val tokens = if (dark) DarkUmmiColors else LightUmmiColors
 
     val colorScheme = if (dark) {

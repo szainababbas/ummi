@@ -35,6 +35,13 @@ class DailyPlanTest {
     }
 
     @Test
+    fun `adds the every-day tasks after the month's acts`() {
+        val base = listOf(act("salah", null), act("water", null))
+        assertEquals(listOf("sun", "daily1", "daily2", "salah", "water"), DailyPlan.tasksFor(month, base, sunday).map { it.id })
+        assertEquals(listOf("salah", "water"), DailyPlan.tasksFor(null, base, sunday).map { it.id })
+    }
+
+    @Test
     fun `has nothing to hand out without a month`() {
         assertEquals(emptyList<ActEntry>(), DailyPlan.actsFor(null, sunday))
     }

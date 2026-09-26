@@ -63,7 +63,9 @@ fun TodayScreen(
     val daysToGo = PregnancyMath.daysToGo(dueDate, today)
     val weekInfo = data.weeks[week.toString()]
     val monthNo = PregnancyMath.currentMonthNumber(week, data.months)
-    val todaysActs = remember(monthNo, today, data) { DailyPlan.actsFor(data.months[monthNo.toString()], today) }
+    val todaysActs = remember(monthNo, today, data) {
+        DailyPlan.tasksFor(data.months[monthNo.toString()], data.baseTasks, today)
+    }
     val doneToday = appState.done[PregnancyMath.todayKey(today)] ?: emptyList()
     val nextAct = todaysActs.firstOrNull { it.id !in doneToday }
     val duaToday = DailyPlan.duaTodayIndex(today, data.duaToday.size)?.let { data.duaToday[it] }
@@ -162,27 +164,34 @@ private fun ProgressRing(week: Int, daysToGo: Int?, sizeDesc: String?) {
     val progress = (week.coerceIn(4, 41) / 40f).coerceIn(0f, 1f)
     val trackColor = Ummi.colors.surface2
     val progressColor = Ummi.colors.primary
-    Box(modifier = Modifier.size(196.dp).padding(16.dp), contentAlignment = Alignment.Center) {
-        Canvas(modifier = Modifier.size(196.dp)) {
-            val stroke = Stroke(width = 12.dp.toPx(), cap = StrokeCap.Round)
-            val diameter = size.minDimension
-            val topLeft = androidx.compose.ui.geometry.Offset(
-                (size.width - diameter) / 2f + stroke.width / 2f,
-                (size.height - diameter) / 2f + stroke.width / 2f,
-            )
-            val arcSize = Size(diameter - stroke.width, diameter - stroke.width)
-            drawArc(color = trackColor, startAngle = -90f, sweepAngle = 360f, useCenter = false, topLeft = topLeft, size = arcSize, style = stroke)
-            drawArc(color = progressColor, startAngle = -90f, sweepAngle = 360f * progress, useCenter = false, topLeft = topLeft, size = arcSize, style = stroke)
+    // The size sentence sits under the ring, as in the handoff: inside it, a
+    // longer size ("an aubergine") ran over the stroke.
+    Column(horizontalAlignment = Alignment.CenterHorizontally, modifier = Modifier.padding(vertical = 8.dp)) {
+        Box(modifier = Modifier.size(196.dp), contentAlignment = Alignment.Center) {
+            Canvas(modifier = Modifier.fillMaxSize()) {
+                val stroke = Stroke(width = 12.dp.toPx(), cap = StrokeCap.Round)
+                val topLeft = androidx.compose.ui.geometry.Offset(stroke.width / 2f, stroke.width / 2f)
+                val arcSize = Size(size.width - stroke.width, size.height - stroke.width)
+                drawArc(color = trackColor, startAngle = -90f, sweepAngle = 360f, useCenter = false, topLeft = topLeft, size = arcSize, style = stroke)
+                drawArc(color = progressColor, startAngle = -90f, sweepAngle = 360f * progress, useCenter = false, topLeft = topLeft, size = arcSize, style = stroke)
+            }
+            Column(horizontalAlignment = Alignment.CenterHorizontally) {
+                Text("WEEK", fontSize = 12.sp, fontWeight = FontWeight.Bold, letterSpacing = 1.sp, color = Ummi.colors.accentText)
+                Text("$week", fontFamily = Literata, fontWeight = FontWeight.SemiBold, fontSize = 64.sp, lineHeight = 68.sp, color = Ummi.colors.ink)
+                if (daysToGo != null) {
+                    Text("$daysToGo days to go", fontSize = 13.sp, color = Ummi.colors.ink2)
+                }
+            }
         }
-        Column(horizontalAlignment = Alignment.CenterHorizontally) {
-            Text("WEEK", fontSize = 12.sp, fontWeight = FontWeight.Bold, color = Ummi.colors.accentText)
-            Text("$week", fontFamily = Literata, fontWeight = FontWeight.SemiBold, fontSize = 48.sp, color = Ummi.colors.ink)
-            if (daysToGo != null) {
-                Text("$daysToGo days to go", fontSize = 13.sp, color = Ummi.colors.ink2)
-            }
-            if (sizeDesc != null) {
-                Text(PregnancyMath.sizeSentence(sizeDesc), fontFamily = Literata, fontSize = 14.sp, color = Ummi.colors.ink, textAlign = TextAlign.Center)
-            }
+        if (sizeDesc != null) {
+            Text(
+                PregnancyMath.sizeSentence(sizeDesc),
+                fontFamily = Literata,
+                fontSize = 17.sp,
+                color = Ummi.colors.ink,
+                textAlign = TextAlign.Center,
+                modifier = Modifier.padding(start = 20.dp, end = 20.dp, top = 12.dp),
+            )
         }
     }
 }

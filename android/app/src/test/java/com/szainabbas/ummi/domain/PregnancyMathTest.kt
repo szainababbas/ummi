@@ -92,6 +92,33 @@ class PregnancyMathTest {
     }
 
     @Test
+    fun `reads the date picker's UTC midnight as that calendar day`() {
+        assertEquals(LocalDate.of(2026, 12, 15), PregnancyMath.fromPickerMillis(1797292800000))
+        assertEquals(1797292800000, PregnancyMath.toPickerMillis(LocalDate.of(2026, 12, 15)))
+    }
+
+    /** Converting through the phone's zone instead of UTC is off by a day on one side of the date line. */
+    @Test
+    fun `keeps the picked day in every time zone`() {
+        val original = java.util.TimeZone.getDefault()
+        try {
+            for (zone in listOf("Pacific/Kiritimati", "America/Los_Angeles", "Europe/London", "Asia/Karachi")) {
+                java.util.TimeZone.setDefault(java.util.TimeZone.getTimeZone(zone))
+                val due = LocalDate.of(2026, 12, 15)
+                assertEquals(zone, due, PregnancyMath.fromPickerMillis(PregnancyMath.toPickerMillis(due)))
+                assertEquals(zone, due, PregnancyMath.fromPickerMillis(1797292800000))
+            }
+        } finally {
+            java.util.TimeZone.setDefault(original)
+        }
+    }
+
+    @Test
+    fun `writes the due date out in full`() {
+        assertEquals("15 December 2026", PregnancyMath.longDate(LocalDate.of(2026, 12, 15)))
+    }
+
+    @Test
     fun `picks a or an for the size sentence`() {
         assertEquals("About the size of a poppy seed", PregnancyMath.sizeSentence("Poppy seed"))
         assertEquals("About the size of an apple", PregnancyMath.sizeSentence("Apple"))

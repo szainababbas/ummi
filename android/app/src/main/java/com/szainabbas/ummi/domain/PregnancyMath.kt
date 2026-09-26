@@ -1,7 +1,9 @@
 package com.szainabbas.ummi.domain
 
 import com.szainabbas.ummi.data.model.MonthEntry
+import java.time.Instant
 import java.time.LocalDate
+import java.time.ZoneOffset
 import java.time.format.DateTimeFormatter
 import java.time.temporal.ChronoUnit
 import kotlin.math.ceil
@@ -51,6 +53,18 @@ object PregnancyMath {
     }
 
     fun todayKey(today: LocalDate = LocalDate.now()): String = today.format(isoDate)
+
+    /**
+     * Material 3's DatePicker speaks in milliseconds at UTC midnight. Converting
+     * through the phone's own time zone instead can land on the day before.
+     */
+    fun toPickerMillis(date: LocalDate): Long = date.atStartOfDay(ZoneOffset.UTC).toInstant().toEpochMilli()
+
+    fun fromPickerMillis(millis: Long): LocalDate = Instant.ofEpochMilli(millis).atZone(ZoneOffset.UTC).toLocalDate()
+
+    /** e.g. "15 December 2026" for the due date on More and the start screen. */
+    fun longDate(date: LocalDate): String =
+        date.format(DateTimeFormatter.ofPattern("d MMMM yyyy", java.util.Locale.UK))
 
     /** e.g. "9 Jan" for the "Due ≈ 9 Jan" meta line. */
     fun shortDate(date: LocalDate): String =

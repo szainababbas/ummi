@@ -29,12 +29,13 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.szainabbas.ummi.data.AppState
 import com.szainabbas.ummi.data.JournalEntry
+import com.szainabbas.ummi.domain.PregnancyMath
+import com.szainabbas.ummi.ui.components.DueDatePickerDialog
 import com.szainabbas.ummi.ui.theme.Literata
 import com.szainabbas.ummi.ui.theme.UmmiIcons
 import com.szainabbas.ummi.ui.theme.Ummi
 import com.szainabbas.ummi.ui.theme.UmmiThemeMode
 import java.time.LocalDate
-import java.time.format.DateTimeFormatter
 
 /**
  * Settings, backup/restore and the reflection journal. The handoff's "Names
@@ -58,6 +59,7 @@ fun MoreScreen(
     onOpenReminders: () -> Unit,
 ) {
     var showResetConfirm by remember { mutableStateOf(false) }
+    var showDuePicker by remember { mutableStateOf(false) }
     var journalText by remember { mutableStateOf("") }
 
     Column(modifier = Modifier.fillMaxWidth().verticalScroll(rememberScrollState())) {
@@ -70,7 +72,9 @@ fun MoreScreen(
             Text("Appearance", fontSize = 13.sp, color = Ummi.colors.ink2, modifier = Modifier.padding(top = 8.dp, bottom = 6.dp))
             ThemeSegmentedControl(themeMode, onSetThemeMode)
             Spacer(Modifier.height(4.dp))
-            SettingRow(label = "Due date: ${appState.dueDate ?: "not set"}") {}
+            SettingRow(
+                label = "Due date: " + (PregnancyMath.parseDueDate(appState.dueDate)?.let(PregnancyMath::longDate) ?: "not set"),
+            ) { showDuePicker = true }
             SettingRow(label = "Export to calendar (.ics)") {}
         }
 
@@ -113,6 +117,14 @@ fun MoreScreen(
         )
     }
 
+    if (showDuePicker) {
+        DueDatePickerDialog(
+            initial = PregnancyMath.parseDueDate(appState.dueDate),
+            onPicked = { onSetDueDate(it); showDuePicker = false },
+            onDismiss = { showDuePicker = false },
+        )
+    }
+
     if (showResetConfirm) {
         AlertDialog(
             onDismissRequest = { showResetConfirm = false },
@@ -130,9 +142,7 @@ fun MoreScreen(
 private fun ProfileCard(appState: AppState, onSetName: (String) -> Unit) {
     var editing by remember { mutableStateOf(false) }
     var draftName by remember(appState.name) { mutableStateOf(appState.name.orEmpty()) }
-    val dueLabel = appState.dueDate?.let {
-        runCatching { LocalDate.parse(it).format(DateTimeFormatter.ofPattern("d MMMM yyyy")) }.getOrNull()
-    } ?: "not set"
+    val dueLabel = PregnancyMath.parseDueDate(appState.dueDate)?.let(PregnancyMath::longDate) ?: "not set"
 
     Row(
         modifier = Modifier

@@ -20,6 +20,8 @@ data class UmmiData(
     @SerialName("BISMILLAH") val bismillah: BismillahEntry,
     @SerialName("AYAHS") val ayahs: Map<String, AyahEntry>,
     @SerialName("SURAHS") val surahs: Map<String, SurahEntry>,
+    /** The PWA's BASE_TASKS: pray, water, move. Shown every day after the month's acts. */
+    @SerialName("BASE_TASKS") val baseTasks: List<ActEntry> = emptyList(),
 ) {
     companion object {
         private val json = Json { ignoreUnknownKeys = true }

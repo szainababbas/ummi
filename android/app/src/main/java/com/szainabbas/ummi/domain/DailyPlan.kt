@@ -21,6 +21,14 @@ object DailyPlan {
             .sortedByDescending { it.days != null }
     }
 
+    /**
+     * The PWA's `tasksToday()`: the month's acts for the day, then the
+     * every-day base tasks. A backup's `done` lists ids from both, so the
+     * Android list has to show both for ticks to survive a restore.
+     */
+    fun tasksFor(month: MonthEntry?, baseTasks: List<ActEntry>, date: LocalDate): List<ActEntry> =
+        actsFor(month, date) + baseTasks
+
     /** The PWA's `DUA_TODAY[dayIndex() % length]`, where dayIndex is the day of the year. */
     fun duaTodayIndex(date: LocalDate, count: Int): Int? =
         if (count <= 0) null else date.dayOfYear % count

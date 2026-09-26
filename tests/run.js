@@ -613,6 +613,15 @@ describe('android app compatibility', () => {
     }
   });
 
+  it('shows the same every-day tasks as index.html', () => {
+    // BASE_TASKS is private to the App closure; tasksToday() is the month's acts followed by it
+    const base = T.tasksToday().slice(T.todaysActs().length);
+    ok(base.length > 0, 'index.html has no every-day tasks; this test needs rethinking');
+    const asset = JSON.parse(fs.readFileSync(path.join(ROOT, 'android/app/src/main/assets/ummi-data.json'), 'utf8'));
+    const d = firstDiff(asset.BASE_TASKS, base, 'BASE_TASKS');
+    ok(!d, 'android/app/src/main/assets/ummi-data.json is out of date with index.html at ' + d);
+  });
+
   it('restores every shared valid file with the same result the Android app gets', () => {
     for (const c of fixture.valid) {
       const s = T.readBackup(c.file);
