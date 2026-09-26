@@ -10,6 +10,7 @@ import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.foundation.ScrollState
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
@@ -20,6 +21,9 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -56,6 +60,7 @@ fun TodayScreen(
     onOpenWeek: (Int) -> Unit,
     onOpenMonth: () -> Unit,
     today: LocalDate = LocalDate.now(),
+    scrollState: ScrollState = rememberScrollState(),
 ) {
     val dueDate = PregnancyMath.parseDueDate(appState.dueDate)
     val week = PregnancyMath.currentWeek(dueDate, today)
@@ -67,11 +72,13 @@ fun TodayScreen(
         DailyPlan.tasksFor(data.months[monthNo.toString()], data.baseTasks, today)
     }
     val doneToday = appState.done[PregnancyMath.todayKey(today)] ?: emptyList()
-    val nextAct = todaysActs.firstOrNull { it.id !in doneToday }
+    // "Later" is for this sitting only, as in the handoff; it starts fresh each day.
+    var skipped by remember(today) { mutableStateOf(emptySet<String>()) }
+    val nextAct = DailyPlan.upNext(todaysActs, doneToday, skipped)
     val duaToday = DailyPlan.duaTodayIndex(today, data.duaToday.size)?.let { data.duaToday[it] }
     val duaRecited = appState.duaDone[PregnancyMath.todayKey(today)] ?: false
 
-    Column(modifier = Modifier.fillMaxWidth().verticalScroll(rememberScrollState())) {
+    Column(modifier = Modifier.fillMaxWidth().verticalScroll(scrollState)) {
         HeaderRow(name = appState.name, activeReminders = 0, onBellClick = onOpenReminders)
 
         Box(modifier = Modifier.fillMaxWidth(), contentAlignment = Alignment.Center) {
@@ -89,10 +96,10 @@ fun TodayScreen(
 
         UpNextCard(
             act = nextAct,
-            totalToday = todaysActs.size,
-            doneCount = todaysActs.count { it.id in doneToday },
+            position = todaysActs.indexOf(nextAct) + 1,
+            doneFlags = todaysActs.map { it.id in doneToday },
             onDone = { nextAct?.let { onToggleTask(it.id) } },
-            onLater = { /* cycles to the next open item; the list order already keeps this simple */ },
+            onLater = { nextAct?.let { skipped = DailyPlan.later(todaysActs, doneToday, skipped, it) } },
             onRead = { act -> ReaderKey.forAct(act)?.let(onOpenReader) },
         )
 
@@ -199,7 +206,8 @@ private fun ProgressRing(week: Int, daysToGo: Int?, sizeDesc: String?) {
 @Composable
 private fun WeekStrip(currentWeek: Int, onWeekClick: (Int) -> Unit) {
     val weeks = (4..41).toList()
-    val listState = rememberLazyListState()
+    // Start on the current week rather than scrolling there after the first frame.
+    val listState = rememberLazyListState(initialFirstVisibleItemIndex = (weeks.indexOf(currentWeek) - 3).coerceAtLeast(0))
     LaunchedEffect(currentWeek) {
         val index = weeks.indexOf(currentWeek).coerceAtLeast(0)
         listState.scrollToItem((index - 3).coerceAtLeast(0))
@@ -238,8 +246,8 @@ private fun WeekStrip(currentWeek: Int, onWeekClick: (Int) -> Unit) {
 @Composable
 private fun UpNextCard(
     act: ActEntry?,
-    totalToday: Int,
-    doneCount: Int,
+    position: Int,
+    doneFlags: List<Boolean>,
     onDone: () -> Unit,
     onLater: () -> Unit,
     onRead: (ActEntry) -> Unit,
@@ -257,13 +265,25 @@ private fun UpNextCard(
             Text("Everything for today is ticked off. Alhamdulillah.", fontSize = 14.sp, color = Ummi.colors.ink2, modifier = Modifier.padding(top = 4.dp))
             return@Column
         }
-        Text(
-            text = "UP NEXT · ${doneCount + 1} OF $totalToday",
-            fontSize = 12.sp,
-            fontWeight = FontWeight.Bold,
-            letterSpacing = 1.sp,
-            color = Ummi.colors.accentText,
-        )
+        Row(verticalAlignment = Alignment.CenterVertically) {
+            Text(
+                text = "UP NEXT · $position OF ${doneFlags.size}",
+                fontSize = 12.sp,
+                fontWeight = FontWeight.Bold,
+                letterSpacing = 1.sp,
+                color = Ummi.colors.accentText,
+                modifier = Modifier.weight(1f),
+            )
+            Row(horizontalArrangement = Arrangement.spacedBy(3.dp)) {
+                doneFlags.forEach { done ->
+                    Box(
+                        Modifier
+                            .size(width = 10.dp, height = 4.dp)
+                            .background(if (done) Ummi.colors.primary else Ummi.colors.line, RoundedCornerShape(2.dp)),
+                    )
+                }
+            }
+        }
         Spacer(Modifier.height(8.dp))
         Text(text = act.cat, fontSize = 13.sp, color = Ummi.colors.accentText)
         Text(text = act.t, fontFamily = Literata, fontWeight = FontWeight.SemiBold, fontSize = 21.sp, color = Ummi.colors.ink)

@@ -6,6 +6,7 @@ import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.ScrollState
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -37,7 +38,11 @@ import com.szainabbas.ummi.ui.theme.Ummi
 private val DUA_TAB_ORDER = listOf("Pregnancy", "Easy delivery", "After birth", "Daily dhikr")
 
 @Composable
-fun DuasScreen(data: UmmiData, onOpenReader: (ReaderKey) -> Unit) {
+fun DuasScreen(
+    data: UmmiData,
+    onOpenReader: (ReaderKey) -> Unit,
+    scrollState: ScrollState = rememberScrollState(),
+) {
     val tabs = DUA_TAB_ORDER.filter { data.duas.containsKey(it) } + "Qurʾān"
     var selectedTab by remember { mutableStateOf(tabs.first()) }
 
@@ -67,7 +72,7 @@ fun DuasScreen(data: UmmiData, onOpenReader: (ReaderKey) -> Unit) {
 
         Spacer(Modifier.height(12.dp))
 
-        Column(modifier = Modifier.fillMaxWidth().weight(1f).verticalScroll(rememberScrollState())) {
+        Column(modifier = Modifier.fillMaxWidth().weight(1f).verticalScroll(scrollState)) {
             if (selectedTab == "Qurʾān") {
                 QuranTab(data, onOpenReader)
             } else {

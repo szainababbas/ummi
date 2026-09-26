@@ -4,6 +4,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.ScrollState
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -57,12 +58,13 @@ fun MoreScreen(
     onImportBackup: () -> Unit,
     onResetApp: () -> Unit,
     onOpenReminders: () -> Unit,
+    scrollState: ScrollState = rememberScrollState(),
 ) {
     var showResetConfirm by remember { mutableStateOf(false) }
     var showDuePicker by remember { mutableStateOf(false) }
     var journalText by remember { mutableStateOf("") }
 
-    Column(modifier = Modifier.fillMaxWidth().verticalScroll(rememberScrollState())) {
+    Column(modifier = Modifier.fillMaxWidth().verticalScroll(scrollState)) {
         Text("More", fontFamily = Literata, fontWeight = FontWeight.SemiBold, fontSize = 26.sp, modifier = Modifier.padding(20.dp, 12.dp), color = Ummi.colors.ink)
 
         ProfileCard(appState, onSetName)

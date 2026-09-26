@@ -41,6 +41,42 @@ class DailyPlanTest {
         assertEquals(listOf("salah", "water"), DailyPlan.tasksFor(null, base, sunday).map { it.id })
     }
 
+    private val abc = listOf(act("a", null), act("b", null), act("c", null))
+
+    @Test
+    fun `puts the first open task up next`() {
+        assertEquals("a", DailyPlan.upNext(abc, done = emptySet(), skipped = emptySet())?.id)
+        assertEquals("b", DailyPlan.upNext(abc, done = setOf("a"), skipped = emptySet())?.id)
+        assertNull(DailyPlan.upNext(abc, done = setOf("a", "b", "c"), skipped = emptySet()))
+    }
+
+    /** Presses "Later" [times] times and records what was up next before each press. */
+    private fun pressLater(times: Int, done: Set<String>): List<String> {
+        var skipped = emptySet<String>()
+        return List(times) {
+            val next = DailyPlan.upNext(abc, done, skipped)!!
+            skipped = DailyPlan.later(abc, done, skipped, next)
+            next.id
+        }
+    }
+
+    @Test
+    fun `later moves on through the open tasks and keeps wrapping round`() {
+        assertEquals(listOf("a", "b", "c", "a", "b", "c", "a"), pressLater(7, done = emptySet()))
+    }
+
+    @Test
+    fun `later skips over tasks already done, and still wraps round`() {
+        assertEquals(listOf("a", "c", "a", "c", "a"), pressLater(5, done = setOf("b")))
+    }
+
+    @Test
+    fun `later on the only open task leaves it up next`() {
+        val done = setOf("a", "b")
+        val only = DailyPlan.upNext(abc, done, emptySet())!!
+        assertEquals("c", DailyPlan.upNext(abc, done, DailyPlan.later(abc, done, emptySet(), only))?.id)
+    }
+
     @Test
     fun `has nothing to hand out without a month`() {
         assertEquals(emptyList<ActEntry>(), DailyPlan.actsFor(null, sunday))

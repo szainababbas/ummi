@@ -29,6 +29,21 @@ object DailyPlan {
     fun tasksFor(month: MonthEntry?, baseTasks: List<ActEntry>, date: LocalDate): List<ActEntry> =
         actsFor(month, date) + baseTasks
 
+    /** The "Up next" card: the first task neither done nor put off with "Later". */
+    fun upNext(tasks: List<ActEntry>, done: Collection<String>, skipped: Collection<String>): ActEntry? =
+        tasks.firstOrNull { it.id !in done && it.id !in skipped } ?: tasks.firstOrNull { it.id !in done }
+
+    /**
+     * "Later" on [current]: move on to the next open task, and once every open
+     * task has been put off, start again from the top (the handoff's "Later
+     * cycles to the next open item"). Returns the new set of put-off ids.
+     */
+    fun later(tasks: List<ActEntry>, done: Collection<String>, skipped: Set<String>, current: ActEntry): Set<String> {
+        val putOff = skipped + current.id
+        val open = tasks.map { it.id }.filter { it !in done }
+        return if (open.all { it in putOff }) emptySet() else putOff
+    }
+
     /** The PWA's `DUA_TODAY[dayIndex() % length]`, where dayIndex is the day of the year. */
     fun duaTodayIndex(date: LocalDate, count: Int): Int? =
         if (count <= 0) null else date.dayOfYear % count

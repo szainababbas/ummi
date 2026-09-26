@@ -1,5 +1,6 @@
 package com.szainabbas.ummi.ui.screenshots
 
+import androidx.compose.foundation.ScrollState
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
@@ -31,13 +32,15 @@ import java.time.LocalDate
  * `recordPaparazziDebug` and uploads the images as the "screenshots"
  * artifact, so each build's screens can be looked at without a phone.
  *
- * The phone is tall enough to show a whole screen without scrolling, and
- * the date is fixed, so the images only change when the app does.
+ * Paparazzi shrinks every image to 1000px on its long side, so a whole
+ * screen in one very tall image comes out too narrow to read. Long screens
+ * are shot a page at a time instead, at a normal phone height. The date is
+ * fixed, so the images only change when the app does.
  */
 class ScreenshotTest {
     @get:Rule
     val paparazzi = Paparazzi(
-        deviceConfig = DeviceConfig.PIXEL_5.copy(screenHeight = 6000),
+        deviceConfig = DeviceConfig.PIXEL_5,
         theme = "android:Theme.Material.NoActionBar",
     )
 
@@ -56,12 +59,17 @@ class ScreenshotTest {
         ),
     )
 
-    private fun shot(name: String, content: @Composable () -> Unit) {
+    /** A page is most of a Pixel 5's 2340px height, leaving a little overlap between shots. */
+    private val pagePx = 1900
+
+    private fun shot(name: String, pages: Int = 1, content: @Composable (ScrollState) -> Unit) {
         for (mode in listOf(UmmiThemeMode.LIGHT, UmmiThemeMode.DARK)) {
-            paparazzi.snapshot(name = "${name}_${mode.name.lowercase()}") {
-                UmmiTheme(mode = mode) {
-                    Surface(color = MaterialTheme.colorScheme.background, modifier = Modifier.fillMaxSize()) {
-                        content()
+            for (page in 1..pages) {
+                paparazzi.snapshot(name = "${name}_p${page}_${mode.name.lowercase()}") {
+                    UmmiTheme(mode = mode) {
+                        Surface(color = MaterialTheme.colorScheme.background, modifier = Modifier.fillMaxSize()) {
+                            content(ScrollState(initial = (page - 1) * pagePx))
+                        }
                     }
                 }
             }
@@ -69,7 +77,7 @@ class ScreenshotTest {
     }
 
     @Composable
-    private fun Today(appState: AppState) = TodayScreen(
+    private fun Today(appState: AppState, scroll: ScrollState) = TodayScreen(
         data = data,
         appState = appState,
         onToggleTask = {},
@@ -79,32 +87,33 @@ class ScreenshotTest {
         onOpenWeek = {},
         onOpenMonth = {},
         today = today,
+        scrollState = scroll,
     )
 
     @Test
     fun startScreen() = shot("start") { DueDateGateScreen(onSetDueDate = {}) }
 
     @Test
-    fun today() = shot("today") { Today(state) }
+    fun today() = shot("today", pages = 3) { Today(state, it) }
 
     @Test
     fun todayAllDone() {
         val month = data.months[PregnancyMath.currentMonthNumber(28, data.months).toString()]
         val allIds = DailyPlan.tasksFor(month, data.baseTasks, today).map { it.id }
         val done = state.copy(done = mapOf(todayKey to allIds), duaDone = mapOf(todayKey to true))
-        shot("today_complete") { Today(done) }
+        shot("today_complete", pages = 2) { Today(done, it) }
     }
 
     @Test
-    fun journey() = shot("journey") {
-        JourneyScreen(data = data, currentWeek = 28, currentMonth = 7, onOpenReader = {})
+    fun journey() = shot("journey", pages = 3) {
+        JourneyScreen(data = data, currentWeek = 28, currentMonth = 7, onOpenReader = {}, scrollState = it)
     }
 
     @Test
-    fun duas() = shot("duas") { DuasScreen(data = data, onOpenReader = {}) }
+    fun duas() = shot("duas", pages = 2) { DuasScreen(data = data, onOpenReader = {}, scrollState = it) }
 
     @Test
-    fun more() = shot("more") {
+    fun more() = shot("more", pages = 2) {
         MoreScreen(
             appState = state,
             themeMode = UmmiThemeMode.SYSTEM,
@@ -117,6 +126,7 @@ class ScreenshotTest {
             onImportBackup = {},
             onResetApp = {},
             onOpenReminders = {},
+            scrollState = it,
         )
     }
 }

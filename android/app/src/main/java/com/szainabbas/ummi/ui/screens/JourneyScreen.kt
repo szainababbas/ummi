@@ -4,6 +4,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.ScrollState
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -39,9 +40,10 @@ fun JourneyScreen(
     currentWeek: Int,
     currentMonth: Int,
     onOpenReader: (ReaderKey) -> Unit,
+    scrollState: ScrollState = rememberScrollState(),
 ) {
     var tab by remember { mutableStateOf(JourneyTab.WEEK) }
-    Column(modifier = Modifier.fillMaxWidth().verticalScroll(rememberScrollState())) {
+    Column(modifier = Modifier.fillMaxWidth().verticalScroll(scrollState)) {
         Text("Your journey", fontFamily = Literata, fontWeight = FontWeight.SemiBold, fontSize = 26.sp, modifier = Modifier.padding(20.dp, 12.dp), color = Ummi.colors.ink)
         SegmentedControl(
             options = listOf("Week" to JourneyTab.WEEK, "Month" to JourneyTab.MONTH, "Food" to JourneyTab.FOOD),
