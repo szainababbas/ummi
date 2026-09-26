@@ -168,12 +168,7 @@ private fun MonthTab(data: UmmiData, currentMonth: Int, onOpenReader: (ReaderKey
 
 @Composable
 private fun ActRow(act: ActEntry, onOpenReader: (ReaderKey) -> Unit) {
-    val readerKey = when {
-        act.surah != null -> ReaderKey.forSurah(act.surah)
-        act.ayah != null -> ReaderKey.forAyah(act.ayah)
-        act.dua != null -> ReaderKey.forDua(act.dua)
-        else -> null
-    }
+    val readerKey = ReaderKey.forAct(act)
     Row(modifier = Modifier.fillMaxWidth().padding(vertical = 8.dp), verticalAlignment = Alignment.CenterVertically) {
         Column(modifier = Modifier.weight(1f)) {
             Text(act.t, fontWeight = FontWeight.SemiBold, fontSize = 15.sp, color = Ummi.colors.ink)

@@ -572,6 +572,71 @@ describe('the shipped file', () => {
   });
 });
 
+/* ------------------------------------------------------------ the Android app */
+/* The Android app (android/) is a separate codebase that must stay compatible
+   with this one: same content, and backups that restore in either direction.
+   tests/fixtures/backup-compat.json is checked by both suites. */
+describe('android app compatibility', () => {
+  const fs = require('fs');
+  const path = require('path');
+  const { ROOT } = require('./harness');
+  const fixture = JSON.parse(fs.readFileSync(path.join(__dirname, 'fixtures', 'backup-compat.json'), 'utf8'));
+
+  function canonical(v) {
+    if (Array.isArray(v)) return v.map(canonical);
+    if (v && typeof v === 'object') {
+      const out = {};
+      for (const k of Object.keys(v).sort()) out[k] = canonical(v[k]);
+      return out;
+    }
+    return v;
+  }
+
+  /* The first path at which two JSON values differ, so a failure names the field
+     rather than dumping the whole of WEEKS. */
+  function firstDiff(a, b, at) {
+    if (JSON.stringify(canonical(a)) === JSON.stringify(canonical(b))) return null;
+    if (a && b && typeof a === 'object' && typeof b === 'object') {
+      for (const k of new Set([...Object.keys(a), ...Object.keys(b)])) {
+        const d = firstDiff(a[k], b[k], at + '.' + k);
+        if (d) return d;
+      }
+    }
+    return at + ': index.html has ' + JSON.stringify(b) + ', Android has ' + JSON.stringify(a);
+  }
+
+  it('ships the same content as index.html', () => {
+    const asset = JSON.parse(fs.readFileSync(path.join(ROOT, 'android/app/src/main/assets/ummi-data.json'), 'utf8'));
+    for (const key of ['WEEKS', 'MONTHS', 'FOOD', 'DUAS', 'DUA_TEXTS', 'DUA_TODAY', 'BISMILLAH', 'AYAHS', 'SURAHS']) {
+      const d = firstDiff(asset[key], data[key], key);
+      ok(!d, 'android/app/src/main/assets/ummi-data.json is out of date with index.html at ' + d);
+    }
+  });
+
+  it('restores every shared valid file with the same result the Android app gets', () => {
+    for (const c of fixture.valid) {
+      const s = T.readBackup(c.file);
+      ok(s, 'rejected: ' + c.why);
+      for (const k of Object.keys(c.expect)) eq(s[k], c.expect[k], c.why + ', field ' + k);
+    }
+  });
+
+  it('rejects every shared invalid file', () => {
+    for (const junk of fixture.invalid) eq(T.readBackup(junk), null, 'accepted junk: ' + junk);
+  });
+
+  it('restores a backup written by the Android app', () => {
+    const s = T.readBackup(fixture.androidBackup.file);
+    ok(s, 'the Android backup was not recognised');
+    for (const k of Object.keys(fixture.androidBackup.state)) eq(s[k], fixture.androidBackup.state[k], 'field ' + k);
+  });
+
+  it('writes the same readable record as the Android app', () => {
+    T.setState(JSON.parse(JSON.stringify(fixture.history.state)));
+    eq(T.historyText().replace(/^Exported .*$/m, 'Exported ' + fixture.history.today), fixture.history.text);
+  });
+});
+
 /* ---------------------------------------------------------------------- results */
 const total = passed + failures.length;
 if (failures.length) {

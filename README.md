@@ -14,7 +14,9 @@ Live at <https://szainababbas.github.io/ummi/>.
   `CACHE` when shipping, so old caches are dropped on activate.
 - `manifest.json`, `icon-*.png` — what makes it installable to the home screen.
 - `tools/` — the Qurʾān text generator. See `tools/README.md`.
-- `tests/` — the test suite (for `index.html`, the web app).
+- `tests/` — the web app's test suite, plus `fixtures/` shared with the Android
+  app's tests.
+- `CLAUDE.md` — working rules for this repo (tests with every change).
 - `android/` — a native Android app (Kotlin + Jetpack Compose), a from-scratch
   redesign rather than a wrapper around `index.html`. See "Android app" below.
 - `design/handoff-android/` — the design handoff the Android app is built from
@@ -58,6 +60,14 @@ journal escaping, the all-day event end date or the restore path each make it fa
 What the tests do not cover, and is still checked by hand in a browser: layout,
 colour and contrast in both themes, and whether a download actually lands.
 
+The Android app has its own JVM unit tests: `cd android && ./gradlew
+testDebugUnitTest`. They cover the week and month maths, which acts land on
+which day, state changes, the bundled content's integrity, and the backup
+format. `tests/fixtures/backup-compat.json` is shared by both suites, so a
+backup written by either app must restore in the other, and `tests/run.js`
+fails if the Android app's copy of the content drifts from `index.html`. Both
+suites run in CI on every pull request.
+
 ## Deploying
 
 GitHub Pages serves `main` directly, so a push is the deploy. Bump `CACHE` in
@@ -80,11 +90,8 @@ Build it:
   `cd android && ./gradlew assembleDebug`, APK lands in
   `android/app/build/outputs/apk/debug/`.
 - **CI, no local Android SDK needed** — `.github/workflows/android.yml` builds a
-  debug APK on every push to `main` and on pull requests, and uploads it as a
-  workflow artifact. This is also the first place the app actually gets
-  compiled — this repo's own dev environment has no Android SDK and blocks
-  `dl.google.com`, so the Gradle project here has not been built locally, only
-  written carefully and sanity-checked by hand.
+  debug APK on every push to `main` and on pull requests, runs the unit tests,
+  and uploads the APK as a workflow artifact.
 
 App id `com.szainabbas.ummi`. Fonts (Literata, Figtree, Amiri) are bundled from
 google/fonts under `res/font/`; launcher icon and adaptive-icon background are

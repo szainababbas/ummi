@@ -1,6 +1,5 @@
 package com.szainabbas.ummi.data
 
-import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 /**
@@ -29,11 +28,30 @@ data class JournalEntry(
     val t: String,
 )
 
-/** The wrapper the PWA writes to a backup file: `{app, schema, exportedAt, state}`. */
+/**
+ * The wrapper the PWA writes to a backup file: `{app, schema, exportedAt, state}`.
+ * No default values: kotlinx.serialization leaves defaulted fields out of the
+ * JSON, and the PWA only recognises the file when `app` is present.
+ */
 @Serializable
 data class BackupPayload(
-    val app: String = "ummi",
-    val schema: Int = 1,
+    val app: String,
+    val schema: Int,
     val exportedAt: String,
     val state: AppState,
 )
+
+fun AppState.withTaskToggled(id: String, dateKey: String): AppState {
+    val list = done[dateKey].orEmpty()
+    return copy(done = done + (dateKey to if (id in list) list - id else list + id))
+}
+
+fun AppState.withDuaRecitedToggled(dateKey: String): AppState =
+    copy(duaDone = duaDone + (dateKey to !(duaDone[dateKey] ?: false)))
+
+/** Newest first and trimmed, as the PWA's `saveJournal`; blank text changes nothing. */
+fun AppState.withJournalEntry(text: String, dateKey: String): AppState {
+    val trimmed = text.trim()
+    if (trimmed.isEmpty()) return this
+    return copy(journal = listOf(JournalEntry(dateKey, trimmed)) + journal)
+}

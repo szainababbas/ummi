@@ -5,9 +5,12 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
 import com.szainabbas.ummi.data.AppState
 import com.szainabbas.ummi.data.AppStateRepository
-import com.szainabbas.ummi.data.JournalEntry
+import com.szainabbas.ummi.data.BackupCodec
 import com.szainabbas.ummi.data.UmmiDataRepository
 import com.szainabbas.ummi.data.model.UmmiData
+import com.szainabbas.ummi.data.withDuaRecitedToggled
+import com.szainabbas.ummi.data.withJournalEntry
+import com.szainabbas.ummi.data.withTaskToggled
 import com.szainabbas.ummi.domain.PregnancyMath
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -16,6 +19,7 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import java.time.Instant
 import java.time.LocalDate
 
 data class UmmiUiState(
@@ -25,11 +29,9 @@ data class UmmiUiState(
 )
 
 /**
- * Single source of truth for content ([UmmiData], loaded once from assets)
- * and for the user's own state ([AppState], persisted through
- * [AppStateRepository]). Every mutation updates [uiState] immediately and
- * persists in the background — the same read-then-save-on-every-change
- * pattern the PWA uses with `localStorage`, just async.
+ * Holds content ([UmmiData], loaded once from assets) and the user's own
+ * [AppState]. Each change updates [uiState] straight away and is persisted
+ * in the background, like the PWA's save-on-every-change to localStorage.
  */
 class UmmiViewModel(application: Application) : AndroidViewModel(application) {
     private val stateRepo = AppStateRepository(application)
@@ -45,41 +47,33 @@ class UmmiViewModel(application: Application) : AndroidViewModel(application) {
         }
     }
 
-    private fun mutate(block: (AppState) -> AppState) {
-        val updated = block(_uiState.value.appState)
+    private fun replaceState(updated: AppState) {
         _uiState.update { it.copy(appState = updated) }
         viewModelScope.launch(Dispatchers.IO) { stateRepo.save(updated) }
     }
 
-    fun toggleTask(id: String) = mutate { s ->
-        val key = PregnancyMath.todayKey()
-        val list = s.done[key] ?: emptyList()
-        s.copy(done = s.done + (key to if (id in list) list - id else list + id))
-    }
+    private fun mutate(block: (AppState) -> AppState) = replaceState(block(_uiState.value.appState))
 
-    fun toggleDuaRecitedToday() = mutate { s ->
-        val key = PregnancyMath.todayKey()
-        s.copy(duaDone = s.duaDone + (key to !(s.duaDone[key] ?: false)))
-    }
+    fun toggleTask(id: String) = mutate { it.withTaskToggled(id, PregnancyMath.todayKey()) }
 
-    fun addJournalEntry(text: String) {
-        if (text.isBlank()) return
-        mutate { s -> s.copy(journal = listOf(JournalEntry(PregnancyMath.todayKey(), text)) + s.journal) }
-    }
+    fun toggleDuaRecitedToday() = mutate { it.withDuaRecitedToggled(PregnancyMath.todayKey()) }
+
+    fun addJournalEntry(text: String) = mutate { it.withJournalEntry(text, PregnancyMath.todayKey()) }
 
     fun setDueDate(date: LocalDate) = mutate { it.copy(dueDate = date.toString()) }
 
-    fun setName(name: String) = mutate { it.copy(name = name.ifBlank { null }) }
+    fun setName(name: String) = mutate { it.copy(name = name.trim().ifBlank { null }) }
 
     fun setThemeMode(mode: String) = mutate { it.copy(theme = mode) }
 
-    fun exportBackupJson(): String = stateRepo.exportBackupJson(_uiState.value.appState)
+    fun exportBackupJson(): String = BackupCodec.encodeBackup(_uiState.value.appState, Instant.now())
+
+    fun historyText(): String = BackupCodec.historyText(_uiState.value.appState, LocalDate.now())
 
     /** Returns false (and leaves state untouched) if [text] isn't a recognised Ummi backup. */
     fun importBackupJson(text: String): Boolean {
-        val parsed = stateRepo.parseBackupJson(text) ?: return false
-        _uiState.update { it.copy(appState = parsed) }
-        viewModelScope.launch(Dispatchers.IO) { stateRepo.save(parsed) }
+        val parsed = BackupCodec.decodeBackup(text) ?: return false
+        replaceState(parsed)
         return true
     }
 

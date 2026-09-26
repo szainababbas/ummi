@@ -35,15 +35,24 @@ object PregnancyMath {
         else -> 3
     }
 
-    /** Which of the nine MONTHS guide entries a week falls into (1-indexed, matches JSON keys). */
+    /** Mirrors the PWA's `monthOf(w)`: the month whose range holds the week, else 1 below every range and 9 above. */
     fun currentMonthNumber(week: Int, months: Map<String, MonthEntry>): Int {
-        val match = months.entries.firstOrNull { (_, m) -> week in m.from..m.to }
-        return match?.key?.toIntOrNull() ?: months.keys.mapNotNull { it.toIntOrNull() }.minOrNull() ?: 1
+        for (m in 1..9) {
+            val range = months[m.toString()] ?: continue
+            if (week in range.from..range.to) return m
+        }
+        return if (week < 1) 1 else 9
+    }
+
+    /** The PWA's `sizeSentence`: "About the size of a poppy seed" / "an apple". */
+    fun sizeSentence(size: String): String {
+        val article = if (size.firstOrNull()?.lowercaseChar() in setOf('a', 'e', 'i', 'o', 'u')) "an" else "a"
+        return "About the size of $article ${size.lowercase()}"
     }
 
     fun todayKey(today: LocalDate = LocalDate.now()): String = today.format(isoDate)
 
     /** e.g. "9 Jan" for the "Due ≈ 9 Jan" meta line. */
     fun shortDate(date: LocalDate): String =
-        date.format(DateTimeFormatter.ofPattern("d MMM"))
+        date.format(DateTimeFormatter.ofPattern("d MMM", java.util.Locale.UK))
 }

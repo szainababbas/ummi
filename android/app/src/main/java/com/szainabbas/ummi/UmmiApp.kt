@@ -65,28 +65,7 @@ fun UmmiApp(viewModel: UmmiViewModel = viewModel()) {
     }
     val exportHistoryLauncher = rememberLauncherForActivityResult(ActivityResultContracts.CreateDocument("text/plain")) { uri: Uri? ->
         if (uri == null) return@rememberLauncherForActivityResult
-        // A plain-text record (not JSON, so it can't be restored) — same
-        // "readable record" the PWA offers, generated the same way: from
-        // the current state's done/duaDone/journal.
-        val state = uiState.appState
-        val text = buildString {
-            appendLine("Ummi — your record")
-            appendLine("Exported ${PregnancyMath.todayKey()}")
-            appendLine()
-            appendLine("Due date: ${state.dueDate ?: "not set"}")
-            if (!state.name.isNullOrBlank()) appendLine("Name: ${state.name}")
-            appendLine()
-            val days = (state.done.keys + state.duaDone.keys).distinct().sorted()
-            appendLine("DAILY RECORD (${days.size} days)")
-            days.forEach { d ->
-                val n = state.done[d]?.size ?: 0
-                val dua = if (state.duaDone[d] == true) ", dua recited" else ""
-                appendLine("  $d — $n item${if (n == 1) "" else "s"} ticked$dua")
-            }
-            appendLine()
-            appendLine("REFLECTIONS (${state.journal.size})")
-            state.journal.forEach { appendLine("  ${it.d} — ${it.t}") }
-        }
+        val text = viewModel.historyText()
         scope.launch(Dispatchers.IO) {
             context.contentResolver.openOutputStream(uri)?.use { it.write(text.toByteArray()) }
         }

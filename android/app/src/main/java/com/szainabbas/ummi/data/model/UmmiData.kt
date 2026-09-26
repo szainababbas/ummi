@@ -2,6 +2,7 @@ package com.szainabbas.ummi.data.model
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
+import kotlinx.serialization.json.Json
 
 /**
  * Mirrors `ummi-data.json` exactly (itself generated from the PWA's own
@@ -19,7 +20,13 @@ data class UmmiData(
     @SerialName("BISMILLAH") val bismillah: BismillahEntry,
     @SerialName("AYAHS") val ayahs: Map<String, AyahEntry>,
     @SerialName("SURAHS") val surahs: Map<String, SurahEntry>,
-)
+) {
+    companion object {
+        private val json = Json { ignoreUnknownKeys = true }
+
+        fun parse(text: String): UmmiData = json.decodeFromString(serializer(), text)
+    }
+}
 
 @Serializable
 data class WeekEntry(
@@ -140,5 +147,13 @@ sealed class ReaderKey {
         fun forSurah(no: Int) = Surah(no)
         fun forAyah(ref: String) = Ayah(ref)
         fun forDua(id: String) = Dua(id)
+
+        /** The text an act links to, which is what gives it a "Read" button; null if none. */
+        fun forAct(act: ActEntry): ReaderKey? = when {
+            act.surah != null -> Surah(act.surah)
+            act.ayah != null -> Ayah(act.ayah)
+            act.dua != null -> Dua(act.dua)
+            else -> null
+        }
     }
 }

@@ -37,6 +37,7 @@ import com.szainabbas.ummi.data.AppState
 import com.szainabbas.ummi.data.model.ActEntry
 import com.szainabbas.ummi.data.model.ReaderKey
 import com.szainabbas.ummi.data.model.UmmiData
+import com.szainabbas.ummi.domain.DailyPlan
 import com.szainabbas.ummi.domain.PregnancyMath
 import com.szainabbas.ummi.ui.theme.Amiri
 import com.szainabbas.ummi.ui.theme.Literata
@@ -62,16 +63,10 @@ fun TodayScreen(
     val daysToGo = PregnancyMath.daysToGo(dueDate, today)
     val weekInfo = data.weeks[week.toString()]
     val monthNo = PregnancyMath.currentMonthNumber(week, data.months)
-    val jsWeekday = today.dayOfWeek.value % 7
-    val todaysActs = remember(week, jsWeekday, data) {
-        data.months[monthNo.toString()]?.acts
-            ?.filter { it.days == null || jsWeekday in it.days }
-            ?.sortedByDescending { it.days != null }
-            ?: emptyList()
-    }
+    val todaysActs = remember(monthNo, today, data) { DailyPlan.actsFor(data.months[monthNo.toString()], today) }
     val doneToday = appState.done[PregnancyMath.todayKey(today)] ?: emptyList()
     val nextAct = todaysActs.firstOrNull { it.id !in doneToday }
-    val duaToday = if (data.duaToday.isNotEmpty()) data.duaToday[today.dayOfYear % data.duaToday.size] else null
+    val duaToday = DailyPlan.duaTodayIndex(today, data.duaToday.size)?.let { data.duaToday[it] }
     val duaRecited = appState.duaDone[PregnancyMath.todayKey(today)] ?: false
 
     Column(modifier = Modifier.fillMaxWidth().verticalScroll(rememberScrollState())) {
@@ -96,7 +91,7 @@ fun TodayScreen(
             doneCount = todaysActs.count { it.id in doneToday },
             onDone = { nextAct?.let { onToggleTask(it.id) } },
             onLater = { /* cycles to the next open item; the list order already keeps this simple */ },
-            onRead = { act -> readerKeyFor(act)?.let(onOpenReader) },
+            onRead = { act -> ReaderKey.forAct(act)?.let(onOpenReader) },
         )
 
         if (duaToday != null) {
@@ -124,7 +119,7 @@ fun TodayScreen(
                 done = act.id in doneToday,
                 isUpNext = act.id == nextAct?.id,
                 onToggle = { onToggleTask(act.id) },
-                onRead = { readerKeyFor(act)?.let(onOpenReader) },
+                onRead = { ReaderKey.forAct(act)?.let(onOpenReader) },
             )
         }
 
@@ -136,13 +131,6 @@ fun TodayScreen(
             modifier = Modifier.padding(20.dp),
         )
     }
-}
-
-private fun readerKeyFor(act: ActEntry): ReaderKey? = when {
-    act.surah != null -> ReaderKey.forSurah(act.surah)
-    act.ayah != null -> ReaderKey.forAyah(act.ayah)
-    act.dua != null -> ReaderKey.forDua(act.dua)
-    else -> null
 }
 
 @Composable
@@ -193,7 +181,7 @@ private fun ProgressRing(week: Int, daysToGo: Int?, sizeDesc: String?) {
                 Text("$daysToGo days to go", fontSize = 13.sp, color = Ummi.colors.ink2)
             }
             if (sizeDesc != null) {
-                Text("About the size of ${sizeDesc.lowercase()}", fontFamily = Literata, fontSize = 14.sp, color = Ummi.colors.ink, textAlign = TextAlign.Center)
+                Text(PregnancyMath.sizeSentence(sizeDesc), fontFamily = Literata, fontSize = 14.sp, color = Ummi.colors.ink, textAlign = TextAlign.Center)
             }
         }
     }
@@ -284,7 +272,7 @@ private fun UpNextCard(
                 Spacer(Modifier.width(6.dp))
                 Text("Done")
             }
-            if (readerKeyFor(act) != null) {
+            if (ReaderKey.forAct(act) != null) {
                 Button(
                     onClick = { onRead(act) },
                     colors = ButtonDefaults.buttonColors(containerColor = Ummi.colors.pc, contentColor = Ummi.colors.onpc),
@@ -361,7 +349,7 @@ private fun TaskRow(act: ActEntry, done: Boolean, isUpNext: Boolean, onToggle: (
                 Text(text = act.s, fontSize = 13.sp, color = Ummi.colors.ink2)
             }
         }
-        if (readerKeyFor(act) != null) {
+        if (ReaderKey.forAct(act) != null) {
             OutlinedButton(onClick = onRead, contentPadding = androidx.compose.foundation.layout.PaddingValues(horizontal = 12.dp, vertical = 4.dp)) {
                 Text("Read", fontSize = 12.sp)
             }
