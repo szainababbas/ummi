@@ -1,0 +1,12 @@
+{
+  "appId": "com.szainabbas.ummi",
+  "appName": "Ummi",
+  "webDir": "www",
+  "backgroundColor": "#F7F3EA",
+  "android": {
+    "backgroundColor": "#F7F3EA"
+  },
+  "server": {
+    "androidScheme": "https"
+  }
+}

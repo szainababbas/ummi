@@ -13,8 +13,10 @@ Live at <https://szainababbas.github.io/ummi/>.
   as soon as the phone is online and the app still opens when it is not. Bump
   `CACHE` when shipping, so old caches are dropped on activate.
 - `manifest.json`, `icon-*.png` — what makes it installable to the home screen.
-- `tools/` — the Qurʾān text generator. See `tools/README.md`.
+- `tools/` — the Qurʾān text generator and `sync-web.js`. See `tools/README.md`.
 - `tests/` — the test suite.
+- `android/` — a Capacitor wrapper around the same `index.html`, for a real,
+  installable APK. See "Android app" below.
 
 ### Data
 
@@ -57,3 +59,33 @@ colour and contrast in both themes, and whether a download actually lands.
 
 GitHub Pages serves `main` directly, so a push is the deploy. Bump `CACHE` in
 `sw.js` in the same commit as any change to `index.html`.
+
+## Android app
+
+`index.html` is still the one source of truth. `android/` is a
+[Capacitor](https://capacitorjs.com) wrapper that loads a synced copy of it in a
+native WebView, so it installs and runs like any other app instead of needing
+"Add to Home screen" in Chrome.
+
+    npm install
+    npm run android:sync   # copies index.html, sw.js, manifest.json, icons into
+                            # www/ and into android/app/src/main/assets/public
+
+From there, either:
+
+- **Android Studio** — `npm run android:open` (needs `ANDROID_HOME` set), or
+  open the `android/` folder directly, then Run.
+- **Command line** — needs the Android SDK installed locally:
+  `cd android && ./gradlew assembleDebug`, APK lands in
+  `android/app/build/outputs/apk/debug/`.
+- **CI, no local Android SDK needed** — `.github/workflows/android.yml` builds a
+  debug APK on every push to `main` and on pull requests, and uploads it as a
+  workflow artifact.
+
+Whenever `index.html`, `sw.js`, `manifest.json` or the icons change, run
+`npm run android:sync` before rebuilding the Android app — it is a plain copy,
+not automatic. App id is `com.szainabbas.ummi`; launcher icon and splash screen
+are generated from `resources/icon.png` via `npx @capacitor/assets generate`.
+
+Release signing (a real keystore, not the debug one) is not set up yet — needed
+before a Play Store submission, not for sideloading test builds.
