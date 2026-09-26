@@ -2,16 +2,8 @@
   "name": "ummi",
   "version": "1.0.0",
   "private": true,
-  "description": "Ummi — a week-by-week pregnancy companion. Web app plus Android wrapper.",
+  "description": "Ummi — a week-by-week pregnancy companion.",
   "scripts": {
-    "sync-web": "node tools/sync-web.js",
-    "android:sync": "npm run sync-web && npx cap sync android",
-    "android:open": "npm run android:sync && npx cap open android",
     "test": "node tests/run.js"
-  },
-  "devDependencies": {
-    "@capacitor/android": "^6.2.0",
-    "@capacitor/cli": "^6.2.0",
-    "@capacitor/core": "^6.2.0"
   }
 }

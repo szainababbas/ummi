@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<div style="height:100%;overflow-y:auto;scrollbar-width:none;background:var(--bg);color:var(--ink);font-family:Figtree,sans-serif">
+<div style="display:flex;align-items:center;gap:4px;padding:4px 8px 8px">
+<button onClick="{{ back }}" aria-label="Back" style="width:48px;height:48px;border-radius:24px;border:none;background:transparent;color:var(--ink);display:flex;align-items:center;justify-content:center;cursor:pointer"><span style="font-family:'Material Symbols Rounded';font-size:24px;line-height:1">arrow_back</span></button>
+<div style="font-family:Literata,serif;font-weight:600;font-size:22px">Reminders</div>
+</div>
+
+<div style="margin:0 16px 20px;background:var(--pc);color:var(--onpc);border-radius:20px;padding:14px 16px;display:flex;align-items:center;gap:12px">
+<span style="font-family:'Material Symbols Rounded';font-size:22px;line-height:1">check_circle</span>
+<div style="flex:1;font-size:14px;line-height:1.45">Notifications are allowed. Prayer times are worked out for London.</div>
+<div style="font-size:14px;font-weight:700">Change</div>
+</div>
+
+<div style="font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--accentText);margin:0 20px 8px">Every day</div>
+<div style="margin:0 16px 20px;background:var(--surface);border:1px solid var(--line);border-radius:20px;overflow:hidden">
+<sc-for list="{{ daily }}" as="r" hint-placeholder-count="3">
+<div onClick="{{ r.toggle }}" style="display:flex;align-items:center;gap:16px;padding:14px 16px;border-bottom:1px solid var(--line);cursor:pointer">
+<span style="font-family:'Material Symbols Rounded';font-size:24px;line-height:1;color:var(--primary)">{{ r.icon }}</span>
+<div style="flex:1;min-width:0"><div style="font-size:16px">{{ r.t }}</div><div style="font-size:13px;color:var(--ink2);margin-top:1px">{{ r.s }}</div></div>
+<div style="width:52px;height:32px;border-radius:16px;background:{{ r.track }};border:2px solid {{ r.bd }};box-sizing:border-box;position:relative;flex:none"><div style="position:absolute;top:50%;left:{{ r.x }};width:{{ r.k }};height:{{ r.k }};transform:translateY(-50%);border-radius:12px;background:{{ r.knob }};transition:left .15s"></div></div>
+</div>
+</sc-for>
+</div>
+
+<div style="font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--accentText);margin:0 20px 8px">Today · Friday</div>
+<div style="margin:0 16px 20px;background:var(--surface);border:1px solid var(--line);border-radius:20px;overflow:hidden">
+<sc-for list="{{ today }}" as="r" hint-placeholder-count="3">
+<div onClick="{{ r.toggle }}" style="display:flex;align-items:center;gap:16px;padding:14px 16px;border-bottom:1px solid var(--line);cursor:pointer">
+<div style="width:56px;flex:none;font-size:14px;font-weight:700;color:var(--accentText)">{{ r.time }}</div>
+<div style="flex:1;min-width:0"><div style="font-size:15px;line-height:1.35">{{ r.t }}</div></div>
+<div style="width:52px;height:32px;border-radius:16px;background:{{ r.track }};border:2px solid {{ r.bd }};box-sizing:border-box;position:relative;flex:none"><div style="position:absolute;top:50%;left:{{ r.x }};width:{{ r.k }};height:{{ r.k }};transform:translateY(-50%);border-radius:12px;background:{{ r.knob }};transition:left .15s"></div></div>
+</div>
+</sc-for>
+</div>
+
+<div style="font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--accentText);margin:0 20px 8px">Visits</div>
+<div style="margin:0 16px 24px;background:var(--surface);border:1px solid var(--line);border-radius:20px;padding:14px 16px;display:flex;align-items:center;gap:16px">
+<span style="font-family:'Material Symbols Rounded';font-size:24px;line-height:1;color:var(--primary)">event</span>
+<div style="flex:1"><div style="font-size:15px">Glucose test (OGTT)</div><div style="font-size:13px;color:var(--ink2);margin-top:1px">Mon 28 Sep, 8:00 pm · fast from midnight</div></div>
+</div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  state = {
+    daily: [
+      { id: 'sum', icon: 'wb_sunny', t: 'Morning summary', s: "7:30 am · today's dua and checklist", on: true },
+      { id: 'adhan', icon: 'mosque', t: 'Prayer-linked acts', s: 'Sent a few minutes after each adhān', on: true },
+      { id: 'water', icon: 'water_drop', t: 'Water', s: 'Every 2 hours, 9 am – 7 pm', on: false }
+    ],
+    today: [
+      { id: 'a', time: '7:30 am', t: 'Figs and olives for breakfast', on: false },
+      { id: 'b', time: '1:02 pm', t: 'Rub Khāke Shifāʾ after Dhuhr', on: true },
+      { id: 'c', time: '6:52 pm', t: 'Sūrah at-Tīn in Maghrib', on: true },
+      { id: 'd', time: '9:00 pm', t: 'Sūrah al-Wāqiʿah', on: false }
+    ]
+  };
+  sw(on) { return { track: on ? 'var(--primary)' : 'var(--surface2)', bd: on ? 'var(--primary)' : 'var(--ink2)', knob: on ? 'var(--onp)' : 'var(--ink2)', x: on ? '22px' : '6px', k: on ? '24px' : '16px' }; }
+  flip(key, id) { this.setState(s => ({ [key]: s[key].map(r => r.id === id ? { ...r, on: !r.on } : r) })); }
+  renderVals() {
+    return {
+      back: () => this.props.back && this.props.back(),
+      daily: this.state.daily.map(r => ({ ...r, ...this.sw(r.on), toggle: () => this.flip('daily', r.id) })),
+      today: this.state.today.map(r => ({ ...r, ...this.sw(r.on), toggle: () => this.flip('today', r.id) }))
+    };
+  }
+}
+</script>
+</body>
+</html>

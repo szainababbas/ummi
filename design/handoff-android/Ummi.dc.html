@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet><link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Literata:opsz,wght@7..72,400;7..72,600&family=Figtree:wght@400;500;600;700&family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,300..500,0..1,0&icon_names=add,arrow_back,arrow_forward,auto_stories,block,bloodtype,brightness_auto,calendar_month,calendar_today,check,check_circle,chevron_left,chevron_right,close,cloud_download,contrast,dark_mode,description,directions_walk,download,edit,event,event_upcoming,expand_more,favorite,flag,light_mode,lightbulb,location_on,lock,medical_services,menu_book,monitor_heart,more_horiz,mosque,nights_stay,notification_add,notifications,notifications_active,notifications_off,nutrition,person,pregnant_woman,remove,restore,schedule,share,spa,stethoscope,straighten,water_drop,wb_sunny,wb_twilight&display=swap" rel="stylesheet"><style>body{margin:0}a{color:#2D4A3E}a:hover{color:#1F362C}</style></helmet>
+<div style="{{ rootStyle }}">
+<div style="flex:1;min-height:0;position:relative;display:flex;flex-direction:column">
+<sc-if value="{{ is.onboarding }}" hint-placeholder-val="{{ false }}"><dc-import name="Screen Onboarding" done="{{ finishOnboarding }}" style="flex:1;min-height:0;height:100%" hint-size="100%,100%"></dc-import></sc-if>
+<sc-if value="{{ is.today }}" hint-placeholder-val="{{ true }}"><dc-import name="Screen Today" go="{{ go }}" open-reader="{{ openReader }}" style="flex:1;min-height:0;height:100%" hint-size="100%,100%"></dc-import></sc-if>
+<sc-if value="{{ is.journey }}" hint-placeholder-val="{{ false }}"><dc-import name="Screen Journey" tab="{{ params.tab }}" week="{{ params.week }}" open-reader="{{ openReader }}" style="flex:1;min-height:0;height:100%" hint-size="100%,100%"></dc-import></sc-if>
+<sc-if value="{{ is.duas }}" hint-placeholder-val="{{ false }}"><dc-import name="Screen Duas" open-reader="{{ openReader }}" style="flex:1;min-height:0;height:100%" hint-size="100%,100%"></dc-import></sc-if>
+<sc-if value="{{ is.visits }}" hint-placeholder-val="{{ false }}"><dc-import name="Screen Visits" toast="{{ showToast }}" style="flex:1;min-height:0;height:100%" hint-size="100%,100%"></dc-import></sc-if>
+<sc-if value="{{ is.more }}" hint-placeholder-val="{{ false }}"><dc-import name="Screen More" go="{{ go }}" toast="{{ showToast }}" theme="{{ theme }}" set-theme="{{ setTheme }}" style="flex:1;min-height:0;height:100%" hint-size="100%,100%"></dc-import></sc-if>
+<sc-if value="{{ is.reminders }}" hint-placeholder-val="{{ false }}"><dc-import name="Screen Reminders" back="{{ back }}" style="flex:1;min-height:0;height:100%" hint-size="100%,100%"></dc-import></sc-if>
+
+<sc-if value="{{ toast }}" hint-placeholder-val="{{ false }}">
+<div style="position:absolute;left:12px;right:12px;bottom:12px;background:var(--ink);color:var(--bg);border-radius:8px;padding:14px 16px;font-size:14px;box-shadow:0 4px 16px rgba(0,0,0,.2);z-index:5">{{ toast }}</div>
+</sc-if>
+</div>
+
+<sc-if value="{{ showNav }}" hint-placeholder-val="{{ true }}">
+<div style="flex:none;display:flex;justify-content:space-around;padding:12px 4px 14px;background:var(--nav);border-top:1px solid var(--line)">
+<sc-for list="{{ nav }}" as="n" hint-placeholder-count="5">
+<div onClick="{{ n.go }}" style="display:flex;flex-direction:column;align-items:center;gap:4px;width:72px;cursor:pointer;color:{{ n.fg }}">
+<div style="width:56px;height:32px;border-radius:16px;background:{{ n.bg }};color:{{ n.ic }};display:flex;align-items:center;justify-content:center;transition:background .2s"><span style="font-family:'Material Symbols Rounded';font-size:24px;line-height:1;font-variation-settings:'FILL' {{ n.fill }}">{{ n.icon }}</span></div>
+<span style="font-size:12px;font-weight:{{ n.w }}">{{ n.label }}</span>
+</div>
+</sc-for>
+</div>
+</sc-if>
+
+<sc-if value="{{ readerOpen }}" hint-placeholder-val="{{ false }}">
+<div onClick="{{ closeReader }}" style="position:absolute;inset:0;background:rgba(10,12,10,.55);z-index:10"></div>
+<div style="position:absolute;left:0;right:0;bottom:0;max-height:88%;display:flex;flex-direction:column;background:var(--surface);border-radius:28px 28px 0 0;z-index:11">
+<div style="flex:none;padding:10px 12px 8px 20px">
+<div style="width:32px;height:4px;border-radius:2px;background:var(--line);margin:0 auto 10px"></div>
+<div style="display:flex;align-items:center;gap:12px">
+<div style="flex:1;min-width:0"><div style="font-family:Literata,serif;font-weight:600;font-size:20px">{{ reader.title }}</div><div style="font-size:13px;color:var(--ink2);margin-top:2px">{{ reader.sub }}</div></div>
+<button onClick="{{ closeReader }}" aria-label="Close" style="width:48px;height:48px;border-radius:24px;border:none;background:var(--surface2);color:var(--ink);display:flex;align-items:center;justify-content:center;cursor:pointer"><span style="font-family:'Material Symbols Rounded';font-size:22px;line-height:1">close</span></button>
+</div>
+</div>
+<div style="flex:1;min-height:0;overflow-y:auto;scrollbar-width:none;padding:0 20px 24px">
+<sc-if value="{{ reader.bism }}" hint-placeholder-val="{{ false }}"><div style="font-family:Amiri,serif;font-size:26px;line-height:2;direction:rtl;text-align:center;color:var(--accentText);padding:10px 0 6px;border-bottom:1px solid var(--line)">{{ reader.bism }}</div></sc-if>
+<sc-for list="{{ reader.verses }}" as="v" hint-placeholder-count="4">
+<div style="padding:16px 0;border-bottom:1px solid var(--line)">
+<sc-if value="{{ v.n }}" hint-placeholder-val="{{ false }}"><div style="width:28px;height:28px;border-radius:14px;border:1.5px solid var(--accent);color:var(--accentText);display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700">{{ v.n }}</div></sc-if>
+<div style="font-family:Amiri,serif;font-size:27px;line-height:2.1;direction:rtl;text-align:right;text-wrap:pretty;margin:6px 0 8px;padding:2px 0">{{ v.ar }}</div>
+<sc-if value="{{ v.tl }}" hint-placeholder-val="{{ false }}"><div style="font-size:14px;font-style:italic;line-height:1.5;color:var(--primary)">{{ v.tl }}</div></sc-if>
+<div style="font-size:15px;line-height:1.6;margin-top:6px">{{ v.en }}</div>
+</div>
+</sc-for>
+<sc-if value="{{ reader.src }}" hint-placeholder-val="{{ false }}"><div style="font-size:12px;font-style:italic;color:var(--accentText);padding-top:12px">{{ reader.src }}</div></sc-if>
+</div>
+</div>
+</sc-if>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:396,&quot;height&quot;:844},&quot;start&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;onboarding&quot;,&quot;today&quot;,&quot;journey&quot;,&quot;duas&quot;,&quot;visits&quot;,&quot;more&quot;,&quot;reminders&quot;],&quot;default&quot;:&quot;today&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;dark&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:false,&quot;tsType&quot;:&quot;boolean&quot;},&quot;params&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;object&quot;},&quot;reader&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;string&quot;}}">
+const LIGHT = { '--bg':'#F6F1E7','--surface':'#FFFDF8','--surface2':'#EEE7D8','--line':'#E0D6C2','--ink':'#1E1C18','--ink2':'#5A5446','--primary':'#2D4A3E','--onp':'#FFFFFF','--pc':'#DCE8E0','--onpc':'#16332A','--accent':'#A07A45','--accentText':'#6E4F24','--ac':'#F2E6CC','--heroA':'#2D4A3E','--heroB':'#1C342B','--heroInk':'#FFFFFF','--heroInk2':'#EBDDBB','--nav':'#EFE8DA','--danger':'#A5473A' };
+const DARK = { '--bg':'#0F1411','--surface':'#171E1A','--surface2':'#1F2823','--line':'#2A342E','--ink':'#ECE6D9','--ink2':'#AEB5AB','--primary':'#A3CBB5','--onp':'#0D2A1E','--pc':'#26463A','--onpc':'#D2E8DB','--accent':'#D6B478','--accentText':'#E4C990','--ac':'#352C1C','--heroA':'#21443A','--heroB':'#162D25','--heroInk':'#F4EFE4','--heroInk2':'#E4C990','--nav':'#151B18','--danger':'#E39A8A' };
+const NAV = [['today','Today','wb_sunny'],['journey','Journey','pregnant_woman'],['duas','Duas','menu_book'],['visits','Visits','event'],['more','More','more_horiz']];
+const SCREENS = ['onboarding','today','journey','duas','visits','more','reminders'];
+class Component extends DCLogic {
+  state = { screen: this.props.start || 'today', prev: 'today', params: this.props.params || (this.props.tab ? { tab: this.props.tab } : {}), theme: this.props.dark ? 'Dark' : 'Light', reader: this.props.reader || null, toast: '', d: null };
+  componentDidMount() {
+    window.__ummiData = window.__ummiData || fetch('./ummi-data.json').then(r => r.json());
+    window.__ummiData.then(d => this.setState({ d }));
+  }
+  componentWillUnmount() { clearTimeout(this.tt); }
+  componentDidUpdate(p) { if (p.dark !== this.props.dark) this.setState({ theme: this.props.dark ? 'Dark' : 'Light' }); }
+  go(screen, params) { this.setState(s => ({ screen, prev: s.screen, params: params || {} })); }
+  buildReader() {
+    const { reader: key, d } = this.state;
+    if (!key || !d) return { title: '', sub: '', bism: '', verses: [], src: '' };
+    const [kind, ...rest] = key.split(':'); const id = rest.join(':');
+    if (kind === 'surah') { const s = d.SURAHS[id]; return { title: 'Sūrah ' + s.name, sub: s.meaning + ' · ' + s.v.length + ' āyāt', bism: s.bism ? d.BISMILLAH.ar : '', verses: s.v.map(v => ({ n: v.n, ar: v.ar, tl: v.tl || '', en: v.en })), src: 'Translation: ʿAlī Qulī Qaraʾī' }; }
+    if (kind === 'ayah') { const a = d.AYAHS[id]; return { title: a.ref || id, sub: 'Qurʾān ' + id, bism: '', verses: [{ n: '', ar: a.ar, tl: a.tl || '', en: a.en || '' }], src: 'Translation: ʿAlī Qulī Qaraʾī' }; }
+    const t = d.DUA_TEXTS[id] || {}; return { title: t.lbl || id, sub: 'Dhikr', bism: '', verses: [{ n: '', ar: t.ar || '', tl: t.tl || '', en: t.en || '' }], src: t.sr || '' };
+  }
+  renderVals() {
+    const s = this.state;
+    const dark = s.theme === 'Dark';
+    const is = {}; SCREENS.forEach(k => is[k] = s.screen === k);
+    return {
+      rootStyle: { ...(dark ? DARK : LIGHT), height: '100%', minHeight: 0, display: 'flex', flexDirection: 'column', position: 'relative', overflow: 'hidden', background: 'var(--bg)', color: 'var(--ink)', fontFamily: 'Figtree, sans-serif' },
+      is, params: s.params, theme: s.theme,
+      showNav: s.screen !== 'onboarding',
+      nav: NAV.map(([k, label, icon]) => { const on = s.screen === k; return { label, icon, fill: on ? 1 : 0, w: on ? 700 : 600, fg: on ? 'var(--ink)' : 'var(--ink2)', bg: on ? 'var(--pc)' : 'transparent', ic: on ? 'var(--onpc)' : 'var(--ink2)', go: () => this.go(k) }; }),
+      go: (k, p) => this.go(k, p),
+      back: () => this.go(s.prev === 'reminders' ? 'today' : s.prev),
+      finishOnboarding: () => this.go('today'),
+      setTheme: t => this.setState({ theme: t === 'System' ? (dark ? 'Dark' : 'Light') : t }),
+      openReader: key => key && this.setState({ reader: key }),
+      closeReader: () => this.setState({ reader: null }),
+      readerOpen: !!s.reader && !!s.d, reader: this.buildReader(),
+      toast: s.toast,
+      showToast: msg => { clearTimeout(this.tt); this.setState({ toast: msg }); this.tt = setTimeout(() => this.setState({ toast: '' }), 2800); }
+    };
+  }
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<div style="height:100%;position:relative;background:var(--bg);color:var(--ink);font-family:Figtree,sans-serif">
+<div style="height:100%;overflow-y:auto;scrollbar-width:none;padding-bottom:88px;box-sizing:border-box">
+<div style="padding:8px 20px 14px">
+<div style="font-family:Literata,serif;font-weight:600;font-size:26px;line-height:1.25">Visits</div>
+<div style="font-size:14px;color:var(--ink2);margin-top:2px">Appointments and scans</div>
+</div>
+
+<div style="margin:0 16px 20px;border-radius:24px;padding:20px;background:linear-gradient(160deg,var(--heroA),var(--heroB));color:var(--heroInk)">
+<div style="font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--heroInk2)">Next · in 3 days</div>
+<div style="font-family:Literata,serif;font-weight:600;font-size:24px;line-height:1.25;margin-top:8px">Glucose test (OGTT)</div>
+<div style="display:flex;flex-direction:column;gap:6px;margin-top:12px;font-size:14px">
+<div style="display:flex;align-items:center;gap:10px"><span style="font-family:'Material Symbols Rounded';font-size:18px;line-height:1;color:var(--heroInk2)">event</span>Tuesday 29 September, 9:10</div>
+<div style="display:flex;align-items:center;gap:10px"><span style="font-family:'Material Symbols Rounded';font-size:18px;line-height:1;color:var(--heroInk2)">location_on</span>Antenatal clinic</div>
+</div>
+<div style="background:rgba(255,255,255,.1);border-radius:16px;padding:12px 14px;margin-top:14px">
+<div style="font-size:12px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--heroInk2)">To prepare</div>
+<div style="font-size:14px;line-height:1.55;margin-top:4px">Fast from midnight — water only. Bring your maternity notes. The test takes about two hours.</div>
+</div>
+<div onClick="{{ toggleNextRem }}" style="display:flex;align-items:center;gap:12px;margin-top:14px;cursor:pointer">
+<span style="font-family:'Material Symbols Rounded';font-size:20px;line-height:1;color:var(--heroInk2)">notifications</span>
+<div style="flex:1;font-size:14px">Remind me the evening before · 8:00 pm</div>
+<div style="width:52px;height:32px;border-radius:16px;background:{{ swBg }};position:relative;flex:none;transition:background .2s"><div style="position:absolute;top:4px;left:{{ swX }};width:24px;height:24px;border-radius:12px;background:{{ swKnob }};transition:left .2s"></div></div>
+</div>
+</div>
+
+<div style="font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--accentText);margin:0 20px 8px">Coming up</div>
+<div style="margin:0 16px 20px;background:var(--surface);border:1px solid var(--line);border-radius:20px;padding:0 14px">
+<sc-for list="{{ upcoming }}" as="v" hint-placeholder-count="3">
+<div style="display:flex;align-items:center;gap:14px;padding:14px 0;border-bottom:1px solid var(--line)">
+<div style="width:48px;flex:none;text-align:center;border-radius:12px;background:var(--surface2);padding:6px 0"><div style="font-size:11px;font-weight:700;text-transform:uppercase;color:var(--accentText)">{{ v.mon }}</div><div style="font-size:18px;font-weight:700;line-height:1.1">{{ v.day }}</div></div>
+<div style="flex:1;min-width:0"><div style="font-size:15px;font-weight:600">{{ v.title }}</div><div style="font-size:13px;color:var(--ink2);margin-top:2px">{{ v.meta }}</div></div>
+<span style="font-family:'Material Symbols Rounded';font-size:20px;line-height:1;color:{{ v.bellC }};font-variation-settings:'FILL' 1">{{ v.bell }}</span>
+</div>
+</sc-for>
+</div>
+
+<div style="margin:0 16px 20px;background:var(--ac);color:var(--accentText);border-radius:20px;padding:16px 18px">
+<div style="display:flex;align-items:center;gap:8px;font-size:14px;font-weight:700"><span style="font-family:'Material Symbols Rounded';font-size:18px;line-height:1">lightbulb</span>Typical NHS schedule, first pregnancy</div>
+<div style="font-size:14px;line-height:1.55;margin-top:6px;color:var(--ink)">Midwife checks are usually offered at 25, 28, 31, 34, 36, 38 and 40 weeks. Add the ones you've been booked for.</div>
+</div>
+
+<div style="font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--accentText);margin:0 20px 8px">Past</div>
+<div style="margin:0 16px 20px;background:var(--surface);border:1px solid var(--line);border-radius:20px;padding:0 14px">
+<sc-for list="{{ past }}" as="v" hint-placeholder-count="2">
+<div style="display:flex;align-items:flex-start;gap:14px;padding:14px 0;border-bottom:1px solid var(--line)">
+<div style="width:48px;flex:none;text-align:center;border-radius:12px;border:1px solid var(--line);padding:5px 0;color:var(--ink2)"><div style="font-size:11px;font-weight:700;text-transform:uppercase">{{ v.mon }}</div><div style="font-size:18px;font-weight:700;line-height:1.1">{{ v.day }}</div></div>
+<div style="flex:1;min-width:0"><div style="font-size:15px;font-weight:600">{{ v.title }}</div><div style="font-size:13px;color:var(--ink2);margin-top:2px">{{ v.meta }}</div><div style="font-size:14px;line-height:1.5;margin-top:6px;font-style:italic">“{{ v.note }}”</div></div>
+</div>
+</sc-for>
+</div>
+</div>
+
+<button onClick="{{ openSheet }}" style="position:absolute;right:16px;bottom:16px;height:56px;padding:0 20px 0 16px;border-radius:16px;border:none;background:var(--pc);color:var(--onpc);font:700 15px Figtree,sans-serif;display:flex;align-items:center;gap:10px;box-shadow:0 3px 10px rgba(0,0,0,.18);cursor:pointer"><span style="font-family:'Material Symbols Rounded';font-size:24px;line-height:1">add</span>Add visit</button>
+
+<sc-if value="{{ sheet }}" hint-placeholder-val="{{ false }}">
+<div onClick="{{ closeSheet }}" style="position:absolute;inset:0;background:rgba(10,12,10,.5)"></div>
+<div style="position:absolute;left:0;right:0;bottom:0;max-height:92%;overflow-y:auto;background:var(--surface);border-radius:28px 28px 0 0;padding:10px 20px 20px;box-sizing:border-box">
+<div style="width:32px;height:4px;border-radius:2px;background:var(--line);margin:0 auto 14px"></div>
+<div style="font-family:Literata,serif;font-weight:600;font-size:21px">New visit</div>
+<div style="font-size:13px;font-weight:600;color:var(--ink2);margin:16px 0 8px">Type</div>
+<div style="display:flex;flex-wrap:wrap;gap:8px">
+<sc-for list="{{ types }}" as="t" hint-placeholder-count="6">
+<button onClick="{{ t.pick }}" style="height:34px;padding:0 12px;border-radius:10px;border:1px solid {{ t.bd }};background:{{ t.bg }};color:{{ t.fg }};font:600 14px Figtree,sans-serif;display:flex;align-items:center;gap:6px;cursor:pointer"><span style="font-family:'Material Symbols Rounded';font-size:17px;line-height:1">{{ t.icon }}</span>{{ t.label }}</button>
+</sc-for>
+</div>
+<div style="font-size:13px;font-weight:600;color:var(--ink2);margin:16px 0 6px">Title</div>
+<input value="{{ fTitle }}" onChange="{{ setTitle }}" placeholder="e.g. Midwife check, 25 weeks" style="width:100%;box-sizing:border-box;height:52px;padding:0 14px;border-radius:12px;border:1.5px solid var(--line);background:var(--bg);color:var(--ink);font:400 16px Figtree,sans-serif;outline:none">
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+<div><div style="font-size:13px;font-weight:600;color:var(--ink2);margin:14px 0 6px">Date</div><input type="date" value="{{ fDate }}" onChange="{{ setDate }}" style="width:100%;box-sizing:border-box;height:52px;padding:0 12px;border-radius:12px;border:1.5px solid var(--line);background:var(--bg);color:var(--ink);font:400 15px Figtree,sans-serif"></div>
+<div><div style="font-size:13px;font-weight:600;color:var(--ink2);margin:14px 0 6px">Time</div><input type="time" value="{{ fTime }}" onChange="{{ setTime }}" style="width:100%;box-sizing:border-box;height:52px;padding:0 12px;border-radius:12px;border:1.5px solid var(--line);background:var(--bg);color:var(--ink);font:400 15px Figtree,sans-serif"></div>
+</div>
+<div style="font-size:13px;font-weight:600;color:var(--ink2);margin:14px 0 8px">Reminder</div>
+<div style="display:flex;flex-wrap:wrap;gap:8px">
+<sc-for list="{{ rems }}" as="r" hint-placeholder-count="4">
+<button onClick="{{ r.pick }}" style="height:34px;padding:0 12px;border-radius:10px;border:1px solid {{ r.bd }};background:{{ r.bg }};color:{{ r.fg }};font:600 14px Figtree,sans-serif;cursor:pointer">{{ r.label }}</button>
+</sc-for>
+</div>
+<div style="display:flex;gap:10px;margin-top:22px">
+<button onClick="{{ closeSheet }}" style="flex:1;height:48px;border-radius:24px;border:1px solid var(--line);background:transparent;color:var(--ink);font:600 15px Figtree,sans-serif;cursor:pointer">Cancel</button>
+<button onClick="{{ save }}" style="flex:1;height:48px;border-radius:24px;border:none;background:var(--primary);color:var(--onp);font:600 15px Figtree,sans-serif;cursor:pointer;opacity:{{ saveOp }}">Save</button>
+</div>
+</div>
+</sc-if>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+const TYPES = [['Midwife','stethoscope'],['Scan','monitor_heart'],['Blood test','bloodtype'],['GP','medical_services'],['Consultant','person'],['Other','more_horiz']];
+const REMS = ['None', 'Evening before', 'Morning of', '2 hours before'];
+const MON = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+class Component extends DCLogic {
+  state = {
+    nextRem: true, sheet: false, type: 'Midwife', title: '', date: '2026-10-16', time: '10:30', rem: 'Evening before',
+    upcoming: [
+      { date: '2026-10-16', time: '10:30', title: 'Midwife check · 28 weeks', type: 'Midwife', rem: 'Evening before' },
+      { date: '2026-11-06', time: '14:00', title: 'Midwife check · 31 weeks', type: 'Midwife', rem: 'None' }
+    ]
+  };
+  fmt(v) { const d = new Date(v.date + 'T00:00:00'); return { mon: MON[d.getMonth()], day: d.getDate() }; }
+  renderVals() {
+    const s = this.state;
+    const chip = (on) => ({ bg: on ? 'var(--pc)' : 'transparent', fg: on ? 'var(--onpc)' : 'var(--ink)', bd: on ? 'var(--pc)' : 'var(--line)' });
+    return {
+      swBg: s.nextRem ? 'var(--heroInk2)' : 'rgba(255,255,255,.2)', swX: s.nextRem ? '24px' : '4px', swKnob: s.nextRem ? 'var(--heroB)' : 'var(--heroInk)',
+      toggleNextRem: () => { this.setState({ nextRem: !s.nextRem }); this.props.toast && this.props.toast(s.nextRem ? 'Reminder off' : 'Reminder set · Mon 8:00 pm'); },
+      upcoming: s.upcoming.slice().sort((a, b) => a.date.localeCompare(b.date)).map(v => ({ ...this.fmt(v), title: v.title, meta: v.type + ' · ' + v.time + (v.rem !== 'None' ? ' · reminder ' + v.rem.toLowerCase() : ''), bell: v.rem !== 'None' ? 'notifications_active' : 'notifications_off', bellC: v.rem !== 'None' ? 'var(--accentText)' : 'var(--ink2)' })),
+      past: [
+        { mon: 'Aug', day: 28, title: 'Anomaly scan · 20 weeks', meta: 'Scan · Ultrasound department', note: 'Everything looked well. Baby was very wriggly.' },
+        { mon: 'Jul', day: 3, title: 'Dating scan · 12 weeks', meta: 'Scan · due date set to 9 January', note: 'First time hearing the heartbeat.' }
+      ],
+      sheet: s.sheet,
+      openSheet: () => this.setState({ sheet: true, title: '' }),
+      closeSheet: () => this.setState({ sheet: false }),
+      types: TYPES.map(([l, icon]) => ({ label: l, icon, ...chip(l === s.type), pick: () => this.setState({ type: l }) })),
+      rems: REMS.map(l => ({ label: l, ...chip(l === s.rem), pick: () => this.setState({ rem: l }) })),
+      fTitle: s.title, fDate: s.date, fTime: s.time,
+      setTitle: e => this.setState({ title: e.target.value }),
+      setDate: e => this.setState({ date: e.target.value }),
+      setTime: e => this.setState({ time: e.target.value }),
+      saveOp: s.title.trim() ? 1 : 0.5,
+      save: () => {
+        if (!s.title.trim()) return;
+        this.setState({ sheet: false, upcoming: [...s.upcoming, { date: s.date, time: s.time, title: s.title.trim(), type: s.type, rem: s.rem }] });
+        this.props.toast && this.props.toast('Visit added' + (s.rem !== 'None' ? ' · reminder ' + s.rem.toLowerCase() : ''));
+      }
+    };
+  }
+}
+</script>
+</body>
+</html>

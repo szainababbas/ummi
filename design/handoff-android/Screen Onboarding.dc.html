@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<div style="height:100%;display:flex;flex-direction:column;background:var(--bg);color:var(--ink);font-family:Figtree,sans-serif">
+<div style="display:flex;align-items:center;gap:12px;padding:8px 20px 0;min-height:48px">
+<sc-if value="{{ canBack }}" hint-placeholder-val="{{ false }}"><button onClick="{{ back }}" aria-label="Back" style="width:48px;height:48px;margin-left:-12px;border-radius:24px;border:none;background:transparent;color:var(--ink);display:flex;align-items:center;justify-content:center;cursor:pointer"><span style="font-family:'Material Symbols Rounded';font-size:24px;line-height:1">arrow_back</span></button></sc-if>
+<div style="flex:1"></div>
+<div style="display:flex;gap:6px"><sc-for list="{{ dots }}" as="d" hint-placeholder-count="4"><div style="width:{{ d.w }};height:6px;border-radius:3px;background:{{ d.c }};transition:width .2s"></div></sc-for></div>
+</div>
+
+<div style="flex:1;min-height:0;overflow-y:auto;scrollbar-width:none;padding:0 24px">
+<sc-if value="{{ s0 }}" hint-placeholder-val="{{ true }}">
+<div style="display:flex;flex-direction:column;align-items:center;text-align:center;padding-top:72px">
+<img src="icon-192.png" alt="Ummi" style="width:96px;height:96px;border-radius:24px">
+<div style="font-family:Literata,serif;font-weight:600;font-size:40px;margin-top:20px">Ummi</div>
+<div style="font-size:17px;line-height:1.6;color:var(--ink2);margin-top:12px;text-wrap:pretty">A week-by-week pregnancy companion rooted in science and the teachings of the Ahlulbayt (as).</div>
+<div style="font-family:Amiri,serif;font-size:26px;line-height:2;direction:rtl;color:var(--accentText);margin-top:28px">رَبِّ هَبْ لِي مِنَ الصَّالِحِينَ</div>
+<div style="font-size:14px;font-style:italic;color:var(--ink2)">“My Lord, grant me a child from among the righteous.”</div>
+</div>
+</sc-if>
+
+<sc-if value="{{ s1 }}" hint-placeholder-val="{{ false }}">
+<div style="padding-top:28px">
+<div style="font-family:Literata,serif;font-weight:600;font-size:28px;line-height:1.25">When is your baby due?</div>
+<div style="font-size:15px;color:var(--ink2);margin-top:8px;line-height:1.5">Everything in Ummi follows from this. You can change it later.</div>
+<div style="display:flex;margin-top:24px;border:1px solid var(--line);border-radius:20px;overflow:hidden;height:40px">
+<sc-for list="{{ modes }}" as="m" hint-placeholder-count="2"><button onClick="{{ m.pick }}" style="flex:1;border:none;border-right:1px solid var(--line);background:{{ m.bg }};color:{{ m.fg }};font:600 14px Figtree,sans-serif;cursor:pointer">{{ m.label }}</button></sc-for>
+</div>
+<sc-if value="{{ byDate }}" hint-placeholder-val="{{ true }}">
+<div style="font-size:13px;font-weight:600;color:var(--ink2);margin:22px 0 6px">Due date</div>
+<input type="date" value="{{ due }}" onChange="{{ setDue }}" style="width:100%;box-sizing:border-box;height:56px;padding:0 14px;border-radius:12px;border:1.5px solid var(--line);background:var(--surface);color:var(--ink);font:400 17px Figtree,sans-serif">
+</sc-if>
+<sc-if value="{{ byWeek }}" hint-placeholder-val="{{ false }}">
+<div style="display:flex;align-items:center;justify-content:space-between;margin-top:22px;background:var(--surface);border:1px solid var(--line);border-radius:20px;padding:12px">
+<button onClick="{{ weekDown }}" aria-label="Fewer weeks" style="width:48px;height:48px;border-radius:24px;border:none;background:var(--surface2);color:var(--ink);display:flex;align-items:center;justify-content:center;cursor:pointer"><span style="font-family:'Material Symbols Rounded';font-size:24px;line-height:1">remove</span></button>
+<div style="text-align:center"><div style="font-family:Literata,serif;font-weight:600;font-size:40px;line-height:1">{{ week }}</div><div style="font-size:13px;color:var(--ink2);margin-top:4px">weeks pregnant</div></div>
+<button onClick="{{ weekUp }}" aria-label="More weeks" style="width:48px;height:48px;border-radius:24px;border:none;background:var(--surface2);color:var(--ink);display:flex;align-items:center;justify-content:center;cursor:pointer"><span style="font-family:'Material Symbols Rounded';font-size:24px;line-height:1">add</span></button>
+</div>
+</sc-if>
+<div style="display:flex;align-items:center;gap:12px;margin-top:16px;background:var(--pc);color:var(--onpc);border-radius:16px;padding:14px 16px;font-size:15px;line-height:1.45">
+<span style="font-family:'Material Symbols Rounded';font-size:22px;line-height:1">pregnant_woman</span><div>{{ summary }}</div>
+</div>
+</div>
+</sc-if>
+
+<sc-if value="{{ s2 }}" hint-placeholder-val="{{ false }}">
+<div style="padding-top:28px">
+<div style="font-family:Literata,serif;font-weight:600;font-size:28px;line-height:1.25">What should we call you?</div>
+<div style="font-size:15px;color:var(--ink2);margin-top:8px">Optional. It's only used for the greeting.</div>
+<input value="{{ name }}" onChange="{{ setName }}" placeholder="e.g. Fatima" style="width:100%;box-sizing:border-box;margin-top:24px;height:56px;padding:0 16px;border-radius:12px;border:1.5px solid var(--line);background:var(--surface);color:var(--ink);font:400 17px Figtree,sans-serif;outline:none">
+<div style="display:flex;align-items:center;gap:10px;margin-top:20px;font-size:14px;color:var(--ink2)"><span style="font-family:'Material Symbols Rounded';font-size:20px;line-height:1;color:var(--primary)">lock</span>Nothing leaves your device. No account, no server.</div>
+</div>
+</sc-if>
+
+<sc-if value="{{ s3 }}" hint-placeholder-val="{{ false }}">
+<div style="padding-top:28px">
+<div style="width:56px;height:56px;border-radius:28px;background:var(--ac);color:var(--accentText);display:flex;align-items:center;justify-content:center"><span style="font-family:'Material Symbols Rounded';font-size:28px;line-height:1">notifications</span></div>
+<div style="font-family:Literata,serif;font-weight:600;font-size:28px;line-height:1.25;margin-top:18px">Gentle reminders?</div>
+<div style="font-size:15px;color:var(--ink2);margin-top:8px;line-height:1.5">A nudge in the morning, and at the prayer an act belongs to. Turn any of them off later.</div>
+<div style="margin-top:20px;background:var(--surface);border:1px solid var(--line);border-radius:20px;overflow:hidden">
+<sc-for list="{{ opts }}" as="o" hint-placeholder-count="3">
+<div onClick="{{ o.toggle }}" style="display:flex;align-items:center;gap:14px;padding:14px 16px;border-bottom:1px solid var(--line);cursor:pointer">
+<div style="width:24px;height:24px;border-radius:6px;border:2px solid {{ o.bd }};background:{{ o.bg }};color:var(--onp);display:flex;align-items:center;justify-content:center;box-sizing:border-box;flex:none"><span style="font-family:'Material Symbols Rounded';font-size:18px;line-height:1;opacity:{{ o.op }}">check</span></div>
+<div style="flex:1"><div style="font-size:16px">{{ o.t }}</div><div style="font-size:13px;color:var(--ink2);margin-top:1px">{{ o.s }}</div></div>
+</div>
+</sc-for>
+</div>
+</div>
+</sc-if>
+</div>
+
+<div style="padding:16px 24px 20px;display:flex;flex-direction:column;gap:8px">
+<button onClick="{{ next }}" style="height:56px;border-radius:28px;border:none;background:var(--primary);color:var(--onp);font:600 16px Figtree,sans-serif;cursor:pointer">{{ cta }}</button>
+<sc-if value="{{ s3 }}" hint-placeholder-val="{{ false }}"><button onClick="{{ finish }}" style="height:48px;border-radius:24px;border:none;background:transparent;color:var(--primary);font:600 15px Figtree,sans-serif;cursor:pointer">Not now</button></sc-if>
+<sc-if value="{{ s0 }}" hint-placeholder-val="{{ true }}"><div style="text-align:center;font-size:13px;color:var(--ink2)">Free, always. Nothing leaves your device.</div></sc-if>
+</div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+const TODAY = new Date('2026-09-26T00:00:00');
+class Component extends DCLogic {
+  state = { step: 0, mode: 'date', due: '2027-01-09', week: 24, name: '', opts: [true, true, false] };
+  weekFromDue(due) { const d = new Date(due + 'T00:00:00'); const days = Math.round((d - TODAY) / 864e5); return Math.max(4, Math.min(41, 40 - Math.ceil(days / 7))); }
+  renderVals() {
+    const s = this.state;
+    const w = s.mode === 'date' ? this.weekFromDue(s.due) : s.week;
+    const tri = w < 14 ? '1st' : w < 28 ? '2nd' : '3rd';
+    const OPTS = [['Morning summary', "7:30 am · today's dua and checklist"], ['Prayer-linked acts', 'A few minutes after each adhān'], ['Water', 'Every 2 hours through the day']];
+    const finish = () => this.props.done && this.props.done();
+    return {
+      s0: s.step === 0, s1: s.step === 1, s2: s.step === 2, s3: s.step === 3, canBack: s.step > 0,
+      dots: [0, 1, 2, 3].map(i => ({ w: i === s.step ? '20px' : '6px', c: i <= s.step ? 'var(--primary)' : 'var(--line)' })),
+      back: () => this.setState({ step: s.step - 1 }),
+      modes: [['date', 'Due date'], ['week', 'Current week']].map(([k, l]) => ({ label: l, bg: k === s.mode ? 'var(--pc)' : 'transparent', fg: k === s.mode ? 'var(--onpc)' : 'var(--ink)', pick: () => this.setState({ mode: k }) })),
+      byDate: s.mode === 'date', byWeek: s.mode === 'week',
+      due: s.due, setDue: e => this.setState({ due: e.target.value }),
+      week: s.week, weekDown: () => this.setState({ week: Math.max(4, s.week - 1) }), weekUp: () => this.setState({ week: Math.min(41, s.week + 1) }),
+      summary: "That's week " + w + ', ' + tri + ' trimester. Welcome.',
+      name: s.name, setName: e => this.setState({ name: e.target.value }),
+      opts: OPTS.map(([t, sub], i) => { const on = s.opts[i]; return { t, s: sub, bd: on ? 'var(--primary)' : 'var(--ink2)', bg: on ? 'var(--primary)' : 'transparent', op: on ? 1 : 0, toggle: () => this.setState(st => ({ opts: st.opts.map((v, j) => j === i ? !v : v) })) }; }),
+      cta: ['Begin the journey', 'Continue', s.name.trim() ? 'Continue' : 'Skip', 'Allow notifications'][s.step],
+      next: () => s.step < 3 ? this.setState({ step: s.step + 1 }) : finish(),
+      finish
+    };
+  }
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<div style="height:100%;overflow-y:auto;scrollbar-width:none;background:var(--bg);color:var(--ink);font-family:Figtree,sans-serif">
+<div style="padding:8px 20px 12px">
+<div style="font-family:Literata,serif;font-weight:600;font-size:26px;line-height:1.25">Your journey</div>
+</div>
+<div style="display:flex;margin:0 16px 16px;border:1px solid var(--line);border-radius:20px;overflow:hidden;height:40px">
+<sc-for list="{{ tabs }}" as="t" hint-placeholder-count="3">
+<button onClick="{{ t.pick }}" style="flex:1;border:none;border-right:1px solid var(--line);background:{{ t.bg }};color:{{ t.fg }};font:600 14px Figtree,sans-serif;display:flex;align-items:center;justify-content:center;gap:6px;cursor:pointer">{{ t.label }}</button>
+</sc-for>
+</div>
+
+<sc-if value="{{ isWeek }}" hint-placeholder-val="{{ true }}">
+<div style="padding:0 16px 24px">
+<div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px">
+<button onClick="{{ prevWeek }}" aria-label="Previous week" style="width:48px;height:48px;border-radius:24px;border:1px solid var(--line);background:var(--surface);color:var(--ink);display:flex;align-items:center;justify-content:center;cursor:pointer"><span style="font-family:'Material Symbols Rounded';font-size:24px;line-height:1">chevron_left</span></button>
+<div style="text-align:center"><div style="font-family:Literata,serif;font-weight:600;font-size:22px">Week {{ week }}</div><div style="font-size:13px;color:var(--ink2);margin-top:2px">{{ weekSub }}</div></div>
+<button onClick="{{ nextWeek }}" aria-label="Next week" style="width:48px;height:48px;border-radius:24px;border:1px solid var(--line);background:var(--surface);color:var(--ink);display:flex;align-items:center;justify-content:center;cursor:pointer"><span style="font-family:'Material Symbols Rounded';font-size:24px;line-height:1">chevron_right</span></button>
+</div>
+<div style="background:var(--surface);border:1px solid var(--line);border-radius:20px;padding:18px;margin-bottom:12px">
+<div style="font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--accentText)">Baby this week</div>
+<div style="font-family:Literata,serif;font-weight:600;font-size:20px;line-height:1.3;margin-top:6px">{{ sizeSentence }}</div>
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:14px">
+<div style="background:var(--surface2);border-radius:14px;padding:10px 12px"><div style="font-size:12px;color:var(--ink2)">Length</div><div style="font-size:16px;font-weight:700;margin-top:2px">{{ w.len }}</div></div>
+<div style="background:var(--surface2);border-radius:14px;padding:10px 12px"><div style="font-size:12px;color:var(--ink2)">Weight</div><div style="font-size:16px;font-weight:700;margin-top:2px">~{{ w.wt }}</div></div>
+</div>
+<sc-if value="{{ w.milestone }}" hint-placeholder-val="{{ false }}"><div style="display:inline-flex;align-items:center;gap:6px;margin-top:12px;height:30px;padding:0 12px;border-radius:15px;background:var(--pc);color:var(--onpc);font-size:13px;font-weight:600"><span style="font-family:'Material Symbols Rounded';font-size:16px;line-height:1">flag</span>{{ w.milestone }}</div></sc-if>
+</div>
+<div style="background:var(--surface);border:1px solid var(--line);border-radius:20px;padding:18px 18px 8px;margin-bottom:12px">
+<div style="font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--accentText)">Baby's development</div>
+<sc-for list="{{ w.dev }}" as="x" hint-placeholder-count="3"><div style="display:flex;gap:12px;padding:10px 0;border-bottom:1px solid var(--line);font-size:15px;line-height:1.55"><div style="width:6px;height:6px;border-radius:3px;background:var(--accent);flex:none;margin-top:9px"></div><div>{{ x }}</div></div></sc-for>
+</div>
+<div style="background:var(--surface);border:1px solid var(--line);border-radius:20px;padding:18px;margin-bottom:12px">
+<div style="font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--accentText)">Your body</div>
+<sc-for list="{{ w.body }}" as="x" hint-placeholder-count="2"><div style="display:flex;gap:12px;padding:10px 0;border-bottom:1px solid var(--line);font-size:15px;line-height:1.55"><div style="width:6px;height:6px;border-radius:3px;background:var(--accent);flex:none;margin-top:9px"></div><div>{{ x }}</div></div></sc-for>
+<div style="background:var(--pc);color:var(--onpc);border-radius:14px;padding:12px 14px;font-size:14px;line-height:1.55;margin-top:12px"><b>What's normal:</b> {{ w.normal }}</div>
+</div>
+<div style="background:var(--surface);border:1px solid var(--line);border-radius:20px;padding:18px;margin-bottom:12px">
+<div style="font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--accentText)">Faith focus</div>
+<div style="font-size:15px;line-height:1.6;margin-top:6px">{{ w.faith }}</div>
+</div>
+<div style="background:var(--surface);border:1px solid var(--line);border-radius:20px;padding:18px;margin-bottom:12px">
+<div style="font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--accentText)">This week's tip</div>
+<div style="font-size:15px;line-height:1.6;margin-top:6px">{{ w.tip }}</div>
+</div>
+<sc-if value="{{ notCurrent }}" hint-placeholder-val="{{ false }}"><button onClick="{{ backToCurrent }}" style="display:block;margin:4px auto 0;height:40px;padding:0 16px;border-radius:20px;border:none;background:transparent;color:var(--primary);font:700 14px Figtree,sans-serif;cursor:pointer">Back to week 24</button></sc-if>
+</div>
+</sc-if>
+
+<sc-if value="{{ isMonth }}" hint-placeholder-val="{{ false }}">
+<div style="padding:0 16px 24px">
+<div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px">
+<button onClick="{{ prevMonth }}" aria-label="Previous month" style="width:48px;height:48px;border-radius:24px;border:1px solid var(--line);background:var(--surface);color:var(--ink);display:flex;align-items:center;justify-content:center;cursor:pointer"><span style="font-family:'Material Symbols Rounded';font-size:24px;line-height:1">chevron_left</span></button>
+<div style="text-align:center"><div style="font-family:Literata,serif;font-weight:600;font-size:22px">Month {{ month }}</div><div style="font-size:13px;color:var(--ink2);margin-top:2px">{{ monthSub }}</div></div>
+<button onClick="{{ nextMonth }}" aria-label="Next month" style="width:48px;height:48px;border-radius:24px;border:1px solid var(--line);background:var(--surface);color:var(--ink);display:flex;align-items:center;justify-content:center;cursor:pointer"><span style="font-family:'Material Symbols Rounded';font-size:24px;line-height:1">chevron_right</span></button>
+</div>
+<div style="background:var(--surface);border:1px solid var(--line);border-radius:20px;padding:18px;margin-bottom:12px">
+<div style="font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--accentText)">What's happening</div>
+<div style="font-size:15px;line-height:1.6;margin-top:6px">{{ m.note }}</div>
+</div>
+<sc-for list="{{ groups }}" as="g" hint-placeholder-count="3">
+<div style="background:var(--surface);border:1px solid var(--line);border-radius:20px;padding:18px 18px 6px;margin-bottom:12px">
+<div style="display:flex;align-items:center;gap:8px;font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--accentText)"><span style="font-family:'Material Symbols Rounded';font-size:18px;line-height:1">{{ g.icon }}</span>{{ g.label }}</div>
+<sc-for list="{{ g.items }}" as="a" hint-placeholder-count="2">
+<div style="padding:12px 0;border-bottom:1px solid var(--line)">
+<div style="font-size:15px;font-weight:600;line-height:1.4">{{ a.t }}</div>
+<sc-if value="{{ a.s }}" hint-placeholder-val="{{ false }}"><div style="font-size:13px;color:var(--ink2);margin-top:3px;line-height:1.5">{{ a.s }}</div></sc-if>
+<div style="display:flex;gap:8px;margin-top:8px;flex-wrap:wrap">
+<div style="display:flex;align-items:center;gap:4px;height:28px;padding:0 10px;border-radius:14px;background:var(--surface2);color:var(--ink2);font-size:12px;font-weight:600"><span style="font-family:'Material Symbols Rounded';font-size:15px;line-height:1">calendar_today</span>{{ a.days }}</div>
+<sc-if value="{{ a.ref }}" hint-placeholder-val="{{ false }}"><div onClick="{{ a.read }}" style="cursor:pointer;display:flex;align-items:center;gap:4px;height:28px;padding:0 12px;border-radius:14px;background:var(--pc);color:var(--onpc);font-size:13px;font-weight:600"><span style="font-family:'Material Symbols Rounded';font-size:15px;line-height:1">menu_book</span>Read</div></sc-if>
+</div>
+</div>
+</sc-for>
+</div>
+</sc-for>
+<div style="background:var(--surface);border:1px solid var(--line);border-radius:20px;padding:18px;margin-bottom:12px">
+<div style="display:flex;align-items:center;gap:8px;font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--accentText)"><span style="font-family:'Material Symbols Rounded';font-size:18px;line-height:1">directions_walk</span>Physical activity</div>
+<div style="font-size:15px;line-height:1.6;margin-top:6px">{{ m.activity }}</div>
+</div>
+<div style="font-size:13px;line-height:1.55;color:var(--ink2);padding:4px 4px 0">The month-by-month acts, foods and recitations come from the Shiʿi pregnancy planner Aimen compiled, with its own citations kept on each item. Weekly baby and body notes are NHS. These are recommended acts (mustaḥab); follow your own marjaʿ on specific rulings.</div>
+</div>
+</sc-if>
+
+<sc-if value="{{ isFood }}" hint-placeholder-val="{{ false }}">
+<div style="padding:0 16px 24px">
+<div style="font-family:Literata,serif;font-weight:600;font-size:19px;margin:4px 4px 10px">From the Ahlulbayt (as)</div>
+<div style="background:var(--surface);border:1px solid var(--line);border-radius:20px;padding:4px 18px;margin-bottom:20px">
+<sc-for list="{{ sunnah }}" as="f" hint-placeholder-count="6"><div style="padding:12px 0;border-bottom:1px solid var(--line)"><div style="font-size:15px;font-weight:600">{{ f.name }}</div><div style="font-size:13px;color:var(--ink2);margin-top:2px;line-height:1.5">{{ f.note }}</div></div></sc-for>
+</div>
+<div style="font-family:Literata,serif;font-weight:600;font-size:19px;margin:0 4px 10px">Everyday essentials</div>
+<div style="background:var(--surface);border:1px solid var(--line);border-radius:20px;padding:4px 18px;margin-bottom:20px">
+<sc-for list="{{ med }}" as="f" hint-placeholder-count="6"><div style="padding:12px 0;border-bottom:1px solid var(--line)"><div style="font-size:15px;font-weight:600">{{ f.name }}</div><div style="font-size:13px;color:var(--ink2);margin-top:2px;line-height:1.5">{{ f.note }}</div></div></sc-for>
+</div>
+<div style="font-family:Literata,serif;font-weight:600;font-size:19px;margin:0 4px 10px">Best avoided</div>
+<div style="background:var(--surface);border:1px solid var(--line);border-radius:20px;padding:4px 18px;margin-bottom:16px">
+<sc-for list="{{ avoid }}" as="f" hint-placeholder-count="5"><div style="display:flex;gap:12px;padding:12px 0;border-bottom:1px solid var(--line)"><span style="font-family:'Material Symbols Rounded';font-size:20px;line-height:1;color:var(--danger);margin-top:1px">block</span><div><div style="font-size:15px;font-weight:600">{{ f.name }}</div><div style="font-size:13px;color:var(--ink2);margin-top:2px;line-height:1.5">{{ f.note }}</div></div></div></sc-for>
+</div>
+<div style="font-size:13px;line-height:1.55;color:var(--ink2);padding:0 4px">Food traditions are drawn from narrations of the Ahlulbayt (as) and the books From Marriage to Parenthood and A Mother’s Prayer (al-islam.org); medical guidance reflects NHS/ACOG recommendations. Always confirm with your doctor or midwife.</div>
+</div>
+</sc-if>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+const CUR = 24;
+const WD = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+const CATS = [['Recitation','auto_stories'],['Sūrah','menu_book'],['Food','nutrition'],['Wellness','spa']];
+class Component extends DCLogic {
+  state = { tab: this.props.tab || 'Week', week: this.props.week || CUR, month: this.props.month || 6, d: null };
+  componentDidMount() {
+    window.__ummiData = window.__ummiData || fetch('./ummi-data.json').then(r => r.json());
+    window.__ummiData.then(d => this.setState({ d }));
+  }
+  componentDidUpdate(p) {
+    if (p.tab !== this.props.tab && this.props.tab) this.setState({ tab: this.props.tab });
+    if (p.week !== this.props.week && this.props.week) this.setState({ week: this.props.week, tab: 'Week' });
+  }
+  renderVals() {
+    const { tab, week, month, d } = this.state;
+    const W = (d && d.WEEKS[week]) || { size: '', len: '', wt: '', dev: [], body: [], normal: '', faith: '', tip: '' };
+    const M = (d && d.MONTHS[month]) || { note: '', acts: [], activity: '', from: 0, to: 0 };
+    const tri = week < 14 ? '1st trimester' : week < 28 ? '2nd trimester' : '3rd trimester';
+    const art = /^[aeiou]/i.test(W.size) ? 'an ' : 'a ';
+    const go = this.props.openReader;
+    return {
+      tabs: ['Week', 'Month', 'Food'].map(l => ({ label: l, bg: l === tab ? 'var(--pc)' : 'transparent', fg: l === tab ? 'var(--onpc)' : 'var(--ink)', pick: () => this.setState({ tab: l }) })),
+      isWeek: tab === 'Week', isMonth: tab === 'Month', isFood: tab === 'Food',
+      week, w: { ...W, milestone: W.milestone || '' },
+      weekSub: tri + (week === CUR ? ' · this week' : ''),
+      sizeSentence: W.size ? 'About the size of ' + art + W.size.toLowerCase() : '',
+      notCurrent: week !== CUR,
+      prevWeek: () => this.setState(s => ({ week: Math.max(4, s.week - 1) })),
+      nextWeek: () => this.setState(s => ({ week: Math.min(41, s.week + 1) })),
+      backToCurrent: () => this.setState({ week: CUR }),
+      month, m: M, monthSub: 'Weeks ' + M.from + '–' + M.to + (month === 6 ? ' · this month' : ''),
+      prevMonth: () => this.setState(s => ({ month: Math.max(1, s.month - 1) })),
+      nextMonth: () => this.setState(s => ({ month: Math.min(9, s.month + 1) })),
+      groups: CATS.map(([c, icon]) => ({ label: c, icon, items: M.acts.filter(a => a.cat === c).map(a => {
+        const ref = a.surah ? 'surah:' + a.surah : a.ayah ? 'ayah:' + a.ayah : a.dua ? 'dua:' + a.dua : '';
+        return { t: a.t, s: a.s || '', days: a.days ? a.days.map(i => WD[i]).join(' · ') : 'Every day', ref, read: () => go && go(ref) };
+      }) })).filter(g => g.items.length),
+      sunnah: d ? d.FOOD.sunnah : [], med: d ? d.FOOD.med : [], avoid: d ? d.FOOD.avoid : []
+    };
+  }
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Matches the light theme's `bg` token; used only for the splash screen,
+         before Compose (and its real light/dark theme) takes over. -->
+    <color name="splash_background">#F6F1E7</color>
+</resources>

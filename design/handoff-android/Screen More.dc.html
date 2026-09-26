@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<div style="height:100%;overflow-y:auto;scrollbar-width:none;background:var(--bg);color:var(--ink);font-family:Figtree,sans-serif">
+<div style="padding:8px 20px 14px"><div style="font-family:Literata,serif;font-weight:600;font-size:26px;line-height:1.25">More</div></div>
+
+<div style="margin:0 16px 20px;background:var(--surface);border:1px solid var(--line);border-radius:20px;padding:16px;display:flex;align-items:center;gap:14px">
+<div style="width:48px;height:48px;border-radius:24px;background:var(--pc);color:var(--onpc);display:flex;align-items:center;justify-content:center;font-family:Literata,serif;font-weight:600;font-size:20px;flex:none">F</div>
+<div style="flex:1;min-width:0"><div style="font-size:16px;font-weight:600">Fatima</div><div style="font-size:13px;color:var(--ink2);margin-top:2px">Due 9 January 2027 · week 24</div></div>
+<button style="height:36px;padding:0 14px;border-radius:18px;border:1px solid var(--line);background:transparent;color:var(--primary);font:600 14px Figtree,sans-serif;cursor:pointer">Edit</button>
+</div>
+
+<div style="font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--accentText);margin:0 20px 8px">Names we're thinking about</div>
+<div style="margin:0 16px 20px;background:var(--surface);border:1px solid var(--line);border-radius:20px;padding:16px">
+<div style="display:flex;gap:8px">
+<input value="{{ draft }}" onChange="{{ setDraft }}" onKeyDown="{{ keyAdd }}" placeholder="Add a name…" style="flex:1;min-width:0;height:48px;padding:0 14px;border-radius:12px;border:1.5px solid var(--line);background:var(--bg);color:var(--ink);font:400 16px Figtree,sans-serif;outline:none">
+<button onClick="{{ addName }}" aria-label="Add name" style="width:48px;height:48px;border-radius:12px;border:none;background:var(--primary);color:var(--onp);display:flex;align-items:center;justify-content:center;cursor:pointer"><span style="font-family:'Material Symbols Rounded';font-size:24px;line-height:1">add</span></button>
+</div>
+<div style="margin-top:6px">
+<sc-for list="{{ names }}" as="n" hint-placeholder-count="4">
+<div style="display:flex;align-items:center;gap:6px;padding:8px 0;border-bottom:1px solid var(--line)">
+<div style="flex:1;min-width:0"><div style="font-family:Literata,serif;font-weight:600;font-size:17px">{{ n.n }}</div><sc-if value="{{ n.note }}" hint-placeholder-val="{{ false }}"><div style="font-size:13px;color:var(--ink2);margin-top:1px">{{ n.note }}</div></sc-if></div>
+<button onClick="{{ n.fav }}" aria-label="Favourite" style="width:40px;height:40px;border-radius:20px;border:none;background:transparent;color:{{ n.favC }};display:flex;align-items:center;justify-content:center;cursor:pointer"><span style="font-family:'Material Symbols Rounded';font-size:22px;line-height:1;font-variation-settings:'FILL' {{ n.fill }}">favorite</span></button>
+<button onClick="{{ n.del }}" aria-label="Remove" style="width:40px;height:40px;border-radius:20px;border:none;background:transparent;color:var(--ink2);display:flex;align-items:center;justify-content:center;cursor:pointer"><span style="font-family:'Material Symbols Rounded';font-size:20px;line-height:1">close</span></button>
+</div>
+</sc-for>
+</div>
+<div style="font-size:13px;color:var(--ink2);margin-top:10px">Only on this phone. Tap the heart on the ones you both love.</div>
+</div>
+
+<div style="font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--accentText);margin:0 20px 8px">Settings</div>
+<div style="margin:0 16px 20px;background:var(--surface);border:1px solid var(--line);border-radius:20px;overflow:hidden">
+<div onClick="{{ openReminders }}" style="display:flex;align-items:center;gap:16px;padding:14px 16px;border-bottom:1px solid var(--line);cursor:pointer"><span style="font-family:'Material Symbols Rounded';font-size:24px;line-height:1;color:var(--primary)">notifications</span><div style="flex:1"><div style="font-size:16px">Reminders</div><div style="font-size:13px;color:var(--ink2)">Daily summary 7:30 am · prayer-linked acts</div></div><span style="font-family:'Material Symbols Rounded';font-size:22px;line-height:1;color:var(--ink2)">chevron_right</span></div>
+<div style="padding:14px 16px;border-bottom:1px solid var(--line)">
+<div style="display:flex;align-items:center;gap:16px"><span style="font-family:'Material Symbols Rounded';font-size:24px;line-height:1;color:var(--primary)">contrast</span><div style="font-size:16px">Appearance</div></div>
+<div style="display:flex;margin:12px 0 0 40px;border:1px solid var(--line);border-radius:20px;overflow:hidden;height:40px">
+<sc-for list="{{ themes }}" as="t" hint-placeholder-count="3"><button onClick="{{ t.pick }}" style="flex:1;border:none;border-right:1px solid var(--line);background:{{ t.bg }};color:{{ t.fg }};font:600 14px Figtree,sans-serif;display:flex;align-items:center;justify-content:center;gap:6px;cursor:pointer"><span style="font-family:'Material Symbols Rounded';font-size:17px;line-height:1">{{ t.icon }}</span>{{ t.label }}</button></sc-for>
+</div>
+</div>
+<div style="display:flex;align-items:center;gap:16px;padding:14px 16px;border-bottom:1px solid var(--line)"><span style="font-family:'Material Symbols Rounded';font-size:24px;line-height:1;color:var(--primary)">calendar_month</span><div style="flex:1"><div style="font-size:16px">Due date</div><div style="font-size:13px;color:var(--ink2)">9 January 2027</div></div><span style="font-family:'Material Symbols Rounded';font-size:22px;line-height:1;color:var(--ink2)">edit</span></div>
+<div onClick="{{ exportIcs }}" style="display:flex;align-items:center;gap:16px;padding:14px 16px;cursor:pointer"><span style="font-family:'Material Symbols Rounded';font-size:24px;line-height:1;color:var(--primary)">event_upcoming</span><div style="flex:1"><div style="font-size:16px">Export to calendar (.ics)</div><div style="font-size:13px;color:var(--ink2)">The whole plan as all-day entries, from your due date</div></div><span style="font-family:'Material Symbols Rounded';font-size:22px;line-height:1;color:var(--ink2)">download</span></div>
+</div>
+
+<div style="font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--accentText);margin:0 20px 8px">A gentle reflection</div>
+<div style="margin:0 16px 20px;background:var(--surface);border:1px solid var(--line);border-radius:20px;padding:16px">
+<div style="font-size:14px;color:var(--ink2);margin-bottom:10px">One line, whenever you feel like it. Never required.</div>
+<div style="display:flex;gap:8px">
+<input value="{{ refl }}" onChange="{{ setRefl }}" placeholder="What am I grateful for today?" style="flex:1;min-width:0;height:48px;padding:0 14px;border-radius:12px;border:1.5px solid var(--line);background:var(--bg);color:var(--ink);font:400 15px Figtree,sans-serif;outline:none">
+<button onClick="{{ saveRefl }}" style="height:48px;padding:0 16px;border-radius:12px;border:none;background:var(--pc);color:var(--onpc);font:600 15px Figtree,sans-serif;cursor:pointer">Save</button>
+</div>
+<sc-for list="{{ journal }}" as="j" hint-placeholder-count="2">
+<div style="padding:10px 0;border-bottom:1px solid var(--line);font-size:14px;line-height:1.5"><b style="color:var(--primary);font-weight:700">{{ j.d }}</b> · {{ j.t }}</div>
+</sc-for>
+</div>
+
+<div style="font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--accentText);margin:0 20px 8px">Backup</div>
+<div style="margin:0 16px 12px;background:var(--surface);border:1px solid var(--line);border-radius:20px;overflow:hidden">
+<div style="padding:14px 16px 4px;font-size:14px;line-height:1.5;color:var(--ink2)">Your progress is stored on this phone only. Save a backup now and then.</div>
+<div style="display:flex;align-items:center;gap:16px;padding:14px 16px;border-bottom:1px solid var(--line)"><span style="font-family:'Material Symbols Rounded';font-size:24px;line-height:1;color:var(--primary)">cloud_download</span><div style="flex:1;font-size:16px">Download backup</div><div style="font-size:12px;color:var(--ink2)">Last: 19 Sep</div></div>
+<div style="display:flex;align-items:center;gap:16px;padding:14px 16px;border-bottom:1px solid var(--line)"><span style="font-family:'Material Symbols Rounded';font-size:24px;line-height:1;color:var(--primary)">restore</span><div style="flex:1;font-size:16px">Restore from backup</div></div>
+<div style="display:flex;align-items:center;gap:16px;padding:14px 16px"><span style="font-family:'Material Symbols Rounded';font-size:24px;line-height:1;color:var(--primary)">description</span><div style="flex:1;font-size:16px">Download a readable record</div></div>
+</div>
+<button style="display:block;margin:8px auto 0;height:44px;padding:0 16px;border:none;background:transparent;color:var(--danger);font:600 15px Figtree,sans-serif;cursor:pointer">Reset app</button>
+<div style="font-size:12px;line-height:1.5;color:var(--ink2);text-align:center;padding:10px 32px 28px">Ummi is for guidance and comfort — it is not a substitute for medical care or the rulings of your marja'.</div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  state = {
+    draft: '', refl: '',
+    names: [{ n: 'Maryam', note: 'After Sayyidah Maryam (as)', fav: true }, { n: 'Zahra', note: 'The radiant one', fav: false }, { n: 'Ali', note: '', fav: true }, { n: 'Hasan', note: '', fav: false }],
+    journal: [{ d: '25 Sep', t: 'Felt the first proper kicks during Maghrib.' }, { d: '22 Sep', t: 'A quiet morning and a long walk.' }]
+  };
+  addName() { const v = this.state.draft.trim(); if (!v) return; this.setState(s => ({ draft: '', names: [{ n: v, note: '', fav: false }, ...s.names] })); }
+  renderVals() {
+    const s = this.state; const cur = this.props.theme || 'Light';
+    return {
+      draft: s.draft, setDraft: e => this.setState({ draft: e.target.value }),
+      addName: () => this.addName(), keyAdd: e => { if (e.key === 'Enter') this.addName(); },
+      names: s.names.map((x, i) => ({ ...x, favC: x.fav ? 'var(--danger)' : 'var(--ink2)', fill: x.fav ? 1 : 0,
+        fav: () => this.setState(st => ({ names: st.names.map((y, j) => j === i ? { ...y, fav: !y.fav } : y) })),
+        del: () => this.setState(st => ({ names: st.names.filter((_, j) => j !== i) })) })),
+      themes: [['Light', 'light_mode'], ['Dark', 'dark_mode'], ['System', 'brightness_auto']].map(([l, icon]) => ({ label: l, icon, bg: l === cur ? 'var(--pc)' : 'transparent', fg: l === cur ? 'var(--onpc)' : 'var(--ink)', pick: () => this.props.setTheme && this.props.setTheme(l) })),
+      openReminders: () => this.props.go && this.props.go('reminders'),
+      exportIcs: () => this.props.toast && this.props.toast('ummi-plan.ics saved to Downloads'),
+      refl: s.refl, setRefl: e => this.setState({ refl: e.target.value }),
+      saveRefl: () => { const v = s.refl.trim(); if (!v) return; this.setState(st => ({ refl: '', journal: [{ d: '26 Sep', t: v }, ...st.journal] })); this.props.toast && this.props.toast('Reflection saved'); },
+      journal: s.journal.slice(0, 4)
+    };
+  }
+}
+</script>
+</body>
+</html>
