@@ -26,7 +26,18 @@ jobs:
           distribution: "temurin"
           java-version: "17"
 
-      - uses: android-actions/setup-android@v3
+      # ubuntu-latest runners ship a pre-installed Android SDK, but not
+      # necessarily this project's exact platform/build-tools versions.
+      # Installing them directly (rather than via android-actions/setup-android,
+      # which also tries to install a "tools" package Google removed years
+      # ago, and fails outright when it can't find it) only adds what's
+      # actually missing.
+      - name: Install the Android SDK platform and build-tools this project needs
+        run: |
+          SDKMANAGER=$(find "$ANDROID_HOME/cmdline-tools" -maxdepth 2 -name sdkmanager -path "*/bin/*" | sort -V | tail -1)
+          echo "Using $SDKMANAGER"
+          yes | "$SDKMANAGER" --licenses > /dev/null
+          "$SDKMANAGER" "platforms;android-34" "build-tools;34.0.0"
 
       - name: Build debug APK
         run: ./gradlew assembleDebug --no-daemon
