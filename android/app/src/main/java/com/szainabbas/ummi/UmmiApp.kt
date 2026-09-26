@@ -5,6 +5,7 @@ import android.widget.Toast
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
@@ -137,6 +138,7 @@ private fun parseThemeMode(stored: String): UmmiThemeMode = when (stored.lowerca
     else -> UmmiThemeMode.SYSTEM
 }
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun UmmiMainScaffold(
     viewModel: UmmiViewModel,
