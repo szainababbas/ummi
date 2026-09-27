@@ -407,10 +407,16 @@ describe('the library, as checked against its sources', () => {
     ok(!all.some((d) => /7:54/.test(d.translit + d.body)), 'the Ibn al-Sunnī labour recitations are back');
   });
 
-  it('marks every A Mother’s Prayer citation as unchecked until someone reads the book', () => {
-    // al-islam.org could not be reached in the 2026-09-27 audit; see docs/SOURCES.md
+  it('cites A Mother’s Prayer by chapter, and only for what the book says', () => {
+    // checked against the book itself on 27 September 2026; see docs/SOURCES.md
     const lines = all.map((d) => d.src).concat(DUA_TODAY.map((d) => d.sr));
-    for (const l of lines) if (l.includes('A Mother’s Prayer')) ok(l.includes('not yet checked'), 'unmarked: ' + l);
+    for (const l of lines) {
+      ok(!l.includes('not yet checked'), 'still marked unchecked: ' + l);
+      if (l.includes('A Mother’s Prayer')) ok(/A Mother’s Prayer, ch\.\d/.test(l), 'no chapter given: ' + l);
+    }
+    // the book never recommends 3:36; it only has 3:35, written out for labour
+    const p = DUA_TODAY.find((d) => /3:36/.test(d.sr));
+    ok(!p.sr.includes('A Mother’s Prayer'), '3:36 is credited to A Mother’s Prayer, which does not recommend it');
   });
 
   it('never offers honey to a newborn', () => {

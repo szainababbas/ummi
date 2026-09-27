@@ -182,19 +182,41 @@ Month 9's three "also" lines (no garam masala, the sheep for Imām al-Mahdī (aj
 
 **The NHS gives no fetal weights,** so `WEEKS[].wt` is unchecked. The values follow the usual Hadlock-style chart.
 
+## A Mother's Prayer (checked 27 September 2026)
+
+Read in full from the al-islam.org EPUB (Bhimji and Hudda, Islamic Publishing House, 2004).
+
+**What kind of source it is.**
+- Chapters 2 to 5 (pregnancy, delivery, breastfeeding) give **no ḥadīth reference for any single prayer**.
+- The bibliography says they come from modern Persian compilations (*Darukhane-e-Maʿnavi*, *Mafātīḥ al-Ḥājāt*, *Adab-e-Zanashui*), plus Ḥilyat al-Muttaqīn and Mafātīḥ al-Jinān.
+- So, like From Marriage to Parenthood, it is a Shiʿi devotional compilation, not a narration.
+- Chapter 6 (after the birth) does quote ḥadīth, and agrees with al-Kāfī 6 on taḥnīk, naming and the hair's weight in silver or gold.
+
+**Confirmed, now cited by chapter and prayer:**
+- al-Fātiḥah continuously (ch.2 prayer 6)
+- Āyat al-Kursī (ch.2 prayer 2)
+- al-Qadr (ch.2 prayer 5)
+- Yūsuf (ch.2 prayer 8)
+- Yāsīn 36:36 (ch.2 prayer 9). It is over a glass of water, drunk after, for forty days; the card now says so.
+- Maryam daily (ch.3 prayer 1)
+- Duʿāʾ Yastashīr, daily in the ninth month (ch.4 prayer 9)
+- Maryam 19:23 over the mother in labour (ch.4 prayer 2)
+- 94:5 to 6, 46:35 and 79:46 for labour (ch.4 prayers 1, 6 and 8). The book has these written and tied on, not recited.
+- Bismillāh before each feed (ch.5)
+
+**Not in the book:**
+- **3:36** (the mother of Maryam's prayer) is not recommended anywhere in it; only 3:35 appears, written out for labour. The card now cites the Qurʾān alone.
+- The book does not mention 37:100, 14:40 or 20:25 to 26.
+- It uses 3:38 and 25:74 only for conceiving, and 46:15 only in a quoted excerpt. Those cards cite From Marriage to Parenthood.
+
+**Not taken into the app:** the book has many amulets, and verses written in saffron water and drunk. These are left out. They are practices from the compilations, not narrations the app can cite.
+
 ## Still to check
 
-**A Mother's Prayer.** al-islam.org serves a "verify you are human" check that an automated session can't pass. These lines are marked "not yet checked against the book" in the app, and a test keeps them marked:
+Primary texts not reached (their sites were down or blocked):
 
-- DUAS: al-Fātiḥah continuously; Yāsīn 36:36 forty times for forty days; Duʿāʾ Yastashīr in the ninth month.
-- DUA_TODAY: 3:36.
-
-Opening https://www.al-islam.org/mothers-prayer-saleem-bhimji in a browser and reading chapters 2 and 4 would settle them in about ten minutes. Then remove the marker, or remove the item.
-
-**Primary texts not reached** (their sites were down or blocked):
-
-- **Ṭibb al-Aʾimmah:** the labour recitations are quoted via duas.org.
-- **Ḥilyat al-Muttaqīn:** apple and pregnancy is quoted via the book, p.102.
+- **Ṭibb al-Aʾimmah:** the labour recitations are quoted via duas.org. A Mother's Prayer ch.4 now corroborates the verses.
+- **Ḥilyat al-Muttaqīn:** apple and pregnancy is quoted via From Marriage to Parenthood, p.102.
 - **The old three-volume Mustadrak:** the new edition was used instead.
 
 ## Coverage of the 27 September 2026 audit
@@ -210,7 +232,7 @@ Opening https://www.al-islam.org/mothers-prayer-saleem-bhimji in a browser and r
   - duas.org (Thursday ṣalawāt; pregnancy pages).
   - Tanzil (Uthmani text and en.qarai) and the quran.com API.
   - The NHS pages listed under "Health fixes".
-- **Could not reach:** al-islam.org (so A Mother's Prayer), shiaonlinelibrary.com, lib.eshia.ir, hadith.net, wikishia, web.archive.org.
+- **Could not reach:** al-islam.org (A Mother's Prayer was then read from the EPUB Zainab supplied), shiaonlinelibrary.com, lib.eshia.ir, hadith.net, wikishia, web.archive.org.
 - **Skipped on purpose:**
   - Sunni collections and general aggregators (they came up in searches only, to trace where a claim came from).
   - Rayḥāneh-ye Beheshtī and Masāʾil ʿIlmī dar Qurʾān, which are modern popular books, not primary sources.
