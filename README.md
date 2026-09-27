@@ -109,6 +109,8 @@ persists the same JSON shape the PWA writes with "Download backup"
 `data/AppStateRepository.kt`), so a backup file downloaded from the browser
 version restores directly in the Android app's More → Restore, and vice versa.
 
+Where the Android app stands, what differs from the handoff and what is still to test on a phone: `android/NOTES.md`.
+
 **Visits, names and reminders live only in the Android app.** They travel in
 the same backup file; the web app keeps them when it restores that file and
 writes them back out, so nothing is lost by passing through the browser.
