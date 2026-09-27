@@ -113,6 +113,9 @@ class ScreenshotTest {
     fun duas() = shot("duas", pages = 2) { DuasScreen(data = data, onOpenReader = {}, scrollState = it) }
 
     @Test
+    fun quran() = shot("quran", pages = 2) { DuasScreen(data = data, onOpenReader = {}, scrollState = it, startOnQuran = true) }
+
+    @Test
     fun more() = shot("more", pages = 2) {
         MoreScreen(
             appState = state,
