@@ -346,6 +346,12 @@ describe('the guide, as checked against its sources', () => {
     }
   });
 
+  it('records every act in docs/SOURCES.md', () => {
+    // so an act cannot ship without someone having looked for its source
+    const doc = require('fs').readFileSync(require('path').join(__dirname, '..', 'docs', 'SOURCES.md'), 'utf8');
+    for (const a of acts) ok(doc.includes('| ' + a.id + ' | '), a.id + ' has no row in docs/SOURCES.md');
+  });
+
   it('carries none of the citations that did not hold up', () => {
     // "Mustadrak vol.3 p.112/635" are not where those hadith are; Masāʾil ʿIlmī is not a hadith book
     const text = JSON.stringify(MONTHS) + JSON.stringify(DUA_TEXTS);
@@ -373,6 +379,59 @@ describe('the guide, as checked against its sources', () => {
       ok(!/pinch/i.test(a.t + a.s), a.id + ': a pinch is more than the chickpea size Sistani allows');
       ok(a.s.includes('ruling 2645'), a.id + ' should cite the ruling');
     }
+  });
+});
+
+/* And the duʿāʾ library, sunnah foods and names: Shiʿi sources only, each named,
+   and nothing passed off as checked that could not be. */
+describe('the library, as checked against its sources', () => {
+  const { DUAS, FOOD, NAMES, DUA_TODAY } = data;
+  const all = [];
+  for (const cat of Object.keys(DUAS)) for (const d of DUAS[cat]) all.push(d);
+  const SOURCES = ['Qurʾān', 'Sūrah', 'al-Kāfī', 'Man lā yaḥḍuruhu', 'al-Amālī', 'Ṭibb al-Aʾimmah', 'Sistani',
+    'From Marriage to Parenthood', 'A Mother’s Prayer'];
+
+  it('names a real source for every duʿāʾ, not "tradition" or "sunnah"', () => {
+    for (const d of all) {
+      ok(!/^(Traditions|Narrated traditions|Sunnah of the Prophet|General supplication)/.test(d.src), d.title + ' has a vague source: ' + d.src);
+      ok(SOURCES.some((x) => d.src.includes(x)), d.title + ' names no known source: ' + d.src);
+    }
+  });
+
+  it('cites no Sunni collection', () => {
+    const text = JSON.stringify([DUAS, FOOD, DUA_TODAY, MONTHS, DUA_TEXTS]);
+    for (const b of ['Bukhārī', 'Bukhari', 'Muslim,', 'Tirmidh', 'Ibn al-Sunn', 'Abū Dāwūd', 'Abu Dawud', 'Suyūṭī']) {
+      ok(!text.includes(b), 'cites ' + b);
+    }
+    // the labour recitations with 7:54 are Ibn al-Sunnī's report, not a Shiʿi one
+    ok(!all.some((d) => /7:54/.test(d.translit + d.body)), 'the Ibn al-Sunnī labour recitations are back');
+  });
+
+  it('marks every A Mother’s Prayer citation as unchecked until someone reads the book', () => {
+    // al-islam.org could not be reached in the 2026-09-27 audit; see docs/SOURCES.md
+    const lines = all.map((d) => d.src).concat(DUA_TODAY.map((d) => d.sr));
+    for (const l of lines) if (l.includes('A Mother’s Prayer')) ok(l.includes('not yet checked'), 'unmarked: ' + l);
+  });
+
+  it('never offers honey to a newborn', () => {
+    const t = all.find((d) => d.title === 'Tahnik');
+    ok(!/or honey/i.test(t.translit + t.body), 'taḥnīk offers honey, which the NHS says not to give before one');
+    ok(/Never honey/.test(t.body), 'taḥnīk should warn against honey');
+  });
+
+  it('flags frankincense as a herbal remedy to check first', () => {
+    const f = FOOD.sunnah.find((x) => /Frankincense/.test(x.name));
+    ok(/midwife or pharmacist/.test(f.note), 'frankincense lost its NHS caution');
+    ok(!/chew/i.test(f.note), 'the ḥadīth says give (feed), not chew');
+  });
+
+  it('gives names their narrated meanings', () => {
+    const m = {};
+    for (const g of Object.keys(NAMES)) for (const x of NAMES[g]) m[x.n] = x.m;
+    ok(/Weaned from evil/.test(m.Fatima), 'Fatima: the narrated meaning is weaned (kept) from evil');
+    ok(!/daughter of the Prophet/.test(m.Ruqayya), 'Ruqayya: the Shiʿi association is the daughter of Imam Husayn');
+    ok(!/Noble/.test(m.Khadija), 'Khadija means born early');
+    ok(m.Abdullah, 'Abdullah is the first name in the ḥadīth on the best names');
   });
 });
 
