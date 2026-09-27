@@ -572,6 +572,49 @@ describe('the shipped file', () => {
   });
 });
 
+/* ---------------------------------------------------------- clock changes */
+/* Adding 24-hour blocks to a local midnight lands at 23:00 the day before once the
+   clocks go back, so anything that counts days must count calendar days. These run
+   in the UK's time zone with "now" pinned, so they don't depend on when they run. */
+describe('across a clock change (Europe/London)', () => {
+  function inLondon(fn) {
+    const prev = process.env.TZ;
+    process.env.TZ = 'Europe/London';
+    try { fn(); } finally { if (prev === undefined) delete process.env.TZ; else process.env.TZ = prev; }
+  }
+  const utcDay = (s) => Date.UTC(+s.slice(0, 4), +s.slice(4, 6) - 1, +s.slice(6, 8));
+
+  it('puts every calendar event on its own day for a summer due date', () => inLondon(() => {
+    const a = load({ now: '2026-09-27T10:00' });
+    a.T.setState({ dueDate: '2027-07-15' });
+    const starts = [...a.T.buildICS().matchAll(/DTSTART;VALUE=DATE:(\d{8})/g)].map((m) => m[1]);
+    eq(starts[0], '20261105', 'first event (week 4) is on the wrong day');
+    eq(starts[starts.length - 1], '20270715', 'last event is not the due date');
+    for (let i = 1; i < starts.length; i++) {
+      eq((utcDay(starts[i]) - utcDay(starts[i - 1])) / 86400000, 1, 'the calendar skips or repeats a day after ' + starts[i - 1]);
+    }
+  }));
+
+  it('works out the due date from the week you signed up with, in summer', () => inLondon(() => {
+    // Being a day out still lands in the same week, so check the date itself.
+    for (let w = 4; w <= 41; w++) {
+      const a = load({ now: '2026-09-27T10:00' });
+      a.App.init();
+      a.doc.getElementById('g-week').value = String(w);
+      a.App.signup();
+      const expected = new Date(Date.UTC(2026, 8, 27) + (40 - w) * 7 * 86400000).toISOString().slice(0, 10);
+      eq(a.T.getState().dueDate, expected, 'signed up at week ' + w + ' on 27 September');
+      eq(a.T.currentWeek(), w, 'signed up at week ' + w);
+    }
+  }));
+
+  it("keeps today's dua for the whole day, even just after midnight in summer", () => inLondon(() => {
+    // 1 June 2026 is day 152; the Android app picks the same dua from the day of the year
+    eq(load({ now: '2026-06-01T00:30' }).T.dayIndex(), 152, 'just after midnight');
+    eq(load({ now: '2026-06-01T23:30' }).T.dayIndex(), 152, 'just before midnight');
+  }));
+});
+
 /* ------------------------------------------------------------ the Android app */
 /* The Android app (android/) is a separate codebase that must stay compatible
    with this one: same content, and backups that restore in either direction.

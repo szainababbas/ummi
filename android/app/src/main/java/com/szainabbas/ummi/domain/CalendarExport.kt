@@ -11,8 +11,9 @@ import java.time.format.DateTimeFormatter
  * day's lead act and listing the rest. Output is byte-for-byte the web
  * app's; tests/fixtures/calendar-2026-12-15.ics holds both to it.
  *
- * Days are counted as calendar dates. The PWA counts in 24-hour steps from
- * the due date, which slips a day across a daylight-saving change.
+ * Days are counted as calendar dates, not 24-hour steps, which slip a day
+ * across a daylight-saving change (the web app had that bug until both were
+ * held to the same tests).
  */
 object CalendarExport {
     private val compact = DateTimeFormatter.BASIC_ISO_DATE

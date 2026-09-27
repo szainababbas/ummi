@@ -26,7 +26,7 @@ class CalendarExportTest {
         }
     }
 
-    /** The web app's 24-hour stepping duplicates a date across the October clock change for a summer due date. */
+    /** Counting 24-hour steps instead of calendar days puts winter events a day early for a summer due date. */
     @Test
     fun `has exactly one event per day, across a clock change`() {
         val original = TimeZone.getDefault()

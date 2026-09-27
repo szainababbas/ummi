@@ -1,6 +1,6 @@
 /* Ummi service worker — network-first with cache fallback, so updates
    arrive when online but the app still opens offline. */
-const CACHE = 'ummi-v2';
+const CACHE = 'ummi-v3';
 
 self.addEventListener('install', function (e) { self.skipWaiting(); });
 
