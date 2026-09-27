@@ -10,7 +10,6 @@ import com.szainabbas.ummi.data.Place
 import com.szainabbas.ummi.data.ReminderSettings
 import com.szainabbas.ummi.data.UmmiDataRepository
 import com.szainabbas.ummi.data.Visit
-import com.szainabbas.ummi.data.VisitReminder
 import com.szainabbas.ummi.data.model.UmmiData
 import com.szainabbas.ummi.data.withDuaRecitedToggled
 import com.szainabbas.ummi.data.withJournalEntry
@@ -20,8 +19,7 @@ import com.szainabbas.ummi.data.withNameNote
 import com.szainabbas.ummi.data.withNameRemoved
 import com.szainabbas.ummi.data.withTaskReminder
 import com.szainabbas.ummi.data.withTaskToggled
-import com.szainabbas.ummi.data.withVisitRemoved
-import com.szainabbas.ummi.data.withVisitReminder
+import com.szainabbas.ummi.data.withVisitDeleted
 import com.szainabbas.ummi.data.withVisitSaved
 import com.szainabbas.ummi.reminders.ReminderScheduler
 import com.szainabbas.ummi.domain.CalendarExport
@@ -101,9 +99,7 @@ class UmmiViewModel(application: Application) : AndroidViewModel(application) {
 
     fun saveVisit(visit: Visit) = mutate { it.withVisitSaved(visit) }
 
-    fun removeVisit(id: String) = mutate { it.withVisitRemoved(id) }
-
-    fun setVisitReminder(id: String, reminder: VisitReminder) = mutate { it.withVisitReminder(id, reminder) }
+    fun deleteVisit(id: String) = mutate { it.withVisitDeleted(id) }
 
     /** [time] is "HH:mm", or null to turn the task's reminder off. */
     fun setTaskReminder(id: String, time: String?) = mutate { it.withTaskReminder(id, time) }

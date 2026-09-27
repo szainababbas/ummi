@@ -2,70 +2,112 @@ package com.szainabbas.ummi.domain
 
 import com.szainabbas.ummi.data.Visit
 import org.junit.Assert.assertEquals
+import org.junit.Assert.assertFalse
 import org.junit.Assert.assertNull
+import org.junit.Assert.assertTrue
 import org.junit.Test
 import java.time.LocalDate
 import java.time.LocalDateTime
 
 class VisitsTest {
-    private val now = LocalDateTime.of(2026, 9, 26, 12, 0)
-    private val ogtt = Visit("a", "2026-09-29", "09:10", "Glucose test (OGTT)", type = "Blood test", reminder = "evening")
-    private val midwife = Visit("b", "2026-10-16", "10:30", "Midwife check · 28 weeks")
-    private val scan = Visit("c", "2026-08-28", "09:00", "Anomaly scan · 20 weeks", type = "Scan")
-    private val thisMorning = Visit("d", "2026-09-26", "11:59", "Earlier today")
-    private val visits = listOf(midwife, scan, ogtt, thisMorning)
+    private val today = LocalDate.of(2026, 9, 27) // a Sunday
+
+    private fun v(id: String, date: String, time: String = "", title: String = id, type: String = "other", reminder: String = "none") =
+        Visit(id = id, date = date, time = time, title = title, type = type, reminder = reminder)
+
+    private val visits = listOf(
+        v("later", "2026-10-20"),
+        v("lastWeek", "2026-09-20", "10:00"),
+        v("todayUntimed", "2026-09-27"),
+        v("todayPm", "2026-09-27", "14:30"),
+        v("todayAm", "2026-09-27", "09:10"),
+        v("longAgo", "2026-08-01"),
+        v("broken", "not a date"),
+    )
 
     @Test
-    fun `lists visits to come soonest first, and past ones latest first`() {
-        assertEquals(listOf("a", "b"), Visits.upcoming(visits, now).map { it.id })
-        assertEquals(listOf("d", "c"), Visits.past(visits, now).map { it.id })
-        assertEquals("a", Visits.next(visits, now)?.id)
+    fun `lists what's coming up soonest first, keeping today's visits all day`() {
+        assertEquals(
+            listOf("todayAm", "todayPm", "todayUntimed", "later"),
+            Visits.upcoming(visits, today).map { it.id },
+        )
+        assertEquals("todayAm", Visits.next(visits, today)?.id)
     }
 
     @Test
-    fun `keeps a visit coming up until its start time`() {
-        val atNoon = thisMorning.copy(time = "12:00")
-        assertEquals(listOf(atNoon), Visits.upcoming(listOf(atNoon), now))
+    fun `lists past visits most recent first`() {
+        assertEquals(listOf("lastWeek", "longAgo"), Visits.past(visits, today).map { it.id })
     }
 
     @Test
-    fun `skips a visit with a date it cannot read`() {
-        assertEquals(emptyList<Visit>(), Visits.upcoming(listOf(ogtt.copy(date = "soon")), now))
-        assertEquals(emptyList<Visit>(), Visits.past(listOf(ogtt.copy(date = "soon")), now))
+    fun `has no next visit when there is nothing ahead`() {
+        assertNull(Visits.next(listOf(v("old", "2026-01-01")), today))
+        assertNull(Visits.next(emptyList(), today))
     }
 
     @Test
-    fun `works out each kind of reminder`() {
-        assertEquals(LocalDateTime.of(2026, 9, 28, 20, 0), Visits.reminderAt(ogtt))
-        assertEquals(LocalDateTime.of(2026, 9, 29, 8, 0), Visits.reminderAt(ogtt.copy(reminder = "morning")))
-        assertEquals(LocalDateTime.of(2026, 9, 29, 7, 10), Visits.reminderAt(ogtt.copy(reminder = "2h")))
-        assertNull(Visits.reminderAt(midwife))
+    fun `says how far off a visit is`() {
+        assertEquals("TODAY", Visits.whenLabel(v("a", "2026-09-27"), today))
+        assertEquals("TOMORROW", Visits.whenLabel(v("a", "2026-09-28"), today))
+        assertEquals("IN 3 DAYS", Visits.whenLabel(v("a", "2026-09-30"), today))
+        assertEquals("IN 13 DAYS", Visits.whenLabel(v("a", "2026-10-10"), today))
+        assertEquals("IN 2 WEEKS", Visits.whenLabel(v("a", "2026-10-11"), today))
     }
 
     @Test
-    fun `counts down in days`() {
-        val today = LocalDate.of(2026, 9, 26)
-        assertEquals("Next · in 3 days", Visits.countdown(ogtt, today))
-        assertEquals("Next · tomorrow", Visits.countdown(ogtt, today.plusDays(2)))
-        assertEquals("Next · today", Visits.countdown(ogtt, today.plusDays(3)))
+    fun `writes times the UK way`() {
+        assertEquals("9:10 am", Visits.timeLabel(v("a", "2026-10-06", "09:10")))
+        assertEquals("2:30 pm", Visits.timeLabel(v("a", "2026-10-06", "14:30")))
+        assertEquals("", Visits.timeLabel(v("a", "2026-10-06")))
+        assertEquals("Tuesday 6 October · 9:10 am", Visits.longWhen(v("a", "2026-10-06", "09:10")))
+        assertEquals("Tuesday 6 October", Visits.longWhen(v("a", "2026-10-06")))
     }
 
     @Test
-    fun `labels a visit the way the handoff does`() {
-        assertEquals("Tuesday 29 September, 9:10", Visits.longWhen(ogtt))
-        assertEquals("Tue 9:10 · Glucose test (OGTT)", Visits.chip(ogtt))
-        assertEquals("Blood test · 9:10 · reminder evening before", Visits.meta(ogtt))
-        assertEquals("Midwife · 10:30", Visits.meta(midwife))
-        assertEquals("Remind me the evening before · 8:00 pm", Visits.reminderLine(ogtt))
-        assertEquals("Sep" to "29", Visits.tile(ogtt))
+    fun `leaves out of the subtitle whatever isn't set`() {
+        assertEquals("Scan · 9:10 am · Evening before", Visits.meta(v("a", "2026-10-06", "09:10", type = "scan", reminder = "evening")))
+        assertEquals("Blood test", Visits.meta(v("a", "2026-10-06", type = "blood")))
+        assertEquals("Other", Visits.meta(v("a", "2026-10-06", type = "something new")))
     }
 
     @Test
-    fun `words the snackbars`() {
-        assertEquals("Reminder set · Mon 8:00 pm", Visits.reminderSetMessage(ogtt))
-        assertEquals("Reminder set · Tue 7:10 am", Visits.reminderSetMessage(ogtt.copy(reminder = "2h")))
-        assertEquals("Reminder off", Visits.reminderSetMessage(midwife))
-        assertEquals("Visit added · reminder evening before", Visits.savedMessage(ogtt, isNew = true))
-        assertEquals("Visit saved", Visits.savedMessage(midwife, isNew = false))
+    fun `labels the chip on Today by how near the visit is`() {
+        assertEquals("Today 9:10 · Glucose", Visits.chipLabel(v("a", "2026-09-27", "09:10", "Glucose"), today))
+        assertEquals("Tomorrow · Midwife", Visits.chipLabel(v("a", "2026-09-28", title = "Midwife"), today))
+        assertEquals("Tue 14:30 · Scan", Visits.chipLabel(v("a", "2026-09-29", "14:30", "Scan"), today))
+        assertEquals("6 Oct · Scan", Visits.chipLabel(v("a", "2026-10-06", title = "Scan"), today))
+    }
+
+    @Test
+    fun `builds the date tile`() {
+        assertEquals("OCT", Visits.tileMonth(v("a", "2026-10-06")))
+        assertEquals("6", Visits.tileDay(v("a", "2026-10-06")))
+    }
+
+    @Test
+    fun `needs a title and a date before it can save`() {
+        assertTrue(Visits.canSave("Scan", today))
+        assertFalse(Visits.canSave("   ", today))
+        assertFalse(Visits.canSave("Scan", null))
+    }
+
+    @Test
+    fun `reads unknown keys as other and no reminder`() {
+        assertEquals(VisitType.OTHER, VisitType.of("x"))
+        assertEquals(VisitType.SCAN, VisitType.of("scan"))
+        assertEquals(VisitReminder.NONE, VisitReminder.of("x"))
+        assertEquals(VisitReminder.TWO_HOURS, VisitReminder.of("2h"))
+    }
+
+    @Test
+    fun `works out when each kind of reminder goes off`() {
+        val v = Visit(id = "a", date = "2026-10-06", time = "09:10", title = "Scan", reminder = "evening")
+        assertEquals(LocalDateTime.of(2026, 10, 5, 20, 0), Visits.reminderAt(v))
+        assertEquals(LocalDateTime.of(2026, 10, 6, 8, 0), Visits.reminderAt(v.copy(reminder = "morning")))
+        assertEquals(LocalDateTime.of(2026, 10, 6, 7, 10), Visits.reminderAt(v.copy(reminder = "2h")))
+        // "2 hours before" needs a time; without one it falls back to the morning of.
+        assertEquals(LocalDateTime.of(2026, 10, 6, 8, 0), Visits.reminderAt(v.copy(reminder = "2h", time = "")))
+        assertEquals(null, Visits.reminderAt(v.copy(reminder = "none")))
+        assertEquals(null, Visits.reminderAt(v.copy(date = "soon")))
     }
 }

@@ -1,16 +1,18 @@
 package com.szainabbas.ummi.ui.theme
 
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.rounded.AccessTime
 import androidx.compose.material.icons.rounded.Add
 import androidx.compose.material.icons.rounded.ArrowBack
 import androidx.compose.material.icons.rounded.Bloodtype
 import androidx.compose.material.icons.rounded.CheckCircle
+import androidx.compose.material.icons.rounded.Delete
 import androidx.compose.material.icons.rounded.Favorite
 import androidx.compose.material.icons.rounded.FavoriteBorder
 import androidx.compose.material.icons.rounded.Lightbulb
+import androidx.compose.material.icons.rounded.LocalHospital
 import androidx.compose.material.icons.rounded.LocationOn
 import androidx.compose.material.icons.rounded.Lock
-import androidx.compose.material.icons.rounded.LocalHospital
 import androidx.compose.material.icons.rounded.MedicalServices
 import androidx.compose.material.icons.rounded.MonitorHeart
 import androidx.compose.material.icons.rounded.Mosque
@@ -52,7 +54,7 @@ import androidx.compose.ui.graphics.vector.ImageVector
  * uses `material-icons-extended`, an older fixed catalogue that ships as a
  * normal Gradle dependency and needs no font-variation plumbing. Most names
  * match directly. Where the handoff's exact glyph isn't in that catalogue
- * (e.g. "stethoscope"), the nearest existing icon is used instead and noted here.
+ * (e.g. "mosque", "stethoscope"), the nearest existing icon is used instead and noted here.
  * Swapping in the real Material Symbols font is a possible follow-up, not
  * a blocker.
  */
@@ -90,11 +92,13 @@ object UmmiIcons {
     val close: ImageVector = Icons.Rounded.Close
     val schedule: ImageVector = Icons.Rounded.Schedule
 
-    // Visits
+    // Visits screen. There's no stethoscope in this icon set, so midwife
+    // visits use the same figure as the Journey tab.
     val add: ImageVector = Icons.Rounded.Add
-    val location: ImageVector = Icons.Rounded.LocationOn
-    val tip: ImageVector = Icons.Rounded.Lightbulb
-    val typeMidwife: ImageVector = Icons.Rounded.LocalHospital // stand-in for "stethoscope"
+    val event: ImageVector = Icons.Rounded.Event
+    val delete: ImageVector = Icons.Rounded.Delete
+    val reminderSet: ImageVector = Icons.Rounded.Notifications
+    val typeMidwife: ImageVector = Icons.Rounded.PregnantWoman
     val typeScan: ImageVector = Icons.Rounded.MonitorHeart
     val typeBlood: ImageVector = Icons.Rounded.Bloodtype
     val typeGp: ImageVector = Icons.Rounded.MedicalServices

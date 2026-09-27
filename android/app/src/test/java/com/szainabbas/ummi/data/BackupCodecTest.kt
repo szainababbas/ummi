@@ -27,7 +27,7 @@ class BackupCodecTest {
         journal = listOf(JournalEntry("2026-08-16", "a good day")),
         theme = "dark",
         names = listOf(NameEntry("Maryam", "After Sayyidah Maryam (as)", favourite = true)),
-        visits = listOf(Visit("v1", "2026-10-16", "10:30", "Midwife check", reminder = "evening", place = "Clinic")),
+        visits = listOf(Visit("v1", "2026-10-16", "10:30", "Midwife check", type = "midwife", reminder = "evening", note = "Bring notes")),
         reminders = ReminderSettings(morning = true, water = true, tasks = mapOf("m4a" to "07:30")),
         place = Place("Karachi", 24.8607, 67.0011),
     )
@@ -98,6 +98,14 @@ class BackupCodecTest {
     @Test
     fun `writes the same readable record as the web app`() {
         val history = fixture["history"]!!.jsonObject
+        val state = stateOf(history["state"]!!.jsonObject)
+        val today = LocalDate.parse(history["today"]!!.jsonPrimitive.content)
+        assertEquals(history["text"]!!.jsonPrimitive.content, BackupCodec.historyText(state, today))
+    }
+
+    @Test
+    fun `lists visits in the readable record the same way as the web app`() {
+        val history = fixture["historyWithVisits"]!!.jsonObject
         val state = stateOf(history["state"]!!.jsonObject)
         val today = LocalDate.parse(history["today"]!!.jsonPrimitive.content)
         assertEquals(history["text"]!!.jsonPrimitive.content, BackupCodec.historyText(state, today))

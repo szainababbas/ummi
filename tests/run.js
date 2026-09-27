@@ -277,6 +277,170 @@ describe("qur'an data", () => {
   });
 });
 
+/* The 2026-09-27 research audit (docs/SOURCES.md) checked the Qurʾān block against
+   Tanzil and quran.com, and the duʿāʾ cards against Qarāʾī. These hold those fixes. */
+describe('texts, as checked against their sources', () => {
+  it('spells 16:69 as the Madinah muṣḥaf does', () => {
+    ok(AYAHS['16:69'].ar.includes('لَـَٔايَةًۭ'), '16:69 should seat the hamza on a tatweel, as Tanzil and quran.com do');
+    ok(!AYAHS['16:69'].ar.includes('لَءَايَةً'), '16:69 still has the API spelling');
+  });
+
+  it('names each surah the way the rest of the app does', () => {
+    const names = { 2: 'al-Baqarah', 3: 'Āl ʿImrān', 14: 'Ibrāhīm', 16: 'an-Naḥl', 19: 'Maryam', 20: 'Ṭā Hā',
+      25: 'al-Furqān', 36: 'Yāsīn', 37: 'aṣ-Ṣāffāt', 46: 'al-Aḥqāf', 94: 'ash-Sharḥ' };
+    for (const r of Object.keys(AYAHS)) {
+      eq(AYAHS[r].ref, 'Sūrah ' + names[r.split(':')[0]] + ' ' + r, 'ref label for ' + r);
+    }
+  });
+
+  it('has none of the transliteration slips the API ships with', () => {
+    // each of these is a wrong word, not a style choice: see tools/gen_quran.py TL_FIXES
+    const slips = ['mww', "waqa'athaa", 'Summma', "aqzi'neee", "b'adu", 'alfee', 'afwajah', 'was taghfir', 'Hunaaalika'];
+    const all = [];
+    for (const n of Object.keys(SURAHS)) for (const v of SURAHS[n].v) all.push(n + ':' + v.n + ' ' + v.tl);
+    for (const r of Object.keys(AYAHS)) all.push(r + ' ' + AYAHS[r].tl);
+    for (const line of all) for (const s of slips) ok(!line.includes(s), 'transliteration slip "' + s + '" in ' + line);
+    ok(SURAHS[110].v[2].tl.includes('wastaghfirhu'), '110:3 should keep the pronoun: wastaghfirhu');
+  });
+
+  it("gives every duʿāʾ card the Qarāʾī meaning of the verse it quotes", () => {
+    // the app says its translation is Qarāʾī, so the cards must not carry another one
+    const flat = (x) => x.replace(/[‘’“”'"]/g, '').replace(/[—–]/g, ' ').replace(/\s+/g, ' ').trim();
+    for (const d of data.DUA_TODAY) {
+      const m = /(\d+):(\d+)(?:–(\d+))?/.exec(d.sr);
+      ok(m, d.lbl + ' has no verse reference');
+      let en = '';
+      for (let v = +m[2]; v <= +(m[3] || m[2]); v++) {
+        const a = AYAHS[m[1] + ':' + v];
+        ok(a, d.lbl + ' quotes ' + m[1] + ':' + v + ', which the app does not carry');
+        en += ' ' + a.en;
+      }
+      const quoted = /“([^”]+)”/.exec(d.mn);
+      ok(quoted, d.lbl + ' has no quoted meaning');
+      ok(flat(en).includes(flat(quoted[1])), d.lbl + ': meaning is not Qarāʾī for ' + m[0] + ': ' + quoted[1]);
+    }
+  });
+
+  it('shows all the Arabic that each duʿāʾ card translates', () => {
+    // three cards used to translate the end of the verse without showing it
+    const ends = { 'For a righteous child': 'الدُّعَاءِ', 'Comfort of the eyes': 'إِمَامًا', 'Steadfast in prayer': 'دُعَاءِ' };
+    for (const d of data.DUA_TODAY) if (ends[d.lbl]) ok(d.arabic.endsWith(ends[d.lbl]), d.lbl + ' stops short of what it translates');
+    const g = data.DUA_TODAY.find((d) => d.lbl.startsWith('Gratitude'));
+    ok(g.arabic.includes('وَالِدَيَّ'), '46:15 card skips words in the middle of the verse');
+  });
+});
+
+/* The same audit traced the nine-month guide to From Marriage to Parenthood (World
+   Federation, 2006, ch.6), which the planner was copied from, and checked each act
+   for a primary source. These hold what it found. */
+describe('the guide, as checked against its sources', () => {
+  const SOURCES = ['From Marriage to Parenthood', 'al-Kāfī', 'Biḥār al-Anwār', 'Makārim al-Akhlāq',
+    'Mustadrak al-Wasāʾil', 'Sistani', 'NHS', 'Aimen’s planner'];
+  const acts = [];
+  for (const m of Object.keys(MONTHS)) for (const a of MONTHS[m].acts) acts.push(a);
+
+  it('says where every act comes from', () => {
+    for (const a of acts) ok(SOURCES.some((src) => a.s.includes(src)), a.id + ' names no source: ' + JSON.stringify(a.s));
+    for (const m of Object.keys(MONTHS)) for (const x of MONTHS[m].also || []) {
+      ok(SOURCES.some((src) => x.includes(src)), 'month ' + m + ' "also" names no source: ' + x);
+    }
+  });
+
+  it('records every act in docs/SOURCES.md', () => {
+    // so an act cannot ship without someone having looked for its source
+    const doc = require('fs').readFileSync(require('path').join(__dirname, '..', 'docs', 'SOURCES.md'), 'utf8');
+    for (const a of acts) ok(doc.includes('| ' + a.id + ' | '), a.id + ' has no row in docs/SOURCES.md');
+  });
+
+  it('carries none of the citations that did not hold up', () => {
+    // "Mustadrak vol.3 p.112/635" are not where those hadith are; Masāʾil ʿIlmī is not a hadith book
+    const text = JSON.stringify(MONTHS) + JSON.stringify(DUA_TEXTS);
+    ok(!/Mustadrak al-Wasāʾil, Vol\. 3/.test(text), 'a Mustadrak vol. 3 citation is back');
+    ok(!/Masāʾile? ʿIlmī/.test(text), 'Masāʾil ʿIlmī dar Qurʾān is cited as a source again');
+  });
+
+  it('puts Friday night on Thursday, since that is when it falls', () => {
+    const fatir = acts.find((a) => a.t.includes('Fāṭir'));
+    eq(fatir.days, [4], 'Sūrah Fāṭir is for Friday night, which is Thursday evening');
+  });
+
+  it('keeps month seven as the book gives it', () => {
+    const m7 = MONTHS[7].acts;
+    eq(m7.find((a) => a.t.includes('an-Naḥl')).days, [1], 'an-Naḥl is for Mondays');
+    ok(m7.find((a) => a.t.includes('al-Anʿām')).days === null, 'al-Anʿām is for forty days, not Mondays');
+    ok(m7.some((a) => a.s.includes('al-Ḥadīd (57)')), 'the five sūrahs start with al-Ḥadīd');
+    ok(m7.some((a) => a.t.includes('quince')), 'Yāsīn is recited over a quince');
+  });
+
+  it('keeps the turbah within what Sistani allows', () => {
+    const eaten = acts.filter((a) => /Khāke Shifāʾ/.test(a.t) && !/^Rub/.test(a.t));
+    ok(eaten.length > 0, 'expected an act about eating Khāke Shifāʾ');
+    for (const a of eaten) {
+      ok(!/pinch/i.test(a.t + a.s), a.id + ': a pinch is more than the chickpea size Sistani allows');
+      ok(a.s.includes('ruling 2645'), a.id + ' should cite the ruling');
+    }
+  });
+});
+
+/* And the duʿāʾ library, sunnah foods and names: Shiʿi sources only, each named,
+   and nothing passed off as checked that could not be. */
+describe('the library, as checked against its sources', () => {
+  const { DUAS, FOOD, NAMES, DUA_TODAY } = data;
+  const all = [];
+  for (const cat of Object.keys(DUAS)) for (const d of DUAS[cat]) all.push(d);
+  const SOURCES = ['Qurʾān', 'Sūrah', 'al-Kāfī', 'Man lā yaḥḍuruhu', 'al-Amālī', 'Ṭibb al-Aʾimmah', 'Sistani',
+    'From Marriage to Parenthood', 'A Mother’s Prayer'];
+
+  it('names a real source for every duʿāʾ, not "tradition" or "sunnah"', () => {
+    for (const d of all) {
+      ok(!/^(Traditions|Narrated traditions|Sunnah of the Prophet|General supplication)/.test(d.src), d.title + ' has a vague source: ' + d.src);
+      ok(SOURCES.some((x) => d.src.includes(x)), d.title + ' names no known source: ' + d.src);
+    }
+  });
+
+  it('cites no Sunni collection', () => {
+    const text = JSON.stringify([DUAS, FOOD, DUA_TODAY, MONTHS, DUA_TEXTS]);
+    for (const b of ['Bukhārī', 'Bukhari', 'Muslim,', 'Tirmidh', 'Ibn al-Sunn', 'Abū Dāwūd', 'Abu Dawud', 'Suyūṭī']) {
+      ok(!text.includes(b), 'cites ' + b);
+    }
+    // the labour recitations with 7:54 are Ibn al-Sunnī's report, not a Shiʿi one
+    ok(!all.some((d) => /7:54/.test(d.translit + d.body)), 'the Ibn al-Sunnī labour recitations are back');
+  });
+
+  it('cites A Mother’s Prayer by chapter, and only for what the book says', () => {
+    // checked against the book itself on 27 September 2026; see docs/SOURCES.md
+    const lines = all.map((d) => d.src).concat(DUA_TODAY.map((d) => d.sr));
+    for (const l of lines) {
+      ok(!l.includes('not yet checked'), 'still marked unchecked: ' + l);
+      if (l.includes('A Mother’s Prayer')) ok(/A Mother’s Prayer, ch\.\d/.test(l), 'no chapter given: ' + l);
+    }
+    // the book never recommends 3:36; it only has 3:35, written out for labour
+    const p = DUA_TODAY.find((d) => /3:36/.test(d.sr));
+    ok(!p.sr.includes('A Mother’s Prayer'), '3:36 is credited to A Mother’s Prayer, which does not recommend it');
+  });
+
+  it('never offers honey to a newborn', () => {
+    const t = all.find((d) => d.title === 'Tahnik');
+    ok(!/or honey/i.test(t.translit + t.body), 'taḥnīk offers honey, which the NHS says not to give before one');
+    ok(/Never honey/.test(t.body), 'taḥnīk should warn against honey');
+  });
+
+  it('flags frankincense as a herbal remedy to check first', () => {
+    const f = FOOD.sunnah.find((x) => /Frankincense/.test(x.name));
+    ok(/midwife or pharmacist/.test(f.note), 'frankincense lost its NHS caution');
+    ok(!/chew/i.test(f.note), 'the ḥadīth says give (feed), not chew');
+  });
+
+  it('gives names their narrated meanings', () => {
+    const m = {};
+    for (const g of Object.keys(NAMES)) for (const x of NAMES[g]) m[x.n] = x.m;
+    ok(/Weaned from evil/.test(m.Fatima), 'Fatima: the narrated meaning is weaned (kept) from evil');
+    ok(!/daughter of the Prophet/.test(m.Ruqayya), 'Ruqayya: the Shiʿi association is the daughter of Imam Husayn');
+    ok(!/Noble/.test(m.Khadija), 'Khadija means born early');
+    ok(m.Abdullah, 'Abdullah is the first name in the ḥadīth on the best names');
+  });
+});
+
 /* -------------------------------------------------------------- calendar export */
 describe('calendar export', () => {
   T.setState({ dueDate: DUE });
@@ -704,6 +868,18 @@ describe('android app compatibility', () => {
   it('writes the same readable record as the Android app', () => {
     T.setState(JSON.parse(JSON.stringify(fixture.history.state)));
     eq(T.historyText().replace(/^Exported .*$/m, 'Exported ' + fixture.history.today), fixture.history.text);
+  });
+
+  it('lists visits in the readable record the same way as the Android app', () => {
+    const h = fixture.historyWithVisits;
+    T.setState(JSON.parse(JSON.stringify(h.state)));
+    eq(T.historyText().replace(/^Exported .*$/m, 'Exported ' + h.today), h.text);
+  });
+
+  it('keeps visits through a restore and a new backup', () => {
+    const s = T.readBackup(fixture.androidBackup.file);
+    T.setState(s);
+    eq(T.backupPayload().state.visits, fixture.androidBackup.state.visits);
   });
 });
 

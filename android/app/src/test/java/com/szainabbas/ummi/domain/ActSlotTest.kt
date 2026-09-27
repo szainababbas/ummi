@@ -19,7 +19,7 @@ class ActSlotTest {
         assertEquals(ActSlot.MORNING, slot("m7b")) // Sūrah al-Anʿām after Fajr
         assertEquals(ActSlot.MORNING, slot("m6d")) // figs and olives for breakfast
         assertEquals(ActSlot.MORNING, slot("m1c")) // dates on an empty stomach
-        assertEquals(ActSlot.MORNING, slot("m4d")) // Ṣalātul Layl, before dawn
+        assertEquals(ActSlot.MORNING, slot("m4d")) // Ṣalātul Layl, though its note says "after ʿIshāʾ"
     }
 
     @Test
@@ -42,6 +42,7 @@ class ActSlotTest {
     fun `leaves everything else to any time, including "the prayer for comfort"`() {
         assertEquals(ActSlot.ANYTIME, slot("m4a"))
         assertEquals(ActSlot.ANYTIME, slot("m9h"))
+        assertEquals(ActSlot.ANYTIME, slot("m7h")) // melon "rather than on an empty stomach"
         assertEquals(ActSlot.ANYTIME, slot("water"))
     }
 

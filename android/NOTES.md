@@ -14,7 +14,7 @@ Last updated 27 September 2026. The day-by-day history is in `WORKLOG.md`.
   - the next visit as a chip.
 - **Journey:** Week, Month and Food tabs. Today links to a given week or to the Month tab.
 - **Duas:** tabs, accordion, and the Qur'an reader.
-- **Visits:** the next visit, what's coming up, past visits, and an add/edit form. Each visit can have a reminder.
+- **Visits** (built in PR #4): the next visit, what's coming up, past visits, the NHS schedule, and an add/edit sheet. Each visit can have a reminder: the evening before, that morning, or 2 hours before.
 - **More**
   - profile and the names wishlist;
   - Reminders & notifications;
@@ -28,14 +28,14 @@ Last updated 27 September 2026. The day-by-day history is in `WORKLOG.md`.
 
 - **No bell at the top of Today.** On the phone it read as "your notifications", not settings. Reminder settings live under More instead.
 - **Prayer reminders come after Fajr, Ẓuhr and Maghrib only**, not all five prayers. They are never sent before 6:30 am or after 10 pm. In a London summer, Fajr can fall around 1 am.
-- **The visit form has two extra fields**, "Where" and "To prepare / Notes". The handoff's visit card shows these, but its form had no way to enter them.
+- **The NHS schedule follows the NHS page**, not the handoff, which left out the booking, 16 and 41 week appointments.
 - **Prayer times use a city picked from a short list**, not the phone's location. That needs no permission. London is the default.
 - **A few icons are close substitutes** where the exact Material Symbol isn't in the icon set. They are listed in `ui/theme/UmmiIcons.kt`.
 
 ## Known limits
 
 - **Reminders can be a few minutes late.** Exact alarms need a permission Android keeps for alarm-clock apps.
-- **Visits, names and reminders exist only in the Android app.** They travel in backups, and the web app keeps them if a backup passes through it.
+- **Visits, names and reminders exist only in the Android app.** They travel in backups, and the web app keeps them if a backup passes through it. The web app lists visits and names in its readable record.
 - **No release signing yet.** It's needed before a Play Store release, not for installing test builds.
 
 ## Still to check on a phone

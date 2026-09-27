@@ -1,5 +1,5 @@
 {
-  "_about": "Shared by tests/run.js (the web app) and android/app/src/test (the Android app). Both must accept every valid file with the same result, reject every invalid one, and write the same readable record. androidBackup is what the Android app writes; the web app must restore it. Visits, names, reminders and place are written only by the Android app; the web app must keep them.",
+  "_about": "Shared by tests/run.js (the web app) and android/app/src/test (the Android app). Both must accept every valid file with the same result, reject every invalid one, and write the same readable record. androidBackup is what the Android app writes; the web app must restore it. historyWithVisits is the readable record once visits exist (they're made in the Android app and carried through web backups untouched). Names, reminders and place are written only by the Android app too; the web app must keep them.",
   "valid": [
     {
       "why": "a backup downloaded from the web app",
@@ -125,27 +125,9 @@
         {
           "name": "Ali"
         }
-      ],
-      "visits": [
-        {
-          "id": "v1",
-          "date": "2026-10-16",
-          "time": "10:30",
-          "title": "Midwife check · 28 weeks",
-          "reminder": "evening",
-          "place": "Antenatal clinic"
-        },
-        {
-          "id": "v0",
-          "date": "2026-08-28",
-          "time": "09:00",
-          "title": "Anomaly scan · 20 weeks",
-          "type": "Scan",
-          "note": "Everything looked well."
-        }
       ]
     },
-    "text": "Ummi — your record\nExported 2026-09-26\n\nDue date: 2026-11-20\nName: Aimen\n\nDAILY RECORD (2 days)\n  2026-08-15 — 1 item ticked\n  2026-08-16 — 2 items ticked, dua recited\n\nREFLECTIONS (2)\n  2026-08-15 — first entry\n  2026-08-16 — a good day\n\nVISITS (2)\n  2026-08-28 09:00 — Anomaly scan · 20 weeks (Scan) — Everything looked well.\n  2026-10-16 10:30 — Midwife check · 28 weeks (Midwife)\n\nNAMES (2)\n  Maryam (favourite) — After Sayyidah Maryam (as)\n  Ali\n"
+    "text": "Ummi — your record\nExported 2026-09-26\n\nDue date: 2026-11-20\nName: Aimen\n\nDAILY RECORD (2 days)\n  2026-08-15 — 1 item ticked\n  2026-08-16 — 2 items ticked, dua recited\n\nREFLECTIONS (2)\n  2026-08-15 — first entry\n  2026-08-16 — a good day\n\nNAMES (2)\n  Maryam (favourite) — After Sayyidah Maryam (as)\n  Ali\n"
   },
   "androidBackup": {
     "exportedAt": "2026-08-16T09:30:00Z",
@@ -174,6 +156,23 @@
           "t": "first entry"
         }
       ],
+      "visits": [
+        {
+          "id": "v2",
+          "date": "2026-10-20",
+          "title": "Midwife check",
+          "type": "midwife"
+        },
+        {
+          "id": "v1",
+          "date": "2026-10-06",
+          "time": "09:10",
+          "title": "Twenty-week scan",
+          "type": "scan",
+          "reminder": "evening",
+          "note": "full bladder"
+        }
+      ],
       "names": [
         {
           "name": "Maryam",
@@ -182,24 +181,6 @@
         },
         {
           "name": "Ali"
-        }
-      ],
-      "visits": [
-        {
-          "id": "v1",
-          "date": "2026-10-16",
-          "time": "10:30",
-          "title": "Midwife check · 28 weeks",
-          "reminder": "evening",
-          "place": "Antenatal clinic"
-        },
-        {
-          "id": "v0",
-          "date": "2026-08-28",
-          "time": "09:00",
-          "title": "Anomaly scan · 20 weeks",
-          "type": "Scan",
-          "note": "Everything looked well."
         }
       ],
       "reminders": {
@@ -215,6 +196,31 @@
         "lng": -1.8904
       }
     },
-    "file": "{\n    \"app\": \"ummi\",\n    \"schema\": 1,\n    \"exportedAt\": \"2026-08-16T09:30:00Z\",\n    \"state\": {\n        \"dueDate\": \"2026-11-20\",\n        \"name\": \"Aimen\",\n        \"done\": {\n            \"2026-08-15\": [\n                \"m4a\"\n            ],\n            \"2026-08-16\": [\n                \"m4a\",\n                \"salah\"\n            ]\n        },\n        \"duaDone\": {\n            \"2026-08-16\": true\n        },\n        \"journal\": [\n            {\n                \"d\": \"2026-08-16\",\n                \"t\": \"a good day\"\n            },\n            {\n                \"d\": \"2026-08-15\",\n                \"t\": \"first entry\"\n            }\n        ],\n        \"names\": [\n            {\n                \"name\": \"Maryam\",\n                \"note\": \"After Sayyidah Maryam (as)\",\n                \"favourite\": true\n            },\n            {\n                \"name\": \"Ali\"\n            }\n        ],\n        \"visits\": [\n            {\n                \"id\": \"v1\",\n                \"date\": \"2026-10-16\",\n                \"time\": \"10:30\",\n                \"title\": \"Midwife check · 28 weeks\",\n                \"reminder\": \"evening\",\n                \"place\": \"Antenatal clinic\"\n            },\n            {\n                \"id\": \"v0\",\n                \"date\": \"2026-08-28\",\n                \"time\": \"09:00\",\n                \"title\": \"Anomaly scan · 20 weeks\",\n                \"type\": \"Scan\",\n                \"note\": \"Everything looked well.\"\n            }\n        ],\n        \"reminders\": {\n            \"morning\": true,\n            \"prayer\": true,\n            \"tasks\": {\n                \"m4a\": \"07:30\"\n            }\n        },\n        \"place\": {\n            \"name\": \"Birmingham\",\n            \"lat\": 52.4862,\n            \"lng\": -1.8904\n        }\n    }\n}"
+    "file": "{\n    \"app\": \"ummi\",\n    \"schema\": 1,\n    \"exportedAt\": \"2026-08-16T09:30:00Z\",\n    \"state\": {\n        \"dueDate\": \"2026-11-20\",\n        \"name\": \"Aimen\",\n        \"done\": {\n            \"2026-08-15\": [\n                \"m4a\"\n            ],\n            \"2026-08-16\": [\n                \"m4a\",\n                \"salah\"\n            ]\n        },\n        \"duaDone\": {\n            \"2026-08-16\": true\n        },\n        \"journal\": [\n            {\n                \"d\": \"2026-08-16\",\n                \"t\": \"a good day\"\n            },\n            {\n                \"d\": \"2026-08-15\",\n                \"t\": \"first entry\"\n            }\n        ],\n        \"names\": [\n            {\n                \"name\": \"Maryam\",\n                \"note\": \"After Sayyidah Maryam (as)\",\n                \"favourite\": true\n            },\n            {\n                \"name\": \"Ali\"\n            }\n        ],\n        \"visits\": [\n            {\n                \"id\": \"v2\",\n                \"date\": \"2026-10-20\",\n                \"title\": \"Midwife check\",\n                \"type\": \"midwife\"\n            },\n            {\n                \"id\": \"v1\",\n                \"date\": \"2026-10-06\",\n                \"time\": \"09:10\",\n                \"title\": \"Twenty-week scan\",\n                \"type\": \"scan\",\n                \"reminder\": \"evening\",\n                \"note\": \"full bladder\"\n            }\n        ],\n        \"reminders\": {\n            \"morning\": true,\n            \"prayer\": true,\n            \"tasks\": {\n                \"m4a\": \"07:30\"\n            }\n        },\n        \"place\": {\n            \"name\": \"Birmingham\",\n            \"lat\": 52.4862,\n            \"lng\": -1.8904\n        }\n    }\n}"
+  },
+  "historyWithVisits": {
+    "today": "2026-09-26",
+    "state": {
+      "dueDate": "2026-11-20",
+      "journal": [],
+      "visits": [
+        {
+          "id": "v2",
+          "date": "2026-10-20",
+          "title": "Midwife check",
+          "type": "midwife"
+        },
+        {
+          "id": "v1",
+          "date": "2026-10-06",
+          "time": "09:10",
+          "title": "Twenty-week scan",
+          "type": "scan",
+          "reminder": "evening",
+          "note": "full bladder"
+        }
+      ]
+    },
+    "text": "Ummi — your record\nExported 2026-09-26\n\nDue date: 2026-11-20\n\nDAILY RECORD (0 days)\n\nREFLECTIONS (0)\n\nVISITS (2)\n  2026-10-06 09:10 — Twenty-week scan (Scan) — \"full bladder\"\n  2026-10-20 — Midwife check (Midwife)\n"
   }
 }

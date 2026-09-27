@@ -1,5 +1,6 @@
 package com.szainabbas.ummi.data
 
+import com.szainabbas.ummi.domain.VisitType
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.JsonObject
 import kotlinx.serialization.json.JsonPrimitive
@@ -57,12 +58,15 @@ object BackupCodec {
         lines += "REFLECTIONS (${state.journal.size})"
         state.journal.asReversed().forEach { lines += "  ${it.d} — ${it.t}" }
         // Visits and names come from the Android app; the PWA prints them too
-        // when a restored backup carries them.
+        // when a restored backup carries them. Only when there are any, so a
+        // record from before them reads the same.
         if (state.visits.isNotEmpty()) {
             lines += ""
             lines += "VISITS (${state.visits.size})"
             state.visits.sortedWith(compareBy({ it.date }, { it.time })).forEach { v ->
-                lines += "  ${v.date} ${v.time} — ${v.title} (${v.type})" + if (v.note.isNotEmpty()) " — ${v.note}" else ""
+                val time = if (v.time.isEmpty()) "" else " ${v.time}"
+                val note = v.note?.takeIf { it.isNotBlank() }?.let { " — \"$it\"" } ?: ""
+                lines += "  ${v.date}$time — ${v.title} (${VisitType.of(v.type).label})$note"
             }
         }
         if (state.names.isNotEmpty()) {

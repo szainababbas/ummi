@@ -15,7 +15,7 @@ import java.time.LocalTime
 
 /**
  * Sunday 27 September 2026 with the baby due 15 December: week 28, month 7,
- * whose Sunday list is m7a, m7d–m7i and the three every-day tasks.
+ * whose Sunday list is m7a, m7b, m7d–m7i and the three every-day tasks.
  */
 class ReminderPlannerTest {
     private val data = UmmiData.parse(TestFiles.ummiData)
@@ -40,7 +40,7 @@ class ReminderPlannerTest {
         val e = on(ReminderSettings(morning = true)).single()
         assertEquals(sunday.atTime(7, 30), e.at)
         assertEquals("Good morning · week 28", e.title)
-        assertEquals("10 things on today's list. Today's dua: Protection for mother & child.", e.text)
+        assertEquals("11 things on today's list. Today's dua: Protection for mother & child.", e.text)
     }
 
     @Test
@@ -49,8 +49,8 @@ class ReminderPlannerTest {
         assertEquals(listOf("After Fajr", "After Ẓuhr", "After Maghrib"), e.map { it.title })
         // Fajr is at 5:15, but nothing is sent before 6:30.
         assertEquals(listOf(sunday.atTime(6, 30), sunday.atTime(12, 56), sunday.atTime(19, 13)), e.map { it.at })
-        assertEquals("The five sūrahs after your prayers · Sūrah al-Ikhlāṣ (112) in the daily prayers and 2 more", e[0].text)
-        assertEquals("The five sūrahs after your prayers · Sūrah al-Ikhlāṣ (112) in the daily prayers and 1 more", e[1].text)
+        assertEquals("Sūrah al-Anʿām (6) over almonds after Fajr · The five sūrahs after your prayers and 3 more", e[0].text)
+        assertEquals("The five sūrahs after your prayers · Sūrah al-Qadr (97) and al-Ikhlāṣ (112) in the daily prayers and 1 more", e[1].text)
     }
 
     @Test
@@ -76,15 +76,15 @@ class ReminderPlannerTest {
 
     @Test
     fun `reminds about a task only on days it is on the list and still to do`() {
-        val settings = ReminderSettings(tasks = mapOf("m7g" to "08:15", "m7b" to "06:00", "walk" to "nonsense"))
-        val e = on(settings).single() // m7b is Mondays only; "nonsense" is no time
+        val settings = ReminderSettings(tasks = mapOf("m7g" to "08:15", "m7j" to "06:00", "walk" to "nonsense"))
+        val e = on(settings).single() // m7j is Mondays only; "nonsense" is no time
         assertEquals(sunday.atTime(8, 15), e.at)
-        assertEquals("Sūrah Yāsīn (36) over almonds", e.title)
-        assertEquals("Then eat them on an empty stomach.", e.text)
+        assertEquals("Sūrah Yāsīn (36) over a quince", e.title)
+        assertTrue(e.text.startsWith("Then eat it on an empty stomach."))
         assertEquals(emptyList<ReminderEvent>(), on(settings, state = base.withTaskToggled("m7g", "2026-09-27")))
     }
 
-    private val ogtt = Visit("a", "2026-10-13", "09:10", "Glucose test", reminder = "evening", place = "Antenatal clinic", note = "Fast from midnight")
+    private val ogtt = Visit("a", "2026-10-13", "09:10", "Glucose test", type = "blood", reminder = "evening", note = "Fast from midnight")
 
     @Test
     fun `reminds about a visit at the time chosen for it`() {
@@ -92,8 +92,8 @@ class ReminderPlannerTest {
         assertEquals(1, e.size)
         assertEquals(LocalDateTime.of(2026, 10, 12, 20, 0), e[0].at)
         assertEquals("Tomorrow: Glucose test", e[0].title)
-        assertEquals("9:10 am · Antenatal clinic · Fast from midnight", e[0].text)
-        val morning = ReminderPlanner.visitEvents(base.copy(visits = listOf(ogtt.copy(reminder = "morning", place = "", note = ""))))
+        assertEquals("9:10 am · Fast from midnight", e[0].text)
+        val morning = ReminderPlanner.visitEvents(base.copy(visits = listOf(ogtt.copy(reminder = "morning", note = null))))
         assertEquals("Today: Glucose test", morning[0].title)
         assertEquals("9:10 am", morning[0].text)
     }

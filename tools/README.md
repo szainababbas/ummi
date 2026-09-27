@@ -10,6 +10,13 @@ translation can be audited and rebuilt rather than trusted.
    source file as a second Shiʿi reading to check against.
 2. `gen_quran.py` turns that into the `BISMILLAH` / `SURAHS` / `AYAHS` block.
 
+The API's text is not taken on trust. `gen_quran.py` carries the fixes from the
+27 September 2026 audit (see `docs/SOURCES.md`): `AR_FIXES` puts 16:69 in the muṣḥaf
+spelling, `EN_FIXES` drops a closing quote mark that belongs to 16:68, `TL_FIXES`
+replaces 24 verses whose transliteration had wrong words or odd splits, and
+`REF_NAMES` spells the surah names the way the rest of the app does. It fails loudly
+if a fix no longer matches the source, rather than silently dropping it.
+
 The API prefixes the basmalah to the first verse of every surah except al-Fātiḥah
 and at-Tawbah, and the prefixed copy is not byte-identical between surahs (95 and 97
 carry an extra shadda, some carry a BOM). `gen_quran.py` strips it by comparing the
@@ -27,3 +34,11 @@ To rebuild:
     python gen_quran.py       # writes gen_quran.js
 
 then paste the generated block over the existing one in `index.html`.
+
+## Android content
+
+`export_android_data.js` writes `android/app/src/main/assets/ummi-data.json` and
+`tests/fixtures/calendar-2026-12-15.ics` from `index.html`. Run it after changing any
+content constant; `tests/run.js` fails until you do.
+
+    node tools/export_android_data.js

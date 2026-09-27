@@ -1,15 +1,12 @@
 package com.szainabbas.ummi.domain
 
 import com.szainabbas.ummi.data.AppState
-import com.szainabbas.ummi.data.VisitReminder
 import com.szainabbas.ummi.data.model.ActEntry
 import com.szainabbas.ummi.data.model.UmmiData
 import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.LocalTime
-import java.time.format.DateTimeFormatter
 import java.time.temporal.ChronoUnit
-import java.util.Locale
 
 /** One notification: when, a stable key (also its notification id), and what it says. */
 data class ReminderEvent(
@@ -35,7 +32,6 @@ object ReminderPlanner {
     val LATEST: LocalTime = LocalTime.of(22, 0)
     private const val AFTER_ADHAN_MINUTES = 5L
 
-    private val hm = DateTimeFormatter.ofPattern("h:mm a", Locale.UK)
 
     /** The prayers a reminder follows, and the parts of the day whose acts it lists. */
     private enum class After(val label: String, val slots: Set<ActSlot>, val time: (PrayerDay) -> LocalTime) {
@@ -94,9 +90,8 @@ object ReminderPlanner {
     /** One reminder for each visit that has one set. */
     fun visitEvents(state: AppState): List<ReminderEvent> = state.visits.mapNotNull { visit ->
         val at = Visits.reminderAt(visit) ?: return@mapNotNull null
-        val start = Visits.at(visit) ?: return@mapNotNull null
-        val day = if (VisitReminder.of(visit.reminder) == VisitReminder.EVENING_BEFORE) "Tomorrow" else "Today"
-        val details = listOf(start.format(hm).lowercase(Locale.UK), visit.place, visit.note).filter { it.isNotBlank() }
+        val day = if (VisitReminder.of(visit.reminder) == VisitReminder.EVENING) "Tomorrow" else "Today"
+        val details = listOf(Visits.timeLabel(visit), visit.note.orEmpty()).filter { it.isNotBlank() }
         ReminderEvent(at, "visit:${visit.id}", "$day: ${visit.title}", details.joinToString(" · "))
     }
 
@@ -121,14 +116,14 @@ object ReminderPlanner {
     fun activeCount(state: AppState, now: LocalDateTime): Int {
         val r = state.reminders
         val daily = listOf(r.morning, r.prayer, r.water).count { it }
-        val visits = Visits.upcoming(state.visits, now).count { VisitReminder.of(it.reminder) != VisitReminder.NONE }
+        val visits = Visits.upcoming(state.visits, now.toLocalDate()).count { VisitReminder.of(it.reminder) != VisitReminder.NONE }
         return daily + r.tasks.size + visits
     }
 
     /** More's line under "Reminders & notifications": "3 on · morning summary, after prayers, 1 task", or "All off". */
     fun statusLine(state: AppState, now: LocalDateTime): String {
         val r = state.reminders
-        val visits = Visits.upcoming(state.visits, now).count { VisitReminder.of(it.reminder) != VisitReminder.NONE }
+        val visits = Visits.upcoming(state.visits, now.toLocalDate()).count { VisitReminder.of(it.reminder) != VisitReminder.NONE }
         val parts = buildList {
             if (r.morning) add("morning summary")
             if (r.prayer) add("after prayers")

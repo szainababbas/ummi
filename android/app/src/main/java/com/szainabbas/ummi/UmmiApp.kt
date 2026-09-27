@@ -51,12 +51,10 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleEventObserver
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavGraph.Companion.findStartDestination
-import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
-import androidx.navigation.navArgument
 import com.szainabbas.ummi.data.AppState
 import com.szainabbas.ummi.data.Place
 import com.szainabbas.ummi.data.model.ReaderKey
@@ -74,6 +72,8 @@ import com.szainabbas.ummi.ui.navigation.Routes
 import com.szainabbas.ummi.ui.navigation.UmmiDestination
 import com.szainabbas.ummi.ui.screens.DuasScreen
 import com.szainabbas.ummi.ui.screens.JourneyScreen
+import com.szainabbas.ummi.ui.screens.JourneyTab
+import com.szainabbas.ummi.ui.screens.VisitsScreen
 import com.szainabbas.ummi.ui.screens.MoreScreen
 import com.szainabbas.ummi.ui.screens.OnboardingScreen
 import com.szainabbas.ummi.ui.screens.RemindersScreen
@@ -260,8 +260,16 @@ private fun UmmiMainScaffold(
 ) {
     val navController = rememberNavController()
     val backStackEntry by navController.currentBackStackEntryAsState()
-    // "journey?week={week}&tab={tab}" is still the Journey tab
-    val currentRoute = backStackEntry?.destination?.route?.substringBefore('?')
+    val currentRoute = backStackEntry?.destination?.route
+    // Where Journey opens when Today sends her there: a tapped week, or the month.
+    var journeyStart by remember { mutableStateOf<Pair<JourneyTab, Int?>?>(null) }
+    val goTo: (String) -> Unit = { route ->
+        navController.navigate(route) {
+            popUpTo(navController.graph.findStartDestination().id) { saveState = true }
+            launchSingleTop = true
+            restoreState = true
+        }
+    }
     val scope = rememberCoroutineScope()
     val snackbarHost = remember { SnackbarHostState() }
     val snack = remember(snackbarHost) {
@@ -284,12 +292,6 @@ private fun UmmiMainScaffold(
     val dueDate = PregnancyMath.parseDueDate(appState.dueDate)
     val week = PregnancyMath.currentWeek(dueDate)
     val month = PregnancyMath.currentMonthNumber(week, data.months)
-    val navigateTo = { route: String ->
-        navController.navigate(route) {
-            popUpTo(navController.graph.findStartDestination().id) { saveState = true }
-            launchSingleTop = true
-        }
-    }
 
     CompositionLocalProvider(LocalSnack provides snack) {
     Scaffold(
@@ -309,11 +311,8 @@ private fun UmmiMainScaffold(
                     NavigationBarItem(
                         selected = currentRoute == dest.route,
                         onClick = {
-                            navController.navigate(dest.route) {
-                                popUpTo(navController.graph.findStartDestination().id) { saveState = true }
-                                launchSingleTop = true
-                                restoreState = true
-                            }
+                            if (dest == UmmiDestination.Journey) journeyStart = null
+                            goTo(dest.route)
                         },
                         icon = { Icon(dest.icon, contentDescription = dest.label) },
                         label = { Text(dest.label) },
@@ -334,40 +333,31 @@ private fun UmmiMainScaffold(
                     onToggleTask = viewModel::toggleTask,
                     onToggleDua = viewModel::toggleDuaRecitedToday,
                     onOpenReader = onOpenReader,
-                    onOpenWeek = { navigateTo("${UmmiDestination.Journey.route}?week=$it") },
-                    onOpenMonth = { navigateTo("${UmmiDestination.Journey.route}?tab=month") },
-                    onOpenVisits = { navigateTo(UmmiDestination.Visits.route) },
+                    onOpenWeek = { journeyStart = JourneyTab.WEEK to it; goTo(UmmiDestination.Journey.route) },
+                    onOpenMonth = { journeyStart = JourneyTab.MONTH to null; goTo(UmmiDestination.Journey.route) },
+                    onOpenVisits = { goTo(UmmiDestination.Visits.route) },
                     onSetTaskReminder = viewModel::setTaskReminder,
                     prayers = prayers,
                 )
             }
-            composable(
-                route = UmmiDestination.Journey.route + "?week={week}&tab={tab}",
-                arguments = listOf(
-                    navArgument("week") { type = NavType.StringType; nullable = true; defaultValue = null },
-                    navArgument("tab") { type = NavType.StringType; nullable = true; defaultValue = null },
-                ),
-            ) { entry ->
-                val startWeek = entry.arguments?.getString("week")?.toIntOrNull()
+            composable(UmmiDestination.Journey.route) {
+                val dueDate = PregnancyMath.parseDueDate(appState.dueDate)
+                val week = PregnancyMath.currentWeek(dueDate)
+                val month = PregnancyMath.currentMonthNumber(week, data.months)
                 JourneyScreen(
                     data = data,
                     currentWeek = week,
                     currentMonth = month,
                     onOpenReader = onOpenReader,
-                    startWeek = startWeek ?: week,
-                    startOnMonth = entry.arguments?.getString("tab") == "month",
+                    startTab = journeyStart?.first ?: JourneyTab.WEEK,
+                    startWeek = journeyStart?.second ?: week,
                 )
             }
             composable(UmmiDestination.Duas.route) {
                 DuasScreen(data = data, onOpenReader = onOpenReader)
             }
             composable(UmmiDestination.Visits.route) {
-                VisitsScreen(
-                    visits = appState.visits,
-                    onSave = viewModel::saveVisit,
-                    onRemove = viewModel::removeVisit,
-                    onSetReminder = viewModel::setVisitReminder,
-                )
+                VisitsScreen(visits = appState.visits, onSave = viewModel::saveVisit, onDelete = viewModel::deleteVisit)
             }
             composable(UmmiDestination.More.route) {
                 MoreScreen(
@@ -397,7 +387,7 @@ private fun UmmiMainScaffold(
                     notificationsAllowed = notificationsAllowed,
                     todaysTasks = DailyPlan.tasksFor(data.months[month.toString()], data.baseTasks, today)
                         .sortedBy { ActSlot.of(it).ordinal },
-                    visits = Visits.upcoming(appState.visits, LocalDateTime.now()),
+                    visits = Visits.upcoming(appState.visits, today),
                     onBack = { navController.popBackStack() },
                     onUpdate = viewModel::setReminders,
                     onSetTaskReminder = viewModel::setTaskReminder,

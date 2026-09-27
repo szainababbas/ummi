@@ -42,6 +42,30 @@ class AppStateOpsTest {
         assertSame(state, state.withJournalEntry("   ", day1))
     }
 
+    private val scan = Visit(id = "v1", date = "2026-10-06", time = "09:10", title = "  Anomaly scan ", type = "scan")
+
+    @Test
+    fun `adds a visit, tidying the title and a blank note`() {
+        val state = AppState().withVisitSaved(scan.copy(note = "   "))
+        assertEquals(listOf(scan.copy(title = "Anomaly scan")), state.visits)
+    }
+
+    @Test
+    fun `saving a visit with the same id edits it in place`() {
+        val other = Visit(id = "v2", date = "2026-10-20", title = "Midwife", type = "midwife")
+        val state = AppState().withVisitSaved(scan).withVisitSaved(other)
+            .withVisitSaved(scan.copy(title = "Growth scan", note = "full bladder"))
+        assertEquals(listOf("Growth scan", "Midwife"), state.visits.map { it.title })
+        assertEquals("full bladder", state.visits[0].note)
+    }
+
+    @Test
+    fun `deletes only the visit with that id`() {
+        val other = Visit(id = "v2", date = "2026-10-20", title = "Midwife")
+        val state = AppState().withVisitSaved(scan).withVisitSaved(other).withVisitDeleted("v1")
+        assertEquals(listOf("v2"), state.visits.map { it.id })
+    }
+
     @Test
     fun `adds names to the top, trimmed, and skips blanks and repeats`() {
         val state = AppState().withNameAdded("Ali").withNameAdded("  Maryam ").withNameAdded(" ").withNameAdded("maryam")
@@ -57,32 +81,6 @@ class AppStateOpsTest {
         assertEquals(listOf("After Sayyidah Maryam (as)", ""), state.names.map { it.note })
         assertEquals(false, state.withNameFavouriteToggled("Ali").names[1].favourite)
         assertEquals(listOf("Ali"), state.withNameRemoved("Maryam").names.map { it.name })
-    }
-
-    private val scan = Visit(id = "v1", date = "2026-10-16", time = "10:30", title = " Dating scan ", type = "Scan")
-
-    @Test
-    fun `saving a visit adds it, and saving it again replaces it`() {
-        val added = AppState().withVisitSaved(scan)
-        assertEquals(listOf("Dating scan"), added.visits.map { it.title })
-        val edited = added.withVisitSaved(scan.copy(title = "Anomaly scan", place = " Clinic "))
-        assertEquals(1, edited.visits.size)
-        assertEquals("Anomaly scan", edited.visits[0].title)
-        assertEquals("Clinic", edited.visits[0].place)
-    }
-
-    @Test
-    fun `changes a visit's reminder and removes a visit`() {
-        val state = AppState().withVisitSaved(scan).withVisitSaved(scan.copy(id = "v2"))
-        assertEquals("evening", state.withVisitReminder("v2", VisitReminder.EVENING_BEFORE).visits[1].reminder)
-        assertEquals("none", state.withVisitReminder("v2", VisitReminder.EVENING_BEFORE).visits[0].reminder)
-        assertEquals(listOf("v2"), state.withVisitRemoved("v1").visits.map { it.id })
-    }
-
-    @Test
-    fun `reads an unknown visit reminder as none`() {
-        assertEquals(VisitReminder.NONE, VisitReminder.of("fortnightly"))
-        assertEquals(VisitReminder.TWO_HOURS, VisitReminder.of("2h"))
     }
 
     @Test

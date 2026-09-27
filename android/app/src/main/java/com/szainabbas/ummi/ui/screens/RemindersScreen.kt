@@ -151,7 +151,7 @@ fun RemindersScreen(
                         Text(visit.title, fontSize = 15.sp, color = Ummi.colors.ink)
                         Text(
                             at.format(DateTimeFormatter.ofPattern("EEE d MMM", Locale.ENGLISH)) + ", " + Clock.label(at.toLocalTime()) +
-                                (if (visit.note.isNotBlank()) " · " + visit.note else ""),
+                                (if (!visit.note.isNullOrBlank()) " · " + visit.note else ""),
                             fontSize = 13.sp,
                             color = Ummi.colors.ink2,
                             maxLines = 1,

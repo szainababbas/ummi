@@ -33,7 +33,7 @@ import com.szainabbas.ummi.ui.theme.Literata
 import com.szainabbas.ummi.ui.theme.UmmiIcons
 import com.szainabbas.ummi.ui.theme.Ummi
 
-private enum class JourneyTab { WEEK, MONTH, FOOD }
+enum class JourneyTab { WEEK, MONTH, FOOD }
 
 @Composable
 fun JourneyScreen(
@@ -42,12 +42,12 @@ fun JourneyScreen(
     currentMonth: Int,
     onOpenReader: (ReaderKey) -> Unit,
     scrollState: ScrollState = rememberScrollState(),
-    /** The week to open on, when Today's week strip sent her here. */
+    startTab: JourneyTab = JourneyTab.WEEK,
     startWeek: Int = currentWeek,
-    /** Open on the Month tab, for Today's "Month N of the guide". */
-    startOnMonth: Boolean = false,
 ) {
-    var tab by remember { mutableStateOf(if (startOnMonth) JourneyTab.MONTH else JourneyTab.WEEK) }
+    // Keyed on the start, so tapping week 20 on Today opens week 20 even
+    // when Journey was already showing something else.
+    var tab by remember(startTab, startWeek) { mutableStateOf(startTab) }
     Column(modifier = Modifier.fillMaxWidth().verticalScroll(scrollState)) {
         Text("Your journey", fontFamily = Literata, fontWeight = FontWeight.SemiBold, fontSize = 26.sp, modifier = Modifier.padding(20.dp, 12.dp), color = Ummi.colors.ink)
         SegmentedControl(
