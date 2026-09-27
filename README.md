@@ -36,8 +36,16 @@ Live at <https://szainababbas.github.io/ummi/>.
 - `DUAS`, `FOOD`, `NAMES`, `DUA_TODAY` — the older library content.
 
 Arabic is the Uthmani text and the translation is ʿAlī Qulī Qaraʾī, the standard
-Shiʿi English rendering. Month content keeps the planner's own citations on each
-item.
+Shiʿi English rendering.
+
+**Sources.** `docs/SOURCES.md` is the record of where everything comes from:
+Shiʿi sources only for anything Islamic, the NHS for anything medical, each
+checked against the primary text. Every month act has a row there, and the tests
+fail if one does not, or if an act, duʿāʾ or food names no source. Read it before
+adding content.
+
+After changing any content constant, run `node tools/export_android_data.js`: it
+rewrites the Android app's copy of the content and the shared calendar fixture.
 
 ## Tests
 
