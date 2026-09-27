@@ -277,6 +277,59 @@ describe("qur'an data", () => {
   });
 });
 
+/* The 2026-09-27 research audit (docs/SOURCES.md) checked the Qurʾān block against
+   Tanzil and quran.com, and the duʿāʾ cards against Qarāʾī. These hold those fixes. */
+describe('texts, as checked against their sources', () => {
+  it('spells 16:69 as the Madinah muṣḥaf does', () => {
+    ok(AYAHS['16:69'].ar.includes('لَـَٔايَةًۭ'), '16:69 should seat the hamza on a tatweel, as Tanzil and quran.com do');
+    ok(!AYAHS['16:69'].ar.includes('لَءَايَةً'), '16:69 still has the API spelling');
+  });
+
+  it('names each surah the way the rest of the app does', () => {
+    const names = { 2: 'al-Baqarah', 3: 'Āl ʿImrān', 14: 'Ibrāhīm', 16: 'an-Naḥl', 19: 'Maryam', 20: 'Ṭā Hā',
+      25: 'al-Furqān', 36: 'Yāsīn', 37: 'aṣ-Ṣāffāt', 46: 'al-Aḥqāf', 94: 'ash-Sharḥ' };
+    for (const r of Object.keys(AYAHS)) {
+      eq(AYAHS[r].ref, 'Sūrah ' + names[r.split(':')[0]] + ' ' + r, 'ref label for ' + r);
+    }
+  });
+
+  it('has none of the transliteration slips the API ships with', () => {
+    // each of these is a wrong word, not a style choice: see tools/gen_quran.py TL_FIXES
+    const slips = ['mww', "waqa'athaa", 'Summma', "aqzi'neee", "b'adu", 'alfee', 'afwajah', 'was taghfir', 'Hunaaalika'];
+    const all = [];
+    for (const n of Object.keys(SURAHS)) for (const v of SURAHS[n].v) all.push(n + ':' + v.n + ' ' + v.tl);
+    for (const r of Object.keys(AYAHS)) all.push(r + ' ' + AYAHS[r].tl);
+    for (const line of all) for (const s of slips) ok(!line.includes(s), 'transliteration slip "' + s + '" in ' + line);
+    ok(SURAHS[110].v[2].tl.includes('wastaghfirhu'), '110:3 should keep the pronoun: wastaghfirhu');
+  });
+
+  it("gives every duʿāʾ card the Qarāʾī meaning of the verse it quotes", () => {
+    // the app says its translation is Qarāʾī, so the cards must not carry another one
+    const flat = (x) => x.replace(/[‘’“”'"]/g, '').replace(/[—–]/g, ' ').replace(/\s+/g, ' ').trim();
+    for (const d of data.DUA_TODAY) {
+      const m = /(\d+):(\d+)(?:–(\d+))?/.exec(d.sr);
+      ok(m, d.lbl + ' has no verse reference');
+      let en = '';
+      for (let v = +m[2]; v <= +(m[3] || m[2]); v++) {
+        const a = AYAHS[m[1] + ':' + v];
+        ok(a, d.lbl + ' quotes ' + m[1] + ':' + v + ', which the app does not carry');
+        en += ' ' + a.en;
+      }
+      const quoted = /“([^”]+)”/.exec(d.mn);
+      ok(quoted, d.lbl + ' has no quoted meaning');
+      ok(flat(en).includes(flat(quoted[1])), d.lbl + ': meaning is not Qarāʾī for ' + m[0] + ': ' + quoted[1]);
+    }
+  });
+
+  it('shows all the Arabic that each duʿāʾ card translates', () => {
+    // three cards used to translate the end of the verse without showing it
+    const ends = { 'For a righteous child': 'الدُّعَاءِ', 'Comfort of the eyes': 'إِمَامًا', 'Steadfast in prayer': 'دُعَاءِ' };
+    for (const d of data.DUA_TODAY) if (ends[d.lbl]) ok(d.arabic.endsWith(ends[d.lbl]), d.lbl + ' stops short of what it translates');
+    const g = data.DUA_TODAY.find((d) => d.lbl.startsWith('Gratitude'));
+    ok(g.arabic.includes('وَالِدَيَّ'), '46:15 card skips words in the middle of the verse');
+  });
+});
+
 /* -------------------------------------------------------------- calendar export */
 describe('calendar export', () => {
   T.setState({ dueDate: DUE });

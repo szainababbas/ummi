@@ -10,13 +10,17 @@ DTSTAMP:20260926T000000Z
 DTSTART;VALUE=DATE:20260407
 DTEND;VALUE=DATE:20260408
 SUMMARY:Your prenatal vitamins
-DESCRIPTION:Keep these going through pregnancy and after delivery.\n\nAlso 
- today:\n• Adhān and iqāmah before every prayer (With your hand on your
-  stomach.)\n• Sūrah al-Qadr (97) over two dates (Recite once\, blow on 
- the dates\, eat them on an empty stomach.)\n• An apple in the morning\n
- • A pinch of Khāke Shifāʾ before sunset (Turbah of Karbalāʾ\, also 
- called Turbah Imām Ḥusayn.)\n• Vitamin D (Milk\, orange juice and egg
-  yolks are good sources.)\n\nWeek 4\, month 1 of the guide.
+DESCRIPTION:Folic acid\, 400 micrograms a day until 12 weeks. Choose a preg
+ nancy multivitamin: ordinary ones and cod liver oil can contain vitamin A 
+ (retinol)\, which is not safe in pregnancy. NHS.\n\nAlso today:\n• Adhā
+ n and iqāmah before every prayer (With your hand on your stomach.)\n• S
+ ūrah al-Qadr (97) over two dates (Recite once\, blow on the dates\, eat t
+ hem on an empty stomach.)\n• An apple in the morning\n• A pinch of Kh
+ āke Shifāʾ before sunset (Turbah of Karbalāʾ\, also called Turbah Im
+ ām Ḥusayn.)\n• Vitamin D\, 10 micrograms a day (The NHS advises a 10 
+ microgram supplement every day from October to March\, and all year if you
+  usually cover most of your skin outdoors. UK milk is not usually fortifie
+ d\, so food alone will not cover it.)\n\nWeek 4\, month 1 of the guide.
 CATEGORIES:Wellness
 TRANSP:TRANSPARENT
 END:VEVENT
@@ -25,14 +29,18 @@ UID:ummi-20260408@ummi.local
 DTSTAMP:20260926T000000Z
 DTSTART;VALUE=DATE:20260408
 DTEND;VALUE=DATE:20260409
-SUMMARY:Vitamin D
-DESCRIPTION:Milk\, orange juice and egg yolks are good sources.\n\nAlso tod
- ay:\n• Adhān and iqāmah before every prayer (With your hand on your st
- omach.)\n• Sūrah al-Qadr (97) over two dates (Recite once\, blow on the
-  dates\, eat them on an empty stomach.)\n• An apple in the morning\n• 
- A pinch of Khāke Shifāʾ before sunset (Turbah of Karbalāʾ\, also call
- ed Turbah Imām Ḥusayn.)\n• Your prenatal vitamins (Keep these going t
- hrough pregnancy and after delivery.)\n\nWeek 4\, month 1 of the guide.
+SUMMARY:Vitamin D\, 10 micrograms a day
+DESCRIPTION:The NHS advises a 10 microgram supplement every day from Octobe
+ r to March\, and all year if you usually cover most of your skin outdoors.
+  UK milk is not usually fortified\, so food alone will not cover it.\n\nAl
+ so today:\n• Adhān and iqāmah before every prayer (With your hand on y
+ our stomach.)\n• Sūrah al-Qadr (97) over two dates (Recite once\, blow 
+ on the dates\, eat them on an empty stomach.)\n• An apple in the morning
+ \n• A pinch of Khāke Shifāʾ before sunset (Turbah of Karbalāʾ\, als
+ o called Turbah Imām Ḥusayn.)\n• Your prenatal vitamins (Folic acid\,
+  400 micrograms a day until 12 weeks. Choose a pregnancy multivitamin: ord
+ inary ones and cod liver oil can contain vitamin A (retinol)\, which is no
+ t safe in pregnancy. NHS.)\n\nWeek 4\, month 1 of the guide.
 CATEGORIES:Wellness
 TRANSP:TRANSPARENT
 END:VEVENT
@@ -47,9 +55,13 @@ DESCRIPTION:Then blow gently on your stomach.\n\nAlso today:\n• Adhān an
  h al-Qadr (97) over two dates (Recite once\, blow on the dates\, eat them 
  on an empty stomach.)\n• An apple in the morning\n• A pinch of Khāke 
  Shifāʾ before sunset (Turbah of Karbalāʾ\, also called Turbah Imām 
- Ḥusayn.)\n• Your prenatal vitamins (Keep these going through pregnancy
-  and after delivery.)\n• Vitamin D (Milk\, orange juice and egg yolks ar
- e good sources.)\n\nWeek 4\, month 1 of the guide.
+ Ḥusayn.)\n• Your prenatal vitamins (Folic acid\, 400 micrograms a day 
+ until 12 weeks. Choose a pregnancy multivitamin: ordinary ones and cod liv
+ er oil can contain vitamin A (retinol)\, which is not safe in pregnancy. N
+ HS.)\n• Vitamin D\, 10 micrograms a day (The NHS advises a 10 microgram 
+ supplement every day from October to March\, and all year if you usually c
+ over most of your skin outdoors. UK milk is not usually fortified\, so foo
+ d alone will not cover it.)\n\nWeek 4\, month 1 of the guide.
 CATEGORIES:Sūrah
 TRANSP:TRANSPARENT
 END:VEVENT
@@ -65,10 +77,14 @@ DESCRIPTION:Masāʾile ʿIlmī dar Qurʾān\, p.140.\n\nAlso today:\n• Ad
  on your stomach.)\n• Sūrah al-Qadr (97) over two dates (Recite once\, b
  low on the dates\, eat them on an empty stomach.)\n• An apple in the mor
  ning\n• A pinch of Khāke Shifāʾ before sunset (Turbah of Karbalāʾ\,
-  also called Turbah Imām Ḥusayn.)\n• Your prenatal vitamins (Keep the
- se going through pregnancy and after delivery.)\n• Vitamin D (Milk\, ora
- nge juice and egg yolks are good sources.)\n\nWeek 4\, month 1 of the guid
- e.
+  also called Turbah Imām Ḥusayn.)\n• Your prenatal vitamins (Folic ac
+ id\, 400 micrograms a day until 12 weeks. Choose a pregnancy multivitamin:
+  ordinary ones and cod liver oil can contain vitamin A (retinol)\, which i
+ s not safe in pregnancy. NHS.)\n• Vitamin D\, 10 micrograms a day (The N
+ HS advises a 10 microgram supplement every day from October to March\, and
+  all year if you usually cover most of your skin outdoors. UK milk is not 
+ usually fortified\, so food alone will not cover it.)\n\nWeek 4\, month 1 
+ of the guide.
 CATEGORIES:Food
 TRANSP:TRANSPARENT
 END:VEVENT
@@ -82,9 +98,13 @@ DESCRIPTION:\nAlso today:\n• Adhān and iqāmah before every prayer (With
   your hand on your stomach.)\n• Sūrah al-Qadr (97) over two dates (Reci
  te once\, blow on the dates\, eat them on an empty stomach.)\n• A pinch 
  of Khāke Shifāʾ before sunset (Turbah of Karbalāʾ\, also called Turba
- h Imām Ḥusayn.)\n• Your prenatal vitamins (Keep these going through p
- regnancy and after delivery.)\n• Vitamin D (Milk\, orange juice and egg 
- yolks are good sources.)\n\nWeek 4\, month 1 of the guide.
+ h Imām Ḥusayn.)\n• Your prenatal vitamins (Folic acid\, 400 microgram
+ s a day until 12 weeks. Choose a pregnancy multivitamin: ordinary ones and
+  cod liver oil can contain vitamin A (retinol)\, which is not safe in preg
+ nancy. NHS.)\n• Vitamin D\, 10 micrograms a day (The NHS advises a 10 mi
+ crogram supplement every day from October to March\, and all year if you u
+ sually cover most of your skin outdoors. UK milk is not usually fortified\
+ , so food alone will not cover it.)\n\nWeek 4\, month 1 of the guide.
 CATEGORIES:Food
 TRANSP:TRANSPARENT
 END:VEVENT
@@ -98,9 +118,13 @@ DESCRIPTION:Turbah of Karbalāʾ\, also called Turbah Imām Ḥusayn.\n\nAl
  so today:\n• Adhān and iqāmah before every prayer (With your hand on y
  our stomach.)\n• Sūrah al-Qadr (97) over two dates (Recite once\, blow 
  on the dates\, eat them on an empty stomach.)\n• An apple in the morning
- \n• Your prenatal vitamins (Keep these going through pregnancy and after
-  delivery.)\n• Vitamin D (Milk\, orange juice and egg yolks are good sou
- rces.)\n\nWeek 4\, month 1 of the guide.
+ \n• Your prenatal vitamins (Folic acid\, 400 micrograms a day until 12 w
+ eeks. Choose a pregnancy multivitamin: ordinary ones and cod liver oil can
+  contain vitamin A (retinol)\, which is not safe in pregnancy. NHS.)\n• 
+ Vitamin D\, 10 micrograms a day (The NHS advises a 10 microgram supplement
+  every day from October to March\, and all year if you usually cover most 
+ of your skin outdoors. UK milk is not usually fortified\, so food alone wi
+ ll not cover it.)\n\nWeek 4\, month 1 of the guide.
 CATEGORIES:Food
 TRANSP:TRANSPARENT
 END:VEVENT
@@ -110,13 +134,17 @@ DTSTAMP:20260926T000000Z
 DTSTART;VALUE=DATE:20260413
 DTEND;VALUE=DATE:20260414
 SUMMARY:Your prenatal vitamins
-DESCRIPTION:Keep these going through pregnancy and after delivery.\n\nAlso 
- today:\n• Adhān and iqāmah before every prayer (With your hand on your
-  stomach.)\n• Sūrah al-Qadr (97) over two dates (Recite once\, blow on 
- the dates\, eat them on an empty stomach.)\n• An apple in the morning\n
- • A pinch of Khāke Shifāʾ before sunset (Turbah of Karbalāʾ\, also 
- called Turbah Imām Ḥusayn.)\n• Vitamin D (Milk\, orange juice and egg
-  yolks are good sources.)\n\nWeek 4\, month 1 of the guide.
+DESCRIPTION:Folic acid\, 400 micrograms a day until 12 weeks. Choose a preg
+ nancy multivitamin: ordinary ones and cod liver oil can contain vitamin A 
+ (retinol)\, which is not safe in pregnancy. NHS.\n\nAlso today:\n• Adhā
+ n and iqāmah before every prayer (With your hand on your stomach.)\n• S
+ ūrah al-Qadr (97) over two dates (Recite once\, blow on the dates\, eat t
+ hem on an empty stomach.)\n• An apple in the morning\n• A pinch of Kh
+ āke Shifāʾ before sunset (Turbah of Karbalāʾ\, also called Turbah Im
+ ām Ḥusayn.)\n• Vitamin D\, 10 micrograms a day (The NHS advises a 10 
+ microgram supplement every day from October to March\, and all year if you
+  usually cover most of your skin outdoors. UK milk is not usually fortifie
+ d\, so food alone will not cover it.)\n\nWeek 4\, month 1 of the guide.
 CATEGORIES:Wellness
 TRANSP:TRANSPARENT
 END:VEVENT
@@ -897,9 +925,9 @@ DESCRIPTION:Astaghfirullāha Rabbī wa atūbu ilayh.\n\nAlso today:\n• S
  : al-Kawthar\, al-Qadr\, long ṣalawāt (Sūrah al-Kawthar (108)\, Sūrah
   al-Qadr (97)\, then the long ṣalawāt with your hand on your stomach.)\
  n• Sūrah at-Tīn (95) over two figs (Eat them on an empty stomach.)\n
- • Apples\, honey and pomegranates\n• Nutrient-rich foods (Granola\, cr
- ackers\, lentils\, cheese and leafy greens.)\n\nWeek 13\, month 4 of the g
- uide.
+ • Apples\, honey and pomegranates\n• Nutrient-rich foods (Lentils and 
+ beans\, wholegrains\, cheese and yoghurt\, and leafy greens.)\n\nWeek 13\,
+  month 4 of the guide.
 CATEGORIES:Recitation
 TRANSP:TRANSPARENT
 END:VEVENT
@@ -917,8 +945,8 @@ DESCRIPTION:\nAlso today:\n• Sūrah al-Furqān 25:74 (The prayer for comf
  dr\, long ṣalawāt (Sūrah al-Kawthar (108)\, Sūrah al-Qadr (97)\, then
   the long ṣalawāt with your hand on your stomach.)\n• Sūrah at-Tīn 
  (95) over two figs (Eat them on an empty stomach.)\n• Apples\, honey and
-  pomegranates\n• Nutrient-rich foods (Granola\, crackers\, lentils\, che
- ese and leafy greens.)\n\nWeek 13\, month 4 of the guide.
+  pomegranates\n• Nutrient-rich foods (Lentils and beans\, wholegrains\, 
+ cheese and yoghurt\, and leafy greens.)\n\nWeek 13\, month 4 of the guide.
 CATEGORIES:Recitation
 TRANSP:TRANSPARENT
 END:VEVENT
@@ -937,8 +965,8 @@ DESCRIPTION:\nAlso today:\n• Sūrah al-Furqān 25:74 (The prayer for comf
  l-Kawthar (108)\, Sūrah al-Qadr (97)\, then the long ṣalawāt with your
   hand on your stomach.)\n• Sūrah at-Tīn (95) over two figs (Eat them o
  n an empty stomach.)\n• Apples\, honey and pomegranates\n• Nutrient-ri
- ch foods (Granola\, crackers\, lentils\, cheese and leafy greens.)\n\nWeek
-  13\, month 4 of the guide.
+ ch foods (Lentils and beans\, wholegrains\, cheese and yoghurt\, and leafy
+  greens.)\n\nWeek 13\, month 4 of the guide.
 CATEGORIES:Sūrah
 TRANSP:TRANSPARENT
 END:VEVENT
@@ -957,8 +985,8 @@ DESCRIPTION:\nAlso today:\n• Sūrah al-Furqān 25:74 (The prayer for comf
  l-Kawthar (108)\, Sūrah al-Qadr (97)\, then the long ṣalawāt with your
   hand on your stomach.)\n• Sūrah at-Tīn (95) over two figs (Eat them o
  n an empty stomach.)\n• Apples\, honey and pomegranates\n• Nutrient-ri
- ch foods (Granola\, crackers\, lentils\, cheese and leafy greens.)\n\nWeek
-  13\, month 4 of the guide.
+ ch foods (Lentils and beans\, wholegrains\, cheese and yoghurt\, and leafy
+  greens.)\n\nWeek 13\, month 4 of the guide.
 CATEGORIES:Sūrah
 TRANSP:TRANSPARENT
 END:VEVENT
@@ -976,8 +1004,8 @@ DESCRIPTION:Sūrah al-Kawthar (108)\, Sūrah al-Qadr (97)\, then the long
  iss the time\, make it up later as qaḍāʾ.)\n• Sūrah al-Qadr (97) in
   one rakʿah of every prayer\n• Sūrah at-Tīn (95) over two figs (Eat t
  hem on an empty stomach.)\n• Apples\, honey and pomegranates\n• Nutrie
- nt-rich foods (Granola\, crackers\, lentils\, cheese and leafy greens.)\n\
- nWeek 13\, month 4 of the guide.
+ nt-rich foods (Lentils and beans\, wholegrains\, cheese and yoghurt\, and 
+ leafy greens.)\n\nWeek 13\, month 4 of the guide.
 CATEGORIES:Sūrah
 TRANSP:TRANSPARENT
 END:VEVENT
@@ -995,8 +1023,9 @@ DESCRIPTION:Eat them on an empty stomach.\n\nAlso today:\n• Sūrah al-Fur
  ne rakʿah of every prayer\n• After the daily prayers: al-Kawthar\, al-Q
  adr\, long ṣalawāt (Sūrah al-Kawthar (108)\, Sūrah al-Qadr (97)\, the
  n the long ṣalawāt with your hand on your stomach.)\n• Apples\, honey
-  and pomegranates\n• Nutrient-rich foods (Granola\, crackers\, lentils\,
-  cheese and leafy greens.)\n\nWeek 13\, month 4 of the guide.
+  and pomegranates\n• Nutrient-rich foods (Lentils and beans\, wholegrain
+ s\, cheese and yoghurt\, and leafy greens.)\n\nWeek 13\, month 4 of the gu
+ ide.
 CATEGORIES:Sūrah
 TRANSP:TRANSPARENT
 END:VEVENT
@@ -1014,8 +1043,9 @@ DESCRIPTION:\nAlso today:\n• Sūrah al-Furqān 25:74 (The prayer for comf
   After the daily prayers: al-Kawthar\, al-Qadr\, long ṣalawāt (Sūrah a
  l-Kawthar (108)\, Sūrah al-Qadr (97)\, then the long ṣalawāt with your
   hand on your stomach.)\n• Sūrah at-Tīn (95) over two figs (Eat them o
- n an empty stomach.)\n• Nutrient-rich foods (Granola\, crackers\, lentil
- s\, cheese and leafy greens.)\n\nWeek 13\, month 4 of the guide.
+ n an empty stomach.)\n• Nutrient-rich foods (Lentils and beans\, wholegr
+ ains\, cheese and yoghurt\, and leafy greens.)\n\nWeek 13\, month 4 of the
+  guide.
 CATEGORIES:Food
 TRANSP:TRANSPARENT
 END:VEVENT
@@ -1025,17 +1055,17 @@ DTSTAMP:20260926T000000Z
 DTSTART;VALUE=DATE:20260616
 DTEND;VALUE=DATE:20260617
 SUMMARY:Nutrient-rich foods
-DESCRIPTION:Granola\, crackers\, lentils\, cheese and leafy greens.\n\nAlso
-  today:\n• Sūrah al-Furqān 25:74 (The prayer for comfort in your famil
- y.)\n• Istighfār 7 times (Astaghfirullāha Rabbī wa atūbu ilayh.)\n
- • Ṣalawāt 140 times after each prayer\n• Ṣalātul Layl (As much a
- s you can manage. If you miss the time\, make it up later as qaḍāʾ.)\n
- • Sūrah al-Qadr (97) in one rakʿah of every prayer\n• After the dail
- y prayers: al-Kawthar\, al-Qadr\, long ṣalawāt (Sūrah al-Kawthar (108)
- \, Sūrah al-Qadr (97)\, then the long ṣalawāt with your hand on your s
- tomach.)\n• Sūrah at-Tīn (95) over two figs (Eat them on an empty stom
- ach.)\n• Apples\, honey and pomegranates\n\nWeek 14\, month 4 of the gui
- de.
+DESCRIPTION:Lentils and beans\, wholegrains\, cheese and yoghurt\, and leaf
+ y greens.\n\nAlso today:\n• Sūrah al-Furqān 25:74 (The prayer for comf
+ ort in your family.)\n• Istighfār 7 times (Astaghfirullāha Rabbī wa a
+ tūbu ilayh.)\n• Ṣalawāt 140 times after each prayer\n• Ṣalātul 
+ Layl (As much as you can manage. If you miss the time\, make it up later a
+ s qaḍāʾ.)\n• Sūrah al-Qadr (97) in one rakʿah of every prayer\n•
+  After the daily prayers: al-Kawthar\, al-Qadr\, long ṣalawāt (Sūrah a
+ l-Kawthar (108)\, Sūrah al-Qadr (97)\, then the long ṣalawāt with your
+  hand on your stomach.)\n• Sūrah at-Tīn (95) over two figs (Eat them o
+ n an empty stomach.)\n• Apples\, honey and pomegranates\n\nWeek 14\, mon
+ th 4 of the guide.
 CATEGORIES:Food
 TRANSP:TRANSPARENT
 END:VEVENT
@@ -1053,8 +1083,9 @@ DESCRIPTION:The prayer for comfort in your family.\n\nAlso today:\n• Isti
  awthar\, al-Qadr\, long ṣalawāt (Sūrah al-Kawthar (108)\, Sūrah al-Qa
  dr (97)\, then the long ṣalawāt with your hand on your stomach.)\n• S
  ūrah at-Tīn (95) over two figs (Eat them on an empty stomach.)\n• Appl
- es\, honey and pomegranates\n• Nutrient-rich foods (Granola\, crackers\,
-  lentils\, cheese and leafy greens.)\n\nWeek 14\, month 4 of the guide.
+ es\, honey and pomegranates\n• Nutrient-rich foods (Lentils and beans\, 
+ wholegrains\, cheese and yoghurt\, and leafy greens.)\n\nWeek 14\, month 4
+  of the guide.
 CATEGORIES:Recitation
 TRANSP:TRANSPARENT
 END:VEVENT
@@ -1073,8 +1104,8 @@ DESCRIPTION:\nAlso today:\n• Sūrah al-Furqān 25:74 (The prayer for comf
  l-Kawthar (108)\, Sūrah al-Qadr (97)\, then the long ṣalawāt with your
   hand on your stomach.)\n• Sūrah at-Tīn (95) over two figs (Eat them o
  n an empty stomach.)\n• Apples\, honey and pomegranates\n• Nutrient-ri
- ch foods (Granola\, crackers\, lentils\, cheese and leafy greens.)\n\nWeek
-  14\, month 4 of the guide.
+ ch foods (Lentils and beans\, wholegrains\, cheese and yoghurt\, and leafy
+  greens.)\n\nWeek 14\, month 4 of the guide.
 CATEGORIES:Sūrah
 TRANSP:TRANSPARENT
 END:VEVENT
@@ -1093,8 +1124,8 @@ DESCRIPTION:\nAlso today:\n• Sūrah al-Furqān 25:74 (The prayer for comf
  l-Kawthar (108)\, Sūrah al-Qadr (97)\, then the long ṣalawāt with your
   hand on your stomach.)\n• Sūrah at-Tīn (95) over two figs (Eat them o
  n an empty stomach.)\n• Apples\, honey and pomegranates\n• Nutrient-ri
- ch foods (Granola\, crackers\, lentils\, cheese and leafy greens.)\n\nWeek
-  14\, month 4 of the guide.
+ ch foods (Lentils and beans\, wholegrains\, cheese and yoghurt\, and leafy
+  greens.)\n\nWeek 14\, month 4 of the guide.
 CATEGORIES:Sūrah
 TRANSP:TRANSPARENT
 END:VEVENT
@@ -1112,9 +1143,9 @@ DESCRIPTION:As much as you can manage. If you miss the time\, make it up la
  rs: al-Kawthar\, al-Qadr\, long ṣalawāt (Sūrah al-Kawthar (108)\, Sūr
  ah al-Qadr (97)\, then the long ṣalawāt with your hand on your stomach.
  )\n• Sūrah at-Tīn (95) over two figs (Eat them on an empty stomach.)\n
- • Apples\, honey and pomegranates\n• Nutrient-rich foods (Granola\, cr
- ackers\, lentils\, cheese and leafy greens.)\n\nWeek 14\, month 4 of the g
- uide.
+ • Apples\, honey and pomegranates\n• Nutrient-rich foods (Lentils and 
+ beans\, wholegrains\, cheese and yoghurt\, and leafy greens.)\n\nWeek 14\,
+  month 4 of the guide.
 CATEGORIES:Recitation
 TRANSP:TRANSPARENT
 END:VEVENT
@@ -1132,8 +1163,8 @@ DESCRIPTION:\nAlso today:\n• Sūrah al-Furqān 25:74 (The prayer for comf
  ṣalawāt (Sūrah al-Kawthar (108)\, Sūrah al-Qadr (97)\, then the long 
  ṣalawāt with your hand on your stomach.)\n• Sūrah at-Tīn (95) over 
  two figs (Eat them on an empty stomach.)\n• Apples\, honey and pomegrana
- tes\n• Nutrient-rich foods (Granola\, crackers\, lentils\, cheese and le
- afy greens.)\n\nWeek 14\, month 4 of the guide.
+ tes\n• Nutrient-rich foods (Lentils and beans\, wholegrains\, cheese and
+  yoghurt\, and leafy greens.)\n\nWeek 14\, month 4 of the guide.
 CATEGORIES:Sūrah
 TRANSP:TRANSPARENT
 END:VEVENT
@@ -1151,8 +1182,8 @@ DESCRIPTION:Sūrah al-Kawthar (108)\, Sūrah al-Qadr (97)\, then the long
  iss the time\, make it up later as qaḍāʾ.)\n• Sūrah al-Qadr (97) in
   one rakʿah of every prayer\n• Sūrah at-Tīn (95) over two figs (Eat t
  hem on an empty stomach.)\n• Apples\, honey and pomegranates\n• Nutrie
- nt-rich foods (Granola\, crackers\, lentils\, cheese and leafy greens.)\n\
- nWeek 14\, month 4 of the guide.
+ nt-rich foods (Lentils and beans\, wholegrains\, cheese and yoghurt\, and 
+ leafy greens.)\n\nWeek 14\, month 4 of the guide.
 CATEGORIES:Sūrah
 TRANSP:TRANSPARENT
 END:VEVENT
@@ -1170,8 +1201,9 @@ DESCRIPTION:Eat them on an empty stomach.\n\nAlso today:\n• Sūrah al-Fur
  ne rakʿah of every prayer\n• After the daily prayers: al-Kawthar\, al-Q
  adr\, long ṣalawāt (Sūrah al-Kawthar (108)\, Sūrah al-Qadr (97)\, the
  n the long ṣalawāt with your hand on your stomach.)\n• Apples\, honey
-  and pomegranates\n• Nutrient-rich foods (Granola\, crackers\, lentils\,
-  cheese and leafy greens.)\n\nWeek 15\, month 4 of the guide.
+  and pomegranates\n• Nutrient-rich foods (Lentils and beans\, wholegrain
+ s\, cheese and yoghurt\, and leafy greens.)\n\nWeek 15\, month 4 of the gu
+ ide.
 CATEGORIES:Sūrah
 TRANSP:TRANSPARENT
 END:VEVENT
@@ -1189,8 +1221,9 @@ DESCRIPTION:\nAlso today:\n• Sūrah al-Furqān 25:74 (The prayer for comf
   After the daily prayers: al-Kawthar\, al-Qadr\, long ṣalawāt (Sūrah a
  l-Kawthar (108)\, Sūrah al-Qadr (97)\, then the long ṣalawāt with your
   hand on your stomach.)\n• Sūrah at-Tīn (95) over two figs (Eat them o
- n an empty stomach.)\n• Nutrient-rich foods (Granola\, crackers\, lentil
- s\, cheese and leafy greens.)\n\nWeek 15\, month 4 of the guide.
+ n an empty stomach.)\n• Nutrient-rich foods (Lentils and beans\, wholegr
+ ains\, cheese and yoghurt\, and leafy greens.)\n\nWeek 15\, month 4 of the
+  guide.
 CATEGORIES:Food
 TRANSP:TRANSPARENT
 END:VEVENT
@@ -1209,8 +1242,8 @@ DESCRIPTION:\nAlso today:\n• Sūrah al-Furqān 25:74 (The prayer for comf
  l-Kawthar (108)\, Sūrah al-Qadr (97)\, then the long ṣalawāt with your
   hand on your stomach.)\n• Sūrah at-Tīn (95) over two figs (Eat them o
  n an empty stomach.)\n• Apples\, honey and pomegranates\n• Nutrient-ri
- ch foods (Granola\, crackers\, lentils\, cheese and leafy greens.)\n\nWeek
-  15\, month 4 of the guide.
+ ch foods (Lentils and beans\, wholegrains\, cheese and yoghurt\, and leafy
+  greens.)\n\nWeek 15\, month 4 of the guide.
 CATEGORIES:Sūrah
 TRANSP:TRANSPARENT
 END:VEVENT
@@ -1229,8 +1262,8 @@ DESCRIPTION:\nAlso today:\n• Sūrah al-Furqān 25:74 (The prayer for comf
  l-Kawthar (108)\, Sūrah al-Qadr (97)\, then the long ṣalawāt with your
   hand on your stomach.)\n• Sūrah at-Tīn (95) over two figs (Eat them o
  n an empty stomach.)\n• Apples\, honey and pomegranates\n• Nutrient-ri
- ch foods (Granola\, crackers\, lentils\, cheese and leafy greens.)\n\nWeek
-  15\, month 4 of the guide.
+ ch foods (Lentils and beans\, wholegrains\, cheese and yoghurt\, and leafy
+  greens.)\n\nWeek 15\, month 4 of the guide.
 CATEGORIES:Sūrah
 TRANSP:TRANSPARENT
 END:VEVENT
@@ -1248,9 +1281,9 @@ DESCRIPTION:Astaghfirullāha Rabbī wa atūbu ilayh.\n\nAlso today:\n• S
  : al-Kawthar\, al-Qadr\, long ṣalawāt (Sūrah al-Kawthar (108)\, Sūrah
   al-Qadr (97)\, then the long ṣalawāt with your hand on your stomach.)\
  n• Sūrah at-Tīn (95) over two figs (Eat them on an empty stomach.)\n
- • Apples\, honey and pomegranates\n• Nutrient-rich foods (Granola\, cr
- ackers\, lentils\, cheese and leafy greens.)\n\nWeek 15\, month 4 of the g
- uide.
+ • Apples\, honey and pomegranates\n• Nutrient-rich foods (Lentils and 
+ beans\, wholegrains\, cheese and yoghurt\, and leafy greens.)\n\nWeek 15\,
+  month 4 of the guide.
 CATEGORIES:Recitation
 TRANSP:TRANSPARENT
 END:VEVENT
@@ -1268,8 +1301,8 @@ DESCRIPTION:\nAlso today:\n• Sūrah al-Furqān 25:74 (The prayer for comf
  dr\, long ṣalawāt (Sūrah al-Kawthar (108)\, Sūrah al-Qadr (97)\, then
   the long ṣalawāt with your hand on your stomach.)\n• Sūrah at-Tīn 
  (95) over two figs (Eat them on an empty stomach.)\n• Apples\, honey and
-  pomegranates\n• Nutrient-rich foods (Granola\, crackers\, lentils\, che
- ese and leafy greens.)\n\nWeek 15\, month 4 of the guide.
+  pomegranates\n• Nutrient-rich foods (Lentils and beans\, wholegrains\, 
+ cheese and yoghurt\, and leafy greens.)\n\nWeek 15\, month 4 of the guide.
 CATEGORIES:Recitation
 TRANSP:TRANSPARENT
 END:VEVENT
@@ -1287,9 +1320,9 @@ DESCRIPTION:As much as you can manage. If you miss the time\, make it up la
  rs: al-Kawthar\, al-Qadr\, long ṣalawāt (Sūrah al-Kawthar (108)\, Sūr
  ah al-Qadr (97)\, then the long ṣalawāt with your hand on your stomach.
  )\n• Sūrah at-Tīn (95) over two figs (Eat them on an empty stomach.)\n
- • Apples\, honey and pomegranates\n• Nutrient-rich foods (Granola\, cr
- ackers\, lentils\, cheese and leafy greens.)\n\nWeek 15\, month 4 of the g
- uide.
+ • Apples\, honey and pomegranates\n• Nutrient-rich foods (Lentils and 
+ beans\, wholegrains\, cheese and yoghurt\, and leafy greens.)\n\nWeek 15\,
+  month 4 of the guide.
 CATEGORIES:Recitation
 TRANSP:TRANSPARENT
 END:VEVENT
@@ -1307,8 +1340,8 @@ DESCRIPTION:\nAlso today:\n• Sūrah al-Furqān 25:74 (The prayer for comf
  ṣalawāt (Sūrah al-Kawthar (108)\, Sūrah al-Qadr (97)\, then the long 
  ṣalawāt with your hand on your stomach.)\n• Sūrah at-Tīn (95) over 
  two figs (Eat them on an empty stomach.)\n• Apples\, honey and pomegrana
- tes\n• Nutrient-rich foods (Granola\, crackers\, lentils\, cheese and le
- afy greens.)\n\nWeek 16\, month 4 of the guide.
+ tes\n• Nutrient-rich foods (Lentils and beans\, wholegrains\, cheese and
+  yoghurt\, and leafy greens.)\n\nWeek 16\, month 4 of the guide.
 CATEGORIES:Sūrah
 TRANSP:TRANSPARENT
 END:VEVENT
@@ -1326,8 +1359,8 @@ DESCRIPTION:Sūrah al-Kawthar (108)\, Sūrah al-Qadr (97)\, then the long
  iss the time\, make it up later as qaḍāʾ.)\n• Sūrah al-Qadr (97) in
   one rakʿah of every prayer\n• Sūrah at-Tīn (95) over two figs (Eat t
  hem on an empty stomach.)\n• Apples\, honey and pomegranates\n• Nutrie
- nt-rich foods (Granola\, crackers\, lentils\, cheese and leafy greens.)\n\
- nWeek 16\, month 4 of the guide.
+ nt-rich foods (Lentils and beans\, wholegrains\, cheese and yoghurt\, and 
+ leafy greens.)\n\nWeek 16\, month 4 of the guide.
 CATEGORIES:Sūrah
 TRANSP:TRANSPARENT
 END:VEVENT
@@ -1346,8 +1379,8 @@ DESCRIPTION:\nAlso today:\n• Sūrah al-Furqān 25:74 (The prayer for comf
  l-Kawthar (108)\, Sūrah al-Qadr (97)\, then the long ṣalawāt with your
   hand on your stomach.)\n• Sūrah at-Tīn (95) over two figs (Eat them o
  n an empty stomach.)\n• Apples\, honey and pomegranates\n• Nutrient-ri
- ch foods (Granola\, crackers\, lentils\, cheese and leafy greens.)\n\nWeek
-  16\, month 4 of the guide.
+ ch foods (Lentils and beans\, wholegrains\, cheese and yoghurt\, and leafy
+  greens.)\n\nWeek 16\, month 4 of the guide.
 CATEGORIES:Sūrah
 TRANSP:TRANSPARENT
 END:VEVENT
@@ -1366,8 +1399,8 @@ DESCRIPTION:\nAlso today:\n• Sūrah al-Furqān 25:74 (The prayer for comf
  l-Kawthar (108)\, Sūrah al-Qadr (97)\, then the long ṣalawāt with your
   hand on your stomach.)\n• Sūrah at-Tīn (95) over two figs (Eat them o
  n an empty stomach.)\n• Apples\, honey and pomegranates\n• Nutrient-ri
- ch foods (Granola\, crackers\, lentils\, cheese and leafy greens.)\n\nWeek
-  16\, month 4 of the guide.
+ ch foods (Lentils and beans\, wholegrains\, cheese and yoghurt\, and leafy
+  greens.)\n\nWeek 16\, month 4 of the guide.
 CATEGORIES:Sūrah
 TRANSP:TRANSPARENT
 END:VEVENT
@@ -1377,17 +1410,17 @@ DTSTAMP:20260926T000000Z
 DTSTART;VALUE=DATE:20260704
 DTEND;VALUE=DATE:20260705
 SUMMARY:Nutrient-rich foods
-DESCRIPTION:Granola\, crackers\, lentils\, cheese and leafy greens.\n\nAlso
-  today:\n• Sūrah al-Furqān 25:74 (The prayer for comfort in your famil
- y.)\n• Istighfār 7 times (Astaghfirullāha Rabbī wa atūbu ilayh.)\n
- • Ṣalawāt 140 times after each prayer\n• Ṣalātul Layl (As much a
- s you can manage. If you miss the time\, make it up later as qaḍāʾ.)\n
- • Sūrah al-Qadr (97) in one rakʿah of every prayer\n• After the dail
- y prayers: al-Kawthar\, al-Qadr\, long ṣalawāt (Sūrah al-Kawthar (108)
- \, Sūrah al-Qadr (97)\, then the long ṣalawāt with your hand on your s
- tomach.)\n• Sūrah at-Tīn (95) over two figs (Eat them on an empty stom
- ach.)\n• Apples\, honey and pomegranates\n\nWeek 16\, month 4 of the gui
- de.
+DESCRIPTION:Lentils and beans\, wholegrains\, cheese and yoghurt\, and leaf
+ y greens.\n\nAlso today:\n• Sūrah al-Furqān 25:74 (The prayer for comf
+ ort in your family.)\n• Istighfār 7 times (Astaghfirullāha Rabbī wa a
+ tūbu ilayh.)\n• Ṣalawāt 140 times after each prayer\n• Ṣalātul 
+ Layl (As much as you can manage. If you miss the time\, make it up later a
+ s qaḍāʾ.)\n• Sūrah al-Qadr (97) in one rakʿah of every prayer\n•
+  After the daily prayers: al-Kawthar\, al-Qadr\, long ṣalawāt (Sūrah a
+ l-Kawthar (108)\, Sūrah al-Qadr (97)\, then the long ṣalawāt with your
+  hand on your stomach.)\n• Sūrah at-Tīn (95) over two figs (Eat them o
+ n an empty stomach.)\n• Apples\, honey and pomegranates\n\nWeek 16\, mon
+ th 4 of the guide.
 CATEGORIES:Food
 TRANSP:TRANSPARENT
 END:VEVENT
@@ -1405,8 +1438,9 @@ DESCRIPTION:The prayer for comfort in your family.\n\nAlso today:\n• Isti
  awthar\, al-Qadr\, long ṣalawāt (Sūrah al-Kawthar (108)\, Sūrah al-Qa
  dr (97)\, then the long ṣalawāt with your hand on your stomach.)\n• S
  ūrah at-Tīn (95) over two figs (Eat them on an empty stomach.)\n• Appl
- es\, honey and pomegranates\n• Nutrient-rich foods (Granola\, crackers\,
-  lentils\, cheese and leafy greens.)\n\nWeek 16\, month 4 of the guide.
+ es\, honey and pomegranates\n• Nutrient-rich foods (Lentils and beans\, 
+ wholegrains\, cheese and yoghurt\, and leafy greens.)\n\nWeek 16\, month 4
+  of the guide.
 CATEGORIES:Recitation
 TRANSP:TRANSPARENT
 END:VEVENT
@@ -1424,9 +1458,9 @@ DESCRIPTION:Astaghfirullāha Rabbī wa atūbu ilayh.\n\nAlso today:\n• S
  : al-Kawthar\, al-Qadr\, long ṣalawāt (Sūrah al-Kawthar (108)\, Sūrah
   al-Qadr (97)\, then the long ṣalawāt with your hand on your stomach.)\
  n• Sūrah at-Tīn (95) over two figs (Eat them on an empty stomach.)\n
- • Apples\, honey and pomegranates\n• Nutrient-rich foods (Granola\, cr
- ackers\, lentils\, cheese and leafy greens.)\n\nWeek 16\, month 4 of the g
- uide.
+ • Apples\, honey and pomegranates\n• Nutrient-rich foods (Lentils and 
+ beans\, wholegrains\, cheese and yoghurt\, and leafy greens.)\n\nWeek 16\,
+  month 4 of the guide.
 CATEGORIES:Recitation
 TRANSP:TRANSPARENT
 END:VEVENT
@@ -1436,13 +1470,13 @@ DTSTAMP:20260926T000000Z
 DTSTART;VALUE=DATE:20260707
 DTEND;VALUE=DATE:20260708
 SUMMARY:Nuts
-DESCRIPTION:Good fats and vitamin E\, and possibly a lower risk of nut alle
- rgy in babies.\n\nAlso today:\n• Rub Khāke Shifāʾ on your stomach (Fr
- om the start of the fifth month. Turbah from Karbalāʾ.)\n• Adhān and 
- iqāmah at ṣalāh time (With your hand on your stomach.)\n• Sūrah an-
- Naṣr (110) in the daily prayers\n• Sūrah al-Fātiḥah (1) over an eg
- g (Then eat it on an empty stomach.)\n• A date every morning\n\nWeek 17\
- , month 5 of the guide.
+DESCRIPTION:Good fats\, protein and vitamin E. Nuts are safe in pregnancy u
+ nless you are allergic or have been told to avoid them.\n\nAlso today:\n
+ • Rub Khāke Shifāʾ on your stomach (From the start of the fifth month
+ . Turbah from Karbalāʾ.)\n• Adhān and iqāmah at ṣalāh time (With 
+ your hand on your stomach.)\n• Sūrah an-Naṣr (110) in the daily praye
+ rs\n• Sūrah al-Fātiḥah (1) over an egg (Then eat it on an empty stom
+ ach.)\n• A date every morning\n\nWeek 17\, month 5 of the guide.
 CATEGORIES:Food
 TRANSP:TRANSPARENT
 END:VEVENT
@@ -1456,8 +1490,9 @@ DESCRIPTION:From the start of the fifth month. Turbah from Karbalāʾ.\n\nA
  lso today:\n• Adhān and iqāmah at ṣalāh time (With your hand on you
  r stomach.)\n• Sūrah an-Naṣr (110) in the daily prayers\n• Sūrah a
  l-Fātiḥah (1) over an egg (Then eat it on an empty stomach.)\n• A dat
- e every morning\n• Nuts (Good fats and vitamin E\, and possibly a lower 
- risk of nut allergy in babies.)\n\nWeek 17\, month 5 of the guide.
+ e every morning\n• Nuts (Good fats\, protein and vitamin E. Nuts are saf
+ e in pregnancy unless you are allergic or have been told to avoid them.)\n
+ \nWeek 17\, month 5 of the guide.
 CATEGORIES:Recitation
 TRANSP:TRANSPARENT
 END:VEVENT
@@ -1472,8 +1507,9 @@ DESCRIPTION:\nAlso today:\n• Rub Khāke Shifāʾ on your stomach (From th
  ah at ṣalāh time (With your hand on your stomach.)\n• Sūrah an-Naṣ
  r (110) in the daily prayers\n• Sūrah al-Fātiḥah (1) over an egg (Th
  en eat it on an empty stomach.)\n• A date every morning\n• Nuts (Good 
- fats and vitamin E\, and possibly a lower risk of nut allergy in babies.)\
- n\nWeek 17\, month 5 of the guide.
+ fats\, protein and vitamin E. Nuts are safe in pregnancy unless you are al
+ lergic or have been told to avoid them.)\n\nWeek 17\, month 5 of the guide
+ .
 CATEGORIES:Sūrah
 TRANSP:TRANSPARENT
 END:VEVENT
@@ -1488,8 +1524,9 @@ DESCRIPTION:\nAlso today:\n• Rub Khāke Shifāʾ on your stomach (From th
  ah at ṣalāh time (With your hand on your stomach.)\n• Sūrah an-Naṣ
  r (110) in the daily prayers\n• Sūrah al-Fātiḥah (1) over an egg (Th
  en eat it on an empty stomach.)\n• A date every morning\n• Nuts (Good 
- fats and vitamin E\, and possibly a lower risk of nut allergy in babies.)\
- n\nWeek 17\, month 5 of the guide.
+ fats\, protein and vitamin E. Nuts are safe in pregnancy unless you are al
+ lergic or have been told to avoid them.)\n\nWeek 17\, month 5 of the guide
+ .
 CATEGORIES:Sūrah
 TRANSP:TRANSPARENT
 END:VEVENT
@@ -1503,8 +1540,9 @@ DESCRIPTION:Then eat it on an empty stomach.\n\nAlso today:\n• Rub Khāke
   Shifāʾ on your stomach (From the start of the fifth month. Turbah from 
  Karbalāʾ.)\n• Adhān and iqāmah at ṣalāh time (With your hand on y
  our stomach.)\n• Sūrah an-Naṣr (110) in the daily prayers\n• A date
-  every morning\n• Nuts (Good fats and vitamin E\, and possibly a lower r
- isk of nut allergy in babies.)\n\nWeek 17\, month 5 of the guide.
+  every morning\n• Nuts (Good fats\, protein and vitamin E. Nuts are safe
+  in pregnancy unless you are allergic or have been told to avoid them.)\n\
+ nWeek 17\, month 5 of the guide.
 CATEGORIES:Sūrah
 TRANSP:TRANSPARENT
 END:VEVENT
@@ -1518,9 +1556,9 @@ DESCRIPTION:\nAlso today:\n• Rub Khāke Shifāʾ on your stomach (From th
  e start of the fifth month. Turbah from Karbalāʾ.)\n• Adhān and iqām
  ah at ṣalāh time (With your hand on your stomach.)\n• Sūrah an-Naṣ
  r (110) in the daily prayers\n• Sūrah al-Fātiḥah (1) over an egg (Th
- en eat it on an empty stomach.)\n• Nuts (Good fats and vitamin E\, and p
- ossibly a lower risk of nut allergy in babies.)\n\nWeek 17\, month 5 of th
- e guide.
+ en eat it on an empty stomach.)\n• Nuts (Good fats\, protein and vitamin
+  E. Nuts are safe in pregnancy unless you are allergic or have been told t
+ o avoid them.)\n\nWeek 17\, month 5 of the guide.
 CATEGORIES:Food
 TRANSP:TRANSPARENT
 END:VEVENT
@@ -1530,13 +1568,13 @@ DTSTAMP:20260926T000000Z
 DTSTART;VALUE=DATE:20260713
 DTEND;VALUE=DATE:20260714
 SUMMARY:Nuts
-DESCRIPTION:Good fats and vitamin E\, and possibly a lower risk of nut alle
- rgy in babies.\n\nAlso today:\n• Rub Khāke Shifāʾ on your stomach (Fr
- om the start of the fifth month. Turbah from Karbalāʾ.)\n• Adhān and 
- iqāmah at ṣalāh time (With your hand on your stomach.)\n• Sūrah an-
- Naṣr (110) in the daily prayers\n• Sūrah al-Fātiḥah (1) over an eg
- g (Then eat it on an empty stomach.)\n• A date every morning\n\nWeek 17\
- , month 5 of the guide.
+DESCRIPTION:Good fats\, protein and vitamin E. Nuts are safe in pregnancy u
+ nless you are allergic or have been told to avoid them.\n\nAlso today:\n
+ • Rub Khāke Shifāʾ on your stomach (From the start of the fifth month
+ . Turbah from Karbalāʾ.)\n• Adhān and iqāmah at ṣalāh time (With 
+ your hand on your stomach.)\n• Sūrah an-Naṣr (110) in the daily praye
+ rs\n• Sūrah al-Fātiḥah (1) over an egg (Then eat it on an empty stom
+ ach.)\n• A date every morning\n\nWeek 17\, month 5 of the guide.
 CATEGORIES:Food
 TRANSP:TRANSPARENT
 END:VEVENT
@@ -1550,8 +1588,9 @@ DESCRIPTION:From the start of the fifth month. Turbah from Karbalāʾ.\n\nA
  lso today:\n• Adhān and iqāmah at ṣalāh time (With your hand on you
  r stomach.)\n• Sūrah an-Naṣr (110) in the daily prayers\n• Sūrah a
  l-Fātiḥah (1) over an egg (Then eat it on an empty stomach.)\n• A dat
- e every morning\n• Nuts (Good fats and vitamin E\, and possibly a lower 
- risk of nut allergy in babies.)\n\nWeek 18\, month 5 of the guide.
+ e every morning\n• Nuts (Good fats\, protein and vitamin E. Nuts are saf
+ e in pregnancy unless you are allergic or have been told to avoid them.)\n
+ \nWeek 18\, month 5 of the guide.
 CATEGORIES:Recitation
 TRANSP:TRANSPARENT
 END:VEVENT
@@ -1565,8 +1604,9 @@ DESCRIPTION:With your hand on your stomach.\n\nAlso today:\n• Rub Khāke
  Shifāʾ on your stomach (From the start of the fifth month. Turbah from K
  arbalāʾ.)\n• Sūrah an-Naṣr (110) in the daily prayers\n• Sūrah a
  l-Fātiḥah (1) over an egg (Then eat it on an empty stomach.)\n• A dat
- e every morning\n• Nuts (Good fats and vitamin E\, and possibly a lower 
- risk of nut allergy in babies.)\n\nWeek 18\, month 5 of the guide.
+ e every morning\n• Nuts (Good fats\, protein and vitamin E. Nuts are saf
+ e in pregnancy unless you are allergic or have been told to avoid them.)\n
+ \nWeek 18\, month 5 of the guide.
 CATEGORIES:Recitation
 TRANSP:TRANSPARENT
 END:VEVENT
@@ -1581,8 +1621,9 @@ DESCRIPTION:\nAlso today:\n• Rub Khāke Shifāʾ on your stomach (From th
  ah at ṣalāh time (With your hand on your stomach.)\n• Sūrah an-Naṣ
  r (110) in the daily prayers\n• Sūrah al-Fātiḥah (1) over an egg (Th
  en eat it on an empty stomach.)\n• A date every morning\n• Nuts (Good 
- fats and vitamin E\, and possibly a lower risk of nut allergy in babies.)\
- n\nWeek 18\, month 5 of the guide.
+ fats\, protein and vitamin E. Nuts are safe in pregnancy unless you are al
+ lergic or have been told to avoid them.)\n\nWeek 18\, month 5 of the guide
+ .
 CATEGORIES:Sūrah
 TRANSP:TRANSPARENT
 END:VEVENT
@@ -1597,8 +1638,9 @@ DESCRIPTION:\nAlso today:\n• Rub Khāke Shifāʾ on your stomach (From th
  ah at ṣalāh time (With your hand on your stomach.)\n• Sūrah an-Naṣ
  r (110) in the daily prayers\n• Sūrah al-Fātiḥah (1) over an egg (Th
  en eat it on an empty stomach.)\n• A date every morning\n• Nuts (Good 
- fats and vitamin E\, and possibly a lower risk of nut allergy in babies.)\
- n\nWeek 18\, month 5 of the guide.
+ fats\, protein and vitamin E. Nuts are safe in pregnancy unless you are al
+ lergic or have been told to avoid them.)\n\nWeek 18\, month 5 of the guide
+ .
 CATEGORIES:Sūrah
 TRANSP:TRANSPARENT
 END:VEVENT
@@ -1612,9 +1654,9 @@ DESCRIPTION:\nAlso today:\n• Rub Khāke Shifāʾ on your stomach (From th
  e start of the fifth month. Turbah from Karbalāʾ.)\n• Adhān and iqām
  ah at ṣalāh time (With your hand on your stomach.)\n• Sūrah an-Naṣ
  r (110) in the daily prayers\n• Sūrah al-Fātiḥah (1) over an egg (Th
- en eat it on an empty stomach.)\n• Nuts (Good fats and vitamin E\, and p
- ossibly a lower risk of nut allergy in babies.)\n\nWeek 18\, month 5 of th
- e guide.
+ en eat it on an empty stomach.)\n• Nuts (Good fats\, protein and vitamin
+  E. Nuts are safe in pregnancy unless you are allergic or have been told t
+ o avoid them.)\n\nWeek 18\, month 5 of the guide.
 CATEGORIES:Food
 TRANSP:TRANSPARENT
 END:VEVENT
@@ -1624,13 +1666,13 @@ DTSTAMP:20260926T000000Z
 DTSTART;VALUE=DATE:20260719
 DTEND;VALUE=DATE:20260720
 SUMMARY:Nuts
-DESCRIPTION:Good fats and vitamin E\, and possibly a lower risk of nut alle
- rgy in babies.\n\nAlso today:\n• Rub Khāke Shifāʾ on your stomach (Fr
- om the start of the fifth month. Turbah from Karbalāʾ.)\n• Adhān and 
- iqāmah at ṣalāh time (With your hand on your stomach.)\n• Sūrah an-
- Naṣr (110) in the daily prayers\n• Sūrah al-Fātiḥah (1) over an eg
- g (Then eat it on an empty stomach.)\n• A date every morning\n\nWeek 18\
- , month 5 of the guide.
+DESCRIPTION:Good fats\, protein and vitamin E. Nuts are safe in pregnancy u
+ nless you are allergic or have been told to avoid them.\n\nAlso today:\n
+ • Rub Khāke Shifāʾ on your stomach (From the start of the fifth month
+ . Turbah from Karbalāʾ.)\n• Adhān and iqāmah at ṣalāh time (With 
+ your hand on your stomach.)\n• Sūrah an-Naṣr (110) in the daily praye
+ rs\n• Sūrah al-Fātiḥah (1) over an egg (Then eat it on an empty stom
+ ach.)\n• A date every morning\n\nWeek 18\, month 5 of the guide.
 CATEGORIES:Food
 TRANSP:TRANSPARENT
 END:VEVENT
@@ -1644,8 +1686,9 @@ DESCRIPTION:From the start of the fifth month. Turbah from Karbalāʾ.\n\nA
  lso today:\n• Adhān and iqāmah at ṣalāh time (With your hand on you
  r stomach.)\n• Sūrah an-Naṣr (110) in the daily prayers\n• Sūrah a
  l-Fātiḥah (1) over an egg (Then eat it on an empty stomach.)\n• A dat
- e every morning\n• Nuts (Good fats and vitamin E\, and possibly a lower 
- risk of nut allergy in babies.)\n\nWeek 18\, month 5 of the guide.
+ e every morning\n• Nuts (Good fats\, protein and vitamin E. Nuts are saf
+ e in pregnancy unless you are allergic or have been told to avoid them.)\n
+ \nWeek 18\, month 5 of the guide.
 CATEGORIES:Recitation
 TRANSP:TRANSPARENT
 END:VEVENT
@@ -1659,8 +1702,9 @@ DESCRIPTION:With your hand on your stomach.\n\nAlso today:\n• Rub Khāke
  Shifāʾ on your stomach (From the start of the fifth month. Turbah from K
  arbalāʾ.)\n• Sūrah an-Naṣr (110) in the daily prayers\n• Sūrah a
  l-Fātiḥah (1) over an egg (Then eat it on an empty stomach.)\n• A dat
- e every morning\n• Nuts (Good fats and vitamin E\, and possibly a lower 
- risk of nut allergy in babies.)\n\nWeek 19\, month 5 of the guide.
+ e every morning\n• Nuts (Good fats\, protein and vitamin E. Nuts are saf
+ e in pregnancy unless you are allergic or have been told to avoid them.)\n
+ \nWeek 19\, month 5 of the guide.
 CATEGORIES:Recitation
 TRANSP:TRANSPARENT
 END:VEVENT
@@ -1674,8 +1718,9 @@ DESCRIPTION:\nAlso today:\n• Rub Khāke Shifāʾ on your stomach (From th
  e start of the fifth month. Turbah from Karbalāʾ.)\n• Adhān and iqām
  ah at ṣalāh time (With your hand on your stomach.)\n• Sūrah al-Fāti
  ḥah (1) over an egg (Then eat it on an empty stomach.)\n• A date every
-  morning\n• Nuts (Good fats and vitamin E\, and possibly a lower risk of
-  nut allergy in babies.)\n\nWeek 19\, month 5 of the guide.
+  morning\n• Nuts (Good fats\, protein and vitamin E. Nuts are safe in pr
+ egnancy unless you are allergic or have been told to avoid them.)\n\nWeek 
+ 19\, month 5 of the guide.
 CATEGORIES:Sūrah
 TRANSP:TRANSPARENT
 END:VEVENT
@@ -1690,8 +1735,9 @@ DESCRIPTION:\nAlso today:\n• Rub Khāke Shifāʾ on your stomach (From th
  ah at ṣalāh time (With your hand on your stomach.)\n• Sūrah an-Naṣ
  r (110) in the daily prayers\n• Sūrah al-Fātiḥah (1) over an egg (Th
  en eat it on an empty stomach.)\n• A date every morning\n• Nuts (Good 
- fats and vitamin E\, and possibly a lower risk of nut allergy in babies.)\
- n\nWeek 19\, month 5 of the guide.
+ fats\, protein and vitamin E. Nuts are safe in pregnancy unless you are al
+ lergic or have been told to avoid them.)\n\nWeek 19\, month 5 of the guide
+ .
 CATEGORIES:Sūrah
 TRANSP:TRANSPARENT
 END:VEVENT
@@ -1706,8 +1752,9 @@ DESCRIPTION:\nAlso today:\n• Rub Khāke Shifāʾ on your stomach (From th
  ah at ṣalāh time (With your hand on your stomach.)\n• Sūrah an-Naṣ
  r (110) in the daily prayers\n• Sūrah al-Fātiḥah (1) over an egg (Th
  en eat it on an empty stomach.)\n• A date every morning\n• Nuts (Good 
- fats and vitamin E\, and possibly a lower risk of nut allergy in babies.)\
- n\nWeek 19\, month 5 of the guide.
+ fats\, protein and vitamin E. Nuts are safe in pregnancy unless you are al
+ lergic or have been told to avoid them.)\n\nWeek 19\, month 5 of the guide
+ .
 CATEGORIES:Sūrah
 TRANSP:TRANSPARENT
 END:VEVENT
@@ -1717,13 +1764,13 @@ DTSTAMP:20260926T000000Z
 DTSTART;VALUE=DATE:20260725
 DTEND;VALUE=DATE:20260726
 SUMMARY:Nuts
-DESCRIPTION:Good fats and vitamin E\, and possibly a lower risk of nut alle
- rgy in babies.\n\nAlso today:\n• Rub Khāke Shifāʾ on your stomach (Fr
- om the start of the fifth month. Turbah from Karbalāʾ.)\n• Adhān and 
- iqāmah at ṣalāh time (With your hand on your stomach.)\n• Sūrah an-
- Naṣr (110) in the daily prayers\n• Sūrah al-Fātiḥah (1) over an eg
- g (Then eat it on an empty stomach.)\n• A date every morning\n\nWeek 19\
- , month 5 of the guide.
+DESCRIPTION:Good fats\, protein and vitamin E. Nuts are safe in pregnancy u
+ nless you are allergic or have been told to avoid them.\n\nAlso today:\n
+ • Rub Khāke Shifāʾ on your stomach (From the start of the fifth month
+ . Turbah from Karbalāʾ.)\n• Adhān and iqāmah at ṣalāh time (With 
+ your hand on your stomach.)\n• Sūrah an-Naṣr (110) in the daily praye
+ rs\n• Sūrah al-Fātiḥah (1) over an egg (Then eat it on an empty stom
+ ach.)\n• A date every morning\n\nWeek 19\, month 5 of the guide.
 CATEGORIES:Food
 TRANSP:TRANSPARENT
 END:VEVENT
@@ -1737,8 +1784,9 @@ DESCRIPTION:From the start of the fifth month. Turbah from Karbalāʾ.\n\nA
  lso today:\n• Adhān and iqāmah at ṣalāh time (With your hand on you
  r stomach.)\n• Sūrah an-Naṣr (110) in the daily prayers\n• Sūrah a
  l-Fātiḥah (1) over an egg (Then eat it on an empty stomach.)\n• A dat
- e every morning\n• Nuts (Good fats and vitamin E\, and possibly a lower 
- risk of nut allergy in babies.)\n\nWeek 19\, month 5 of the guide.
+ e every morning\n• Nuts (Good fats\, protein and vitamin E. Nuts are saf
+ e in pregnancy unless you are allergic or have been told to avoid them.)\n
+ \nWeek 19\, month 5 of the guide.
 CATEGORIES:Recitation
 TRANSP:TRANSPARENT
 END:VEVENT
@@ -1752,8 +1800,9 @@ DESCRIPTION:With your hand on your stomach.\n\nAlso today:\n• Rub Khāke
  Shifāʾ on your stomach (From the start of the fifth month. Turbah from K
  arbalāʾ.)\n• Sūrah an-Naṣr (110) in the daily prayers\n• Sūrah a
  l-Fātiḥah (1) over an egg (Then eat it on an empty stomach.)\n• A dat
- e every morning\n• Nuts (Good fats and vitamin E\, and possibly a lower 
- risk of nut allergy in babies.)\n\nWeek 19\, month 5 of the guide.
+ e every morning\n• Nuts (Good fats\, protein and vitamin E. Nuts are saf
+ e in pregnancy unless you are allergic or have been told to avoid them.)\n
+ \nWeek 19\, month 5 of the guide.
 CATEGORIES:Recitation
 TRANSP:TRANSPARENT
 END:VEVENT
@@ -1767,8 +1816,9 @@ DESCRIPTION:\nAlso today:\n• Rub Khāke Shifāʾ on your stomach (From th
  e start of the fifth month. Turbah from Karbalāʾ.)\n• Adhān and iqām
  ah at ṣalāh time (With your hand on your stomach.)\n• Sūrah al-Fāti
  ḥah (1) over an egg (Then eat it on an empty stomach.)\n• A date every
-  morning\n• Nuts (Good fats and vitamin E\, and possibly a lower risk of
-  nut allergy in babies.)\n\nWeek 20\, month 5 of the guide.
+  morning\n• Nuts (Good fats\, protein and vitamin E. Nuts are safe in pr
+ egnancy unless you are allergic or have been told to avoid them.)\n\nWeek 
+ 20\, month 5 of the guide.
 CATEGORIES:Sūrah
 TRANSP:TRANSPARENT
 END:VEVENT
@@ -1782,8 +1832,9 @@ DESCRIPTION:Then eat it on an empty stomach.\n\nAlso today:\n• Rub Khāke
   Shifāʾ on your stomach (From the start of the fifth month. Turbah from 
  Karbalāʾ.)\n• Adhān and iqāmah at ṣalāh time (With your hand on y
  our stomach.)\n• Sūrah an-Naṣr (110) in the daily prayers\n• A date
-  every morning\n• Nuts (Good fats and vitamin E\, and possibly a lower r
- isk of nut allergy in babies.)\n\nWeek 20\, month 5 of the guide.
+  every morning\n• Nuts (Good fats\, protein and vitamin E. Nuts are safe
+  in pregnancy unless you are allergic or have been told to avoid them.)\n\
+ nWeek 20\, month 5 of the guide.
 CATEGORIES:Sūrah
 TRANSP:TRANSPARENT
 END:VEVENT
@@ -1798,8 +1849,9 @@ DESCRIPTION:\nAlso today:\n• Rub Khāke Shifāʾ on your stomach (From th
  ah at ṣalāh time (With your hand on your stomach.)\n• Sūrah an-Naṣ
  r (110) in the daily prayers\n• Sūrah al-Fātiḥah (1) over an egg (Th
  en eat it on an empty stomach.)\n• A date every morning\n• Nuts (Good 
- fats and vitamin E\, and possibly a lower risk of nut allergy in babies.)\
- n\nWeek 20\, month 5 of the guide.
+ fats\, protein and vitamin E. Nuts are safe in pregnancy unless you are al
+ lergic or have been told to avoid them.)\n\nWeek 20\, month 5 of the guide
+ .
 CATEGORIES:Sūrah
 TRANSP:TRANSPARENT
 END:VEVENT
@@ -1814,8 +1866,9 @@ DESCRIPTION:\nAlso today:\n• Rub Khāke Shifāʾ on your stomach (From th
  ah at ṣalāh time (With your hand on your stomach.)\n• Sūrah an-Naṣ
  r (110) in the daily prayers\n• Sūrah al-Fātiḥah (1) over an egg (Th
  en eat it on an empty stomach.)\n• A date every morning\n• Nuts (Good 
- fats and vitamin E\, and possibly a lower risk of nut allergy in babies.)\
- n\nWeek 20\, month 5 of the guide.
+ fats\, protein and vitamin E. Nuts are safe in pregnancy unless you are al
+ lergic or have been told to avoid them.)\n\nWeek 20\, month 5 of the guide
+ .
 CATEGORIES:Sūrah
 TRANSP:TRANSPARENT
 END:VEVENT
@@ -1829,8 +1882,9 @@ DESCRIPTION:From the start of the fifth month. Turbah from Karbalāʾ.\n\nA
  lso today:\n• Adhān and iqāmah at ṣalāh time (With your hand on you
  r stomach.)\n• Sūrah an-Naṣr (110) in the daily prayers\n• Sūrah a
  l-Fātiḥah (1) over an egg (Then eat it on an empty stomach.)\n• A dat
- e every morning\n• Nuts (Good fats and vitamin E\, and possibly a lower 
- risk of nut allergy in babies.)\n\nWeek 20\, month 5 of the guide.
+ e every morning\n• Nuts (Good fats\, protein and vitamin E. Nuts are saf
+ e in pregnancy unless you are allergic or have been told to avoid them.)\n
+ \nWeek 20\, month 5 of the guide.
 CATEGORIES:Recitation
 TRANSP:TRANSPARENT
 END:VEVENT
@@ -1844,8 +1898,9 @@ DESCRIPTION:With your hand on your stomach.\n\nAlso today:\n• Rub Khāke
  Shifāʾ on your stomach (From the start of the fifth month. Turbah from K
  arbalāʾ.)\n• Sūrah an-Naṣr (110) in the daily prayers\n• Sūrah a
  l-Fātiḥah (1) over an egg (Then eat it on an empty stomach.)\n• A dat
- e every morning\n• Nuts (Good fats and vitamin E\, and possibly a lower 
- risk of nut allergy in babies.)\n\nWeek 20\, month 5 of the guide.
+ e every morning\n• Nuts (Good fats\, protein and vitamin E. Nuts are saf
+ e in pregnancy unless you are allergic or have been told to avoid them.)\n
+ \nWeek 20\, month 5 of the guide.
 CATEGORIES:Recitation
 TRANSP:TRANSPARENT
 END:VEVENT
@@ -1859,8 +1914,9 @@ DESCRIPTION:\nAlso today:\n• Rub Khāke Shifāʾ on your stomach (From th
  e start of the fifth month. Turbah from Karbalāʾ.)\n• Adhān and iqām
  ah at ṣalāh time (With your hand on your stomach.)\n• Sūrah al-Fāti
  ḥah (1) over an egg (Then eat it on an empty stomach.)\n• A date every
-  morning\n• Nuts (Good fats and vitamin E\, and possibly a lower risk of
-  nut allergy in babies.)\n\nWeek 20\, month 5 of the guide.
+  morning\n• Nuts (Good fats\, protein and vitamin E. Nuts are safe in pr
+ egnancy unless you are allergic or have been told to avoid them.)\n\nWeek 
+ 20\, month 5 of the guide.
 CATEGORIES:Sūrah
 TRANSP:TRANSPARENT
 END:VEVENT
@@ -2222,9 +2278,10 @@ DESCRIPTION:\nAlso today:\n• Sūrah al-Mulk (67) and Sūrah an-Nūr (24)
   Sūrah Yāsīn (36) over almonds (Then eat them on an empty stomach.)\n
  • Melon after your food (No water just before or after it. Watermelon an
  d kharbozeh are named in particular. Mustadrak al-Wasāʾil\, Vol. 3\, p.6
- 35.)\n• Iron-rich foods (Spinach\, chickpeas and beef. Baby draws on you
- r iron\, so ask your doctor about supplements too.)\n\nWeek 25\, month 7 o
- f the guide.
+ 35.)\n• Iron-rich foods (Red meat\, beans and chickpeas\, nuts\, dried a
+ pricots and fortified cereals. Your iron is checked at booking and at 28 w
+ eeks\, and you’ll be offered a supplement if it is low.)\n\nWeek 25\, mo
+ nth 7 of the guide.
 CATEGORIES:Recitation
 TRANSP:TRANSPARENT
 END:VEVENT
@@ -2242,8 +2299,9 @@ DESCRIPTION:Often\, from this month onward.\n\nAlso today:\n• Ṣalawāt
  ver almonds (Then eat them on an empty stomach.)\n• Melon after your foo
  d (No water just before or after it. Watermelon and kharbozeh are named in
   particular. Mustadrak al-Wasāʾil\, Vol. 3\, p.635.)\n• Iron-rich food
- s (Spinach\, chickpeas and beef. Baby draws on your iron\, so ask your doc
- tor about supplements too.)\n\nWeek 25\, month 7 of the guide.
+ s (Red meat\, beans and chickpeas\, nuts\, dried apricots and fortified ce
+ reals. Your iron is checked at booking and at 28 weeks\, and you’ll be o
+ ffered a supplement if it is low.)\n\nWeek 25\, month 7 of the guide.
 CATEGORIES:Sūrah
 TRANSP:TRANSPARENT
 END:VEVENT
@@ -2261,9 +2319,10 @@ DESCRIPTION:\nAlso today:\n• Ṣalawāt 140 times\n• Sūrah al-Mulk (67
   in the daily prayers\n• Sūrah Yāsīn (36) over almonds (Then eat them
   on an empty stomach.)\n• Melon after your food (No water just before or
   after it. Watermelon and kharbozeh are named in particular. Mustadrak al-
- Wasāʾil\, Vol. 3\, p.635.)\n• Iron-rich foods (Spinach\, chickpeas and
-  beef. Baby draws on your iron\, so ask your doctor about supplements too.
- )\n\nWeek 25\, month 7 of the guide.
+ Wasāʾil\, Vol. 3\, p.635.)\n• Iron-rich foods (Red meat\, beans and ch
+ ickpeas\, nuts\, dried apricots and fortified cereals. Your iron is checke
+ d at booking and at 28 weeks\, and you’ll be offered a supplement if it 
+ is low.)\n\nWeek 25\, month 7 of the guide.
 CATEGORIES:Sūrah
 TRANSP:TRANSPARENT
 END:VEVENT
@@ -2281,9 +2340,10 @@ DESCRIPTION:\nAlso today:\n• Ṣalawāt 140 times\n• Sūrah al-Mulk (67
   in the daily prayers\n• Sūrah Yāsīn (36) over almonds (Then eat them
   on an empty stomach.)\n• Melon after your food (No water just before or
   after it. Watermelon and kharbozeh are named in particular. Mustadrak al-
- Wasāʾil\, Vol. 3\, p.635.)\n• Iron-rich foods (Spinach\, chickpeas and
-  beef. Baby draws on your iron\, so ask your doctor about supplements too.
- )\n\nWeek 25\, month 7 of the guide.
+ Wasāʾil\, Vol. 3\, p.635.)\n• Iron-rich foods (Red meat\, beans and ch
+ ickpeas\, nuts\, dried apricots and fortified cereals. Your iron is checke
+ d at booking and at 28 weeks\, and you’ll be offered a supplement if it 
+ is low.)\n\nWeek 25\, month 7 of the guide.
 CATEGORIES:Sūrah
 TRANSP:TRANSPARENT
 END:VEVENT
@@ -2301,8 +2361,10 @@ DESCRIPTION:Then eat them on an empty stomach.\n\nAlso today:\n• Ṣalaw
  (97).)\n• Sūrah al-Ikhlāṣ (112) in the daily prayers\n• Melon afte
  r your food (No water just before or after it. Watermelon and kharbozeh ar
  e named in particular. Mustadrak al-Wasāʾil\, Vol. 3\, p.635.)\n• Iron
- -rich foods (Spinach\, chickpeas and beef. Baby draws on your iron\, so as
- k your doctor about supplements too.)\n\nWeek 25\, month 7 of the guide.
+ -rich foods (Red meat\, beans and chickpeas\, nuts\, dried apricots and fo
+ rtified cereals. Your iron is checked at booking and at 28 weeks\, and you
+ ’ll be offered a supplement if it is low.)\n\nWeek 25\, month 7 of the g
+ uide.
 CATEGORIES:Sūrah
 TRANSP:TRANSPARENT
 END:VEVENT
@@ -2320,9 +2382,10 @@ DESCRIPTION:No water just before or after it. Watermelon and kharbozeh are
  ): al-Ḥashr (59)\, aṣ-Ṣaff (61)\, al-Jumuʿah (62)\, at-Taghābun (6
  4) and al-Qadr (97).)\n• Sūrah al-Ikhlāṣ (112) in the daily prayers\
  n• Sūrah Yāsīn (36) over almonds (Then eat them on an empty stomach.)
- \n• Iron-rich foods (Spinach\, chickpeas and beef. Baby draws on your ir
- on\, so ask your doctor about supplements too.)\n\nWeek 25\, month 7 of th
- e guide.
+ \n• Iron-rich foods (Red meat\, beans and chickpeas\, nuts\, dried apric
+ ots and fortified cereals. Your iron is checked at booking and at 28 weeks
+ \, and you’ll be offered a supplement if it is low.)\n\nWeek 25\, month 
+ 7 of the guide.
 CATEGORIES:Food
 TRANSP:TRANSPARENT
 END:VEVENT
@@ -2341,8 +2404,9 @@ DESCRIPTION:For forty days\, on Mondays.\n\nAlso today:\n• Ṣalawāt 140
  6) over almonds (Then eat them on an empty stomach.)\n• Melon after your
   food (No water just before or after it. Watermelon and kharbozeh are name
  d in particular. Mustadrak al-Wasāʾil\, Vol. 3\, p.635.)\n• Iron-rich 
- foods (Spinach\, chickpeas and beef. Baby draws on your iron\, so ask your
-  doctor about supplements too.)\n\nWeek 25\, month 7 of the guide.
+ foods (Red meat\, beans and chickpeas\, nuts\, dried apricots and fortifie
+ d cereals. Your iron is checked at booking and at 28 weeks\, and you’ll 
+ be offered a supplement if it is low.)\n\nWeek 25\, month 7 of the guide.
 CATEGORIES:Sūrah
 TRANSP:TRANSPARENT
 END:VEVENT
@@ -2360,9 +2424,10 @@ DESCRIPTION:\nAlso today:\n• Sūrah al-Mulk (67) and Sūrah an-Nūr (24)
   Sūrah Yāsīn (36) over almonds (Then eat them on an empty stomach.)\n
  • Melon after your food (No water just before or after it. Watermelon an
  d kharbozeh are named in particular. Mustadrak al-Wasāʾil\, Vol. 3\, p.6
- 35.)\n• Iron-rich foods (Spinach\, chickpeas and beef. Baby draws on you
- r iron\, so ask your doctor about supplements too.)\n\nWeek 26\, month 7 o
- f the guide.
+ 35.)\n• Iron-rich foods (Red meat\, beans and chickpeas\, nuts\, dried a
+ pricots and fortified cereals. Your iron is checked at booking and at 28 w
+ eeks\, and you’ll be offered a supplement if it is low.)\n\nWeek 26\, mo
+ nth 7 of the guide.
 CATEGORIES:Recitation
 TRANSP:TRANSPARENT
 END:VEVENT
@@ -2380,8 +2445,9 @@ DESCRIPTION:Often\, from this month onward.\n\nAlso today:\n• Ṣalawāt
  ver almonds (Then eat them on an empty stomach.)\n• Melon after your foo
  d (No water just before or after it. Watermelon and kharbozeh are named in
   particular. Mustadrak al-Wasāʾil\, Vol. 3\, p.635.)\n• Iron-rich food
- s (Spinach\, chickpeas and beef. Baby draws on your iron\, so ask your doc
- tor about supplements too.)\n\nWeek 26\, month 7 of the guide.
+ s (Red meat\, beans and chickpeas\, nuts\, dried apricots and fortified ce
+ reals. Your iron is checked at booking and at 28 weeks\, and you’ll be o
+ ffered a supplement if it is low.)\n\nWeek 26\, month 7 of the guide.
 CATEGORIES:Sūrah
 TRANSP:TRANSPARENT
 END:VEVENT
@@ -2399,9 +2465,10 @@ DESCRIPTION:\nAlso today:\n• Ṣalawāt 140 times\n• Sūrah al-Mulk (67
   in the daily prayers\n• Sūrah Yāsīn (36) over almonds (Then eat them
   on an empty stomach.)\n• Melon after your food (No water just before or
   after it. Watermelon and kharbozeh are named in particular. Mustadrak al-
- Wasāʾil\, Vol. 3\, p.635.)\n• Iron-rich foods (Spinach\, chickpeas and
-  beef. Baby draws on your iron\, so ask your doctor about supplements too.
- )\n\nWeek 26\, month 7 of the guide.
+ Wasāʾil\, Vol. 3\, p.635.)\n• Iron-rich foods (Red meat\, beans and ch
+ ickpeas\, nuts\, dried apricots and fortified cereals. Your iron is checke
+ d at booking and at 28 weeks\, and you’ll be offered a supplement if it 
+ is low.)\n\nWeek 26\, month 7 of the guide.
 CATEGORIES:Sūrah
 TRANSP:TRANSPARENT
 END:VEVENT
@@ -2419,9 +2486,10 @@ DESCRIPTION:\nAlso today:\n• Ṣalawāt 140 times\n• Sūrah al-Mulk (67
   in the daily prayers\n• Sūrah Yāsīn (36) over almonds (Then eat them
   on an empty stomach.)\n• Melon after your food (No water just before or
   after it. Watermelon and kharbozeh are named in particular. Mustadrak al-
- Wasāʾil\, Vol. 3\, p.635.)\n• Iron-rich foods (Spinach\, chickpeas and
-  beef. Baby draws on your iron\, so ask your doctor about supplements too.
- )\n\nWeek 26\, month 7 of the guide.
+ Wasāʾil\, Vol. 3\, p.635.)\n• Iron-rich foods (Red meat\, beans and ch
+ ickpeas\, nuts\, dried apricots and fortified cereals. Your iron is checke
+ d at booking and at 28 weeks\, and you’ll be offered a supplement if it 
+ is low.)\n\nWeek 26\, month 7 of the guide.
 CATEGORIES:Sūrah
 TRANSP:TRANSPARENT
 END:VEVENT
@@ -2439,8 +2507,10 @@ DESCRIPTION:Then eat them on an empty stomach.\n\nAlso today:\n• Ṣalaw
  (97).)\n• Sūrah al-Ikhlāṣ (112) in the daily prayers\n• Melon afte
  r your food (No water just before or after it. Watermelon and kharbozeh ar
  e named in particular. Mustadrak al-Wasāʾil\, Vol. 3\, p.635.)\n• Iron
- -rich foods (Spinach\, chickpeas and beef. Baby draws on your iron\, so as
- k your doctor about supplements too.)\n\nWeek 26\, month 7 of the guide.
+ -rich foods (Red meat\, beans and chickpeas\, nuts\, dried apricots and fo
+ rtified cereals. Your iron is checked at booking and at 28 weeks\, and you
+ ’ll be offered a supplement if it is low.)\n\nWeek 26\, month 7 of the g
+ uide.
 CATEGORIES:Sūrah
 TRANSP:TRANSPARENT
 END:VEVENT
@@ -2458,9 +2528,10 @@ DESCRIPTION:No water just before or after it. Watermelon and kharbozeh are
  ): al-Ḥashr (59)\, aṣ-Ṣaff (61)\, al-Jumuʿah (62)\, at-Taghābun (6
  4) and al-Qadr (97).)\n• Sūrah al-Ikhlāṣ (112) in the daily prayers\
  n• Sūrah Yāsīn (36) over almonds (Then eat them on an empty stomach.)
- \n• Iron-rich foods (Spinach\, chickpeas and beef. Baby draws on your ir
- on\, so ask your doctor about supplements too.)\n\nWeek 26\, month 7 of th
- e guide.
+ \n• Iron-rich foods (Red meat\, beans and chickpeas\, nuts\, dried apric
+ ots and fortified cereals. Your iron is checked at booking and at 28 weeks
+ \, and you’ll be offered a supplement if it is low.)\n\nWeek 26\, month 
+ 7 of the guide.
 CATEGORIES:Food
 TRANSP:TRANSPARENT
 END:VEVENT
@@ -2479,8 +2550,9 @@ DESCRIPTION:For forty days\, on Mondays.\n\nAlso today:\n• Ṣalawāt 140
  6) over almonds (Then eat them on an empty stomach.)\n• Melon after your
   food (No water just before or after it. Watermelon and kharbozeh are name
  d in particular. Mustadrak al-Wasāʾil\, Vol. 3\, p.635.)\n• Iron-rich 
- foods (Spinach\, chickpeas and beef. Baby draws on your iron\, so ask your
-  doctor about supplements too.)\n\nWeek 26\, month 7 of the guide.
+ foods (Red meat\, beans and chickpeas\, nuts\, dried apricots and fortifie
+ d cereals. Your iron is checked at booking and at 28 weeks\, and you’ll 
+ be offered a supplement if it is low.)\n\nWeek 26\, month 7 of the guide.
 CATEGORIES:Sūrah
 TRANSP:TRANSPARENT
 END:VEVENT
@@ -2498,9 +2570,10 @@ DESCRIPTION:\nAlso today:\n• Sūrah al-Mulk (67) and Sūrah an-Nūr (24)
   Sūrah Yāsīn (36) over almonds (Then eat them on an empty stomach.)\n
  • Melon after your food (No water just before or after it. Watermelon an
  d kharbozeh are named in particular. Mustadrak al-Wasāʾil\, Vol. 3\, p.6
- 35.)\n• Iron-rich foods (Spinach\, chickpeas and beef. Baby draws on you
- r iron\, so ask your doctor about supplements too.)\n\nWeek 27\, month 7 o
- f the guide.
+ 35.)\n• Iron-rich foods (Red meat\, beans and chickpeas\, nuts\, dried a
+ pricots and fortified cereals. Your iron is checked at booking and at 28 w
+ eeks\, and you’ll be offered a supplement if it is low.)\n\nWeek 27\, mo
+ nth 7 of the guide.
 CATEGORIES:Recitation
 TRANSP:TRANSPARENT
 END:VEVENT
@@ -2518,8 +2591,9 @@ DESCRIPTION:Often\, from this month onward.\n\nAlso today:\n• Ṣalawāt
  ver almonds (Then eat them on an empty stomach.)\n• Melon after your foo
  d (No water just before or after it. Watermelon and kharbozeh are named in
   particular. Mustadrak al-Wasāʾil\, Vol. 3\, p.635.)\n• Iron-rich food
- s (Spinach\, chickpeas and beef. Baby draws on your iron\, so ask your doc
- tor about supplements too.)\n\nWeek 27\, month 7 of the guide.
+ s (Red meat\, beans and chickpeas\, nuts\, dried apricots and fortified ce
+ reals. Your iron is checked at booking and at 28 weeks\, and you’ll be o
+ ffered a supplement if it is low.)\n\nWeek 27\, month 7 of the guide.
 CATEGORIES:Sūrah
 TRANSP:TRANSPARENT
 END:VEVENT
@@ -2537,9 +2611,10 @@ DESCRIPTION:\nAlso today:\n• Ṣalawāt 140 times\n• Sūrah al-Mulk (67
   in the daily prayers\n• Sūrah Yāsīn (36) over almonds (Then eat them
   on an empty stomach.)\n• Melon after your food (No water just before or
   after it. Watermelon and kharbozeh are named in particular. Mustadrak al-
- Wasāʾil\, Vol. 3\, p.635.)\n• Iron-rich foods (Spinach\, chickpeas and
-  beef. Baby draws on your iron\, so ask your doctor about supplements too.
- )\n\nWeek 27\, month 7 of the guide.
+ Wasāʾil\, Vol. 3\, p.635.)\n• Iron-rich foods (Red meat\, beans and ch
+ ickpeas\, nuts\, dried apricots and fortified cereals. Your iron is checke
+ d at booking and at 28 weeks\, and you’ll be offered a supplement if it 
+ is low.)\n\nWeek 27\, month 7 of the guide.
 CATEGORIES:Sūrah
 TRANSP:TRANSPARENT
 END:VEVENT
@@ -2557,9 +2632,10 @@ DESCRIPTION:\nAlso today:\n• Ṣalawāt 140 times\n• Sūrah al-Mulk (67
   in the daily prayers\n• Sūrah Yāsīn (36) over almonds (Then eat them
   on an empty stomach.)\n• Melon after your food (No water just before or
   after it. Watermelon and kharbozeh are named in particular. Mustadrak al-
- Wasāʾil\, Vol. 3\, p.635.)\n• Iron-rich foods (Spinach\, chickpeas and
-  beef. Baby draws on your iron\, so ask your doctor about supplements too.
- )\n\nWeek 27\, month 7 of the guide.
+ Wasāʾil\, Vol. 3\, p.635.)\n• Iron-rich foods (Red meat\, beans and ch
+ ickpeas\, nuts\, dried apricots and fortified cereals. Your iron is checke
+ d at booking and at 28 weeks\, and you’ll be offered a supplement if it 
+ is low.)\n\nWeek 27\, month 7 of the guide.
 CATEGORIES:Sūrah
 TRANSP:TRANSPARENT
 END:VEVENT
@@ -2577,8 +2653,10 @@ DESCRIPTION:Then eat them on an empty stomach.\n\nAlso today:\n• Ṣalaw
  (97).)\n• Sūrah al-Ikhlāṣ (112) in the daily prayers\n• Melon afte
  r your food (No water just before or after it. Watermelon and kharbozeh ar
  e named in particular. Mustadrak al-Wasāʾil\, Vol. 3\, p.635.)\n• Iron
- -rich foods (Spinach\, chickpeas and beef. Baby draws on your iron\, so as
- k your doctor about supplements too.)\n\nWeek 27\, month 7 of the guide.
+ -rich foods (Red meat\, beans and chickpeas\, nuts\, dried apricots and fo
+ rtified cereals. Your iron is checked at booking and at 28 weeks\, and you
+ ’ll be offered a supplement if it is low.)\n\nWeek 27\, month 7 of the g
+ uide.
 CATEGORIES:Sūrah
 TRANSP:TRANSPARENT
 END:VEVENT
@@ -2596,9 +2674,10 @@ DESCRIPTION:No water just before or after it. Watermelon and kharbozeh are
  ): al-Ḥashr (59)\, aṣ-Ṣaff (61)\, al-Jumuʿah (62)\, at-Taghābun (6
  4) and al-Qadr (97).)\n• Sūrah al-Ikhlāṣ (112) in the daily prayers\
  n• Sūrah Yāsīn (36) over almonds (Then eat them on an empty stomach.)
- \n• Iron-rich foods (Spinach\, chickpeas and beef. Baby draws on your ir
- on\, so ask your doctor about supplements too.)\n\nWeek 27\, month 7 of th
- e guide.
+ \n• Iron-rich foods (Red meat\, beans and chickpeas\, nuts\, dried apric
+ ots and fortified cereals. Your iron is checked at booking and at 28 weeks
+ \, and you’ll be offered a supplement if it is low.)\n\nWeek 27\, month 
+ 7 of the guide.
 CATEGORIES:Food
 TRANSP:TRANSPARENT
 END:VEVENT
@@ -2617,8 +2696,9 @@ DESCRIPTION:For forty days\, on Mondays.\n\nAlso today:\n• Ṣalawāt 140
  6) over almonds (Then eat them on an empty stomach.)\n• Melon after your
   food (No water just before or after it. Watermelon and kharbozeh are name
  d in particular. Mustadrak al-Wasāʾil\, Vol. 3\, p.635.)\n• Iron-rich 
- foods (Spinach\, chickpeas and beef. Baby draws on your iron\, so ask your
-  doctor about supplements too.)\n\nWeek 27\, month 7 of the guide.
+ foods (Red meat\, beans and chickpeas\, nuts\, dried apricots and fortifie
+ d cereals. Your iron is checked at booking and at 28 weeks\, and you’ll 
+ be offered a supplement if it is low.)\n\nWeek 27\, month 7 of the guide.
 CATEGORIES:Sūrah
 TRANSP:TRANSPARENT
 END:VEVENT
@@ -2636,9 +2716,10 @@ DESCRIPTION:\nAlso today:\n• Sūrah al-Mulk (67) and Sūrah an-Nūr (24)
   Sūrah Yāsīn (36) over almonds (Then eat them on an empty stomach.)\n
  • Melon after your food (No water just before or after it. Watermelon an
  d kharbozeh are named in particular. Mustadrak al-Wasāʾil\, Vol. 3\, p.6
- 35.)\n• Iron-rich foods (Spinach\, chickpeas and beef. Baby draws on you
- r iron\, so ask your doctor about supplements too.)\n\nWeek 28\, month 7 o
- f the guide.
+ 35.)\n• Iron-rich foods (Red meat\, beans and chickpeas\, nuts\, dried a
+ pricots and fortified cereals. Your iron is checked at booking and at 28 w
+ eeks\, and you’ll be offered a supplement if it is low.)\n\nWeek 28\, mo
+ nth 7 of the guide.
 CATEGORIES:Recitation
 TRANSP:TRANSPARENT
 END:VEVENT
@@ -2656,8 +2737,9 @@ DESCRIPTION:Often\, from this month onward.\n\nAlso today:\n• Ṣalawāt
  ver almonds (Then eat them on an empty stomach.)\n• Melon after your foo
  d (No water just before or after it. Watermelon and kharbozeh are named in
   particular. Mustadrak al-Wasāʾil\, Vol. 3\, p.635.)\n• Iron-rich food
- s (Spinach\, chickpeas and beef. Baby draws on your iron\, so ask your doc
- tor about supplements too.)\n\nWeek 28\, month 7 of the guide.
+ s (Red meat\, beans and chickpeas\, nuts\, dried apricots and fortified ce
+ reals. Your iron is checked at booking and at 28 weeks\, and you’ll be o
+ ffered a supplement if it is low.)\n\nWeek 28\, month 7 of the guide.
 CATEGORIES:Sūrah
 TRANSP:TRANSPARENT
 END:VEVENT
@@ -2675,9 +2757,10 @@ DESCRIPTION:\nAlso today:\n• Ṣalawāt 140 times\n• Sūrah al-Mulk (67
   in the daily prayers\n• Sūrah Yāsīn (36) over almonds (Then eat them
   on an empty stomach.)\n• Melon after your food (No water just before or
   after it. Watermelon and kharbozeh are named in particular. Mustadrak al-
- Wasāʾil\, Vol. 3\, p.635.)\n• Iron-rich foods (Spinach\, chickpeas and
-  beef. Baby draws on your iron\, so ask your doctor about supplements too.
- )\n\nWeek 28\, month 7 of the guide.
+ Wasāʾil\, Vol. 3\, p.635.)\n• Iron-rich foods (Red meat\, beans and ch
+ ickpeas\, nuts\, dried apricots and fortified cereals. Your iron is checke
+ d at booking and at 28 weeks\, and you’ll be offered a supplement if it 
+ is low.)\n\nWeek 28\, month 7 of the guide.
 CATEGORIES:Sūrah
 TRANSP:TRANSPARENT
 END:VEVENT
@@ -2695,9 +2778,10 @@ DESCRIPTION:\nAlso today:\n• Ṣalawāt 140 times\n• Sūrah al-Mulk (67
   in the daily prayers\n• Sūrah Yāsīn (36) over almonds (Then eat them
   on an empty stomach.)\n• Melon after your food (No water just before or
   after it. Watermelon and kharbozeh are named in particular. Mustadrak al-
- Wasāʾil\, Vol. 3\, p.635.)\n• Iron-rich foods (Spinach\, chickpeas and
-  beef. Baby draws on your iron\, so ask your doctor about supplements too.
- )\n\nWeek 28\, month 7 of the guide.
+ Wasāʾil\, Vol. 3\, p.635.)\n• Iron-rich foods (Red meat\, beans and ch
+ ickpeas\, nuts\, dried apricots and fortified cereals. Your iron is checke
+ d at booking and at 28 weeks\, and you’ll be offered a supplement if it 
+ is low.)\n\nWeek 28\, month 7 of the guide.
 CATEGORIES:Sūrah
 TRANSP:TRANSPARENT
 END:VEVENT
@@ -2715,8 +2799,10 @@ DESCRIPTION:Then eat them on an empty stomach.\n\nAlso today:\n• Ṣalaw
  (97).)\n• Sūrah al-Ikhlāṣ (112) in the daily prayers\n• Melon afte
  r your food (No water just before or after it. Watermelon and kharbozeh ar
  e named in particular. Mustadrak al-Wasāʾil\, Vol. 3\, p.635.)\n• Iron
- -rich foods (Spinach\, chickpeas and beef. Baby draws on your iron\, so as
- k your doctor about supplements too.)\n\nWeek 28\, month 7 of the guide.
+ -rich foods (Red meat\, beans and chickpeas\, nuts\, dried apricots and fo
+ rtified cereals. Your iron is checked at booking and at 28 weeks\, and you
+ ’ll be offered a supplement if it is low.)\n\nWeek 28\, month 7 of the g
+ uide.
 CATEGORIES:Sūrah
 TRANSP:TRANSPARENT
 END:VEVENT
@@ -2734,9 +2820,10 @@ DESCRIPTION:No water just before or after it. Watermelon and kharbozeh are
  ): al-Ḥashr (59)\, aṣ-Ṣaff (61)\, al-Jumuʿah (62)\, at-Taghābun (6
  4) and al-Qadr (97).)\n• Sūrah al-Ikhlāṣ (112) in the daily prayers\
  n• Sūrah Yāsīn (36) over almonds (Then eat them on an empty stomach.)
- \n• Iron-rich foods (Spinach\, chickpeas and beef. Baby draws on your ir
- on\, so ask your doctor about supplements too.)\n\nWeek 28\, month 7 of th
- e guide.
+ \n• Iron-rich foods (Red meat\, beans and chickpeas\, nuts\, dried apric
+ ots and fortified cereals. Your iron is checked at booking and at 28 weeks
+ \, and you’ll be offered a supplement if it is low.)\n\nWeek 28\, month 
+ 7 of the guide.
 CATEGORIES:Food
 TRANSP:TRANSPARENT
 END:VEVENT
@@ -2755,8 +2842,9 @@ DESCRIPTION:For forty days\, on Mondays.\n\nAlso today:\n• Ṣalawāt 140
  6) over almonds (Then eat them on an empty stomach.)\n• Melon after your
   food (No water just before or after it. Watermelon and kharbozeh are name
  d in particular. Mustadrak al-Wasāʾil\, Vol. 3\, p.635.)\n• Iron-rich 
- foods (Spinach\, chickpeas and beef. Baby draws on your iron\, so ask your
-  doctor about supplements too.)\n\nWeek 28\, month 7 of the guide.
+ foods (Red meat\, beans and chickpeas\, nuts\, dried apricots and fortifie
+ d cereals. Your iron is checked at booking and at 28 weeks\, and you’ll 
+ be offered a supplement if it is low.)\n\nWeek 28\, month 7 of the guide.
 CATEGORIES:Sūrah
 TRANSP:TRANSPARENT
 END:VEVENT
