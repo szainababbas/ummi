@@ -330,6 +330,52 @@ describe('texts, as checked against their sources', () => {
   });
 });
 
+/* The same audit traced the nine-month guide to From Marriage to Parenthood (World
+   Federation, 2006, ch.6), which the planner was copied from, and checked each act
+   for a primary source. These hold what it found. */
+describe('the guide, as checked against its sources', () => {
+  const SOURCES = ['From Marriage to Parenthood', 'al-Kāfī', 'Biḥār al-Anwār', 'Makārim al-Akhlāq',
+    'Mustadrak al-Wasāʾil', 'Sistani', 'NHS', 'Aimen’s planner'];
+  const acts = [];
+  for (const m of Object.keys(MONTHS)) for (const a of MONTHS[m].acts) acts.push(a);
+
+  it('says where every act comes from', () => {
+    for (const a of acts) ok(SOURCES.some((src) => a.s.includes(src)), a.id + ' names no source: ' + JSON.stringify(a.s));
+    for (const m of Object.keys(MONTHS)) for (const x of MONTHS[m].also || []) {
+      ok(SOURCES.some((src) => x.includes(src)), 'month ' + m + ' "also" names no source: ' + x);
+    }
+  });
+
+  it('carries none of the citations that did not hold up', () => {
+    // "Mustadrak vol.3 p.112/635" are not where those hadith are; Masāʾil ʿIlmī is not a hadith book
+    const text = JSON.stringify(MONTHS) + JSON.stringify(DUA_TEXTS);
+    ok(!/Mustadrak al-Wasāʾil, Vol\. 3/.test(text), 'a Mustadrak vol. 3 citation is back');
+    ok(!/Masāʾile? ʿIlmī/.test(text), 'Masāʾil ʿIlmī dar Qurʾān is cited as a source again');
+  });
+
+  it('puts Friday night on Thursday, since that is when it falls', () => {
+    const fatir = acts.find((a) => a.t.includes('Fāṭir'));
+    eq(fatir.days, [4], 'Sūrah Fāṭir is for Friday night, which is Thursday evening');
+  });
+
+  it('keeps month seven as the book gives it', () => {
+    const m7 = MONTHS[7].acts;
+    eq(m7.find((a) => a.t.includes('an-Naḥl')).days, [1], 'an-Naḥl is for Mondays');
+    ok(m7.find((a) => a.t.includes('al-Anʿām')).days === null, 'al-Anʿām is for forty days, not Mondays');
+    ok(m7.some((a) => a.s.includes('al-Ḥadīd (57)')), 'the five sūrahs start with al-Ḥadīd');
+    ok(m7.some((a) => a.t.includes('quince')), 'Yāsīn is recited over a quince');
+  });
+
+  it('keeps the turbah within what Sistani allows', () => {
+    const eaten = acts.filter((a) => /Khāke Shifāʾ/.test(a.t) && !/^Rub/.test(a.t));
+    ok(eaten.length > 0, 'expected an act about eating Khāke Shifāʾ');
+    for (const a of eaten) {
+      ok(!/pinch/i.test(a.t + a.s), a.id + ': a pinch is more than the chickpea size Sistani allows');
+      ok(a.s.includes('ruling 2645'), a.id + ' should cite the ruling');
+    }
+  });
+});
+
 /* -------------------------------------------------------------- calendar export */
 describe('calendar export', () => {
   T.setState({ dueDate: DUE });

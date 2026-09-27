@@ -446,12 +446,12 @@ const DUA_TEXTS = {
    ar:'اللَّهُمَّ صَلِّ عَلَى مُحَمَّدٍ وَآلِ مُحَمَّدٍ وَعَجِّلْ فَرَجَهُمْ وَأَهْلِكْ عَدُوَّهُمْ مِنَ الْجِنِّ وَالْإِنْسِ مِنَ الْأَوَّلِينَ وَالْآخِرِينَ',
    tl:'Allāhumma ṣalli ʿalā Muḥammadin wa Āli Muḥammad, wa ʿajjil farajahum, wa ahlik ʿaduwwahum minal-jinni wal-insi minal-awwalīna wal-ākhirīn',
    en:'O Allah, bless Muhammad and the family of Muhammad, and hasten their relief, and destroy their enemies from among the jinn and humankind, from the first of them to the last.',
-   sr:'ʿAllāmah Majlisī, Biḥār al-Anwār, Vol. 86, p.289. Recite with your hand on your stomach.'},
+   sr:'ʿAllāmah Majlisī, Biḥār al-Anwār, Vol. 86, p.289: recommended often from Thursday ʿAṣr to the end of Friday. Reciting it with your hand on your stomach: From Marriage to Parenthood, p.110.'},
  'istighfar':{lbl:'Istighfār',
    ar:'أَسْتَغْفِرُ اللَّهَ رَبِّي وَأَتُوبُ إِلَيْهِ',
    tl:'Astaghfirullāha Rabbī wa atūbu ilayh',
    en:'I seek forgiveness from Allah, my Lord, and I turn to Him in repentance.',
-   sr:'Seven times in month four, seventy times after each prayer in month nine.'},
+   sr:'The Prophet (s) sought forgiveness seventy times a day (al-Kāfī, Vol. 2, p.505). The counts in months four and nine are from Aimen’s planner.'},
  'tasbih':{lbl:'Tasbīḥ of Sayyidah Fāṭimah (as)',
    ar:'اللَّهُ أَكْبَرُ ٣٤ · الْحَمْدُ لِلَّهِ ٣٣ · سُبْحَانَ اللَّهِ ٣٣',
    tl:'Allāhu Akbar ×34, Alḥamdu lillāh ×33, Subḥānallāh ×33',
@@ -468,12 +468,12 @@ const DUA_TEXTS = {
 const MONTHS = {
  1:{from:1,to:4,note:'Your body is quietly getting to work. Some women feel PMS-like symptoms, pressure, tender breasts or implantation spotting; others feel nothing at all, which is just as normal.',
   acts:[
-   {id:'m1a',cat:'Recitation',t:'Adhān and iqāmah before every prayer',s:'With your hand on your stomach.',days:null},
-   {id:'m1b',cat:'Sūrah',t:'Sūrah Yāsīn (36) and Sūrah aṣ-Ṣāffāt (37)',s:'Then blow gently on your stomach.',days:[4,5]},
-   {id:'m1c',cat:'Sūrah',t:'Sūrah al-Qadr (97) over two dates',s:'Recite once, blow on the dates, eat them on an empty stomach.',days:null,surah:97},
-   {id:'m1d',cat:'Food',t:'An apple in the morning',s:'',days:null},
-   {id:'m1e',cat:'Food',t:'A pomegranate before breakfast',s:'Masāʾile ʿIlmī dar Qurʾān, p.140.',days:[5]},
-   {id:'m1f',cat:'Food',t:'A pinch of Khāke Shifāʾ before sunset',s:'Turbah of Karbalāʾ, also called Turbah Imām Ḥusayn.',days:null},
+   {id:'m1a',cat:'Recitation',t:'Adhān and iqāmah before every prayer',s:'With your hand on your stomach. From Marriage to Parenthood, p.110.',days:null},
+   {id:'m1b',cat:'Sūrah',t:'Sūrah Yāsīn (36) and Sūrah aṣ-Ṣāffāt (37)',s:'Then blow gently on your stomach. From Marriage to Parenthood, p.109.',days:[4,5]},
+   {id:'m1c',cat:'Sūrah',t:'Sūrah al-Qadr (97) over two dates',s:'Recite once, blow on the dates, eat them on an empty stomach. From Marriage to Parenthood, p.110.',days:null,surah:97},
+   {id:'m1d',cat:'Food',t:'A sweet apple in the morning',s:'Apple on an empty stomach is praised in Makārim al-Akhlāq, p.173. From Marriage to Parenthood, p.109.',days:null},
+   {id:'m1e',cat:'Food',t:'A pomegranate before breakfast',s:'On an empty stomach. Imām al-Kāẓim (as): a pomegranate eaten on Friday before food lights the heart for forty mornings. al-Kāfī, Vol. 6, p.355.',days:[5]},
+   {id:'m1f',cat:'Food',t:'A tiny amount of Khāke Shifāʾ before sunset',s:'No bigger than a lentil, with the intention of shifāʾ. Sistani allows eating the turbah of Imām Ḥusayn (as) only up to a chickpea’s size, for healing (Islamic Laws, ruling 2645). Soil can carry toxoplasmosis (NHS), so tell your midwife you take it. From Marriage to Parenthood, p.110.',days:null},
    {id:'m1g',cat:'Wellness',t:'Your prenatal vitamins',s:'Folic acid, 400 micrograms a day until 12 weeks. Choose a pregnancy multivitamin: ordinary ones and cod liver oil can contain vitamin A (retinol), which is not safe in pregnancy. NHS.',days:null},
    {id:'m1h',cat:'Wellness',t:'Vitamin D, 10 micrograms a day',s:'The NHS advises a 10 microgram supplement every day from October to March, and all year if you usually cover most of your skin outdoors. UK milk is not usually fortified, so food alone will not cover it.',days:null}
   ],
@@ -481,104 +481,105 @@ const MONTHS = {
 
  2:{from:5,to:8,note:'Webbed hands and feet, nose and eyelids beginning to form. Nausea, food aversions or cravings may step up, and bloating can make the belly look a little bigger already.',
   acts:[
-   {id:'m2a',cat:'Recitation',t:'Ṣalawāt 140 times',s:'With wa ʿajjil farajahum at the end.',days:[4]},
-   {id:'m2b',cat:'Recitation',t:'Ṣalawāt 100 times',s:'With wa ʿajjil farajahum at the end.',days:[5]},
-   {id:'m2c',cat:'Recitation',t:'The long ṣalawāt, hand on your stomach',s:'Biḥār al-Anwār, Vol. 86, p.289.',days:null,dua:'salawat-long'},
-   {id:'m2d',cat:'Sūrah',t:'Sūrah al-Mulk (67)',s:'',days:[4,5]},
-   {id:'m2e',cat:'Sūrah',t:'Sūrah al-Ikhlāṣ (112) over two jujube dates',s:'Eat them on an empty stomach.',days:null,surah:112},
-   {id:'m2f',cat:'Food',t:'Meat with sweet apple, and milk',s:'Once a week is enough for these.',days:null}
+   {id:'m2a',cat:'Recitation',t:'Ṣalawāt 140 times',s:'With wa ʿajjil farajahum at the end. The ṣalawāt from Thursday ʿAṣr to Friday is in Biḥār al-Anwār, Vol. 86, p.289; the count of 140: From Marriage to Parenthood, p.110.',days:[4]},
+   {id:'m2b',cat:'Recitation',t:'Ṣalawāt 100 times',s:'With wa ʿajjil farajahum at the end. Saying it 100 times on Friday: Biḥār al-Anwār, Vol. 86, p.289.',days:[5]},
+   {id:'m2c',cat:'Recitation',t:'The long ṣalawāt, hand on your stomach',s:'The words are in Biḥār al-Anwār, Vol. 86, p.289, as a Thursday and Friday ṣalawāt. The hand on your stomach: From Marriage to Parenthood, p.110.',days:null,dua:'salawat-long'},
+   {id:'m2d',cat:'Sūrah',t:'Sūrah al-Mulk (67)',s:'From Marriage to Parenthood, p.110.',days:[4,5]},
+   {id:'m2e',cat:'Sūrah',t:'Sūrah al-Ikhlāṣ (112) over two jujube dates',s:'Eat them on an empty stomach. From Marriage to Parenthood, p.111.',days:null,surah:112},
+   {id:'m2f',cat:'Food',t:'Meat with sweet apple, and milk',s:'Once a week is enough for these. From Marriage to Parenthood, p.110.',days:null}
   ],
   activity:'If you were not active before pregnancy, do not suddenly take up anything strenuous. Start with 10 minutes a day, perhaps a brisk walk, and warm up before and cool down after. Stop if you feel exhausted or too breathless to talk.'},
 
  3:{from:9,to:12,note:'Key body systems and vital organs are developing, and the digestive system starts working by the end of the trimester. You may hear the heartbeat at your next appointment. Dizziness, a sharper sense of smell and frequent bathroom trips are common.',
   acts:[
-   {id:'m3a',cat:'Recitation',t:'Ṣalawāt 100 times',s:'With wa ʿajjil farajahum at the end.',days:[5]},
-   {id:'m3b',cat:'Recitation',t:'The long ṣalawāt, hand on your stomach',s:'Same wording as last month. Biḥār al-Anwār, Vol. 86, p.289.',days:null,dua:'salawat-long'},
-   {id:'m3c',cat:'Sūrah',t:'Sūrah Āl ʿImrān (3)',s:'',days:[4,5]},
-   {id:'m3d',cat:'Sūrah',t:'Āyatul Kursī over an apple',s:'Then eat it on an empty stomach.',days:null,ayah:'2:255'},
-   {id:'m3e',cat:'Food',t:'Honey in the morning',s:'',days:null},
-   {id:'m3f',cat:'Food',t:'Wheat, meat and milk',s:'Once a week is enough for these.',days:null}
+   {id:'m3a',cat:'Recitation',t:'Ṣalawāt 140 times',s:'With wa ʿajjil farajahum at the end. From Marriage to Parenthood, p.111.',days:null},
+   {id:'m3b',cat:'Recitation',t:'The long ṣalawāt, hand on your stomach',s:'Before each prayer. Same wording as last month (Biḥār al-Anwār, Vol. 86, p.289); the hand on your stomach: From Marriage to Parenthood, p.111.',days:null,dua:'salawat-long'},
+   {id:'m3c',cat:'Sūrah',t:'Sūrah Āl ʿImrān (3)',s:'From Marriage to Parenthood, p.111.',days:[4,5]},
+   {id:'m3d',cat:'Sūrah',t:'Āyatul Kursī over an apple',s:'Then eat it on an empty stomach. From Marriage to Parenthood, p.111.',days:null,ayah:'2:255'},
+   {id:'m3e',cat:'Food',t:'Honey in the morning',s:'From Marriage to Parenthood, p.111.',days:null},
+   {id:'m3f',cat:'Food',t:'Wheat, meat and milk',s:'Once a week is enough for these. From Marriage to Parenthood, p.111.',days:null}
   ],
   activity:'Start pelvic floor exercises. They help stop leaks when you cough, sneeze or laugh, now and after the birth. Squeeze the muscles you would use to stop a wee and hold in wind, a few quick squeezes first, then slow ones held for up to 10 seconds. Aim for 3 sets of 8 squeezes a day; a set at each meal helps you remember.'},
 
- 4:{from:13,to:16,note:'Eyes are working, facial muscles can make expressions and fingerprints are forming. Expect weight gain and a more pronounced belly, and possibly a blocked nose, bleeding gums, backache and more discharge. It is recommended to choose the baby’s name before four months.',
+ 4:{from:13,to:16,note:'Eyes are working, facial muscles can make expressions and fingerprints are forming. Expect weight gain and a more pronounced belly, and possibly a blocked nose, bleeding gums, backache and more discharge. Imām ʿAlī (as) said to name children before they are born (al-Kāfī, Vol. 6, p.18); the planner suggests choosing by four months and ten days.',
   acts:[
-   {id:'m4a',cat:'Recitation',t:'Sūrah al-Furqān 25:74',s:'The prayer for comfort in your family.',days:null,ayah:'25:74'},
-   {id:'m4b',cat:'Recitation',t:'Istighfār 7 times',s:'Astaghfirullāha Rabbī wa atūbu ilayh.',days:null,dua:'istighfar'},
-   {id:'m4c',cat:'Recitation',t:'Ṣalawāt 140 times after each prayer',s:'',days:null,dua:'salawat'},
-   {id:'m4d',cat:'Recitation',t:'Ṣalātul Layl',s:'As much as you can manage. If you miss the time, make it up later as qaḍāʾ.',days:null},
-   {id:'m4e',cat:'Sūrah',t:'Sūrah al-Insān (76)',s:'',days:[4,5]},
-   {id:'m4f',cat:'Sūrah',t:'Sūrah al-Qadr (97) in one rakʿah of every prayer',s:'',days:null,surah:97},
-   {id:'m4g',cat:'Sūrah',t:'After the daily prayers: al-Kawthar, al-Qadr, long ṣalawāt',s:'Sūrah al-Kawthar (108), Sūrah al-Qadr (97), then the long ṣalawāt with your hand on your stomach.',days:null,surah:108},
-   {id:'m4h',cat:'Sūrah',t:'Sūrah at-Tīn (95) over two figs',s:'Eat them on an empty stomach.',days:null,surah:95},
-   {id:'m4i',cat:'Food',t:'Apples, honey and pomegranates',s:'',days:null},
-   {id:'m4j',cat:'Food',t:'Nutrient-rich foods',s:'Lentils and beans, wholegrains, cheese and yoghurt, and leafy greens.',days:null}
+   {id:'m4a',cat:'Recitation',t:'Sūrah al-Furqān 25:74',s:'The prayer for comfort in your family. From Marriage to Parenthood, p.112.',days:null,ayah:'25:74'},
+   {id:'m4b',cat:'Recitation',t:'Istighfār 7 times',s:'Astaghfirullāha Rabbī wa atūbu ilayh. From Marriage to Parenthood, p.112.',days:null,dua:'istighfar'},
+   {id:'m4c',cat:'Recitation',t:'Ṣalawāt 140 times after each prayer',s:'From Marriage to Parenthood, p.112.',days:null,dua:'salawat'},
+   {id:'m4d',cat:'Recitation',t:'Ṣalātul Layl',s:'As much as you can manage. Sistani allows it any time after ʿIshāʾ until Fajr (Islamic Laws, ruling 760); if you miss it, make it up later. From Marriage to Parenthood, p.113.',days:null},
+   {id:'m4e',cat:'Sūrah',t:'Sūrah al-Insān (76)',s:'From Marriage to Parenthood, p.111.',days:[4,5]},
+   {id:'m4f',cat:'Sūrah',t:'Sūrah al-Qadr (97) in one rakʿah of every prayer',s:'After al-Fātiḥah, in the first or second rakʿah. From Marriage to Parenthood, p.112.',days:null,surah:97},
+   {id:'m4g',cat:'Sūrah',t:'After the daily prayers: al-Kawthar, al-Qadr, long ṣalawāt',s:'Sūrah al-Kawthar (108), Sūrah al-Qadr (97), then the long ṣalawāt with your hand on your stomach. From Marriage to Parenthood, p.112.',days:null,surah:108},
+   {id:'m4h',cat:'Sūrah',t:'Sūrah at-Tīn (95) over two figs',s:'Eat them on an empty stomach. From Marriage to Parenthood, p.113.',days:null,surah:95},
+   {id:'m4i',cat:'Food',t:'Sweet apples, honey and pomegranates',s:'Sweet pomegranate “improves the child”: al-Kāfī, Vol. 6, p.355. From Marriage to Parenthood, p.112.',days:null},
+   {id:'m4j',cat:'Food',t:'Nutrient-rich foods',s:'Lentils and beans, wholegrains, cheese and yoghurt, and leafy greens (NHS).',days:null}
   ],
   activity:'Gentle yoga and Pilates help with back pain and body aches. Use a qualified teacher who knows you are pregnant, and ask your midwife if you have concerns.'},
 
  5:{from:17,to:20,note:'More lung development, and at the 20-week scan you may be able to find out the baby’s sex, if you want to and if your hospital tells parents. Expect hair and nail growth, a bigger appetite and the odd leg cramp.',
   acts:[
-   {id:'m5a',cat:'Recitation',t:'Rub Khāke Shifāʾ on your stomach',s:'From the start of the fifth month. Turbah from Karbalāʾ.',days:null},
-   {id:'m5b',cat:'Recitation',t:'Adhān and iqāmah at ṣalāh time',s:'With your hand on your stomach.',days:null},
-   {id:'m5c',cat:'Sūrah',t:'Sūrah al-Fatḥ (48)',s:'',days:[4,5]},
-   {id:'m5d',cat:'Sūrah',t:'Sūrah an-Naṣr (110) in the daily prayers',s:'',days:null,surah:110},
-   {id:'m5e',cat:'Sūrah',t:'Sūrah al-Fātiḥah (1) over an egg',s:'Then eat it on an empty stomach.',days:null,surah:1},
-   {id:'m5f',cat:'Food',t:'A date every morning',s:'',days:null},
-   {id:'m5g',cat:'Food',t:'Nuts',s:'Good fats, protein and vitamin E. Nuts are safe in pregnancy unless you are allergic or have been told to avoid them.',days:null}
+   {id:'m5a',cat:'Recitation',t:'Rub Khāke Shifāʾ on your stomach',s:'From the start of the fifth month. Turbah from Karbalāʾ. From Marriage to Parenthood, p.113.',days:null},
+   {id:'m5b',cat:'Recitation',t:'Adhān and iqāmah at ṣalāh time',s:'With your hand on your stomach. From Marriage to Parenthood, p.113.',days:null},
+   {id:'m5c',cat:'Sūrah',t:'Sūrah al-Fatḥ (48)',s:'From Marriage to Parenthood, p.113.',days:[4,5]},
+   {id:'m5d',cat:'Sūrah',t:'Sūrah an-Naṣr (110) in the daily prayers',s:'From Marriage to Parenthood, p.113.',days:null,surah:110},
+   {id:'m5e',cat:'Sūrah',t:'Sūrah al-Fātiḥah (1) over an egg',s:'Then eat it on an empty stomach. From Marriage to Parenthood, p.113.',days:null,surah:1},
+   {id:'m5f',cat:'Food',t:'A date every morning',s:'Dates on an empty stomach are praised in Makārim al-Akhlāq, p.169. From Marriage to Parenthood, p.113.',days:null},
+   {id:'m5g',cat:'Food',t:'Nuts',s:'Good fats, protein and vitamin E. Nuts are safe in pregnancy unless you are allergic or have been told to avoid them (NHS).',days:null}
   ],
   activity:'Most exercise is safe in pregnancy if you go carefully and listen to your body. Swimming, brisk walking, a static bike, cross-trainer and low-impact classes are all good. Avoid lying flat on your back for long, contact sports and anything with a risk of falling.'},
 
  6:{from:21,to:24,note:'Facial features are more defined, hearing is developing fast and eyelashes are coming through. Your belly button may pop out for a while, and carpal tunnel symptoms can appear. If you have a risk factor for gestational diabetes (south Asian heritage is one, as are a BMI over 30 or a parent or sibling with diabetes), you will be offered a glucose tolerance test between weeks 24 and 28.',
   acts:[
-   {id:'m6a',cat:'Recitation',t:'Rub Khāke Shifāʾ on your stomach after every prayer',s:'Turbah from Karbalāʾ.',days:null},
-   {id:'m6b',cat:'Sūrah',t:'Sūrah al-Wāqiʿah (56)',s:'',days:[4,5]},
-   {id:'m6c',cat:'Sūrah',t:'Sūrah at-Tīn (95) in one rakʿah of Maghrib and ʿIshāʾ',s:'',days:null,surah:95},
-   {id:'m6d',cat:'Food',t:'Figs and olives for breakfast',s:'',days:null}
+   {id:'m6a',cat:'Recitation',t:'Rub Khāke Shifāʾ on your stomach after every prayer',s:'Turbah from Karbalāʾ. From Marriage to Parenthood, p.113.',days:null},
+   {id:'m6b',cat:'Sūrah',t:'Sūrah al-Wāqiʿah (56)',s:'Reciting al-Wāqiʿah on Friday is in Biḥār al-Anwār, Vol. 86, p.289; Thursday and this month: From Marriage to Parenthood, p.113.',days:[4,5]},
+   {id:'m6c',cat:'Sūrah',t:'Sūrah at-Tīn (95) in one rakʿah of Maghrib and ʿIshāʾ',s:'From Marriage to Parenthood, p.113.',days:null,surah:95},
+   {id:'m6d',cat:'Food',t:'Figs and olives after breakfast',s:'From Marriage to Parenthood, p.113.',days:null}
   ],
   activity:'Most exercise is safe in pregnancy if you go carefully and listen to your body. Swimming, brisk walking, a static bike, cross-trainer and low-impact classes are all good. Avoid lying flat on your back for long, contact sports and anything with a risk of falling.'},
 
  7:{from:25,to:28,note:'Better breathing, hiccups and blinking, and the beginnings of sleep cycles. Baby may start moving into position for birth over the coming weeks. You may get sciatica, a stuffy nose, faintness or dizziness, and bloating.',
   acts:[
-   {id:'m7a',cat:'Recitation',t:'Ṣalawāt 140 times',s:'',days:null,dua:'salawat'},
-   {id:'m7b',cat:'Sūrah',t:'Sūrah al-Anʿām (6) after Fajr',s:'For forty days, on Mondays.',days:[1]},
-   {id:'m7c',cat:'Sūrah',t:'Sūrah Yāsīn (36) and Sūrah an-Naḥl (16)',s:'',days:[4,5]},
-   {id:'m7d',cat:'Sūrah',t:'Sūrah al-Mulk (67) and Sūrah an-Nūr (24)',s:'Often, from this month onward.',days:null},
-   {id:'m7e',cat:'Sūrah',t:'The five sūrahs after your prayers',s:'After the daily prayers and the tasbīḥ of Sayyidah Fāṭimah (as): al-Ḥashr (59), aṣ-Ṣaff (61), al-Jumuʿah (62), at-Taghābun (64) and al-Qadr (97).',days:null,surah:97},
-   {id:'m7f',cat:'Sūrah',t:'Sūrah al-Ikhlāṣ (112) in the daily prayers',s:'',days:null,surah:112},
-   {id:'m7g',cat:'Sūrah',t:'Sūrah Yāsīn (36) over almonds',s:'Then eat them on an empty stomach.',days:null},
-   {id:'m7h',cat:'Food',t:'Melon after your food',s:'No water just before or after it. Watermelon and kharbozeh are named in particular. Mustadrak al-Wasāʾil, Vol. 3, p.635.',days:null},
-   {id:'m7i',cat:'Food',t:'Iron-rich foods',s:'Red meat, beans and chickpeas, nuts, dried apricots and fortified cereals. Your iron is checked at booking and at 28 weeks, and you’ll be offered a supplement if it is low.',days:null}
+   {id:'m7a',cat:'Recitation',t:'Ṣalawāt 140 times',s:'From Marriage to Parenthood, p.114.',days:null,dua:'salawat'},
+   {id:'m7b',cat:'Sūrah',t:'Sūrah al-Anʿām (6) over almonds after Fajr',s:'For forty days, then eat the almonds. From Marriage to Parenthood, p.114.',days:null},
+   {id:'m7c',cat:'Sūrah',t:'Sūrah Yāsīn (36) and Sūrah al-Mulk (67)',s:'From Marriage to Parenthood, p.114.',days:[4,5]},
+   {id:'m7d',cat:'Sūrah',t:'Sūrah an-Nūr (24)',s:'Often, from this month onward. From Marriage to Parenthood, p.114.',days:null},
+   {id:'m7e',cat:'Sūrah',t:'The five sūrahs after your prayers',s:'After the daily prayers and the tasbīḥ of Sayyidah Fāṭimah (as): al-Ḥadīd (57), al-Ḥashr (59), aṣ-Ṣaff (61), al-Jumuʿah (62) and at-Taghābun (64). From Marriage to Parenthood, p.114.',days:null},
+   {id:'m7f',cat:'Sūrah',t:'Sūrah al-Qadr (97) and al-Ikhlāṣ (112) in the daily prayers',s:'After al-Fātiḥah. Once you start al-Ikhlāṣ, finish it rather than switching (Sistani, Islamic Laws, ruling 974). From Marriage to Parenthood, p.114.',days:null,surah:112},
+   {id:'m7g',cat:'Sūrah',t:'Sūrah Yāsīn (36) over a quince',s:'Then eat it on an empty stomach. Quince for pregnant women: al-Kāfī, Vol. 6, p.22. From Marriage to Parenthood, p.114.',days:null},
+   {id:'m7h',cat:'Food',t:'Melon after your food',s:'After food rather than on an empty stomach (Imām al-ʿAskarī (as), Mustadrak al-Wasāʾil, Vol. 16, p.410). The pregnancy hadith, in Mustadrak Vol. 15, p.214, comes from a Sunni medical collection, so it is weak. Avoiding water with it is from Aimen’s planner.',days:null},
+   {id:'m7j',cat:'Sūrah',t:'Sūrah an-Naḥl (16)',s:'From Marriage to Parenthood, p.114.',days:[1]},
+   {id:'m7i',cat:'Food',t:'Iron-rich foods',s:'Red meat, beans and chickpeas, nuts, dried apricots and fortified cereals. Your iron is checked at booking and at 28 weeks, and you’ll be offered a supplement if it is low (NHS).',days:null}
   ],
   activity:'Keep going with walking, swimming and yoga. Only do what feels comfortable, and stop anything that adds to the discomfort. Ask your midwife if you have concerns.'},
 
  8:{from:29,to:32,note:'Every organ is developed except the lungs, which are practising breathing, and the skin is no longer transparent. Expect Braxton Hicks tightenings, itchy skin over the bump, leaking colostrum, leg cramps and possibly piles or constipation.',
   acts:[
-   {id:'m8a',cat:'Recitation',t:'Adhān and iqāmah before every prayer',s:'With your hand on your stomach.',days:null},
-   {id:'m8b',cat:'Sūrah',t:'Sūrah al-Qadr (97) ten times after Fajr',s:'',days:[6],surah:97},
-   {id:'m8c',cat:'Sūrah',t:'Sūrah at-Tīn (95) twice after Fajr',s:'',days:[0],surah:95},
-   {id:'m8d',cat:'Sūrah',t:'Sūrah Yāsīn (36)',s:'',days:[1]},
-   {id:'m8e',cat:'Sūrah',t:'Sūrah al-Furqān (25)',s:'',days:[2]},
-   {id:'m8f',cat:'Sūrah',t:'Sūrah al-Insān (76)',s:'',days:[3]},
-   {id:'m8g',cat:'Sūrah',t:'Sūrah Muḥammad (47)',s:'',days:[4]},
-   {id:'m8h',cat:'Sūrah',t:'Sūrah aṣ-Ṣāffāt (37)',s:'',days:[5]},
-   {id:'m8i',cat:'Food',t:'Sweet yogurt and honey',s:'',days:null},
-   {id:'m8j',cat:'Food',t:'A sweet pomegranate on an empty stomach',s:'',days:[5]},
-   {id:'m8k',cat:'Food',t:'Vinegar in your food',s:'Once a week, if you have no fear of harm from it.',days:null}
+   {id:'m8a',cat:'Recitation',t:'Adhān and iqāmah before every prayer',s:'With your hand on your stomach. From Marriage to Parenthood, p.114.',days:null},
+   {id:'m8b',cat:'Sūrah',t:'Sūrah al-Qadr (97) ten times after Fajr',s:'From Marriage to Parenthood, p.115.',days:[6],surah:97},
+   {id:'m8c',cat:'Sūrah',t:'Sūrah at-Tīn (95) twice after Fajr',s:'From Marriage to Parenthood, p.115.',days:[0],surah:95},
+   {id:'m8d',cat:'Sūrah',t:'Sūrah Yāsīn (36)',s:'From Marriage to Parenthood, p.115.',days:[1]},
+   {id:'m8e',cat:'Sūrah',t:'Sūrah al-Furqān (25)',s:'From Marriage to Parenthood, p.115.',days:[2]},
+   {id:'m8f',cat:'Sūrah',t:'Sūrah al-Insān (76)',s:'From Marriage to Parenthood, p.115.',days:[3]},
+   {id:'m8g',cat:'Sūrah',t:'Sūrah Muḥammad (47)',s:'From Marriage to Parenthood, p.115.',days:[4]},
+   {id:'m8h',cat:'Sūrah',t:'Sūrah aṣ-Ṣāffāt (37)',s:'From Marriage to Parenthood, p.115.',days:[5]},
+   {id:'m8i',cat:'Food',t:'Sweet yogurt and honey',s:'From Marriage to Parenthood, p.115.',days:null},
+   {id:'m8j',cat:'Food',t:'A sweet pomegranate on an empty stomach',s:'On an empty stomach. al-Kāfī, Vol. 6, p.355: a pomegranate on Friday before food lights the heart, and sweet pomegranate “improves the child”.',days:[5]},
+   {id:'m8k',cat:'Food',t:'Vinegar in your food',s:'Once a week, if you have no fear of harm from it. From Marriage to Parenthood, p.115.',days:null}
   ],
   activity:'Keep going with walking, swimming and yoga. Only do what feels comfortable, and stop anything that adds to the discomfort. Ask your midwife if you have concerns.'},
 
  9:{from:33,to:41,note:'Hearing is very sharp now and baby may recognise your voice. Expect a waddling walk as baby drops into the pelvis, and pelvic pain with it. The planner’s guide ends at month nine, so this block covers the remaining weeks up to 41.',
   acts:[
-   {id:'m9a',cat:'Recitation',t:'Ṣalawāt 140 times',s:'Allāhumma ṣalli ʿalā Muḥammadin wa Āl Muḥammad.',days:null,dua:'salawat'},
-   {id:'m9b',cat:'Recitation',t:'Istighfār 70 times after each prayer',s:'Astaghfirullāha Rabbī wa atūbu ilayh.',days:null,dua:'istighfar'},
-   {id:'m9c',cat:'Sūrah',t:'Sūrah al-ʿAṣr (103) and adh-Dhāriyāt (51)',s:'In the Ẓuhr and ʿAṣr prayers.',days:null,surah:103},
-   {id:'m9d',cat:'Sūrah',t:'Sūrah al-Ḥajj (22)',s:'',days:[4]},
-   {id:'m9e',cat:'Sūrah',t:'Sūrah Fāṭir (35)',s:'On Friday night.',days:[5]},
-   {id:'m9f',cat:'Sūrah',t:'Sūrah al-Insān (76) over dates and milk',s:'Then take them on an empty stomach.',days:null},
-   {id:'m9g',cat:'Food',t:'Dates and kebabs',s:'“In the month in which pregnant ladies will give birth, feed them dates so that their children can be forbearing and virtuous.” Mustadrak al-Wasāʾil, Vol. 3, p.112.',days:null},
-   {id:'m9h',cat:'Wellness',t:'A daily walk',s:'',days:null}
+   {id:'m9a',cat:'Recitation',t:'Ṣalawāt 140 times',s:'Allāhumma ṣalli ʿalā Muḥammadin wa Āli Muḥammad. From Aimen’s planner.',days:null,dua:'salawat'},
+   {id:'m9b',cat:'Recitation',t:'Istighfār 70 times after each prayer',s:'Astaghfirullāha Rabbī wa atūbu ilayh. The Prophet (s) sought forgiveness seventy times a day (al-Kāfī, Vol. 2, p.505); after each prayer is from Aimen’s planner.',days:null,dua:'istighfar'},
+   {id:'m9c',cat:'Sūrah',t:'Sūrah al-ʿAṣr (103) and adh-Dhāriyāt (51)',s:'In the Ẓuhr and ʿAṣr prayers, one in each of the first two rakʿahs. adh-Dhāriyāt is long, so leave it out if time is short (Sistani, ruling 965). From Marriage to Parenthood, p.115.',days:null,surah:103},
+   {id:'m9d',cat:'Sūrah',t:'Sūrah al-Ḥajj (22)',s:'From Marriage to Parenthood, p.115.',days:[4]},
+   {id:'m9e',cat:'Sūrah',t:'Sūrah Fāṭir (35)',s:'On Friday night, which is Thursday evening after Maghrib. From Marriage to Parenthood, p.115.',days:[4]},
+   {id:'m9f',cat:'Sūrah',t:'Sūrah al-Insān (76) over dates and milk',s:'Then take them on an empty stomach. From Marriage to Parenthood, p.115.',days:null},
+   {id:'m9g',cat:'Food',t:'Dates and kebabs',s:'“Feed women dates in the month they give birth, and their child will be forbearing and pure.” The Prophet (s), in Makārim al-Akhlāq, p.169. Kebabs: From Marriage to Parenthood, p.115.',days:null},
+   {id:'m9h',cat:'Wellness',t:'A daily walk',s:'Any amount helps; the NHS says 30 minutes a day can be enough.',days:null}
   ],
-  also:['Go easy on very spicy, rich or fatty food if heartburn is bothering you.','Sacrifice a sheep in the name of Imām al-Mahdī (aj) and eat from it.','Try to avoid looking into the mirror, and at pictures.'],
+  also:['Go easy on very spicy, rich or fatty food, which can bring on heartburn (NHS). From Marriage to Parenthood, p.115, says no garam masala.','Sacrifice a sheep as ṣadaqah on behalf of Imām al-Mahdī (aj), and eat from it. From Marriage to Parenthood, p.115; no hadith found.','Try to avoid looking into the mirror, and at pictures. From Marriage to Parenthood, p.115; no hadith found.'],
   activity:'A daily walk is the main recommendation this month. Ask your midwife if you have concerns.'}
 };
 
