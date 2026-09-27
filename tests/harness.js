@@ -104,6 +104,18 @@ function load(opts) {
   sandbox.globalThis = sandbox;
 
   const ctx = vm.createContext(sandbox);
+  // opts.now pins "now" (a local time, e.g. '2026-09-27T10:00') so date bugs that
+  // only show on some days of the year can be tested on any day. new Date(...)
+  // with arguments still behaves normally.
+  if (opts.now) {
+    const now = JSON.stringify(opts.now);
+    vm.runInContext(
+      'const __RealDate = Date;' +
+      'globalThis.Date = class extends __RealDate {' +
+      '  constructor(...a) { if (a.length === 0) super(' + now + '); else super(...a); }' +
+      '  static now() { return new __RealDate(' + now + ').getTime(); }' +
+      '};', ctx);
+  }
   // DOMContentLoaded never fires here; tests call App.init() when they want it.
   // Top-level `const` in a VM script does not land on the global, so publish
   // the bindings the tests need onto an explicit object at the end.

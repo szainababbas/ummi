@@ -1,0 +1,3 @@
+node_modules/
+
+# android/ has its own .gitignore for build output, local.properties, etc.

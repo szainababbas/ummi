@@ -1,0 +1,9 @@
+{
+  "name": "ummi",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Ummi — a week-by-week pregnancy companion.",
+  "scripts": {
+    "test": "node tests/run.js"
+  }
+}

@@ -958,7 +958,7 @@ const App = (function(){
   function localISO(d){ return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0'); }
   function todayKey(){ return localISO(new Date()); }
   function esc(s){ return String(s).replace(/[&<>"']/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c];}); }
-  function dayIndex(){ const d=new Date(); const start=new Date(d.getFullYear(),0,0); return Math.floor((d-start)/DAY); }
+  function dayIndex(){ const d=new Date(); return Math.round((new Date(d.getFullYear(),d.getMonth(),d.getDate())-new Date(d.getFullYear(),0,0))/DAY); }
 
   // ---- week maths ----
   function clampWeek(w){ return Math.max(4,Math.min(41,w)); }
@@ -1029,9 +1029,9 @@ const App = (function(){
     for(let w=4;w<=41;w++){ const o=document.createElement('option'); o.value=w; o.textContent='Week '+w; sel.appendChild(o); }
   }
   function deriveDueFromWeek(w){
-    const now=new Date(); now.setHours(0,0,0,0);
-    const due=new Date(now.getTime()+(40-w)*7*DAY);
-    return localISO(due);
+    // calendar days, not 24-hour blocks, or a clock change moves the date by one
+    const now=new Date();
+    return localISO(new Date(now.getFullYear(),now.getMonth(),now.getDate()+(40-w)*7));
   }
   function signup(){
     const name=document.getElementById('g-name').value.trim();
@@ -1303,19 +1303,21 @@ const App = (function(){
   function buildICS(){
     if(!state.dueDate) return null;
     const due=new Date(state.dueDate+'T00:00:00');
-    const conception=new Date(due.getTime()-280*DAY);   // day 0 of gestation
+    // Dates are built from calendar days (the Date constructor rolls the day over
+    // into the right month), not 24-hour steps, which slip a day across a clock change.
+    const dayOf=function(n){ return new Date(due.getFullYear(),due.getMonth(),due.getDate()-280+n); };
     const stamp=icsDate(new Date())+'T000000Z';
     const L=['BEGIN:VCALENDAR','VERSION:2.0','PRODID:-//Ummi//Pregnancy companion//EN',
              'CALSCALE:GREGORIAN','METHOD:PUBLISH','X-WR-CALNAME:Ummi — pregnancy'];
     for(let day=4*7; day<=280; day++){
-      const date=new Date(conception.getTime()+day*DAY);
+      const date=dayOf(day);
       const week=Math.floor(day/7);
       const m=monthOf(week);
       const acts=actsFor(m,date.getDay());
       if(!acts.length) continue;
       const lead=featuredAct(m,date,day);
       const rest=acts.filter(function(a){ return a.id!==lead.id; });
-      const next=new Date(date.getTime()+DAY);
+      const next=dayOf(day+1);
       const desc=(lead.s?lead.s+'\n':'')+
         (rest.length?'\nAlso today:\n'+rest.map(function(a){return '• '+a.t+(a.s?' ('+a.s+')':'');}).join('\n')+'\n':'')+
         '\nWeek '+week+', month '+m+' of the guide.';
@@ -1416,7 +1418,7 @@ const App = (function(){
 
   /* Internals exposed for the suite in tests/. Nothing in the app reads this; it is
      here so the tests drive the real logic rather than a copy that can drift. */
-  const __test={monthOf:monthOf,actsFor:actsFor,todaysActs:todaysActs,featuredAct:featuredAct,
+  const __test={dayIndex:dayIndex,monthOf:monthOf,actsFor:actsFor,todaysActs:todaysActs,featuredAct:featuredAct,
     tasksToday:tasksToday,currentWeek:currentWeek,clampWeek:clampWeek,daysToGo:daysToGo,
     trimester:trimester,buildICS:buildICS,icsFold:icsFold,icsEscape:icsEscape,
     backupPayload:backupPayload,readBackup:readBackup,historyText:historyText,

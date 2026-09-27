@@ -14,7 +14,14 @@ Live at <https://szainababbas.github.io/ummi/>.
   `CACHE` when shipping, so old caches are dropped on activate.
 - `manifest.json`, `icon-*.png` — what makes it installable to the home screen.
 - `tools/` — the Qurʾān text generator. See `tools/README.md`.
-- `tests/` — the test suite.
+- `tests/` — the web app's test suite, plus `fixtures/` shared with the Android
+  app's tests.
+- `CLAUDE.md` — working rules for this repo (tests with every change).
+- `android/` — a native Android app (Kotlin + Jetpack Compose), a from-scratch
+  redesign rather than a wrapper around `index.html`. See "Android app" below.
+- `design/handoff-android/` — the design handoff the Android app is built from
+  (screen specs, tokens, and `ummi-data.json`, the content extracted from this
+  repo's own `WEEKS`/`MONTHS`/etc. constants).
 
 ### Data
 
@@ -53,7 +60,63 @@ journal escaping, the all-day event end date or the restore path each make it fa
 What the tests do not cover, and is still checked by hand in a browser: layout,
 colour and contrast in both themes, and whether a download actually lands.
 
+The Android app has its own JVM unit tests: `cd android && ./gradlew
+testDebugUnitTest`. They cover the week and month maths, which acts land on
+which day, state changes, the bundled content's integrity, and the backup
+format. `tests/fixtures/backup-compat.json` is shared by both suites, so a
+backup written by either app must restore in the other, and `tests/run.js`
+fails if the Android app's copy of the content drifts from `index.html`. Both
+suites run in CI on every pull request.
+
+Screenshot tests (Paparazzi) render every Android screen, light and dark, on
+the JVM with no emulator. Each CI run uploads them as the `screenshots`
+artifact on the "Android build" run, next to the APK. Locally:
+`cd android && ./gradlew recordPaparazziDebug`, then look in
+`android/app/src/test/snapshots/images/`.
+
 ## Deploying
 
 GitHub Pages serves `main` directly, so a push is the deploy. Bump `CACHE` in
 `sw.js` in the same commit as any change to `index.html`.
+
+## Android app
+
+`android/` is a separate, native Android app — Kotlin, Jetpack Compose,
+Material 3 — built from the redesign in `design/handoff-android/`, not a
+WebView wrapper around `index.html`. The two share nothing at build time; they
+share *content* (`android/app/src/main/assets/ummi-data.json` is a copy of
+`design/handoff-android/ummi-data.json`, itself generated from this repo's own
+`WEEKS`/`MONTHS`/etc. constants) and a *backup format* (see below), so someone
+already using the web app can move their progress across.
+
+Build it:
+
+- **Android Studio** — open the `android/` folder, then Run.
+- **Command line** — needs the Android SDK installed locally:
+  `cd android && ./gradlew assembleDebug`, APK lands in
+  `android/app/build/outputs/apk/debug/`.
+- **CI, no local Android SDK needed** — `.github/workflows/android.yml` builds a
+  debug APK on every push to `main` and on pull requests, runs the unit tests,
+  and uploads the APK as a workflow artifact.
+
+App id `com.szainabbas.ummi`. Fonts (Literata, Figtree, Amiri) are bundled from
+google/fonts under `res/font/`; launcher icon and adaptive-icon background are
+carried over from the icons already in this repo (`icon-512.png`).
+
+**Backup / restore, and moving data from the web app:** the Android app
+persists the same JSON shape the PWA writes with "Download backup"
+(`{app: "ummi", schema, exportedAt, state}` — see `data/AppState.kt` /
+`data/AppStateRepository.kt`), so a backup file downloaded from the browser
+version restores directly in the Android app's More → Restore, and vice versa.
+
+**What's not built yet** (tracked as follow-up PRs, per the handoff's own
+"Screens" section): the 4-step onboarding (a minimal due-date prompt stands in
+for it for now), Visits, Reminders/notifications, and the "Names we're
+thinking about" wishlist. The 5-tab shell, Today, Journey, Duas and the rest
+of More (settings, backup, reflection journal) are built. A few of the
+handoff's exact "Material Symbols Rounded" icons aren't in the icon set this
+app depends on (`material-icons-extended`) and use a close substitute instead
+— noted in `ui/theme/UmmiIcons.kt`.
+
+Release signing (a real keystore, not the debug one) is not set up yet — needed
+before a Play Store submission, not for sideloading test builds.

@@ -1,0 +1,59 @@
+name: Android build
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "android/**"
+      - "tests/fixtures/**"
+      - ".github/workflows/android.yml"
+  pull_request:
+    paths:
+      - "android/**"
+      - "tests/fixtures/**"
+      - ".github/workflows/android.yml"
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: android
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-java@v4
+        with:
+          distribution: "temurin"
+          java-version: "17"
+
+      # The runner image has no Android SDK of its own; this action installs
+      # cmdline-tools, sets ANDROID_HOME and accepts the licences. Its default
+      # `packages` includes "tools", which Google no longer publishes, so the
+      # action fails unless that default is overridden.
+      - uses: android-actions/setup-android@v3
+        with:
+          packages: "platform-tools platforms;android-34 build-tools;34.0.0"
+
+      # All unit tests, with Paparazzi in record mode so every screen, light
+      # and dark, is saved as an image as well as checked to render.
+      - name: Unit tests and screenshots
+        run: ./gradlew recordPaparazziDebug --no-daemon
+
+      - name: Upload screenshots
+        if: success() || failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: screenshots
+          path: android/app/src/test/snapshots/images/
+          if-no-files-found: warn
+
+      - name: Build debug APK
+        run: ./gradlew assembleDebug --no-daemon
+
+      - name: Upload APK
+        uses: actions/upload-artifact@v4
+        with:
+          name: ummi-debug-apk
+          path: android/app/build/outputs/apk/debug/app-debug.apk

@@ -1,0 +1,2 @@
+# RFC 5545 needs CRLF line endings; never let Git convert them.
+tests/fixtures/*.ics -text
