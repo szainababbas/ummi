@@ -28,6 +28,7 @@ Where everything in Ummi comes from, what kind of source each thing is allowed t
 | `FOOD.sunnah` | al-Kāfī 6 (Kitāb al-ʿAqīqah ch.12; Kitāb al-Aṭʿimah) | Checked. The "recite Yāsīn / Yūsuf over it" lines were removed, because they come from the book, not a narration. |
 | `FOOD.med`, `FOOD.avoid`, `WEEKS` (except `faith`), `BASE_TASKS` | NHS | All 38 NHS week pages (4 to 41) and the pregnancy, diet, vitamins, exercise, vaccinations and movements pages were read on 27 Sep 2026. |
 | `NAMES` | al-Kāfī 6 ch.10; al-Amālī; history | Meanings checked. |
+| Android Visits screen: "Typical NHS schedule, first pregnancy" | NHS, *Your antenatal appointments* | Read on 27 Sep 2026. Two scans (11 to 14 and 18 to 21 weeks) and ten appointments for a first baby (8 to 12, 16, 25, 28, 31, 34, 36, 38, 40, 41). The design handoff listed only 25 to 40; the app follows the NHS. |
 
 ## The planner's own citations
 

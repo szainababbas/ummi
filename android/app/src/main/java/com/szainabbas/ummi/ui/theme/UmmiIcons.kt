@@ -2,6 +2,13 @@ package com.szainabbas.ummi.ui.theme
 
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.AccessTime
+import androidx.compose.material.icons.rounded.Add
+import androidx.compose.material.icons.rounded.Bloodtype
+import androidx.compose.material.icons.rounded.Delete
+import androidx.compose.material.icons.rounded.MedicalServices
+import androidx.compose.material.icons.rounded.MonitorHeart
+import androidx.compose.material.icons.rounded.Notifications
+import androidx.compose.material.icons.rounded.Person
 import androidx.compose.material.icons.rounded.AutoStories
 import androidx.compose.material.icons.rounded.Block
 import androidx.compose.material.icons.rounded.Check
@@ -35,8 +42,7 @@ import androidx.compose.ui.graphics.vector.ImageVector
  * uses `material-icons-extended`, an older fixed catalogue that ships as a
  * normal Gradle dependency and needs no font-variation plumbing. Most names
  * match directly. Where the handoff's exact glyph isn't in that catalogue
- * (e.g. "mosque", "monitor_heart" for the Visits screen — out of scope for
- * this PR anyway), the nearest existing icon is used instead and noted here.
+ * (e.g. "mosque", "stethoscope"), the nearest existing icon is used instead and noted here.
  * Swapping in the real Material Symbols font is a possible follow-up, not
  * a blocker.
  */
@@ -71,6 +77,19 @@ object UmmiIcons {
     val chevronDown: ImageVector = Icons.Rounded.ExpandMore
     val close: ImageVector = Icons.Rounded.Close
     val schedule: ImageVector = Icons.Rounded.Schedule
+
+    // Visits screen. There's no stethoscope in this icon set, so midwife
+    // visits use the same figure as the Journey tab.
+    val add: ImageVector = Icons.Rounded.Add
+    val event: ImageVector = Icons.Rounded.Event
+    val delete: ImageVector = Icons.Rounded.Delete
+    val reminderSet: ImageVector = Icons.Rounded.Notifications
+    val typeMidwife: ImageVector = Icons.Rounded.PregnantWoman
+    val typeScan: ImageVector = Icons.Rounded.MonitorHeart
+    val typeBlood: ImageVector = Icons.Rounded.Bloodtype
+    val typeGp: ImageVector = Icons.Rounded.MedicalServices
+    val typeConsultant: ImageVector = Icons.Rounded.Person
+    val typeOther: ImageVector = Icons.Rounded.MoreHoriz
 
     // More screen
     val edit: ImageVector = Icons.Rounded.Edit

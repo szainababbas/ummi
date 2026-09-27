@@ -46,6 +46,7 @@ import com.szainabbas.ummi.data.model.UmmiData
 import com.szainabbas.ummi.domain.DailyPlan
 import com.szainabbas.ummi.domain.Layout
 import com.szainabbas.ummi.domain.PregnancyMath
+import com.szainabbas.ummi.domain.Visits
 import com.szainabbas.ummi.ui.theme.Amiri
 import com.szainabbas.ummi.ui.theme.Literata
 import com.szainabbas.ummi.ui.theme.UmmiIcons
@@ -62,6 +63,7 @@ fun TodayScreen(
     onOpenReminders: () -> Unit,
     onOpenWeek: (Int) -> Unit,
     onOpenMonth: () -> Unit,
+    onOpenVisits: () -> Unit = {},
     today: LocalDate = LocalDate.now(),
     scrollState: ScrollState = rememberScrollState(),
 ) {
@@ -96,6 +98,11 @@ fun TodayScreen(
             textAlign = TextAlign.Center,
             modifier = Modifier.fillMaxWidth().padding(horizontal = 20.dp, vertical = 8.dp),
         )
+        Visits.next(appState.visits, today)?.let { visit ->
+            Box(modifier = Modifier.fillMaxWidth().padding(bottom = 8.dp), contentAlignment = Alignment.Center) {
+                NextVisitChip(visit, today, onClick = onOpenVisits)
+            }
+        }
 
         UpNextCard(
             act = nextAct,

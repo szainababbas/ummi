@@ -119,9 +119,12 @@ version restores directly in the Android app's More → Restore, and vice versa.
 
 **What's not built yet** (tracked as follow-up PRs, per the handoff's own
 "Screens" section): the 4-step onboarding (a minimal due-date prompt stands in
-for it for now), Visits, Reminders/notifications, and the "Names we're
-thinking about" wishlist. The 5-tab shell, Today, Journey, Duas and the rest
-of More (settings, backup, reflection journal) are built. A few of the
+for it for now), Reminders/notifications, and the "Names we're thinking
+about" wishlist. The 5-tab shell, Today, Journey, Duas, Visits and the rest
+of More (settings, backup, reflection journal) are built. Visits store a
+reminder choice, but nothing fires until notifications exist. The web app
+has no Visits screen; it keeps visits in its backups and lists them in the
+readable record. A few of the
 handoff's exact "Material Symbols Rounded" icons aren't in the icon set this
 app depends on (`material-icons-extended`) and use a close substitute instead
 — noted in `ui/theme/UmmiIcons.kt`.

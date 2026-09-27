@@ -859,6 +859,18 @@ describe('android app compatibility', () => {
     T.setState(JSON.parse(JSON.stringify(fixture.history.state)));
     eq(T.historyText().replace(/^Exported .*$/m, 'Exported ' + fixture.history.today), fixture.history.text);
   });
+
+  it('lists visits in the readable record the same way as the Android app', () => {
+    const h = fixture.historyWithVisits;
+    T.setState(JSON.parse(JSON.stringify(h.state)));
+    eq(T.historyText().replace(/^Exported .*$/m, 'Exported ' + h.today), h.text);
+  });
+
+  it('keeps visits through a restore and a new backup', () => {
+    const s = T.readBackup(fixture.androidBackup.file);
+    T.setState(s);
+    eq(T.backupPayload().state.visits, fixture.androidBackup.state.visits);
+  });
 });
 
 /* ---------------------------------------------------------------------- results */

@@ -1376,6 +1376,7 @@ const App = (function(){
     return s;
   }
   /* A readable copy of what she has actually done, for keeping outside the app. */
+  const VISIT_TYPES={midwife:'Midwife',scan:'Scan',blood:'Blood test',gp:'GP',consultant:'Consultant',other:'Other'};
   function historyText(){
     const lines=['Ummi — your record','Exported '+todayKey(),''];
     lines.push('Due date: '+(state.dueDate||'not set'));
@@ -1392,6 +1393,16 @@ const App = (function(){
     const j=state.journal||[];
     lines.push('','REFLECTIONS ('+j.length+')');
     j.slice().reverse().forEach(function(x){ lines.push('  '+x.d+' — '+x.t); });
+    /* Visits are made in the Android app; a backup restored here keeps them. */
+    const v=(state.visits||[]).slice().sort(function(a,b){
+      return a.date<b.date?-1:a.date>b.date?1:(a.time||'')<(b.time||'')?-1:(a.time||'')>(b.time||'')?1:0;
+    });
+    if(v.length){
+      lines.push('','VISITS ('+v.length+')');
+      v.forEach(function(x){
+        lines.push('  '+x.date+(x.time?' '+x.time:'')+' — '+x.title+' ('+(VISIT_TYPES[x.type]||'Other')+')'+(x.note&&x.note.trim()?' — "'+x.note+'"':''));
+      });
+    }
     return lines.join('\n')+'\n';
   }
   function exportData(){ download('ummi-backup-'+todayKey()+'.json',JSON.stringify(backupPayload(),null,2),'application/json'); }
