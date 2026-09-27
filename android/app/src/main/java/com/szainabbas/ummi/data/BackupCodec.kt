@@ -56,6 +56,22 @@ object BackupCodec {
         lines += ""
         lines += "REFLECTIONS (${state.journal.size})"
         state.journal.asReversed().forEach { lines += "  ${it.d} — ${it.t}" }
+        // Visits and names come from the Android app; the PWA prints them too
+        // when a restored backup carries them.
+        if (state.visits.isNotEmpty()) {
+            lines += ""
+            lines += "VISITS (${state.visits.size})"
+            state.visits.sortedWith(compareBy({ it.date }, { it.time })).forEach { v ->
+                lines += "  ${v.date} ${v.time} — ${v.title} (${v.type})" + if (v.note.isNotEmpty()) " — ${v.note}" else ""
+            }
+        }
+        if (state.names.isNotEmpty()) {
+            lines += ""
+            lines += "NAMES (${state.names.size})"
+            state.names.forEach { n ->
+                lines += "  ${n.name}" + (if (n.favourite) " (favourite)" else "") + if (n.note.isNotEmpty()) " — ${n.note}" else ""
+            }
+        }
         return lines.joinToString("\n") + "\n"
     }
 

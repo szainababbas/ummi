@@ -38,17 +38,28 @@ import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.foundation.Canvas
+import androidx.compose.ui.graphics.vector.ImageVector
 import com.szainabbas.ummi.data.AppState
+import com.szainabbas.ummi.data.Visit
 import com.szainabbas.ummi.data.model.ActEntry
 import com.szainabbas.ummi.data.model.ReaderKey
 import com.szainabbas.ummi.data.model.UmmiData
+import com.szainabbas.ummi.domain.ActSlot
+import com.szainabbas.ummi.domain.Clock
 import com.szainabbas.ummi.domain.DailyPlan
+import com.szainabbas.ummi.domain.PrayerDay
 import com.szainabbas.ummi.domain.PregnancyMath
+import com.szainabbas.ummi.domain.ReminderPlanner
+import com.szainabbas.ummi.domain.Visits
+import com.szainabbas.ummi.domain.clock
+import com.szainabbas.ummi.ui.components.LocalSnack
 import com.szainabbas.ummi.ui.theme.Amiri
 import com.szainabbas.ummi.ui.theme.Literata
 import com.szainabbas.ummi.ui.theme.UmmiIcons
 import com.szainabbas.ummi.ui.theme.Ummi
 import java.time.LocalDate
+import java.time.LocalDateTime
+import java.time.LocalTime
 
 @Composable
 fun TodayScreen(
@@ -60,16 +71,22 @@ fun TodayScreen(
     onOpenReminders: () -> Unit,
     onOpenWeek: (Int) -> Unit,
     onOpenMonth: () -> Unit,
-    today: LocalDate = LocalDate.now(),
+    onOpenVisits: () -> Unit = {},
+    onSetTaskReminder: (String, String?) -> Unit = { _, _ -> },
+    prayers: PrayerDay? = null,
+    now: LocalDateTime = LocalDateTime.now(),
+    today: LocalDate = now.toLocalDate(),
     scrollState: ScrollState = rememberScrollState(),
 ) {
+    val snack = LocalSnack.current
     val dueDate = PregnancyMath.parseDueDate(appState.dueDate)
     val week = PregnancyMath.currentWeek(dueDate, today)
     val daysToGo = PregnancyMath.daysToGo(dueDate, today)
     val weekInfo = data.weeks[week.toString()]
     val monthNo = PregnancyMath.currentMonthNumber(week, data.months)
+    // Grouped by the part of the day they belong to, keeping the plan's order within each part.
     val todaysActs = remember(monthNo, today, data) {
-        DailyPlan.tasksFor(data.months[monthNo.toString()], data.baseTasks, today)
+        DailyPlan.tasksFor(data.months[monthNo.toString()], data.baseTasks, today).sortedBy { ActSlot.of(it).ordinal }
     }
     val doneToday = appState.done[PregnancyMath.todayKey(today)] ?: emptyList()
     // "Later" is for this sitting only, as in the handoff; it starts fresh each day.
@@ -77,9 +94,23 @@ fun TodayScreen(
     val nextAct = DailyPlan.upNext(todaysActs, doneToday, skipped)
     val duaToday = DailyPlan.duaTodayIndex(today, data.duaToday.size)?.let { data.duaToday[it] }
     val duaRecited = appState.duaDone[PregnancyMath.todayKey(today)] ?: false
+    val nextVisit = Visits.next(appState.visits, now)
+    val taskReminders = appState.reminders.tasks
+
+    fun toggleReminder(act: ActEntry) {
+        val existing = taskReminders[act.id]
+        if (existing == null) {
+            val time = ReminderPlanner.defaultTime(act, prayers)
+            onSetTaskReminder(act.id, Clock.store(time))
+            snack.show("Reminder set · " + Clock.label(time)) { onSetTaskReminder(act.id, null) }
+        } else {
+            onSetTaskReminder(act.id, null)
+            snack.show("Reminder off") { onSetTaskReminder(act.id, existing) }
+        }
+    }
 
     Column(modifier = Modifier.fillMaxWidth().verticalScroll(scrollState)) {
-        HeaderRow(name = appState.name, activeReminders = 0, onBellClick = onOpenReminders)
+        HeaderRow(name = appState.name, activeReminders = ReminderPlanner.activeCount(appState, now), onBellClick = onOpenReminders)
 
         Box(modifier = Modifier.fillMaxWidth(), contentAlignment = Alignment.Center) {
             ProgressRing(week = week, daysToGo = daysToGo, sizeDesc = weekInfo?.size)
@@ -87,11 +118,10 @@ fun TodayScreen(
 
         WeekStrip(currentWeek = week, onWeekClick = onOpenWeek)
 
-        Text(
+        MetaLine(
             text = PregnancyMath.trimesterShort(week) + (dueDate?.let { " · Due ≈ ${PregnancyMath.shortDate(it)}" } ?: ""),
-            fontSize = 13.sp,
-            color = Ummi.colors.ink2,
-            modifier = Modifier.padding(horizontal = 20.dp, vertical = 8.dp),
+            nextVisit = nextVisit,
+            onOpenVisits = onOpenVisits,
         )
 
         UpNextCard(
@@ -122,14 +152,23 @@ fun TodayScreen(
             Text("${todaysActs.count { it.id in doneToday }} of ${todaysActs.size}", fontSize = 13.sp, color = Ummi.colors.ink2)
         }
 
-        todaysActs.forEach { act ->
-            TaskRow(
-                act = act,
-                done = act.id in doneToday,
-                isUpNext = act.id == nextAct?.id,
-                onToggle = { onToggleTask(act.id) },
-                onRead = { ReaderKey.forAct(act)?.let(onOpenReader) },
-            )
+        ActSlot.entries.forEach { slot ->
+            val acts = todaysActs.filter { ActSlot.of(it) == slot }
+            if (acts.isNotEmpty()) {
+                SlotGroup(slot = slot, time = slot.clock(prayers)) {
+                    acts.forEach { act ->
+                        TaskRow(
+                            act = act,
+                            done = act.id in doneToday,
+                            isUpNext = act.id == nextAct?.id,
+                            reminder = Clock.parse(taskReminders[act.id]),
+                            onToggle = { onToggleTask(act.id) },
+                            onRead = { ReaderKey.forAct(act)?.let(onOpenReader) },
+                            onToggleReminder = { toggleReminder(act) },
+                        )
+                    }
+                }
+            }
         }
 
         Text(
@@ -160,7 +199,19 @@ private fun HeaderRow(name: String?, activeReminders: Int, onBellClick: () -> Un
                 onClick = onBellClick,
                 modifier = Modifier.size(48.dp).clip(CircleShape).background(Ummi.colors.surface2),
             ) {
-                Icon(UmmiIcons.bell, contentDescription = "Reminders", tint = Ummi.colors.ink)
+                Icon(UmmiIcons.notifications, contentDescription = "Reminders, $activeReminders on", tint = Ummi.colors.ink)
+            }
+            if (activeReminders > 0) {
+                Box(
+                    modifier = Modifier
+                        .align(Alignment.TopEnd)
+                        .defaultMinSize(minWidth = 18.dp, minHeight = 18.dp)
+                        .background(Ummi.colors.primary, CircleShape)
+                        .padding(horizontal = 4.dp),
+                    contentAlignment = Alignment.Center,
+                ) {
+                    Text("$activeReminders", fontSize = 11.sp, lineHeight = 13.sp, fontWeight = FontWeight.Bold, color = Ummi.colors.onPrimary)
+                }
             }
         }
     }
@@ -343,16 +394,82 @@ private fun DuaBand(lbl: String, arabic: String, translit: String, meaning: Stri
     }
 }
 
+@OptIn(ExperimentalLayoutApi::class)
 @Composable
-private fun TaskRow(act: ActEntry, done: Boolean, isUpNext: Boolean, onToggle: () -> Unit, onRead: () -> Unit) {
+private fun MetaLine(text: String, nextVisit: Visit?, onOpenVisits: () -> Unit) {
+    FlowRow(
+        modifier = Modifier.fillMaxWidth().padding(horizontal = 20.dp, vertical = 8.dp),
+        horizontalArrangement = Arrangement.spacedBy(10.dp),
+        verticalArrangement = Arrangement.spacedBy(6.dp),
+    ) {
+        Text(text, fontSize = 13.sp, color = Ummi.colors.ink2, modifier = Modifier.align(Alignment.CenterVertically))
+        if (nextVisit != null) {
+            Row(
+                modifier = Modifier
+                    .height(28.dp)
+                    .clip(RoundedCornerShape(14.dp))
+                    .background(Ummi.colors.ac)
+                    .clickable(onClick = onOpenVisits)
+                    .padding(horizontal = 10.dp),
+                verticalAlignment = Alignment.CenterVertically,
+            ) {
+                Icon(UmmiIcons.visits, contentDescription = null, tint = Ummi.colors.accentText, modifier = Modifier.size(16.dp))
+                Spacer(Modifier.width(6.dp))
+                Text(Visits.chip(nextVisit), fontSize = 13.sp, fontWeight = FontWeight.SemiBold, color = Ummi.colors.accentText, maxLines = 1)
+            }
+        }
+    }
+}
+
+private fun slotIcon(slot: ActSlot): ImageVector = when (slot) {
+    ActSlot.MORNING -> UmmiIcons.timeMorning
+    ActSlot.PRAYERS -> UmmiIcons.timePrayer
+    ActSlot.EVENING -> UmmiIcons.timeEvening
+    ActSlot.ANYTIME -> UmmiIcons.timeAnytime
+}
+
+/** One part of the day: its time down the left, a rule running beside its tasks. */
+@Composable
+private fun SlotGroup(slot: ActSlot, time: LocalTime?, content: @Composable ColumnScope.() -> Unit) {
+    Row(modifier = Modifier.fillMaxWidth().height(IntrinsicSize.Min).padding(start = 16.dp, end = 16.dp, bottom = 8.dp)) {
+        Column(modifier = Modifier.width(52.dp).fillMaxHeight(), horizontalAlignment = Alignment.CenterHorizontally) {
+            if (time != null) {
+                val label = Clock.label(time)
+                Text(label.substringBefore(' '), fontSize = 13.sp, fontWeight = FontWeight.Bold, color = Ummi.colors.ink)
+                Text(label.substringAfter(' '), fontSize = 11.sp, color = Ummi.colors.ink2)
+            } else {
+                Icon(slotIcon(slot), contentDescription = null, tint = Ummi.colors.ink2, modifier = Modifier.size(18.dp))
+            }
+            Box(Modifier.padding(top = 4.dp).width(2.dp).weight(1f).background(Ummi.colors.line))
+        }
+        Column(modifier = Modifier.weight(1f)) {
+            Row(verticalAlignment = Alignment.CenterVertically, modifier = Modifier.padding(start = 4.dp, bottom = 6.dp)) {
+                Icon(slotIcon(slot), contentDescription = null, tint = Ummi.colors.accentText, modifier = Modifier.size(18.dp))
+                Spacer(Modifier.width(6.dp))
+                Text(slot.label, fontSize = 13.sp, fontWeight = FontWeight.Bold, color = Ummi.colors.accentText)
+            }
+            content()
+        }
+    }
+}
+
+@Composable
+private fun TaskRow(
+    act: ActEntry,
+    done: Boolean,
+    isUpNext: Boolean,
+    reminder: LocalTime?,
+    onToggle: () -> Unit,
+    onRead: () -> Unit,
+    onToggleReminder: () -> Unit,
+) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(horizontal = 16.dp, vertical = 4.dp)
-            .border(if (isUpNext) 1.dp else 1.dp, if (isUpNext) Ummi.colors.primary else Ummi.colors.line, RoundedCornerShape(16.dp))
+            .padding(start = 4.dp, bottom = 6.dp)
+            .border(1.dp, if (isUpNext) Ummi.colors.primary else Ummi.colors.line, RoundedCornerShape(16.dp))
             .background(Ummi.colors.surface, RoundedCornerShape(16.dp))
-            .alpha(if (done) 0.55f else 1f)
-            .padding(14.dp),
+            .padding(start = 12.dp, top = 10.dp, bottom = 10.dp, end = 4.dp),
         verticalAlignment = Alignment.CenterVertically,
     ) {
         Box(
@@ -364,28 +481,57 @@ private fun TaskRow(act: ActEntry, done: Boolean, isUpNext: Boolean, onToggle: (
                 .clickable(onClick = onToggle),
             contentAlignment = Alignment.Center,
         ) {
-            if (done) Icon(UmmiIcons.check, contentDescription = null, tint = Ummi.colors.onPrimary, modifier = Modifier.size(16.dp))
+            if (done) Icon(UmmiIcons.check, contentDescription = "Done", tint = Ummi.colors.onPrimary, modifier = Modifier.size(16.dp))
         }
         Spacer(Modifier.width(12.dp))
-        Column(modifier = Modifier.weight(1f).then(Modifier).clip(RoundedCornerShape(4.dp))) {
+        Column(modifier = Modifier.weight(1f).alpha(if (done) 0.55f else 1f)) {
             Text(
                 text = act.t,
                 fontSize = 15.sp,
                 fontWeight = FontWeight.SemiBold,
-                color = if (done) Ummi.colors.ink2 else Ummi.colors.ink,
+                color = Ummi.colors.ink,
                 textDecoration = if (done) TextDecoration.LineThrough else TextDecoration.None,
             )
             if (act.s.isNotBlank()) {
                 Text(text = act.s, fontSize = 13.sp, color = Ummi.colors.ink2)
             }
-        }
-        if (ReaderKey.forAct(act) != null) {
-            OutlinedButton(onClick = onRead, contentPadding = androidx.compose.foundation.layout.PaddingValues(horizontal = 12.dp, vertical = 4.dp)) {
-                Text("Read", fontSize = 12.sp)
+            if (reminder != null) {
+                Row(verticalAlignment = Alignment.CenterVertically, modifier = Modifier.padding(top = 2.dp)) {
+                    Icon(UmmiIcons.notifications, contentDescription = null, tint = Ummi.colors.accentText, modifier = Modifier.size(12.dp))
+                    Spacer(Modifier.width(4.dp))
+                    Text(Clock.label(reminder), fontSize = 12.sp, color = Ummi.colors.accentText)
+                }
+            }
+            if (ReaderKey.forAct(act) != null) {
+                Text(
+                    "Read",
+                    fontSize = 12.sp,
+                    fontWeight = FontWeight.SemiBold,
+                    color = Ummi.colors.onpc,
+                    modifier = Modifier
+                        .padding(top = 6.dp)
+                        .clip(RoundedCornerShape(14.dp))
+                        .background(Ummi.colors.pc)
+                        .clickable(onClick = onRead)
+                        .padding(horizontal = 12.dp, vertical = 5.dp),
+                )
             }
         }
-        // The handoff also puts a per-task reminder bell here; that's part of
-        // the Reminders feature (not built yet), so it's left out rather than
-        // wired to the wrong action.
+        IconButton(onClick = onToggleReminder, modifier = Modifier.size(40.dp)) {
+            Box(
+                modifier = Modifier
+                    .size(34.dp)
+                    .clip(CircleShape)
+                    .background(if (reminder != null) Ummi.colors.ac else Color.Transparent),
+                contentAlignment = Alignment.Center,
+            ) {
+                Icon(
+                    if (reminder != null) UmmiIcons.bell else UmmiIcons.bellAdd,
+                    contentDescription = if (reminder != null) "Turn off the reminder for ${act.t}" else "Remind me about ${act.t}",
+                    tint = if (reminder != null) Ummi.colors.accentText else Ummi.colors.ink2,
+                    modifier = Modifier.size(20.dp),
+                )
+            }
+        }
     }
 }

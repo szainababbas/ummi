@@ -109,14 +109,22 @@ persists the same JSON shape the PWA writes with "Download backup"
 `data/AppStateRepository.kt`), so a backup file downloaded from the browser
 version restores directly in the Android app's More → Restore, and vice versa.
 
-**What's not built yet** (tracked as follow-up PRs, per the handoff's own
-"Screens" section): the 4-step onboarding (a minimal due-date prompt stands in
-for it for now), Visits, Reminders/notifications, and the "Names we're
-thinking about" wishlist. The 5-tab shell, Today, Journey, Duas and the rest
-of More (settings, backup, reflection journal) are built. A few of the
-handoff's exact "Material Symbols Rounded" icons aren't in the icon set this
-app depends on (`material-icons-extended`) and use a close substitute instead
-— noted in `ui/theme/UmmiIcons.kt`.
+**Visits, names and reminders live only in the Android app.** They travel in
+the same backup file; the web app keeps them when it restores that file and
+writes them back out, so nothing is lost by passing through the browser.
+
+**Reminders** are scheduled on the phone with one inexact alarm at a time
+(`reminders/`), worked out by `domain/ReminderPlanner.kt`: a morning summary,
+prayer-linked acts a few minutes after Fajr, Ẓuhr and Maghrib (never before
+6:30 am or after 10 pm), water every two hours, a daily time per task, and a
+reminder per visit. Prayer times use the Shia Ithna-ʿAshari (Jaʿfari) angles
+for a city picked from a short list (`domain/PrayerTimes.kt`, `domain/Places.kt`);
+no location permission is needed. Android 13 and later ask for permission to
+notify at the end of onboarding.
+
+A few of the handoff's exact "Material Symbols Rounded" icons aren't in the
+icon set this app depends on (`material-icons-extended`) and use a close
+substitute instead — noted in `ui/theme/UmmiIcons.kt`.
 
 Release signing (a real keystore, not the debug one) is not set up yet — needed
 before a Play Store submission, not for sideloading test builds.

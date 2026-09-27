@@ -1,12 +1,18 @@
 package com.szainabbas.ummi
 
+import android.Manifest
+import android.content.Intent
 import android.net.Uri
+import android.os.Build
+import android.provider.Settings
 import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.SystemBarStyle
+import androidx.activity.compose.BackHandler
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -15,43 +21,73 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Snackbar
+import androidx.compose.material3.SnackbarDuration
+import androidx.compose.material3.SnackbarHost
+import androidx.compose.material3.SnackbarHostState
+import androidx.compose.material3.SnackbarResult
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalLifecycleOwner
+import androidx.compose.ui.res.painterResource
+import androidx.core.app.ActivityCompat
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.LifecycleEventObserver
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavGraph.Companion.findStartDestination
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import androidx.navigation.navArgument
 import com.szainabbas.ummi.data.AppState
+import com.szainabbas.ummi.data.Place
 import com.szainabbas.ummi.data.model.ReaderKey
 import com.szainabbas.ummi.data.model.UmmiData
+import com.szainabbas.ummi.domain.ActSlot
+import com.szainabbas.ummi.domain.DailyPlan
+import com.szainabbas.ummi.domain.PrayerTimes
 import com.szainabbas.ummi.domain.PregnancyMath
+import com.szainabbas.ummi.domain.Visits
+import com.szainabbas.ummi.reminders.ReminderNotifier
+import com.szainabbas.ummi.ui.components.LocalSnack
 import com.szainabbas.ummi.ui.components.ReaderBottomSheet
+import com.szainabbas.ummi.ui.components.Snack
 import com.szainabbas.ummi.ui.navigation.Routes
 import com.szainabbas.ummi.ui.navigation.UmmiDestination
-import com.szainabbas.ummi.ui.screens.ComingSoonScreen
 import com.szainabbas.ummi.ui.screens.DuasScreen
-import com.szainabbas.ummi.ui.screens.DueDateGateScreen
 import com.szainabbas.ummi.ui.screens.JourneyScreen
 import com.szainabbas.ummi.ui.screens.MoreScreen
+import com.szainabbas.ummi.ui.screens.OnboardingScreen
+import com.szainabbas.ummi.ui.screens.RemindersScreen
 import com.szainabbas.ummi.ui.screens.TodayScreen
+import com.szainabbas.ummi.ui.screens.VisitsScreen
+import com.szainabbas.ummi.ui.theme.Ummi
 import com.szainabbas.ummi.ui.theme.UmmiTheme
 import com.szainabbas.ummi.ui.theme.UmmiThemeMode
 import com.szainabbas.ummi.ui.theme.isDark
 import java.io.BufferedReader
 import java.io.InputStreamReader
+import java.time.LocalDate
+import java.time.LocalDateTime
+import java.time.ZoneId
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -102,9 +138,44 @@ fun UmmiApp(viewModel: UmmiViewModel = viewModel()) {
         }
     }
 
+    val activity = context as? ComponentActivity
+
+    // Whether Android will show Ummi's notifications; checked again whenever
+    // the app comes back to the front, since it can change in Settings.
+    var notificationsAllowed by remember { mutableStateOf(ReminderNotifier.allowed(context)) }
+    val lifecycleOwner = LocalLifecycleOwner.current
+    DisposableEffect(lifecycleOwner) {
+        val observer = LifecycleEventObserver { _, event ->
+            if (event == Lifecycle.Event.ON_RESUME) notificationsAllowed = ReminderNotifier.allowed(context)
+        }
+        lifecycleOwner.lifecycle.addObserver(observer)
+        onDispose { lifecycleOwner.lifecycle.removeObserver(observer) }
+    }
+    val openNotificationSettings = {
+        context.startActivity(
+            Intent(Settings.ACTION_APP_NOTIFICATION_SETTINGS).putExtra(Settings.EXTRA_APP_PACKAGE, context.packageName),
+        )
+    }
+    var askedFromReminders by remember { mutableStateOf(false) }
+    val permissionLauncher = rememberLauncherForActivityResult(ActivityResultContracts.RequestPermission()) { granted ->
+        notificationsAllowed = ReminderNotifier.allowed(context)
+        // Once she has said no twice, Android stops showing the prompt; from the
+        // Reminders screen's "Allow", Settings is then the only way to say yes.
+        val promptBlocked = activity != null && Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU &&
+            !ActivityCompat.shouldShowRequestPermissionRationale(activity, Manifest.permission.POST_NOTIFICATIONS)
+        if (!granted && askedFromReminders && promptBlocked) openNotificationSettings()
+    }
+    val askForNotifications = { fromReminders: Boolean ->
+        askedFromReminders = fromReminders
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            permissionLauncher.launch(Manifest.permission.POST_NOTIFICATIONS)
+        } else if (fromReminders) {
+            openNotificationSettings()
+        }
+    }
+
     val themeMode = parseThemeMode(uiState.appState.theme)
     val dark = themeMode.isDark()
-    val activity = context as? ComponentActivity
     // Status-bar icons follow the app's own Light/Dark setting, not the phone's.
     LaunchedEffect(dark) {
         val transparent = android.graphics.Color.TRANSPARENT
@@ -120,7 +191,19 @@ fun UmmiApp(viewModel: UmmiViewModel = viewModel()) {
             val appState = uiState.appState
             when {
                 uiState.loading || data == null -> Unit // blank while the first load completes
-                appState.dueDate == null -> DueDateGateScreen(onSetDueDate = { viewModel.setDueDate(it) })
+                appState.dueDate == null -> {
+                    var step by rememberSaveable { mutableIntStateOf(0) }
+                    BackHandler(enabled = step > 0) { step-- }
+                    OnboardingScreen(
+                        step = step,
+                        onStep = { step = it },
+                        onFinish = { due, name, reminders, askPermission ->
+                            viewModel.completeOnboarding(due, name, reminders)
+                            if (askPermission) askForNotifications(false)
+                        },
+                        appIcon = { AppIcon() },
+                    )
+                }
                 else -> UmmiMainScaffold(
                     viewModel = viewModel,
                     data = data,
@@ -133,10 +216,23 @@ fun UmmiApp(viewModel: UmmiViewModel = viewModel()) {
                     onExportHistory = { exportHistoryLauncher.launch("ummi-history-${PregnancyMath.todayKey()}.txt") },
                     onImportBackup = { importBackupLauncher.launch(arrayOf("application/json", "text/plain", "*/*")) },
                     onExportCalendar = { exportCalendarLauncher.launch("ummi-pregnancy.ics") },
+                    notificationsAllowed = notificationsAllowed,
+                    onAllowNotifications = { askForNotifications(true) },
                 )
             }
         }
     }
+}
+
+/** The app's icon, for the welcome screen. */
+@Composable
+internal fun AppIcon() {
+    Image(
+        painter = painterResource(R.drawable.ummi_icon),
+        contentDescription = "Ummi",
+        contentScale = ContentScale.Crop,
+        modifier = Modifier.fillMaxSize(),
+    )
 }
 
 private fun parseThemeMode(stored: String): UmmiThemeMode = when (stored.lowercase()) {
@@ -159,12 +255,54 @@ private fun UmmiMainScaffold(
     onExportHistory: () -> Unit,
     onImportBackup: () -> Unit,
     onExportCalendar: () -> Unit,
+    notificationsAllowed: Boolean,
+    onAllowNotifications: () -> Unit,
 ) {
     val navController = rememberNavController()
     val backStackEntry by navController.currentBackStackEntryAsState()
-    val currentRoute = backStackEntry?.destination?.route
+    // "journey?week={week}&tab={tab}" is still the Journey tab
+    val currentRoute = backStackEntry?.destination?.route?.substringBefore('?')
+    val scope = rememberCoroutineScope()
+    val snackbarHost = remember { SnackbarHostState() }
+    val snack = remember(snackbarHost) {
+        Snack { message, undo ->
+            scope.launch {
+                snackbarHost.currentSnackbarData?.dismiss()
+                val result = snackbarHost.showSnackbar(
+                    message = message,
+                    actionLabel = if (undo != null) "Undo" else null,
+                    duration = SnackbarDuration.Short,
+                )
+                if (result == SnackbarResult.ActionPerformed) undo?.invoke()
+            }
+        }
+    }
 
+    val place = appState.place ?: Place.DEFAULT
+    val today = LocalDate.now()
+    val prayers = remember(place, today) { PrayerTimes.forDay(today, place.lat, place.lng, ZoneId.systemDefault()) }
+    val dueDate = PregnancyMath.parseDueDate(appState.dueDate)
+    val week = PregnancyMath.currentWeek(dueDate)
+    val month = PregnancyMath.currentMonthNumber(week, data.months)
+    val navigateTo = { route: String ->
+        navController.navigate(route) {
+            popUpTo(navController.graph.findStartDestination().id) { saveState = true }
+            launchSingleTop = true
+        }
+    }
+
+    CompositionLocalProvider(LocalSnack provides snack) {
     Scaffold(
+        snackbarHost = {
+            SnackbarHost(snackbarHost) { data ->
+                Snackbar(
+                    snackbarData = data,
+                    containerColor = Ummi.colors.ink,
+                    contentColor = Ummi.colors.bg,
+                    actionColor = Ummi.colors.accent,
+                )
+            }
+        },
         bottomBar = {
             NavigationBar {
                 UmmiDestination.entries.forEach { dest ->
@@ -197,21 +335,40 @@ private fun UmmiMainScaffold(
                     onToggleDua = viewModel::toggleDuaRecitedToday,
                     onOpenReader = onOpenReader,
                     onOpenReminders = { navController.navigate(Routes.REMINDERS) },
-                    onOpenWeek = { navController.navigate(UmmiDestination.Journey.route) },
-                    onOpenMonth = { navController.navigate(UmmiDestination.Journey.route) },
+                    onOpenWeek = { navigateTo("${UmmiDestination.Journey.route}?week=$it") },
+                    onOpenMonth = { navigateTo("${UmmiDestination.Journey.route}?tab=month") },
+                    onOpenVisits = { navigateTo(UmmiDestination.Visits.route) },
+                    onSetTaskReminder = viewModel::setTaskReminder,
+                    prayers = prayers,
                 )
             }
-            composable(UmmiDestination.Journey.route) {
-                val dueDate = PregnancyMath.parseDueDate(appState.dueDate)
-                val week = PregnancyMath.currentWeek(dueDate)
-                val month = PregnancyMath.currentMonthNumber(week, data.months)
-                JourneyScreen(data = data, currentWeek = week, currentMonth = month, onOpenReader = onOpenReader)
+            composable(
+                route = UmmiDestination.Journey.route + "?week={week}&tab={tab}",
+                arguments = listOf(
+                    navArgument("week") { type = NavType.StringType; nullable = true; defaultValue = null },
+                    navArgument("tab") { type = NavType.StringType; nullable = true; defaultValue = null },
+                ),
+            ) { entry ->
+                val startWeek = entry.arguments?.getString("week")?.toIntOrNull()
+                JourneyScreen(
+                    data = data,
+                    currentWeek = week,
+                    currentMonth = month,
+                    onOpenReader = onOpenReader,
+                    startWeek = startWeek ?: week,
+                    startOnMonth = entry.arguments?.getString("tab") == "month",
+                )
             }
             composable(UmmiDestination.Duas.route) {
                 DuasScreen(data = data, onOpenReader = onOpenReader)
             }
             composable(UmmiDestination.Visits.route) {
-                ComingSoonScreen("Visits", "Appointments, scans and visit reminders are coming in a future update.")
+                VisitsScreen(
+                    visits = appState.visits,
+                    onSave = viewModel::saveVisit,
+                    onRemove = viewModel::removeVisit,
+                    onSetReminder = viewModel::setVisitReminder,
+                )
             }
             composable(UmmiDestination.More.route) {
                 MoreScreen(
@@ -227,12 +384,30 @@ private fun UmmiMainScaffold(
                     onExportCalendar = onExportCalendar,
                     onResetApp = viewModel::resetAll,
                     onOpenReminders = { navController.navigate(Routes.REMINDERS) },
+                    onAddName = viewModel::addName,
+                    onToggleNameFavourite = viewModel::toggleNameFavourite,
+                    onSetNameNote = viewModel::setNameNote,
+                    onRemoveName = viewModel::removeName,
                 )
             }
             composable(Routes.REMINDERS) {
-                ComingSoonScreen("Reminders", "Daily, prayer-linked and per-task reminders are coming in a future update.")
+                RemindersScreen(
+                    settings = appState.reminders,
+                    place = place,
+                    prayers = prayers,
+                    notificationsAllowed = notificationsAllowed,
+                    todaysTasks = DailyPlan.tasksFor(data.months[month.toString()], data.baseTasks, today)
+                        .sortedBy { ActSlot.of(it).ordinal },
+                    visits = Visits.upcoming(appState.visits, LocalDateTime.now()),
+                    onBack = { navController.popBackStack() },
+                    onUpdate = viewModel::setReminders,
+                    onSetTaskReminder = viewModel::setTaskReminder,
+                    onSetPlace = viewModel::setPlace,
+                    onAllowNotifications = onAllowNotifications,
+                )
             }
         }
+    }
     }
 
     if (readerKey != null) {

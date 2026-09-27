@@ -42,8 +42,12 @@ fun JourneyScreen(
     currentMonth: Int,
     onOpenReader: (ReaderKey) -> Unit,
     scrollState: ScrollState = rememberScrollState(),
+    /** The week to open on, when Today's week strip sent her here. */
+    startWeek: Int = currentWeek,
+    /** Open on the Month tab, for Today's "Month N of the guide". */
+    startOnMonth: Boolean = false,
 ) {
-    var tab by remember { mutableStateOf(JourneyTab.WEEK) }
+    var tab by remember { mutableStateOf(if (startOnMonth) JourneyTab.MONTH else JourneyTab.WEEK) }
     Column(modifier = Modifier.fillMaxWidth().verticalScroll(scrollState)) {
         Text("Your journey", fontFamily = Literata, fontWeight = FontWeight.SemiBold, fontSize = 26.sp, modifier = Modifier.padding(20.dp, 12.dp), color = Ummi.colors.ink)
         SegmentedControl(
@@ -53,7 +57,7 @@ fun JourneyScreen(
         )
         Spacer(Modifier.height(12.dp))
         when (tab) {
-            JourneyTab.WEEK -> WeekTab(data, currentWeek, onOpenReader)
+            JourneyTab.WEEK -> WeekTab(data, currentWeek, startWeek, onOpenReader)
             JourneyTab.MONTH -> MonthTab(data, currentMonth, onOpenReader)
             JourneyTab.FOOD -> FoodTab(data)
         }
@@ -90,8 +94,8 @@ private fun <T> SegmentedControl(options: List<Pair<String, T>>, selected: T, on
 private fun Modifier.clickableNoRipple(onClick: () -> Unit): Modifier = this.clickable(onClick = onClick)
 
 @Composable
-private fun WeekTab(data: UmmiData, currentWeek: Int, onOpenReader: (ReaderKey) -> Unit) {
-    var week by remember(currentWeek) { mutableIntStateOf(currentWeek) }
+private fun WeekTab(data: UmmiData, currentWeek: Int, startWeek: Int, onOpenReader: (ReaderKey) -> Unit) {
+    var week by remember(currentWeek, startWeek) { mutableIntStateOf(startWeek.coerceIn(4, 41)) }
     val info = data.weeks[week.toString()]
     Column {
         Row(

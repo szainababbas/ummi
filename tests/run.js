@@ -683,6 +683,16 @@ describe('android app compatibility', () => {
     for (const k of Object.keys(fixture.androidBackup.state)) eq(s[k], fixture.androidBackup.state[k], 'field ' + k);
   });
 
+  it('keeps the Android app\'s visits, names and reminders in its own backup', () => {
+    // Otherwise a trip through the browser would quietly lose them.
+    T.setState(T.readBackup(fixture.androidBackup.file));
+    const written = JSON.parse(JSON.stringify(T.backupPayload()));
+    for (const k of ['names', 'visits', 'reminders', 'place']) {
+      ok(k in fixture.androidBackup.state, 'the fixture no longer has ' + k);
+      eq(written.state[k], fixture.androidBackup.state[k], 'field ' + k);
+    }
+  });
+
   it('writes the same calendar file as the Android app', () => {
     // android/.../CalendarExportTest checks its own output against this file too
     const expected = fs.readFileSync(path.join(__dirname, 'fixtures', 'calendar-2026-12-15.ics'), 'utf8');

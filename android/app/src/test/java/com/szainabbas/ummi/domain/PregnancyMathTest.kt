@@ -138,4 +138,20 @@ class PregnancyMathTest {
         assertEquals("About the size of an apple", PregnancyMath.sizeSentence("Apple"))
         assertEquals("About the size of an ear of corn", PregnancyMath.sizeSentence("Ear of corn"))
     }
+
+    @Test
+    fun `turns a current week into a due date that lands on that week`() {
+        val today = LocalDate.of(2026, 9, 27)
+        assertEquals(LocalDate.of(2027, 3, 28), PregnancyMath.dueDateForWeek(14, today))
+        for (week in 4..41) {
+            assertEquals("week $week", week, PregnancyMath.currentWeek(PregnancyMath.dueDateForWeek(week, today), today))
+        }
+        assertEquals(PregnancyMath.dueDateForWeek(4, today), PregnancyMath.dueDateForWeek(2, today))
+    }
+
+    @Test
+    fun `welcomes her with the week and trimester`() {
+        assertEquals("That's week 24, 2nd trimester. Welcome.", PregnancyMath.welcomeLine(24))
+        assertEquals("That's week 30, 3rd trimester. Welcome.", PregnancyMath.welcomeLine(30))
+    }
 }

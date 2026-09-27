@@ -26,6 +26,10 @@ class BackupCodecTest {
         duaDone = mapOf("2026-08-16" to true),
         journal = listOf(JournalEntry("2026-08-16", "a good day")),
         theme = "dark",
+        names = listOf(NameEntry("Maryam", "After Sayyidah Maryam (as)", favourite = true)),
+        visits = listOf(Visit("v1", "2026-10-16", "10:30", "Midwife check", reminder = "evening", place = "Clinic")),
+        reminders = ReminderSettings(morning = true, water = true, tasks = mapOf("m4a" to "07:30")),
+        place = Place("Karachi", 24.8607, 67.0011),
     )
 
     @Test

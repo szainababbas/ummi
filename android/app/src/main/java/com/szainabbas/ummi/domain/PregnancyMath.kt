@@ -66,6 +66,17 @@ object PregnancyMath {
     fun todayKey(today: LocalDate = LocalDate.now()): String = today.format(isoDate)
 
     /**
+     * Onboarding's "Current week" mode, as the PWA's `deriveDueFromWeek`: the
+     * due date that makes today the start of [week]. Counted in calendar days,
+     * so a clock change in between can't move it.
+     */
+    fun dueDateForWeek(week: Int, today: LocalDate = LocalDate.now()): LocalDate =
+        today.plusDays((40 - week.coerceIn(4, 41)) * 7L)
+
+    /** Onboarding's summary chip: "That's week 24, 2nd trimester. Welcome." */
+    fun welcomeLine(week: Int): String = "That's week $week, ${trimesterShort(week)}. Welcome."
+
+    /**
      * Material 3's DatePicker speaks in milliseconds at UTC midnight. Converting
      * through the phone's own time zone instead can land on the day before.
      */
