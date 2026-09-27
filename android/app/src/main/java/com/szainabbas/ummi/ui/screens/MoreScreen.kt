@@ -64,6 +64,8 @@ fun MoreScreen(
     onExportCalendar: () -> Unit,
     onResetApp: () -> Unit,
     onOpenReminders: () -> Unit,
+    /** What's on, from [com.szainabbas.ummi.domain.Reminders.statusLine]. */
+    remindersStatus: String = "",
     onAddName: (String) -> Unit = {},
     onToggleNameFavourite: (String) -> Unit = {},
     onSetNameNote: (String, String) -> Unit = { _, _ -> },
@@ -82,7 +84,7 @@ fun MoreScreen(
         NamesCard(appState.names, onAddName, onToggleNameFavourite, onSetNameNote, onRemoveName)
 
         SectionCard(title = "Settings") {
-            SettingRow(label = "Reminders") { onOpenReminders() }
+            RemindersRow(remindersStatus, onOpenReminders)
             Text("Appearance", fontSize = 13.sp, color = Ummi.colors.ink2, modifier = Modifier.padding(top = 8.dp, bottom = 6.dp))
             ThemeSegmentedControl(themeMode, onSetThemeMode)
             Spacer(Modifier.height(4.dp))
@@ -238,6 +240,21 @@ private fun SettingRow(label: String, onClick: () -> Unit) {
         color = Ummi.colors.ink,
         modifier = Modifier.fillMaxWidth().clickable(onClick = onClick).padding(vertical = 10.dp),
     )
+}
+
+@Composable
+private fun RemindersRow(status: String, onClick: () -> Unit) {
+    Row(
+        modifier = Modifier.fillMaxWidth().clickable(onClick = onClick).padding(vertical = 10.dp),
+        verticalAlignment = Alignment.CenterVertically,
+    ) {
+        Icon(UmmiIcons.reminderSet, contentDescription = null, tint = Ummi.colors.primary, modifier = Modifier.size(20.dp))
+        Spacer(Modifier.width(10.dp))
+        Column(Modifier.weight(1f)) {
+            Text("Reminders & notifications", fontSize = 15.sp, color = Ummi.colors.ink)
+            if (status.isNotEmpty()) Text(status, fontSize = 13.sp, color = Ummi.colors.ink2)
+        }
+    }
 }
 
 @Composable

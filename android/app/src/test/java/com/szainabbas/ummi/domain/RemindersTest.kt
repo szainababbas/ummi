@@ -93,6 +93,16 @@ class RemindersTest {
         Visit(id = "v", date = date, time = time, title = "Twenty-week scan", type = "scan", reminder = reminder, note = note)
 
     @Test
+    fun `More's reminders row says what goes off today and which visits have one`() {
+        assertEquals("All off", Reminders.statusLine(today, base, data))
+        assertEquals("1 reminder today", Reminders.statusLine(today, on(ReminderSettings(morning = true)), data))
+        val visits = listOf(visit("evening"), visit("none"), visit("morning", date = "2026-09-01"))
+        val settings = ReminderSettings(morning = true, water = true, tasks = mapOf("m7d" to true))
+        assertEquals("3 reminders today · 1 visit", Reminders.statusLine(today, on(settings).copy(visits = visits), data))
+        assertEquals("2 visits", Reminders.statusLine(today, base.copy(visits = listOf(visit("evening"), visit("2h"))), data))
+    }
+
+    @Test
     fun `visit reminders go off the evening before, the morning of, or two hours before`() {
         assertEquals(LocalDateTime.of(2026, 10, 5, 20, 0), Reminders.visitReminderAt(visit("evening")))
         assertEquals(LocalDateTime.of(2026, 10, 6, 7, 0), Reminders.visitReminderAt(visit("morning")))

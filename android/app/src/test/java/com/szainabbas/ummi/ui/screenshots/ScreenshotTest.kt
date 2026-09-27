@@ -22,6 +22,7 @@ import com.szainabbas.ummi.ui.screens.OnboardingScreen
 import com.szainabbas.ummi.ui.screens.RemindersScreen
 import com.szainabbas.ummi.domain.Onboarding
 import com.szainabbas.ummi.domain.PrayerTimes
+import com.szainabbas.ummi.domain.Reminders
 import com.szainabbas.ummi.ui.screens.JourneyScreen
 import com.szainabbas.ummi.ui.screens.MoreScreen
 import com.szainabbas.ummi.ui.screens.TodayScreen
@@ -108,7 +109,6 @@ class ScreenshotTest {
         onToggleTask = {},
         onToggleDua = {},
         onOpenReader = {},
-        onOpenReminders = {},
         onOpenWeek = {},
         onOpenMonth = {},
         prayerTimes = prayerTimes,
@@ -204,6 +204,7 @@ class ScreenshotTest {
             onExportCalendar = {},
             onResetApp = {},
             onOpenReminders = {},
+            remindersStatus = Reminders.statusLine(today, state, data),
             scrollState = it,
         )
     }

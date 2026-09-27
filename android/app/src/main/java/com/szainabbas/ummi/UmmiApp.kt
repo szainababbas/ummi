@@ -56,6 +56,7 @@ import com.szainabbas.ummi.data.model.ReaderKey
 import com.szainabbas.ummi.data.model.UmmiData
 import com.szainabbas.ummi.domain.PrayerTimes
 import com.szainabbas.ummi.domain.PregnancyMath
+import com.szainabbas.ummi.domain.Reminders
 import com.szainabbas.ummi.notify.ReminderScheduler
 import com.szainabbas.ummi.ui.components.ReaderBottomSheet
 import com.szainabbas.ummi.ui.navigation.Routes
@@ -321,7 +322,6 @@ private fun UmmiMainScaffold(
                     onToggleTask = viewModel::toggleTask,
                     onToggleDua = viewModel::toggleDuaRecitedToday,
                     onOpenReader = onOpenReader,
-                    onOpenReminders = { navController.navigate(Routes.REMINDERS) },
                     onOpenWeek = { journeyStart = JourneyTab.WEEK to it; goTo(UmmiDestination.Journey.route) },
                     onOpenMonth = { journeyStart = JourneyTab.MONTH to null; goTo(UmmiDestination.Journey.route) },
                     onOpenVisits = { goTo(UmmiDestination.Visits.route) },
@@ -363,6 +363,7 @@ private fun UmmiMainScaffold(
                     onExportCalendar = onExportCalendar,
                     onResetApp = viewModel::resetAll,
                     onOpenReminders = { navController.navigate(Routes.REMINDERS) },
+                    remindersStatus = Reminders.statusLine(LocalDate.now(), appState, data),
                     onAddName = viewModel::addName,
                     onToggleNameFavourite = viewModel::toggleNameFavourite,
                     onSetNameNote = viewModel::setNameNote,
