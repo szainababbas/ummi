@@ -125,6 +125,22 @@ object ReminderPlanner {
         return daily + r.tasks.size + visits
     }
 
+    /** More's line under "Reminders & notifications": "3 on · morning summary, after prayers, 1 task", or "All off". */
+    fun statusLine(state: AppState, now: LocalDateTime): String {
+        val r = state.reminders
+        val visits = Visits.upcoming(state.visits, now).count { VisitReminder.of(it.reminder) != VisitReminder.NONE }
+        val parts = buildList {
+            if (r.morning) add("morning summary")
+            if (r.prayer) add("after prayers")
+            if (r.water) add("water")
+            if (r.tasks.isNotEmpty()) add(plural(r.tasks.size, "task"))
+            if (visits > 0) add(plural(visits, "visit"))
+        }
+        return if (parts.isEmpty()) "All off" else "${activeCount(state, now)} on · " + parts.joinToString(", ")
+    }
+
+    private fun plural(n: Int, word: String) = "$n $word" + if (n == 1) "" else "s"
+
     /** The time a task's bell sets when first tapped: near the part of the day it belongs to. */
     fun defaultTime(act: ActEntry, prayers: PrayerDay?): LocalTime = when (ActSlot.of(act)) {
         ActSlot.MORNING -> MORNING

@@ -68,7 +68,6 @@ fun TodayScreen(
     onToggleTask: (String) -> Unit,
     onToggleDua: () -> Unit,
     onOpenReader: (ReaderKey) -> Unit,
-    onOpenReminders: () -> Unit,
     onOpenWeek: (Int) -> Unit,
     onOpenMonth: () -> Unit,
     onOpenVisits: () -> Unit = {},
@@ -110,7 +109,9 @@ fun TodayScreen(
     }
 
     Column(modifier = Modifier.fillMaxWidth().verticalScroll(scrollState)) {
-        HeaderRow(name = appState.name, activeReminders = ReminderPlanner.activeCount(appState, now), onBellClick = onOpenReminders)
+        // No bell here: on Today it read as "your notifications". Reminder
+        // settings live under More; the bells beside each task switch that task's reminder.
+        HeaderRow(name = appState.name)
 
         Box(modifier = Modifier.fillMaxWidth(), contentAlignment = Alignment.Center) {
             ProgressRing(week = week, daysToGo = daysToGo, sizeDesc = weekInfo?.size)
@@ -182,39 +183,14 @@ fun TodayScreen(
 }
 
 @Composable
-private fun HeaderRow(name: String?, activeReminders: Int, onBellClick: () -> Unit) {
-    Row(
-        modifier = Modifier.fillMaxWidth().padding(horizontal = 20.dp, vertical = 12.dp),
-        horizontalArrangement = Arrangement.SpaceBetween,
-        verticalAlignment = Alignment.CenterVertically,
-    ) {
-        Text(
-            text = if (name.isNullOrBlank()) "Salaam" else "Salaam, $name",
-            fontWeight = FontWeight.SemiBold,
-            fontSize = 16.sp,
-            color = Ummi.colors.ink,
-        )
-        Box {
-            IconButton(
-                onClick = onBellClick,
-                modifier = Modifier.size(48.dp).clip(CircleShape).background(Ummi.colors.surface2),
-            ) {
-                Icon(UmmiIcons.notifications, contentDescription = "Reminders, $activeReminders on", tint = Ummi.colors.ink)
-            }
-            if (activeReminders > 0) {
-                Box(
-                    modifier = Modifier
-                        .align(Alignment.TopEnd)
-                        .defaultMinSize(minWidth = 18.dp, minHeight = 18.dp)
-                        .background(Ummi.colors.primary, CircleShape)
-                        .padding(horizontal = 4.dp),
-                    contentAlignment = Alignment.Center,
-                ) {
-                    Text("$activeReminders", fontSize = 11.sp, lineHeight = 13.sp, fontWeight = FontWeight.Bold, color = Ummi.colors.onPrimary)
-                }
-            }
-        }
-    }
+private fun HeaderRow(name: String?) {
+    Text(
+        text = if (name.isNullOrBlank()) "Salaam" else "Salaam, $name",
+        fontWeight = FontWeight.SemiBold,
+        fontSize = 16.sp,
+        color = Ummi.colors.ink,
+        modifier = Modifier.fillMaxWidth().heightIn(min = 48.dp).padding(horizontal = 20.dp, vertical = 12.dp),
+    )
 }
 
 @Composable
@@ -289,7 +265,8 @@ private fun WeekStrip(currentWeek: Int, onWeekClick: (Int) -> Unit) {
             "Tap a week to read about it",
             fontSize = 12.sp,
             color = Ummi.colors.ink2,
-            modifier = Modifier.padding(horizontal = 20.dp, vertical = 4.dp),
+            textAlign = TextAlign.Center,
+            modifier = Modifier.fillMaxWidth().padding(horizontal = 20.dp, vertical = 4.dp),
         )
     }
 }

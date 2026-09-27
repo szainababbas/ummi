@@ -334,7 +334,6 @@ private fun UmmiMainScaffold(
                     onToggleTask = viewModel::toggleTask,
                     onToggleDua = viewModel::toggleDuaRecitedToday,
                     onOpenReader = onOpenReader,
-                    onOpenReminders = { navController.navigate(Routes.REMINDERS) },
                     onOpenWeek = { navigateTo("${UmmiDestination.Journey.route}?week=$it") },
                     onOpenMonth = { navigateTo("${UmmiDestination.Journey.route}?tab=month") },
                     onOpenVisits = { navigateTo(UmmiDestination.Visits.route) },

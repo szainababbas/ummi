@@ -137,4 +137,16 @@ class ReminderPlannerTest {
         assertEquals(t("20:00"), ReminderPlanner.defaultTime(acts.getValue("m9h"), london))
         assertEquals(t("13:30"), ReminderPlanner.defaultTime(acts.getValue("m4c"), null))
     }
+
+    @Test
+    fun `sums up what is on for More's settings row`() {
+        assertEquals("All off", ReminderPlanner.statusLine(base, sunday.atTime(9, 0)))
+        val state = base.copy(
+            reminders = ReminderSettings(morning = true, prayer = true, tasks = mapOf("m7g" to "08:15")),
+            visits = listOf(ogtt, ogtt.copy(id = "b"), ogtt.copy(id = "c", reminder = "none")),
+        )
+        assertEquals("5 on · morning summary, after prayers, 1 task, 2 visits", ReminderPlanner.statusLine(state, sunday.atTime(9, 0)))
+        val water = base.copy(reminders = ReminderSettings(water = true, tasks = mapOf("a" to "07:00", "b" to "08:00")))
+        assertEquals("3 on · water, 2 tasks", ReminderPlanner.statusLine(water, sunday.atTime(9, 0)))
+    }
 }

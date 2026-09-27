@@ -37,12 +37,14 @@ import com.szainabbas.ummi.data.AppState
 import com.szainabbas.ummi.data.JournalEntry
 import com.szainabbas.ummi.data.NameEntry
 import com.szainabbas.ummi.domain.PregnancyMath
+import com.szainabbas.ummi.domain.ReminderPlanner
 import com.szainabbas.ummi.ui.components.DueDatePickerDialog
 import com.szainabbas.ummi.ui.theme.Literata
 import com.szainabbas.ummi.ui.theme.UmmiIcons
 import com.szainabbas.ummi.ui.theme.Ummi
 import com.szainabbas.ummi.ui.theme.UmmiThemeMode
 import java.time.LocalDate
+import java.time.LocalDateTime
 
 /**
  * The profile, the names wishlist, settings, the reflection journal and
@@ -67,6 +69,7 @@ fun MoreScreen(
     onToggleNameFavourite: (String) -> Unit = {},
     onSetNameNote: (String, String) -> Unit = { _, _ -> },
     onRemoveName: (String) -> Unit = {},
+    now: LocalDateTime = LocalDateTime.now(),
     scrollState: ScrollState = rememberScrollState(),
 ) {
     var showResetConfirm by remember { mutableStateOf(false) }
@@ -83,7 +86,18 @@ fun MoreScreen(
         }
 
         SectionCard(title = "Settings") {
-            SettingRow(label = "Reminders") { onOpenReminders() }
+            Row(
+                modifier = Modifier.fillMaxWidth().clickable(onClick = onOpenReminders).padding(vertical = 10.dp),
+                verticalAlignment = Alignment.CenterVertically,
+            ) {
+                Icon(UmmiIcons.notifications, contentDescription = null, tint = Ummi.colors.primary, modifier = Modifier.size(22.dp))
+                Spacer(Modifier.width(12.dp))
+                Column(modifier = Modifier.weight(1f)) {
+                    Text("Reminders & notifications", fontSize = 15.sp, color = Ummi.colors.ink)
+                    Text(ReminderPlanner.statusLine(appState, now), fontSize = 13.sp, color = Ummi.colors.ink2)
+                }
+                Icon(UmmiIcons.nextWeek, contentDescription = null, tint = Ummi.colors.ink2)
+            }
             Text("Appearance", fontSize = 13.sp, color = Ummi.colors.ink2, modifier = Modifier.padding(top = 8.dp, bottom = 6.dp))
             ThemeSegmentedControl(themeMode, onSetThemeMode)
             Spacer(Modifier.height(4.dp))

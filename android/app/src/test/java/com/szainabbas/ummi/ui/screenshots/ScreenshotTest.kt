@@ -118,7 +118,6 @@ class ScreenshotTest {
         onToggleTask = {},
         onToggleDua = {},
         onOpenReader = {},
-        onOpenReminders = {},
         onOpenWeek = {},
         onOpenMonth = {},
         prayers = prayers,
@@ -242,6 +241,7 @@ class ScreenshotTest {
             onExportCalendar = {},
             onResetApp = {},
             onOpenReminders = {},
+            now = now,
             scrollState = it,
         )
     }
