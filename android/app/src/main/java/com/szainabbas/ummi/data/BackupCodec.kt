@@ -1,5 +1,6 @@
 package com.szainabbas.ummi.data
 
+import com.szainabbas.ummi.domain.VisitType
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.JsonObject
 import kotlinx.serialization.json.JsonPrimitive
@@ -56,6 +57,16 @@ object BackupCodec {
         lines += ""
         lines += "REFLECTIONS (${state.journal.size})"
         state.journal.asReversed().forEach { lines += "  ${it.d} — ${it.t}" }
+        // Only when there are any, so a record from before Visits reads the same.
+        if (state.visits.isNotEmpty()) {
+            lines += ""
+            lines += "VISITS (${state.visits.size})"
+            state.visits.sortedWith(compareBy({ it.date }, { it.time })).forEach { v ->
+                val time = if (v.time.isEmpty()) "" else " ${v.time}"
+                val note = v.note?.takeIf { it.isNotBlank() }?.let { " — \"$it\"" } ?: ""
+                lines += "  ${v.date}$time — ${v.title} (${VisitType.of(v.type).label})$note"
+            }
+        }
         return lines.joinToString("\n") + "\n"
     }
 

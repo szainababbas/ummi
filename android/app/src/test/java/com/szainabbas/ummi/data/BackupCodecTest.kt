@@ -100,6 +100,14 @@ class BackupCodecTest {
     }
 
     @Test
+    fun `lists visits in the readable record the same way as the web app`() {
+        val history = fixture["historyWithVisits"]!!.jsonObject
+        val state = stateOf(history["state"]!!.jsonObject)
+        val today = LocalDate.parse(history["today"]!!.jsonPrimitive.content)
+        assertEquals(history["text"]!!.jsonPrimitive.content, BackupCodec.historyText(state, today))
+    }
+
+    @Test
     fun `writes a readable record when nothing has been done yet`() {
         val text = BackupCodec.historyText(AppState(dueDate = "2026-11-20"), LocalDate.of(2026, 9, 26))
         assertEquals(

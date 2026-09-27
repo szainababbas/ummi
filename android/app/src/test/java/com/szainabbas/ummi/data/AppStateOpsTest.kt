@@ -41,4 +41,28 @@ class AppStateOpsTest {
         val state = AppState(dueDate = "2026-11-20")
         assertSame(state, state.withJournalEntry("   ", day1))
     }
+
+    private val scan = Visit(id = "v1", date = "2026-10-06", time = "09:10", title = "  Anomaly scan ", type = "scan")
+
+    @Test
+    fun `adds a visit, tidying the title and a blank note`() {
+        val state = AppState().withVisitSaved(scan.copy(note = "   "))
+        assertEquals(listOf(scan.copy(title = "Anomaly scan")), state.visits)
+    }
+
+    @Test
+    fun `saving a visit with the same id edits it in place`() {
+        val other = Visit(id = "v2", date = "2026-10-20", title = "Midwife", type = "midwife")
+        val state = AppState().withVisitSaved(scan).withVisitSaved(other)
+            .withVisitSaved(scan.copy(title = "Growth scan", note = "full bladder"))
+        assertEquals(listOf("Growth scan", "Midwife"), state.visits.map { it.title })
+        assertEquals("full bladder", state.visits[0].note)
+    }
+
+    @Test
+    fun `deletes only the visit with that id`() {
+        val other = Visit(id = "v2", date = "2026-10-20", title = "Midwife")
+        val state = AppState().withVisitSaved(scan).withVisitSaved(other).withVisitDeleted("v1")
+        assertEquals(listOf("v2"), state.visits.map { it.id })
+    }
 }

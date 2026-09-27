@@ -13,17 +13,22 @@ import androidx.compose.ui.unit.dp
 import com.szainabbas.ummi.domain.PregnancyMath
 import java.time.LocalDate
 
-/** Picks the due date. Used by the start screen and by More → Due date. */
+/**
+ * Picks a date: the due date (start screen, More → Due date) or a visit's
+ * date. With nothing picked yet it opens on [fallbackMonth].
+ */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun DueDatePickerDialog(
     initial: LocalDate?,
     onPicked: (LocalDate) -> Unit,
     onDismiss: () -> Unit,
+    title: String = "When is your baby due?",
+    fallbackMonth: LocalDate = LocalDate.now().plusMonths(6),
 ) {
     val state = rememberDatePickerState(
         initialSelectedDateMillis = initial?.let(PregnancyMath::toPickerMillis),
-        initialDisplayedMonthMillis = PregnancyMath.toPickerMillis(initial ?: LocalDate.now().plusMonths(6)),
+        initialDisplayedMonthMillis = PregnancyMath.toPickerMillis(initial ?: fallbackMonth),
     )
     DatePickerDialog(
         onDismissRequest = onDismiss,
@@ -37,7 +42,7 @@ fun DueDatePickerDialog(
     ) {
         DatePicker(
             state = state,
-            title = { Text("When is your baby due?", modifier = Modifier.padding(start = 24.dp, end = 12.dp, top = 16.dp)) },
+            title = { Text(title, modifier = Modifier.padding(start = 24.dp, end = 12.dp, top = 16.dp)) },
         )
     }
 }

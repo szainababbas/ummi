@@ -35,6 +35,7 @@ import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextDecoration
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.foundation.Canvas
@@ -43,7 +44,9 @@ import com.szainabbas.ummi.data.model.ActEntry
 import com.szainabbas.ummi.data.model.ReaderKey
 import com.szainabbas.ummi.data.model.UmmiData
 import com.szainabbas.ummi.domain.DailyPlan
+import com.szainabbas.ummi.domain.Layout
 import com.szainabbas.ummi.domain.PregnancyMath
+import com.szainabbas.ummi.domain.Visits
 import com.szainabbas.ummi.ui.theme.Amiri
 import com.szainabbas.ummi.ui.theme.Literata
 import com.szainabbas.ummi.ui.theme.UmmiIcons
@@ -60,6 +63,7 @@ fun TodayScreen(
     onOpenReminders: () -> Unit,
     onOpenWeek: (Int) -> Unit,
     onOpenMonth: () -> Unit,
+    onOpenVisits: () -> Unit = {},
     today: LocalDate = LocalDate.now(),
     scrollState: ScrollState = rememberScrollState(),
 ) {
@@ -91,8 +95,14 @@ fun TodayScreen(
             text = PregnancyMath.trimesterShort(week) + (dueDate?.let { " · Due ≈ ${PregnancyMath.shortDate(it)}" } ?: ""),
             fontSize = 13.sp,
             color = Ummi.colors.ink2,
-            modifier = Modifier.padding(horizontal = 20.dp, vertical = 8.dp),
+            textAlign = TextAlign.Center,
+            modifier = Modifier.fillMaxWidth().padding(horizontal = 20.dp, vertical = 8.dp),
         )
+        Visits.next(appState.visits, today)?.let { visit ->
+            Box(modifier = Modifier.fillMaxWidth().padding(bottom = 8.dp), contentAlignment = Alignment.Center) {
+                NextVisitChip(visit, today, onClick = onOpenVisits)
+            }
+        }
 
         UpNextCard(
             act = nextAct,
@@ -206,14 +216,26 @@ private fun ProgressRing(week: Int, daysToGo: Int?, sizeDesc: String?) {
 @Composable
 private fun WeekStrip(currentWeek: Int, onWeekClick: (Int) -> Unit) {
     val weeks = (4..41).toList()
-    // Start on the current week rather than scrolling there after the first frame.
-    val listState = rememberLazyListState(initialFirstVisibleItemIndex = (weeks.indexOf(currentWeek) - 3).coerceAtLeast(0))
-    LaunchedEffect(currentWeek) {
-        val index = weeks.indexOf(currentWeek).coerceAtLeast(0)
-        listState.scrollToItem((index - 3).coerceAtLeast(0))
-    }
-    Column {
-        LazyRow(state = listState, horizontalArrangement = Arrangement.spacedBy(6.dp), modifier = Modifier.padding(horizontal = 20.dp)) {
+    val density = LocalDensity.current
+    val itemPx = with(density) { 40.dp.roundToPx() }
+    val gapPx = with(density) { 6.dp.roundToPx() }
+    val padPx = with(density) { 20.dp.roundToPx() }
+    BoxWithConstraints(modifier = Modifier.fillMaxWidth()) {
+        val viewportPx = constraints.maxWidth
+        fun centred(week: Int) = Layout.centredScroll(weeks.indexOf(week).coerceAtLeast(0), itemPx, gapPx, padPx, viewportPx)
+        // Start with the current week in the middle rather than scrolling there after the first frame.
+        val (startIndex, startOffset) = centred(currentWeek)
+        val listState = rememberLazyListState(startIndex, startOffset)
+        LaunchedEffect(currentWeek, viewportPx) {
+            val (index, offset) = centred(currentWeek)
+            listState.scrollToItem(index, offset)
+        }
+        LazyRow(
+            state = listState,
+            horizontalArrangement = Arrangement.spacedBy(6.dp),
+            contentPadding = PaddingValues(horizontal = 20.dp),
+            modifier = Modifier.fillMaxWidth(),
+        ) {
             itemsIndexed(weeks) { _, w ->
                 val isCurrent = w == currentWeek
                 val isPast = w < currentWeek
@@ -234,13 +256,14 @@ private fun WeekStrip(currentWeek: Int, onWeekClick: (Int) -> Unit) {
                 }
             }
         }
-        Text(
-            "Tap a week to read about it",
-            fontSize = 12.sp,
-            color = Ummi.colors.ink2,
-            modifier = Modifier.padding(horizontal = 20.dp, vertical = 4.dp),
-        )
     }
+    Text(
+        "Tap a week to read about it",
+        fontSize = 12.sp,
+        color = Ummi.colors.ink2,
+        textAlign = TextAlign.Center,
+        modifier = Modifier.fillMaxWidth().padding(horizontal = 20.dp, vertical = 4.dp),
+    )
 }
 
 @Composable

@@ -11,6 +11,7 @@ import app.cash.paparazzi.Paparazzi
 import com.szainabbas.ummi.TestFiles
 import com.szainabbas.ummi.data.AppState
 import com.szainabbas.ummi.data.JournalEntry
+import com.szainabbas.ummi.data.Visit
 import com.szainabbas.ummi.data.model.UmmiData
 import com.szainabbas.ummi.domain.DailyPlan
 import com.szainabbas.ummi.domain.PregnancyMath
@@ -19,6 +20,8 @@ import com.szainabbas.ummi.ui.screens.DueDateGateScreen
 import com.szainabbas.ummi.ui.screens.JourneyScreen
 import com.szainabbas.ummi.ui.screens.MoreScreen
 import com.szainabbas.ummi.ui.screens.TodayScreen
+import com.szainabbas.ummi.ui.screens.VisitForm
+import com.szainabbas.ummi.ui.screens.VisitsScreen
 import com.szainabbas.ummi.ui.theme.UmmiTheme
 import com.szainabbas.ummi.ui.theme.UmmiThemeMode
 import org.junit.Rule
@@ -56,6 +59,12 @@ class ScreenshotTest {
         journal = listOf(
             JournalEntry("2026-09-26", "Felt the first proper kicks after Maghrib."),
             JournalEntry("2026-09-25", "Tired, but grateful."),
+        ),
+        visits = listOf(
+            Visit("v1", "2026-09-29", "09:10", "Glucose test", "blood", "evening", "Nothing to eat after midnight."),
+            Visit("v2", "2026-10-08", "", "Midwife check", "midwife"),
+            Visit("v3", "2026-10-21", "14:30", "Growth scan", "scan", "2h"),
+            Visit("v4", "2026-09-14", "11:00", "Midwife check", "midwife", note = "Heartbeat strong, bump measuring well."),
         ),
     )
 
@@ -113,6 +122,9 @@ class ScreenshotTest {
     fun duas() = shot("duas", pages = 2) { DuasScreen(data = data, onOpenReader = {}, scrollState = it) }
 
     @Test
+    fun quran() = shot("quran", pages = 2) { DuasScreen(data = data, onOpenReader = {}, scrollState = it, startOnQuran = true) }
+
+    @Test
     fun more() = shot("more", pages = 2) {
         MoreScreen(
             appState = state,
@@ -129,5 +141,25 @@ class ScreenshotTest {
             onOpenReminders = {},
             scrollState = it,
         )
+    }
+
+    @Test
+    fun visits() = shot("visits", pages = 2) {
+        VisitsScreen(visits = state.visits, onSave = {}, onDelete = {}, today = today, scrollState = it)
+    }
+
+    @Test
+    fun visitsEmpty() = shot("visits_empty") {
+        VisitsScreen(visits = emptyList(), onSave = {}, onDelete = {}, today = today, scrollState = it)
+    }
+
+    @Test
+    fun visitFormNew() = shot("visit_form_new") {
+        VisitForm(initial = null, today = today, onSave = {}, onCancel = {}, onDelete = {})
+    }
+
+    @Test
+    fun visitFormEdit() = shot("visit_form_edit") {
+        VisitForm(initial = state.visits.first(), today = today, onSave = {}, onCancel = {}, onDelete = {})
     }
 }

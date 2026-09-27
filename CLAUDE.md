@@ -28,3 +28,13 @@ artifact; look at them before calling UI work done, since a screen that
 renders without crashing can still be unreadable.
 
 CI runs both suites on every pull request (`.github/workflows/`).
+
+**Running the Android suite in a cloud session:** there's no SDK
+preinstalled, but one installs in about a minute (cmdline-tools from
+dl.google.com, then `platforms;android-34` and `build-tools;34.0.0`). Point
+`android/local.properties` at it (`sdk.dir=...`, gitignored) and set
+`ANDROID_HOME` for Paparazzi. On JDK 21 the Kotlin daemon crashes, so add
+`-Pkotlin.compiler.execution.strategy=in-process`. `recordPaparazziDebug`
+runs every unit test and writes the screenshots to
+`android/app/src/test/snapshots/images/` (gitignored) for you to look at.
+

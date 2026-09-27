@@ -30,6 +30,7 @@ import androidx.compose.ui.unit.sp
 import com.szainabbas.ummi.data.model.DuaEntry
 import com.szainabbas.ummi.data.model.ReaderKey
 import com.szainabbas.ummi.data.model.UmmiData
+import com.szainabbas.ummi.domain.Layout
 import com.szainabbas.ummi.ui.theme.Amiri
 import com.szainabbas.ummi.ui.theme.Literata
 import com.szainabbas.ummi.ui.theme.UmmiIcons
@@ -42,9 +43,10 @@ fun DuasScreen(
     data: UmmiData,
     onOpenReader: (ReaderKey) -> Unit,
     scrollState: ScrollState = rememberScrollState(),
+    startOnQuran: Boolean = false,
 ) {
     val tabs = DUA_TAB_ORDER.filter { data.duas.containsKey(it) } + "Qurʾān"
-    var selectedTab by remember { mutableStateOf(tabs.first()) }
+    var selectedTab by remember { mutableStateOf(if (startOnQuran) tabs.last() else tabs.first()) }
 
     Column(modifier = Modifier.fillMaxWidth()) {
         Text("Duas & Qurʾān", fontFamily = Literata, fontWeight = FontWeight.SemiBold, fontSize = 26.sp, modifier = Modifier.padding(20.dp, 12.dp), color = Ummi.colors.ink)
@@ -181,30 +183,35 @@ private fun QuranTab(data: UmmiData, onOpenReader: (ReaderKey) -> Unit) {
         }
 
         Text("Āyāt the guide asks for", fontSize = 13.sp, fontWeight = FontWeight.Bold, color = Ummi.colors.accentText, modifier = Modifier.padding(20.dp, 12.dp, 20.dp, 4.dp))
-        FlowChips(refs = data.ayahs.keys.sorted(), onClick = { onOpenReader(ReaderKey.forAyah(it)) })
+        FlowChips(refs = Layout.ayahOrder(data.ayahs.keys), onClick = { onOpenReader(ReaderKey.forAyah(it)) })
     }
 }
 
 @Composable
 private fun FlowChips(refs: List<String>, onClick: (String) -> Unit) {
-    // Fixed-size rows instead of Compose's FlowRow, to avoid depending on
-    // its exact API shape in this BOM version without being able to compile
-    // and check it here.
-    val chunkSize = 3
-    Column(modifier = Modifier.padding(horizontal = 16.dp)) {
-        refs.chunked(chunkSize).forEach { row ->
-            Row(horizontalArrangement = Arrangement.spacedBy(8.dp), modifier = Modifier.padding(bottom = 8.dp)) {
+    // An even grid, four to a row, so the chips span the same width as the
+    // sūrah card above instead of bunching up on the left.
+    Column(modifier = Modifier.fillMaxWidth().padding(horizontal = 16.dp)) {
+        Layout.gridRows(refs, 4).forEach { row ->
+            Row(horizontalArrangement = Arrangement.spacedBy(8.dp), modifier = Modifier.fillMaxWidth().padding(bottom = 8.dp)) {
                 row.forEach { ref ->
-                    Text(
-                        ref,
-                        fontSize = 13.sp,
-                        color = Ummi.colors.ink,
-                        modifier = Modifier
-                            .clip(RoundedCornerShape(18.dp))
-                            .border(1.dp, Ummi.colors.line, RoundedCornerShape(18.dp))
-                            .clickable { onClick(ref) }
-                            .padding(horizontal = 14.dp, vertical = 8.dp),
-                    )
+                    if (ref == null) {
+                        Spacer(Modifier.weight(1f))
+                    } else {
+                        Text(
+                            ref,
+                            fontSize = 13.sp,
+                            color = Ummi.colors.ink,
+                            textAlign = TextAlign.Center,
+                            maxLines = 1,
+                            modifier = Modifier
+                                .weight(1f)
+                                .clip(RoundedCornerShape(18.dp))
+                                .border(1.dp, Ummi.colors.line, RoundedCornerShape(18.dp))
+                                .clickable { onClick(ref) }
+                                .padding(vertical = 8.dp),
+                        )
+                    }
                 }
             }
         }

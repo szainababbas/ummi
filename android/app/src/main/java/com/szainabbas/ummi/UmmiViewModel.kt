@@ -11,6 +11,9 @@ import com.szainabbas.ummi.data.model.UmmiData
 import com.szainabbas.ummi.data.withDuaRecitedToggled
 import com.szainabbas.ummi.data.withJournalEntry
 import com.szainabbas.ummi.data.withTaskToggled
+import com.szainabbas.ummi.data.Visit
+import com.szainabbas.ummi.data.withVisitDeleted
+import com.szainabbas.ummi.data.withVisitSaved
 import com.szainabbas.ummi.domain.CalendarExport
 import com.szainabbas.ummi.domain.PregnancyMath
 import kotlinx.coroutines.Dispatchers
@@ -66,6 +69,10 @@ class UmmiViewModel(application: Application) : AndroidViewModel(application) {
     fun setName(name: String) = mutate { it.copy(name = name.trim().ifBlank { null }) }
 
     fun setThemeMode(mode: String) = mutate { it.copy(theme = mode) }
+
+    fun saveVisit(visit: Visit) = mutate { it.withVisitSaved(visit) }
+
+    fun deleteVisit(id: String) = mutate { it.withVisitDeleted(id) }
 
     fun exportBackupJson(): String = BackupCodec.encodeBackup(_uiState.value.appState, Instant.now())
 

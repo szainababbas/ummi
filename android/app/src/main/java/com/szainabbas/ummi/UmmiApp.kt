@@ -45,6 +45,8 @@ import com.szainabbas.ummi.ui.screens.ComingSoonScreen
 import com.szainabbas.ummi.ui.screens.DuasScreen
 import com.szainabbas.ummi.ui.screens.DueDateGateScreen
 import com.szainabbas.ummi.ui.screens.JourneyScreen
+import com.szainabbas.ummi.ui.screens.JourneyTab
+import com.szainabbas.ummi.ui.screens.VisitsScreen
 import com.szainabbas.ummi.ui.screens.MoreScreen
 import com.szainabbas.ummi.ui.screens.TodayScreen
 import com.szainabbas.ummi.ui.theme.UmmiTheme
@@ -163,6 +165,15 @@ private fun UmmiMainScaffold(
     val navController = rememberNavController()
     val backStackEntry by navController.currentBackStackEntryAsState()
     val currentRoute = backStackEntry?.destination?.route
+    // Where Journey opens when Today sends her there: a tapped week, or the month.
+    var journeyStart by remember { mutableStateOf<Pair<JourneyTab, Int?>?>(null) }
+    val goTo: (String) -> Unit = { route ->
+        navController.navigate(route) {
+            popUpTo(navController.graph.findStartDestination().id) { saveState = true }
+            launchSingleTop = true
+            restoreState = true
+        }
+    }
 
     Scaffold(
         bottomBar = {
@@ -171,11 +182,8 @@ private fun UmmiMainScaffold(
                     NavigationBarItem(
                         selected = currentRoute == dest.route,
                         onClick = {
-                            navController.navigate(dest.route) {
-                                popUpTo(navController.graph.findStartDestination().id) { saveState = true }
-                                launchSingleTop = true
-                                restoreState = true
-                            }
+                            if (dest == UmmiDestination.Journey) journeyStart = null
+                            goTo(dest.route)
                         },
                         icon = { Icon(dest.icon, contentDescription = dest.label) },
                         label = { Text(dest.label) },
@@ -197,21 +205,29 @@ private fun UmmiMainScaffold(
                     onToggleDua = viewModel::toggleDuaRecitedToday,
                     onOpenReader = onOpenReader,
                     onOpenReminders = { navController.navigate(Routes.REMINDERS) },
-                    onOpenWeek = { navController.navigate(UmmiDestination.Journey.route) },
-                    onOpenMonth = { navController.navigate(UmmiDestination.Journey.route) },
+                    onOpenWeek = { journeyStart = JourneyTab.WEEK to it; goTo(UmmiDestination.Journey.route) },
+                    onOpenMonth = { journeyStart = JourneyTab.MONTH to null; goTo(UmmiDestination.Journey.route) },
+                    onOpenVisits = { goTo(UmmiDestination.Visits.route) },
                 )
             }
             composable(UmmiDestination.Journey.route) {
                 val dueDate = PregnancyMath.parseDueDate(appState.dueDate)
                 val week = PregnancyMath.currentWeek(dueDate)
                 val month = PregnancyMath.currentMonthNumber(week, data.months)
-                JourneyScreen(data = data, currentWeek = week, currentMonth = month, onOpenReader = onOpenReader)
+                JourneyScreen(
+                    data = data,
+                    currentWeek = week,
+                    currentMonth = month,
+                    onOpenReader = onOpenReader,
+                    startTab = journeyStart?.first ?: JourneyTab.WEEK,
+                    startWeek = journeyStart?.second ?: week,
+                )
             }
             composable(UmmiDestination.Duas.route) {
                 DuasScreen(data = data, onOpenReader = onOpenReader)
             }
             composable(UmmiDestination.Visits.route) {
-                ComingSoonScreen("Visits", "Appointments, scans and visit reminders are coming in a future update.")
+                VisitsScreen(visits = appState.visits, onSave = viewModel::saveVisit, onDelete = viewModel::deleteVisit)
             }
             composable(UmmiDestination.More.route) {
                 MoreScreen(
