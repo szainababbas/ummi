@@ -9,6 +9,7 @@ import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontVariation
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.unit.em
 import androidx.compose.ui.unit.sp
 import com.szainabbas.ummi.R
 
@@ -60,7 +61,8 @@ val Amiri = FontFamily(
 val UmmiTypography = Typography(
     titleLarge = TextStyle(fontFamily = Literata, fontWeight = FontWeight.SemiBold, fontSize = 22.sp),
     titleMedium = TextStyle(fontFamily = Literata, fontWeight = FontWeight.SemiBold, fontSize = 17.sp),
-    bodyLarge = TextStyle(fontFamily = Figtree, fontWeight = FontWeight.Normal, fontSize = 15.sp, lineHeight = 24.sp),
+    // Relative, since Text inherits this: a fixed 24sp spaced 13sp subtitles far apart.
+    bodyLarge = TextStyle(fontFamily = Figtree, fontWeight = FontWeight.Normal, fontSize = 15.sp, lineHeight = 1.5.em),
     bodyMedium = TextStyle(fontFamily = Figtree, fontWeight = FontWeight.Normal, fontSize = 14.sp, lineHeight = 21.sp),
     labelLarge = TextStyle(fontFamily = Figtree, fontWeight = FontWeight.SemiBold, fontSize = 16.sp),
     labelMedium = TextStyle(fontFamily = Figtree, fontWeight = FontWeight.SemiBold, fontSize = 12.sp),

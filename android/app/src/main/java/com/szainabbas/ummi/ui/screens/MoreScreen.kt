@@ -305,7 +305,7 @@ private fun NamesList(
                 Text(
                     entry.note.ifEmpty { "Add a note" },
                     fontSize = 13.sp,
-                    color = if (entry.note.isEmpty()) Ummi.colors.line else Ummi.colors.ink2,
+                    color = if (entry.note.isEmpty()) Ummi.colors.ink2.copy(alpha = 0.6f) else Ummi.colors.ink2,
                 )
             }
             IconButton(onClick = { onToggleFavourite(entry.name) }, modifier = Modifier.size(40.dp)) {

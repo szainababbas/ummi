@@ -94,11 +94,19 @@ fun RowDivider() {
 
 /** Material 3 switch in the handoff's colours: primary when on, surface2 with an ink2 outline when off. */
 @Composable
-fun UmmiSwitch(checked: Boolean, onCheckedChange: ((Boolean) -> Unit)?) {
+fun UmmiSwitch(checked: Boolean, onCheckedChange: ((Boolean) -> Unit)?, onDark: Boolean = false) {
     Switch(
         checked = checked,
         onCheckedChange = onCheckedChange,
-        colors = SwitchDefaults.colors(
+        // On the dark visit card, the handoff's own switch colours: light track when on.
+        colors = if (onDark) SwitchDefaults.colors(
+            checkedTrackColor = Ummi.colors.heroInk2,
+            checkedThumbColor = Ummi.colors.heroB,
+            checkedBorderColor = Ummi.colors.heroInk2,
+            uncheckedTrackColor = Color.White.copy(alpha = 0.2f),
+            uncheckedThumbColor = Ummi.colors.heroInk,
+            uncheckedBorderColor = Color.White.copy(alpha = 0.2f),
+        ) else SwitchDefaults.colors(
             checkedTrackColor = Ummi.colors.primary,
             checkedThumbColor = Ummi.colors.onPrimary,
             checkedBorderColor = Ummi.colors.primary,

@@ -117,7 +117,7 @@ fun OnboardingScreen(
                     listOf(
                         Triple("Morning summary", "7:30 am · today's dua and checklist", morning) to { morning = !morning },
                         Triple("Prayer-linked acts", "A few minutes after Fajr, Ẓuhr and Maghrib", prayer) to { prayer = !prayer },
-                        Triple("Water", "Every 2 hours through the day", water) to { water = !water },
+                        Triple("Water", "Every 2 hours, 9 am – 7 pm", water) to { water = !water },
                     ),
                 )
             }

@@ -265,10 +265,11 @@ private fun NextVisitHero(visit: Visit, today: LocalDate, onClick: () -> Unit, o
             Text(
                 if (on) Visits.reminderLine(visit) else "Remind me the evening before",
                 fontSize = 14.sp,
+                lineHeight = 19.sp,
                 color = Ummi.colors.heroInk,
-                modifier = Modifier.weight(1f),
+                modifier = Modifier.weight(1f).padding(end = 8.dp),
             )
-            UmmiSwitch(checked = on, onCheckedChange = { onToggleReminder() })
+            UmmiSwitch(checked = on, onCheckedChange = { onToggleReminder() }, onDark = true)
         }
     }
 }
