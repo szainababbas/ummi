@@ -108,6 +108,25 @@ class BackupCodecTest {
     }
 
     @Test
+    fun `lists baby names in the readable record the same way as the web app`() {
+        val history = fixture["historyWithNames"]!!.jsonObject
+        val state = stateOf(history["state"]!!.jsonObject)
+        val today = LocalDate.parse(history["today"]!!.jsonPrimitive.content)
+        assertEquals(history["text"]!!.jsonPrimitive.content, BackupCodec.historyText(state, today))
+    }
+
+    @Test
+    fun `restores names and reminder settings from its own backup`() {
+        val android = fixture["androidBackup"]!!.jsonObject
+        val restored = BackupCodec.decodeBackup(android["file"]!!.jsonPrimitive.content)!!
+        assertEquals(listOf("Zahra", "Maryam"), restored.names.map { it.name })
+        assertEquals(true, restored.names[1].fav)
+        assertEquals("birmingham", restored.reminders.place)
+        assertEquals(mapOf("m6d" to true, "m4c" to false), restored.reminders.tasks)
+        assertEquals(false, restored.reminders.water)
+    }
+
+    @Test
     fun `writes a readable record when nothing has been done yet`() {
         val text = BackupCodec.historyText(AppState(dueDate = "2026-11-20"), LocalDate.of(2026, 9, 26))
         assertEquals(

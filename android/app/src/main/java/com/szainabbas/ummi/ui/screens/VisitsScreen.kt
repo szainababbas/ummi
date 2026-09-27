@@ -43,6 +43,7 @@ import androidx.compose.ui.unit.sp
 import com.szainabbas.ummi.data.Visit
 import com.szainabbas.ummi.domain.Layout
 import com.szainabbas.ummi.domain.VisitReminder
+import com.szainabbas.ummi.domain.Reminders
 import com.szainabbas.ummi.domain.VisitType
 import com.szainabbas.ummi.domain.Visits
 import com.szainabbas.ummi.ui.components.DueDatePickerDialog
@@ -356,7 +357,7 @@ fun VisitForm(
         Text("Reminder", fontSize = 13.sp, color = Ummi.colors.ink2, modifier = Modifier.padding(top = 14.dp, bottom = 6.dp))
         ChipGrid(VisitReminder.entries, perRow = 2, selected = reminder, label = { it.label }, icon = { null }) { reminder = it }
         Text(
-            "Ummi can't send notifications yet. Your choice is kept for when it can.",
+            Reminders.visitHint(reminder, time),
             fontSize = 12.sp,
             color = Ummi.colors.ink2,
             modifier = Modifier.padding(top = 4.dp),

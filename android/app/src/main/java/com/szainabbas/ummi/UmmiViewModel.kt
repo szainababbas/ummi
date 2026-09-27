@@ -14,6 +14,19 @@ import com.szainabbas.ummi.data.withTaskToggled
 import com.szainabbas.ummi.data.Visit
 import com.szainabbas.ummi.data.withVisitDeleted
 import com.szainabbas.ummi.data.withVisitSaved
+import com.szainabbas.ummi.data.BabyName
+import com.szainabbas.ummi.data.withDailyReminders
+import com.szainabbas.ummi.data.withNameAdded
+import com.szainabbas.ummi.data.withNameFavouriteToggled
+import com.szainabbas.ummi.data.withNameNote
+import com.szainabbas.ummi.data.withNameRemoved
+import com.szainabbas.ummi.data.withNameRestored
+import com.szainabbas.ummi.data.withPrayerLinked
+import com.szainabbas.ummi.data.withReminderPlace
+import com.szainabbas.ummi.data.withTaskReminder
+import com.szainabbas.ummi.domain.Onboarding
+import com.szainabbas.ummi.domain.Reminders
+import com.szainabbas.ummi.notify.ReminderScheduler
 import com.szainabbas.ummi.domain.CalendarExport
 import com.szainabbas.ummi.domain.PregnancyMath
 import kotlinx.coroutines.Dispatchers
@@ -48,12 +61,30 @@ class UmmiViewModel(application: Application) : AndroidViewModel(application) {
             val data = UmmiDataRepository.load(application)
             val state = stateRepo.state.first()
             _uiState.update { it.copy(data = data, appState = state, loading = false) }
+            ReminderScheduler.reschedule(application, state, data)
         }
     }
 
+    /**
+     * Every change can move the next reminder (a new visit, a bell, a new
+     * due date), so the alarm is set again after each save.
+     */
     private fun replaceState(updated: AppState) {
         _uiState.update { it.copy(appState = updated) }
-        viewModelScope.launch(Dispatchers.IO) { stateRepo.save(updated) }
+        viewModelScope.launch(Dispatchers.IO) {
+            stateRepo.save(updated)
+            rescheduleNow(updated)
+        }
+    }
+
+    private fun rescheduleNow(state: AppState = _uiState.value.appState) {
+        val data = _uiState.value.data ?: return
+        ReminderScheduler.reschedule(getApplication<Application>(), state, data)
+    }
+
+    /** On coming back to the app: the clock, the day or the alarm permission may have changed. */
+    fun reschedule() {
+        viewModelScope.launch(Dispatchers.IO) { rescheduleNow() }
     }
 
     private fun mutate(block: (AppState) -> AppState) = replaceState(block(_uiState.value.appState))
@@ -73,6 +104,42 @@ class UmmiViewModel(application: Application) : AndroidViewModel(application) {
     fun saveVisit(visit: Visit) = mutate { it.withVisitSaved(visit) }
 
     fun deleteVisit(id: String) = mutate { it.withVisitDeleted(id) }
+
+    /** The end of onboarding. [allowReminders] false is "Not now": everything stays off. */
+    fun finishOnboarding(onboarding: Onboarding, allowReminders: Boolean) {
+        val due = onboarding.dueDate(LocalDate.now()) ?: return
+        mutate {
+            it.copy(dueDate = due.toString(), name = onboarding.name.trim().ifBlank { null })
+                .withDailyReminders(
+                    morning = allowReminders && onboarding.morning,
+                    prayer = allowReminders && onboarding.prayer,
+                    water = allowReminders && onboarding.water,
+                )
+        }
+    }
+
+    fun setMorningSummary(on: Boolean) = mutate { it.withDailyReminders(morning = on) }
+
+    fun setWaterReminders(on: Boolean) = mutate { it.withDailyReminders(water = on) }
+
+    fun setPrayerLinked(on: Boolean) {
+        val data = _uiState.value.data ?: return
+        mutate { it.withPrayerLinked(on, Reminders.prayerLinkedIds(Reminders.allActs(data))) }
+    }
+
+    fun setTaskReminder(id: String, on: Boolean) = mutate { it.withTaskReminder(id, on) }
+
+    fun setReminderPlace(key: String) = mutate { it.withReminderPlace(key) }
+
+    fun addName(name: String) = mutate { it.withNameAdded(name) }
+
+    fun toggleNameFavourite(name: String) = mutate { it.withNameFavouriteToggled(name) }
+
+    fun setNameNote(name: String, note: String) = mutate { it.withNameNote(name, note) }
+
+    fun removeName(name: String) = mutate { it.withNameRemoved(name) }
+
+    fun restoreName(entry: BabyName, index: Int) = mutate { it.withNameRestored(entry, index) }
 
     fun exportBackupJson(): String = BackupCodec.encodeBackup(_uiState.value.appState, Instant.now())
 
@@ -95,6 +162,9 @@ class UmmiViewModel(application: Application) : AndroidViewModel(application) {
 
     fun resetAll() {
         _uiState.update { it.copy(appState = AppState()) }
-        viewModelScope.launch(Dispatchers.IO) { stateRepo.reset() }
+        viewModelScope.launch(Dispatchers.IO) {
+            stateRepo.reset()
+            rescheduleNow(AppState())
+        }
     }
 }

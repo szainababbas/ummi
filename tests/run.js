@@ -871,6 +871,20 @@ describe('android app compatibility', () => {
     T.setState(s);
     eq(T.backupPayload().state.visits, fixture.androidBackup.state.visits);
   });
+
+  it('lists baby names in the readable record the same way as the Android app', () => {
+    const h = fixture.historyWithNames;
+    T.setState(JSON.parse(JSON.stringify(h.state)));
+    eq(T.historyText().replace(/^Exported .*$/m, 'Exported ' + h.today), h.text);
+  });
+
+  it('keeps baby names and reminder settings through a restore and a new backup', () => {
+    // the web app has no screens for either; losing them here would lose them on the phone
+    T.setState(T.readBackup(fixture.androidBackup.file));
+    const state = T.backupPayload().state;
+    eq(state.names, fixture.androidBackup.state.names);
+    eq(state.reminders, fixture.androidBackup.state.reminders);
+  });
 });
 
 /* ---------------------------------------------------------------------- results */

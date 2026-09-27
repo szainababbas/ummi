@@ -1,6 +1,14 @@
 package com.szainabbas.ummi.ui.theme
 
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.rounded.ArrowBack
+import androidx.compose.material.icons.rounded.CheckCircle
+import androidx.compose.material.icons.rounded.Favorite
+import androidx.compose.material.icons.rounded.FavoriteBorder
+import androidx.compose.material.icons.rounded.Lock
+import androidx.compose.material.icons.rounded.NotificationsNone
+import androidx.compose.material.icons.rounded.Remove
+import androidx.compose.material.icons.rounded.WaterDrop
 import androidx.compose.material.icons.rounded.AccessTime
 import androidx.compose.material.icons.rounded.Add
 import androidx.compose.material.icons.rounded.Bloodtype
@@ -97,4 +105,14 @@ object UmmiIcons {
     val restore: ImageVector = Icons.Rounded.Restore
     val readableRecord: ImageVector = Icons.Rounded.Description
     val resetApp: ImageVector = Icons.Rounded.DeleteForever
+
+    // Reminders, onboarding and the names wishlist
+    val back: ImageVector = Icons.AutoMirrored.Rounded.ArrowBack
+    val checkCircle: ImageVector = Icons.Rounded.CheckCircle
+    val water: ImageVector = Icons.Rounded.WaterDrop
+    val bellAdd: ImageVector = Icons.Rounded.NotificationsNone // stand-in for "notification_add"
+    val lock: ImageVector = Icons.Rounded.Lock
+    val remove: ImageVector = Icons.Rounded.Remove
+    val favourite: ImageVector = Icons.Rounded.Favorite
+    val notFavourite: ImageVector = Icons.Rounded.FavoriteBorder
 }

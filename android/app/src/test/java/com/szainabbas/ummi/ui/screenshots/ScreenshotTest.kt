@@ -10,13 +10,18 @@ import app.cash.paparazzi.DeviceConfig
 import app.cash.paparazzi.Paparazzi
 import com.szainabbas.ummi.TestFiles
 import com.szainabbas.ummi.data.AppState
+import com.szainabbas.ummi.data.BabyName
 import com.szainabbas.ummi.data.JournalEntry
+import com.szainabbas.ummi.data.ReminderSettings
 import com.szainabbas.ummi.data.Visit
 import com.szainabbas.ummi.data.model.UmmiData
 import com.szainabbas.ummi.domain.DailyPlan
 import com.szainabbas.ummi.domain.PregnancyMath
 import com.szainabbas.ummi.ui.screens.DuasScreen
-import com.szainabbas.ummi.ui.screens.DueDateGateScreen
+import com.szainabbas.ummi.ui.screens.OnboardingScreen
+import com.szainabbas.ummi.ui.screens.RemindersScreen
+import com.szainabbas.ummi.domain.Onboarding
+import com.szainabbas.ummi.domain.PrayerTimes
 import com.szainabbas.ummi.ui.screens.JourneyScreen
 import com.szainabbas.ummi.ui.screens.MoreScreen
 import com.szainabbas.ummi.ui.screens.TodayScreen
@@ -27,6 +32,7 @@ import com.szainabbas.ummi.ui.theme.UmmiThemeMode
 import org.junit.Rule
 import org.junit.Test
 import java.time.LocalDate
+import java.time.ZoneId
 
 /**
  * Renders every screen, light and dark, on the JVM (no emulator).
@@ -66,7 +72,17 @@ class ScreenshotTest {
             Visit("v3", "2026-10-21", "14:30", "Growth scan", "scan", "2h"),
             Visit("v4", "2026-09-14", "11:00", "Midwife check", "midwife", note = "Heartbeat strong, bump measuring well."),
         ),
+        // Morning summary and prayer-linked acts on, as onboarding leaves them, plus two bells of her own.
+        reminders = ReminderSettings(morning = true, prayer = true, tasks = mapOf("m7g" to true, "m7a" to true)),
+        names = listOf(
+            BabyName("Zahra", note = "The radiant one"),
+            BabyName("Maryam", note = "After Sayyidah Maryam (as)", fav = true),
+            BabyName("Ali", fav = true),
+            BabyName("Hasan"),
+        ),
     )
+
+    private val prayerTimes = PrayerTimes.forDay(today, PrayerTimes.place("london"), ZoneId.of("Europe/London"))
 
     /** A page is most of a Pixel 5's 2340px height, leaving a little overlap between shots. */
     private val pagePx = 1900
@@ -95,15 +111,64 @@ class ScreenshotTest {
         onOpenReminders = {},
         onOpenWeek = {},
         onOpenMonth = {},
+        prayerTimes = prayerTimes,
+        today = today,
+        scrollState = scroll,
+    )
+
+    private fun onboarding(name: String, start: Onboarding) = shot(name) {
+        OnboardingScreen(welcomeAyah = data.ayahs["37:100"], onFinish = { _, _ -> }, today = today, start = start)
+    }
+
+    @Test
+    fun onboardingWelcome() = onboarding("onboarding_1_welcome", Onboarding())
+
+    @Test
+    fun onboardingDueDate() = onboarding("onboarding_2_due", Onboarding(step = 1, due = LocalDate.of(2026, 12, 15)))
+
+    @Test
+    fun onboardingDueEmpty() = onboarding("onboarding_2_due_empty", Onboarding(step = 1))
+
+    @Test
+    fun onboardingWeek() = onboarding("onboarding_2_week", Onboarding(step = 1, byWeek = true, week = 28))
+
+    @Test
+    fun onboardingName() = onboarding("onboarding_3_name", Onboarding(step = 2, name = "Fatima"))
+
+    @Test
+    fun onboardingReminders() = onboarding("onboarding_4_reminders", Onboarding(step = 3))
+
+    @Composable
+    private fun reminders(appState: AppState, allowed: Boolean, exact: Boolean, scroll: androidx.compose.foundation.ScrollState) = RemindersScreen(
+        data = data,
+        appState = appState,
+        prayerTimes = prayerTimes,
+        notificationsAllowed = allowed,
+        exactAlarms = exact,
+        onBack = {},
+        onAllowNotifications = {},
+        onAllowExactAlarms = {},
+        onSetMorning = {},
+        onSetPrayer = {},
+        onSetWater = {},
+        onSetTask = { _, _ -> },
+        onSetPlace = {},
+        onOpenVisits = {},
         today = today,
         scrollState = scroll,
     )
 
     @Test
-    fun startScreen() = shot("start") { DueDateGateScreen(onSetDueDate = {}) }
+    fun remindersScreen() = shot("reminders", pages = 2) { reminders(state, allowed = true, exact = true, scroll = it) }
 
     @Test
-    fun today() = shot("today", pages = 3) { Today(state, it) }
+    fun remindersBlocked() = shot("reminders_off") { reminders(state, allowed = false, exact = false, scroll = it) }
+
+    @Test
+    fun remindersLate() = shot("reminders_inexact") { reminders(state, allowed = true, exact = false, scroll = it) }
+
+    @Test
+    fun today() = shot("today", pages = 4) { Today(state, it) }
 
     @Test
     fun todayAllDone() {

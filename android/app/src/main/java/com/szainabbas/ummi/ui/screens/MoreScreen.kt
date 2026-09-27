@@ -29,6 +29,14 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.szainabbas.ummi.data.AppState
+import com.szainabbas.ummi.data.BabyName
+import androidx.compose.foundation.text.KeyboardActions
+import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.material3.HorizontalDivider
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.OutlinedTextFieldDefaults
+import androidx.compose.ui.text.input.ImeAction
+import androidx.compose.ui.text.input.KeyboardCapitalization
 import com.szainabbas.ummi.data.JournalEntry
 import com.szainabbas.ummi.domain.PregnancyMath
 import com.szainabbas.ummi.ui.components.DueDatePickerDialog
@@ -39,11 +47,8 @@ import com.szainabbas.ummi.ui.theme.UmmiThemeMode
 import java.time.LocalDate
 
 /**
- * Settings, backup/restore and the reflection journal. The handoff's "Names
- * we're thinking about" wishlist is a later PR (it's new product surface,
- * not a restyle of something the PWA already has); everything else here is
- * feature-complete, since backup/restore in particular is how someone
- * carries their data over from the browser version.
+ * The profile, the baby-names wishlist, settings, the reflection journal and
+ * backup/restore (how someone carries their data over from the browser version).
  */
 @Composable
 fun MoreScreen(
@@ -59,6 +64,10 @@ fun MoreScreen(
     onExportCalendar: () -> Unit,
     onResetApp: () -> Unit,
     onOpenReminders: () -> Unit,
+    onAddName: (String) -> Unit = {},
+    onToggleNameFavourite: (String) -> Unit = {},
+    onSetNameNote: (String, String) -> Unit = { _, _ -> },
+    onRemoveName: (BabyName, Int) -> Unit = { _, _ -> },
     scrollState: ScrollState = rememberScrollState(),
 ) {
     var showResetConfirm by remember { mutableStateOf(false) }
@@ -69,6 +78,8 @@ fun MoreScreen(
         Text("More", fontFamily = Literata, fontWeight = FontWeight.SemiBold, fontSize = 26.sp, modifier = Modifier.padding(20.dp, 12.dp), color = Ummi.colors.ink)
 
         ProfileCard(appState, onSetName)
+
+        NamesCard(appState.names, onAddName, onToggleNameFavourite, onSetNameNote, onRemoveName)
 
         SectionCard(title = "Settings") {
             SettingRow(label = "Reminders") { onOpenReminders() }
@@ -247,5 +258,99 @@ private fun JournalRow(entry: JournalEntry) {
         Text(entry.d, fontWeight = FontWeight.Bold, fontSize = 13.sp, color = Ummi.colors.primary)
         Spacer(Modifier.width(8.dp))
         Text(entry.t, fontSize = 14.sp, color = Ummi.colors.ink)
+    }
+}
+
+/**
+ * "Names we're thinking about": her own list, newest at the top, a heart on
+ * the ones they both love. Tapping a name adds or edits its note.
+ */
+@Composable
+private fun NamesCard(
+    names: List<BabyName>,
+    onAdd: (String) -> Unit,
+    onToggleFavourite: (String) -> Unit,
+    onSetNote: (String, String) -> Unit,
+    onRemove: (BabyName, Int) -> Unit,
+) {
+    var draft by remember { mutableStateOf("") }
+    var editing by remember { mutableStateOf<BabyName?>(null) }
+    val add = { if (draft.isNotBlank()) { onAdd(draft); draft = "" } }
+
+    SectionCard(title = "Names we're thinking about") {
+        Row(verticalAlignment = Alignment.CenterVertically) {
+            OutlinedTextField(
+                value = draft,
+                onValueChange = { draft = it },
+                placeholder = { Text("Add a name…") },
+                singleLine = true,
+                keyboardOptions = KeyboardOptions(capitalization = KeyboardCapitalization.Words, imeAction = ImeAction.Done),
+                keyboardActions = KeyboardActions(onDone = { add() }),
+                shape = RoundedCornerShape(12.dp),
+                colors = OutlinedTextFieldDefaults.colors(
+                    unfocusedContainerColor = Ummi.colors.bg,
+                    focusedContainerColor = Ummi.colors.bg,
+                    unfocusedBorderColor = Ummi.colors.line,
+                    focusedBorderColor = Ummi.colors.primary,
+                ),
+                modifier = Modifier.weight(1f),
+            )
+            Spacer(Modifier.width(8.dp))
+            IconButton(
+                onClick = add,
+                modifier = Modifier.size(48.dp).clip(RoundedCornerShape(12.dp)).background(Ummi.colors.primary),
+            ) {
+                Icon(UmmiIcons.add, contentDescription = "Add name", tint = Ummi.colors.onPrimary)
+            }
+        }
+        Spacer(Modifier.height(6.dp))
+        names.forEachIndexed { i, n ->
+            Row(
+                modifier = Modifier.fillMaxWidth().clickable { editing = n }.padding(vertical = 4.dp),
+                verticalAlignment = Alignment.CenterVertically,
+            ) {
+                Column(Modifier.weight(1f)) {
+                    Text(n.name, fontFamily = Literata, fontWeight = FontWeight.SemiBold, fontSize = 17.sp, color = Ummi.colors.ink)
+                    n.note?.let { Text(it, fontSize = 13.sp, color = Ummi.colors.ink2) }
+                }
+                IconButton(onClick = { onToggleFavourite(n.name) }, modifier = Modifier.size(40.dp)) {
+                    Icon(
+                        if (n.fav) UmmiIcons.favourite else UmmiIcons.notFavourite,
+                        contentDescription = if (n.fav) "Unheart ${n.name}" else "Heart ${n.name}",
+                        tint = if (n.fav) Ummi.colors.danger else Ummi.colors.ink2,
+                        modifier = Modifier.size(22.dp),
+                    )
+                }
+                IconButton(onClick = { onRemove(n, i) }, modifier = Modifier.size(40.dp)) {
+                    Icon(UmmiIcons.close, contentDescription = "Remove ${n.name}", tint = Ummi.colors.ink2, modifier = Modifier.size(20.dp))
+                }
+            }
+            HorizontalDivider(color = Ummi.colors.line)
+        }
+        Text(
+            "Only on this phone. Tap the heart on the ones you both love, and a name to add a note.",
+            fontSize = 13.sp,
+            color = Ummi.colors.ink2,
+            modifier = Modifier.padding(top = 10.dp),
+        )
+    }
+
+    editing?.let { n ->
+        var note by remember(n.name) { mutableStateOf(n.note.orEmpty()) }
+        AlertDialog(
+            onDismissRequest = { editing = null },
+            title = { Text(n.name) },
+            text = {
+                OutlinedTextField(
+                    value = note,
+                    onValueChange = { note = it },
+                    label = { Text("Note") },
+                    placeholder = { Text("A meaning, who it's after…") },
+                    modifier = Modifier.fillMaxWidth(),
+                )
+            },
+            confirmButton = { TextButton(onClick = { onSetNote(n.name, note); editing = null }) { Text("Save") } },
+            dismissButton = { TextButton(onClick = { editing = null }) { Text("Cancel") } },
+        )
     }
 }

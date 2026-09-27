@@ -1403,6 +1403,14 @@ const App = (function(){
         lines.push('  '+x.date+(x.time?' '+x.time:'')+' — '+x.title+' ('+(VISIT_TYPES[x.type]||'Other')+')'+(x.note&&x.note.trim()?' — "'+x.note+'"':''));
       });
     }
+    /* The names wishlist is kept in the Android app too, newest first. */
+    const n=state.names||[];
+    if(n.length){
+      lines.push('','BABY NAMES ('+n.length+')');
+      n.forEach(function(x){
+        lines.push('  '+x.name+(x.fav?' ♥':'')+(x.note&&x.note.trim()?' — '+x.note:''));
+      });
+    }
     return lines.join('\n')+'\n';
   }
   function exportData(){ download('ummi-backup-'+todayKey()+'.json',JSON.stringify(backupPayload(),null,2),'application/json'); }
