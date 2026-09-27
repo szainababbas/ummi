@@ -125,7 +125,9 @@ fun OnboardingScreen(
 
         Column(Modifier.fillMaxWidth().padding(start = 24.dp, end = 24.dp, top = 16.dp, bottom = 20.dp)) {
             Button(
-                onClick = ::next,
+                // A lambda, not ::next: Compose kept the function reference from
+                // the first frame, so Continue went on asking for step 0 + 1.
+                onClick = { next() },
                 colors = ButtonDefaults.buttonColors(containerColor = Ummi.colors.primary, contentColor = Ummi.colors.onPrimary),
                 shape = RoundedCornerShape(28.dp),
                 modifier = Modifier.fillMaxWidth().height(56.dp),
