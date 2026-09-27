@@ -64,7 +64,6 @@ fun TodayScreen(
     onToggleTask: (String) -> Unit,
     onToggleDua: () -> Unit,
     onOpenReader: (ReaderKey) -> Unit,
-    onOpenReminders: () -> Unit,
     onOpenWeek: (Int) -> Unit,
     onOpenMonth: () -> Unit,
     onOpenVisits: () -> Unit = {},
@@ -91,7 +90,7 @@ fun TodayScreen(
     val duaRecited = appState.duaDone[PregnancyMath.todayKey(today)] ?: false
 
     Column(modifier = Modifier.fillMaxWidth().verticalScroll(scrollState)) {
-        HeaderRow(name = appState.name, activeReminders = Reminders.activeCount(today, appState, data), onBellClick = onOpenReminders)
+        HeaderRow(name = appState.name)
 
         Box(modifier = Modifier.fillMaxWidth(), contentAlignment = Alignment.Center) {
             ProgressRing(week = week, daysToGo = daysToGo, sizeDesc = weekInfo?.size)
@@ -175,40 +174,16 @@ fun TodayScreen(
 }
 
 @Composable
-private fun HeaderRow(name: String?, activeReminders: Int, onBellClick: () -> Unit) {
-    Row(
+private fun HeaderRow(name: String?) {
+    // No bell here: on the phone it read as "your notifications", not settings.
+    // Reminder settings live under More; each task keeps its own bell.
+    Text(
+        text = if (name.isNullOrBlank()) "Salaam" else "Salaam, $name",
+        fontWeight = FontWeight.SemiBold,
+        fontSize = 16.sp,
+        color = Ummi.colors.ink,
         modifier = Modifier.fillMaxWidth().padding(horizontal = 20.dp, vertical = 12.dp),
-        horizontalArrangement = Arrangement.SpaceBetween,
-        verticalAlignment = Alignment.CenterVertically,
-    ) {
-        Text(
-            text = if (name.isNullOrBlank()) "Salaam" else "Salaam, $name",
-            fontWeight = FontWeight.SemiBold,
-            fontSize = 16.sp,
-            color = Ummi.colors.ink,
-        )
-        Box {
-            IconButton(
-                onClick = onBellClick,
-                modifier = Modifier.size(48.dp).clip(CircleShape).background(Ummi.colors.surface2),
-            ) {
-                Icon(UmmiIcons.reminderSet, contentDescription = "Reminders, $activeReminders on today", tint = Ummi.colors.ink)
-            }
-            if (activeReminders > 0) {
-                Box(
-                    modifier = Modifier
-                        .align(Alignment.TopEnd)
-                        .padding(top = 4.dp, end = 4.dp)
-                        .defaultMinSize(minWidth = 18.dp, minHeight = 18.dp)
-                        .background(Ummi.colors.primary, RoundedCornerShape(9.dp))
-                        .padding(horizontal = 4.dp),
-                    contentAlignment = Alignment.Center,
-                ) {
-                    Text("$activeReminders", fontSize = 11.sp, lineHeight = 13.sp, fontWeight = FontWeight.Bold, color = Ummi.colors.onPrimary)
-                }
-            }
-        }
-    }
+    )
 }
 
 @Composable

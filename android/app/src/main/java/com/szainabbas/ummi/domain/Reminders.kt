@@ -47,7 +47,23 @@ object Reminders {
         return ActTiming.timeline(DailyPlan.tasksFor(month, data.baseTasks, date))
     }
 
-    /** The bell badge on Today: how many things will go off today. */
+    /**
+     * The line under More's "Reminders & notifications" row: what goes off
+     * today and how many visits have one set, e.g. "5 reminders today · 1 visit".
+     */
+    fun statusLine(date: LocalDate, state: AppState, data: UmmiData): String {
+        val today = activeCount(date, state, data)
+        val visits = visitsWithReminders(state.visits, date).size
+        val parts = buildList {
+            if (today > 0) add(plural(today, "reminder") + " today")
+            if (visits > 0) add(plural(visits, "visit"))
+        }
+        return parts.joinToString(" · ").ifEmpty { "All off" }
+    }
+
+    private fun plural(n: Int, word: String) = "$n $word" + if (n == 1) "" else "s"
+
+    /** How many things will go off today. */
     fun activeCount(date: LocalDate, state: AppState, data: UmmiData): Int =
         tasksOn(date, state, data).count { isOn(it, state.reminders) } + if (state.reminders.morning) 1 else 0
 
