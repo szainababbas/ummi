@@ -65,4 +65,55 @@ class AppStateOpsTest {
         val state = AppState().withVisitSaved(scan).withVisitSaved(other).withVisitDeleted("v1")
         assertEquals(listOf("v2"), state.visits.map { it.id })
     }
+
+    @Test
+    fun `adds names to the top, tidied, and skips blanks and repeats in any case`() {
+        val state = AppState().withNameAdded("Maryam").withNameAdded("  zahra   batool ").withNameAdded("   ")
+            .withNameAdded("MARYAM")
+        assertEquals(listOf("zahra batool", "Maryam"), state.names.map { it.name })
+        assertEquals(false, state.names[0].fav)
+    }
+
+    @Test
+    fun `hearts, notes and removes only the name it is given`() {
+        val start = AppState().withNameAdded("Maryam").withNameAdded("Ali")
+        val hearted = start.withNameFavouriteToggled("Maryam")
+        assertEquals(listOf(false, true), hearted.names.map { it.fav })
+        assertEquals(listOf(false, false), hearted.withNameFavouriteToggled("Maryam").names.map { it.fav })
+        val noted = start.withNameNote("Ali", "  After Imam ʿAlī (as) ")
+        assertEquals(listOf("After Imam ʿAlī (as)", null), noted.names.map { it.note })
+        assertEquals(null, noted.withNameNote("Ali", "  ").names[0].note)
+        assertEquals(listOf("Maryam"), start.withNameRemoved("Ali").names.map { it.name })
+    }
+
+    @Test
+    fun `undoing a removal puts the name back where it was`() {
+        val start = AppState().withNameAdded("C").withNameAdded("B").withNameAdded("A") // A, B, C
+        val b = start.names[1].copy(fav = true)
+        val removed = start.withNameRemoved("B")
+        assertEquals(listOf("A", "B", "C"), removed.withNameRestored(b, 1).names.map { it.name })
+        assertEquals(true, removed.withNameRestored(b, 1).names[1].fav)
+        assertSame(start, start.withNameRestored(b, 1)) // already there
+    }
+
+    @Test
+    fun `a bell on one act is her choice for that act, and water's bell is the water switch`() {
+        val state = AppState().withTaskReminder("m6d", true).withTaskReminder("m4c", false).withTaskReminder("water", true)
+        assertEquals(mapOf("m6d" to true, "m4c" to false), state.reminders.tasks)
+        assertEquals(true, state.reminders.water)
+    }
+
+    @Test
+    fun `the prayer-linked switch clears her choices for prayer-linked acts only`() {
+        val state = AppState().withTaskReminder("m4c", false).withTaskReminder("m6d", true)
+            .withPrayerLinked(true, listOf("m4c", "m6a"))
+        assertEquals(true, state.reminders.prayer)
+        assertEquals(mapOf("m6d" to true), state.reminders.tasks)
+    }
+
+    @Test
+    fun `the every-day switches change only the one asked for`() {
+        val state = AppState().withDailyReminders(morning = true).withDailyReminders(water = true).withReminderPlace("leeds")
+        assertEquals(ReminderSettings(morning = true, prayer = false, water = true, place = "leeds"), state.reminders)
+    }
 }

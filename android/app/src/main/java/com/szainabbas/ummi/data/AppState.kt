@@ -6,10 +6,10 @@ import kotlinx.serialization.Serializable
  * Deliberately the same shape as the PWA's `state` object (see
  * `index.html`'s `backupPayload`/`readBackup`), so a `.json` backup
  * downloaded from the web app restores here unchanged, and vice versa.
- * Reminders and the names wishlist aren't built yet (later PRs); when they
- * land they extend this class rather than replace it, the same way
- * [visits] did. The PWA has no Visits screen, but it keeps the whole state
- * object as it is, so visits survive a round trip through the browser.
+ * New features extend this class rather than replace it: [visits],
+ * [reminders] and [names] came after the PWA, which has no screens for
+ * them, but it keeps the whole state object as it is, so they survive a
+ * round trip through the browser.
  */
 @Serializable
 data class AppState(
@@ -22,6 +22,31 @@ data class AppState(
     val journal: List<JournalEntry> = emptyList(),
     val theme: String = "system",
     val visits: List<Visit> = emptyList(),
+    val reminders: ReminderSettings = ReminderSettings(),
+    val names: List<BabyName> = emptyList(),
+)
+
+/**
+ * What goes off and when. Everything is off until she turns it on, in
+ * onboarding or on the Reminders screen. [tasks] holds her own choice per
+ * act id; an act she hasn't chosen for follows [prayer] if it is
+ * prayer-linked, and is off otherwise. [place] is a key in `PrayerTimes.places`.
+ */
+@Serializable
+data class ReminderSettings(
+    val morning: Boolean = false,
+    val prayer: Boolean = false,
+    val water: Boolean = false,
+    val place: String = "london",
+    val tasks: Map<String, Boolean> = emptyMap(),
+)
+
+/** A name on the wishlist. [fav] is the heart: the ones they both love. */
+@Serializable
+data class BabyName(
+    val name: String,
+    val note: String? = null,
+    val fav: Boolean = false,
 )
 
 /**
@@ -82,3 +107,43 @@ fun AppState.withVisitSaved(visit: Visit): AppState {
 }
 
 fun AppState.withVisitDeleted(id: String): AppState = copy(visits = visits.filterNot { it.id == id })
+
+/** Onboarding's three checkboxes, or the Reminders screen's "Every day" switches. */
+fun AppState.withDailyReminders(morning: Boolean = reminders.morning, prayer: Boolean = reminders.prayer, water: Boolean = reminders.water): AppState =
+    copy(reminders = reminders.copy(morning = morning, prayer = prayer, water = water))
+
+/**
+ * The "Prayer-linked acts" switch. Flipping it resets her per-act choices for
+ * [prayerLinkedIds], so every prayer-linked act follows the switch again;
+ * the bells on Today are for fine-tuning after that.
+ */
+fun AppState.withPrayerLinked(on: Boolean, prayerLinkedIds: Collection<String>): AppState =
+    copy(reminders = reminders.copy(prayer = on, tasks = reminders.tasks - prayerLinkedIds.toSet()))
+
+/** A bell on one act. Water's bell is the every-day water switch, since that is what it rings. */
+fun AppState.withTaskReminder(id: String, on: Boolean): AppState =
+    if (id == "water") withDailyReminders(water = on)
+    else copy(reminders = reminders.copy(tasks = reminders.tasks + (id to on)))
+
+fun AppState.withReminderPlace(key: String): AppState = copy(reminders = reminders.copy(place = key))
+
+/** New names go to the top. Blank, or one already on the list (in any case), changes nothing. */
+fun AppState.withNameAdded(name: String): AppState {
+    val trimmed = name.trim().replace(Regex("\\s+"), " ")
+    if (trimmed.isEmpty() || names.any { it.name.equals(trimmed, ignoreCase = true) }) return this
+    return copy(names = listOf(BabyName(trimmed)) + names)
+}
+
+fun AppState.withNameFavouriteToggled(name: String): AppState =
+    copy(names = names.map { if (it.name == name) it.copy(fav = !it.fav) else it })
+
+fun AppState.withNameNote(name: String, note: String): AppState =
+    copy(names = names.map { if (it.name == name) it.copy(note = note.trim().ifBlank { null }) else it })
+
+fun AppState.withNameRemoved(name: String): AppState = copy(names = names.filterNot { it.name == name })
+
+/** Undo for a removal: back where it was. */
+fun AppState.withNameRestored(entry: BabyName, index: Int): AppState {
+    if (names.any { it.name == entry.name }) return this
+    return copy(names = names.toMutableList().also { it.add(index.coerceIn(0, it.size), entry) })
+}

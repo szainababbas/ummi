@@ -67,6 +67,14 @@ object BackupCodec {
                 lines += "  ${v.date}$time — ${v.title} (${VisitType.of(v.type).label})$note"
             }
         }
+        if (state.names.isNotEmpty()) {
+            lines += ""
+            lines += "BABY NAMES (${state.names.size})"
+            state.names.forEach { n ->
+                val note = n.note?.takeIf { it.isNotBlank() }?.let { " — $it" } ?: ""
+                lines += "  ${n.name}${if (n.fav) " ♥" else ""}$note"
+            }
+        }
         return lines.joinToString("\n") + "\n"
     }
 

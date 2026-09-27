@@ -43,7 +43,11 @@ import com.szainabbas.ummi.data.AppState
 import com.szainabbas.ummi.data.model.ActEntry
 import com.szainabbas.ummi.data.model.ReaderKey
 import com.szainabbas.ummi.data.model.UmmiData
+import com.szainabbas.ummi.domain.ActTiming
 import com.szainabbas.ummi.domain.DailyPlan
+import com.szainabbas.ummi.domain.DayPart
+import com.szainabbas.ummi.domain.DayPrayerTimes
+import com.szainabbas.ummi.domain.Reminders
 import com.szainabbas.ummi.domain.Layout
 import com.szainabbas.ummi.domain.PregnancyMath
 import com.szainabbas.ummi.domain.Visits
@@ -64,6 +68,9 @@ fun TodayScreen(
     onOpenWeek: (Int) -> Unit,
     onOpenMonth: () -> Unit,
     onOpenVisits: () -> Unit = {},
+    prayerTimes: DayPrayerTimes,
+    onSetTaskReminder: (String, Boolean) -> Unit = { _, _ -> },
+    onNotify: (String, (() -> Unit)?) -> Unit = { _, _ -> },
     today: LocalDate = LocalDate.now(),
     scrollState: ScrollState = rememberScrollState(),
 ) {
@@ -72,8 +79,9 @@ fun TodayScreen(
     val daysToGo = PregnancyMath.daysToGo(dueDate, today)
     val weekInfo = data.weeks[week.toString()]
     val monthNo = PregnancyMath.currentMonthNumber(week, data.months)
+    // In the order the day runs: morning, after the prayers, evening, any time.
     val todaysActs = remember(monthNo, today, data) {
-        DailyPlan.tasksFor(data.months[monthNo.toString()], data.baseTasks, today)
+        ActTiming.timeline(DailyPlan.tasksFor(data.months[monthNo.toString()], data.baseTasks, today))
     }
     val doneToday = appState.done[PregnancyMath.todayKey(today)] ?: emptyList()
     // "Later" is for this sitting only, as in the handoff; it starts fresh each day.
@@ -83,7 +91,7 @@ fun TodayScreen(
     val duaRecited = appState.duaDone[PregnancyMath.todayKey(today)] ?: false
 
     Column(modifier = Modifier.fillMaxWidth().verticalScroll(scrollState)) {
-        HeaderRow(name = appState.name, activeReminders = 0, onBellClick = onOpenReminders)
+        HeaderRow(name = appState.name, activeReminders = Reminders.activeCount(today, appState, data), onBellClick = onOpenReminders)
 
         Box(modifier = Modifier.fillMaxWidth(), contentAlignment = Alignment.Center) {
             ProgressRing(week = week, daysToGo = daysToGo, sizeDesc = weekInfo?.size)
@@ -132,14 +140,28 @@ fun TodayScreen(
             Text("${todaysActs.count { it.id in doneToday }} of ${todaysActs.size}", fontSize = 13.sp, color = Ummi.colors.ink2)
         }
 
-        todaysActs.forEach { act ->
-            TaskRow(
-                act = act,
-                done = act.id in doneToday,
-                isUpNext = act.id == nextAct?.id,
-                onToggle = { onToggleTask(act.id) },
-                onRead = { ReaderKey.forAct(act)?.let(onOpenReader) },
-            )
+        todaysActs.groupBy { ActTiming.anchor(it).part }.toSortedMap().forEach { (part, acts) ->
+            PartHeader(part, prayerTimes)
+            acts.forEach { act ->
+                val anchor = ActTiming.anchor(act)
+                val reminderOn = Reminders.isOn(act, appState.reminders)
+                val whenLabel = ActTiming.whenLabel(anchor, prayerTimes)
+                TaskRow(
+                    act = act,
+                    done = act.id in doneToday,
+                    isUpNext = act.id == nextAct?.id,
+                    reminderLabel = if (reminderOn) whenLabel else null,
+                    onToggle = { onToggleTask(act.id) },
+                    onRead = { ReaderKey.forAct(act)?.let(onOpenReader) },
+                    onBell = {
+                        onSetTaskReminder(act.id, !reminderOn)
+                        onNotify(
+                            if (reminderOn) "Reminder off" else "Reminder set · " + whenLabel,
+                            { onSetTaskReminder(act.id, reminderOn) },
+                        )
+                    },
+                )
+            }
         }
 
         Text(
@@ -170,7 +192,20 @@ private fun HeaderRow(name: String?, activeReminders: Int, onBellClick: () -> Un
                 onClick = onBellClick,
                 modifier = Modifier.size(48.dp).clip(CircleShape).background(Ummi.colors.surface2),
             ) {
-                Icon(UmmiIcons.bell, contentDescription = "Reminders", tint = Ummi.colors.ink)
+                Icon(UmmiIcons.reminderSet, contentDescription = "Reminders, $activeReminders on today", tint = Ummi.colors.ink)
+            }
+            if (activeReminders > 0) {
+                Box(
+                    modifier = Modifier
+                        .align(Alignment.TopEnd)
+                        .padding(top = 4.dp, end = 4.dp)
+                        .defaultMinSize(minWidth = 18.dp, minHeight = 18.dp)
+                        .background(Ummi.colors.primary, RoundedCornerShape(9.dp))
+                        .padding(horizontal = 4.dp),
+                    contentAlignment = Alignment.Center,
+                ) {
+                    Text("$activeReminders", fontSize = 11.sp, lineHeight = 13.sp, fontWeight = FontWeight.Bold, color = Ummi.colors.onPrimary)
+                }
             }
         }
     }
@@ -366,20 +401,48 @@ private fun DuaBand(lbl: String, arabic: String, translit: String, meaning: Stri
     }
 }
 
+/** "Morning · 5:15 am", with the adhān time where the part has one. */
 @Composable
-private fun TaskRow(act: ActEntry, done: Boolean, isUpNext: Boolean, onToggle: () -> Unit, onRead: () -> Unit) {
+private fun PartHeader(part: DayPart, pt: DayPrayerTimes) {
+    val (icon, time) = when (part) {
+        DayPart.MORNING -> UmmiIcons.timeMorning to "Fajr " + ActTiming.clock(pt.fajr)
+        DayPart.PRAYERS -> UmmiIcons.timePrayer to null
+        DayPart.EVENING -> UmmiIcons.timeEvening to "Maghrib " + ActTiming.clock(pt.maghrib)
+        DayPart.ANYTIME -> UmmiIcons.timeAnytime to null
+    }
+    Row(
+        modifier = Modifier.fillMaxWidth().padding(start = 20.dp, end = 20.dp, top = 14.dp, bottom = 6.dp),
+        verticalAlignment = Alignment.CenterVertically,
+    ) {
+        Icon(icon, contentDescription = null, tint = Ummi.colors.accentText, modifier = Modifier.size(18.dp))
+        Spacer(Modifier.width(8.dp))
+        Text(part.label, fontSize = 14.sp, fontWeight = FontWeight.Bold, color = Ummi.colors.accentText, modifier = Modifier.weight(1f))
+        if (time != null) Text(time, fontSize = 13.sp, color = Ummi.colors.ink2)
+    }
+}
+
+@Composable
+private fun TaskRow(
+    act: ActEntry,
+    done: Boolean,
+    isUpNext: Boolean,
+    reminderLabel: String?,
+    onToggle: () -> Unit,
+    onRead: () -> Unit,
+    onBell: () -> Unit,
+) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
             .padding(horizontal = 16.dp, vertical = 4.dp)
-            .border(if (isUpNext) 1.dp else 1.dp, if (isUpNext) Ummi.colors.primary else Ummi.colors.line, RoundedCornerShape(16.dp))
+            .border(1.dp, if (isUpNext) Ummi.colors.primary else Ummi.colors.line, RoundedCornerShape(16.dp))
             .background(Ummi.colors.surface, RoundedCornerShape(16.dp))
-            .alpha(if (done) 0.55f else 1f)
-            .padding(14.dp),
+            .padding(start = 14.dp, top = 12.dp, bottom = 12.dp, end = 6.dp),
         verticalAlignment = Alignment.CenterVertically,
     ) {
         Box(
             modifier = Modifier
+                .alpha(if (done) 0.55f else 1f)
                 .size(24.dp)
                 .clip(CircleShape)
                 .background(if (done) Ummi.colors.primary else Color.Transparent)
@@ -390,7 +453,7 @@ private fun TaskRow(act: ActEntry, done: Boolean, isUpNext: Boolean, onToggle: (
             if (done) Icon(UmmiIcons.check, contentDescription = null, tint = Ummi.colors.onPrimary, modifier = Modifier.size(16.dp))
         }
         Spacer(Modifier.width(12.dp))
-        Column(modifier = Modifier.weight(1f).then(Modifier).clip(RoundedCornerShape(4.dp))) {
+        Column(modifier = Modifier.weight(1f).alpha(if (done) 0.55f else 1f)) {
             Text(
                 text = act.t,
                 fontSize = 15.sp,
@@ -401,14 +464,41 @@ private fun TaskRow(act: ActEntry, done: Boolean, isUpNext: Boolean, onToggle: (
             if (act.s.isNotBlank()) {
                 Text(text = act.s, fontSize = 13.sp, color = Ummi.colors.ink2)
             }
-        }
-        if (ReaderKey.forAct(act) != null) {
-            OutlinedButton(onClick = onRead, contentPadding = androidx.compose.foundation.layout.PaddingValues(horizontal = 12.dp, vertical = 4.dp)) {
-                Text("Read", fontSize = 12.sp)
+            if (reminderLabel != null) {
+                Row(verticalAlignment = Alignment.CenterVertically, modifier = Modifier.padding(top = 4.dp)) {
+                    Icon(UmmiIcons.reminderSet, contentDescription = null, tint = Ummi.colors.accentText, modifier = Modifier.size(14.dp))
+                    Spacer(Modifier.width(4.dp))
+                    Text(reminderLabel, fontSize = 12.sp, fontWeight = FontWeight.SemiBold, color = Ummi.colors.accentText)
+                }
+            }
+            if (ReaderKey.forAct(act) != null) {
+                Text(
+                    "Read",
+                    fontSize = 12.sp,
+                    fontWeight = FontWeight.SemiBold,
+                    color = Ummi.colors.onpc,
+                    modifier = Modifier
+                        .padding(top = 6.dp)
+                        .clip(RoundedCornerShape(14.dp))
+                        .background(Ummi.colors.pc)
+                        .clickable(onClick = onRead)
+                        .padding(horizontal = 12.dp, vertical = 5.dp),
+                )
             }
         }
-        // The handoff also puts a per-task reminder bell here; that's part of
-        // the Reminders feature (not built yet), so it's left out rather than
-        // wired to the wrong action.
+        IconButton(
+            onClick = onBell,
+            modifier = Modifier
+                .size(40.dp)
+                .clip(CircleShape)
+                .background(if (reminderLabel != null) Ummi.colors.ac else Color.Transparent),
+        ) {
+            Icon(
+                if (reminderLabel != null) UmmiIcons.bell else UmmiIcons.bellAdd,
+                contentDescription = if (reminderLabel != null) "Turn reminder off" else "Set a reminder",
+                tint = if (reminderLabel != null) Ummi.colors.accentText else Ummi.colors.ink2,
+                modifier = Modifier.size(20.dp),
+            )
+        }
     }
 }

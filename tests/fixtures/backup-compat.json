@@ -1,5 +1,5 @@
 {
-  "_about": "Shared by tests/run.js (the web app) and android/app/src/test (the Android app). Both must accept every valid file with the same result, reject every invalid one, and write the same readable record. androidBackup is what the Android app writes; the web app must restore it. historyWithVisits is the readable record once visits exist (they're made in the Android app and carried through web backups untouched).",
+  "_about": "Shared by tests/run.js (the web app) and android/app/src/test (the Android app). Both must accept every valid file with the same result, reject every invalid one, and write the same readable record. androidBackup is what the Android app writes; the web app must restore it. historyWithVisits and historyWithNames are the readable record once visits and baby names exist (they're made in the Android app and carried through web backups untouched, as are the reminder settings).",
   "valid": [
     {
       "why": "a backup downloaded from the web app",
@@ -42,7 +42,7 @@
     },
     {
       "why": "a newer backup with fields this version does not know yet",
-      "file": "{\"app\":\"ummi\",\"schema\":1,\"exportedAt\":\"2026-08-16T09:30:00.000Z\",\"state\":{\"name\":\"Aimen\",\"dueDate\":\"2026-11-20\",\"done\":{\"2026-08-15\":[\"m4a\"],\"2026-08-16\":[\"m4a\",\"salah\"]},\"duaDone\":{\"2026-08-16\":true},\"journal\":[{\"d\":\"2026-08-16\",\"t\":\"a good day\"},{\"d\":\"2026-08-15\",\"t\":\"first entry\"}],\"names\":[{\"name\":\"Maryam\",\"fav\":true}]}}",
+      "file": "{\"app\":\"ummi\",\"schema\":1,\"exportedAt\":\"2026-08-16T09:30:00.000Z\",\"state\":{\"name\":\"Aimen\",\"dueDate\":\"2026-11-20\",\"done\":{\"2026-08-15\":[\"m4a\"],\"2026-08-16\":[\"m4a\",\"salah\"]},\"duaDone\":{\"2026-08-16\":true},\"journal\":[{\"d\":\"2026-08-16\",\"t\":\"a good day\"},{\"d\":\"2026-08-15\",\"t\":\"first entry\"}],\"babyGear\":[{\"item\":\"Pram\",\"got\":true}]}}",
       "expect": {
         "name": "Aimen",
         "dueDate": "2026-11-20",
@@ -162,9 +162,28 @@
           "reminder": "evening",
           "note": "full bladder"
         }
+      ],
+      "reminders": {
+        "morning": true,
+        "prayer": true,
+        "place": "birmingham",
+        "tasks": {
+          "m6d": true,
+          "m4c": false
+        }
+      },
+      "names": [
+        {
+          "name": "Zahra"
+        },
+        {
+          "name": "Maryam",
+          "note": "After Sayyidah Maryam (as)",
+          "fav": true
+        }
       ]
     },
-    "file": "{\n    \"app\": \"ummi\",\n    \"schema\": 1,\n    \"exportedAt\": \"2026-08-16T09:30:00Z\",\n    \"state\": {\n        \"dueDate\": \"2026-11-20\",\n        \"name\": \"Aimen\",\n        \"done\": {\n            \"2026-08-15\": [\n                \"m4a\"\n            ],\n            \"2026-08-16\": [\n                \"m4a\",\n                \"salah\"\n            ]\n        },\n        \"duaDone\": {\n            \"2026-08-16\": true\n        },\n        \"journal\": [\n            {\n                \"d\": \"2026-08-16\",\n                \"t\": \"a good day\"\n            },\n            {\n                \"d\": \"2026-08-15\",\n                \"t\": \"first entry\"\n            }\n        ],\n        \"visits\": [\n            {\n                \"id\": \"v2\",\n                \"date\": \"2026-10-20\",\n                \"title\": \"Midwife check\",\n                \"type\": \"midwife\"\n            },\n            {\n                \"id\": \"v1\",\n                \"date\": \"2026-10-06\",\n                \"time\": \"09:10\",\n                \"title\": \"Twenty-week scan\",\n                \"type\": \"scan\",\n                \"reminder\": \"evening\",\n                \"note\": \"full bladder\"\n            }\n        ]\n    }\n}"
+    "file": "{\n    \"app\": \"ummi\",\n    \"schema\": 1,\n    \"exportedAt\": \"2026-08-16T09:30:00Z\",\n    \"state\": {\n        \"dueDate\": \"2026-11-20\",\n        \"name\": \"Aimen\",\n        \"done\": {\n            \"2026-08-15\": [\n                \"m4a\"\n            ],\n            \"2026-08-16\": [\n                \"m4a\",\n                \"salah\"\n            ]\n        },\n        \"duaDone\": {\n            \"2026-08-16\": true\n        },\n        \"journal\": [\n            {\n                \"d\": \"2026-08-16\",\n                \"t\": \"a good day\"\n            },\n            {\n                \"d\": \"2026-08-15\",\n                \"t\": \"first entry\"\n            }\n        ],\n        \"visits\": [\n            {\n                \"id\": \"v2\",\n                \"date\": \"2026-10-20\",\n                \"title\": \"Midwife check\",\n                \"type\": \"midwife\"\n            },\n            {\n                \"id\": \"v1\",\n                \"date\": \"2026-10-06\",\n                \"time\": \"09:10\",\n                \"title\": \"Twenty-week scan\",\n                \"type\": \"scan\",\n                \"reminder\": \"evening\",\n                \"note\": \"full bladder\"\n            }\n        ],\n        \"reminders\": {\n            \"morning\": true,\n            \"prayer\": true,\n            \"place\": \"birmingham\",\n            \"tasks\": {\n                \"m6d\": true,\n                \"m4c\": false\n            }\n        },\n        \"names\": [\n            {\n                \"name\": \"Zahra\"\n            },\n            {\n                \"name\": \"Maryam\",\n                \"note\": \"After Sayyidah Maryam (as)\",\n                \"fav\": true\n            }\n        ]\n    }\n}"
   },
   "historyWithVisits": {
     "today": "2026-09-26",
@@ -190,5 +209,23 @@
       ]
     },
     "text": "Ummi — your record\nExported 2026-09-26\n\nDue date: 2026-11-20\n\nDAILY RECORD (0 days)\n\nREFLECTIONS (0)\n\nVISITS (2)\n  2026-10-06 09:10 — Twenty-week scan (Scan) — \"full bladder\"\n  2026-10-20 — Midwife check (Midwife)\n"
+  },
+  "historyWithNames": {
+    "today": "2026-09-26",
+    "state": {
+      "dueDate": "2026-11-20",
+      "journal": [],
+      "names": [
+        {
+          "name": "Zahra"
+        },
+        {
+          "name": "Maryam",
+          "note": "After Sayyidah Maryam (as)",
+          "fav": true
+        }
+      ]
+    },
+    "text": "Ummi — your record\nExported 2026-09-26\n\nDue date: 2026-11-20\n\nDAILY RECORD (0 days)\n\nREFLECTIONS (0)\n\nBABY NAMES (2)\n  Zahra\n  Maryam ♥ — After Sayyidah Maryam (as)\n"
   }
 }
