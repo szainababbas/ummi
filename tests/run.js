@@ -335,12 +335,17 @@ describe('texts, as checked against their sources', () => {
    for a primary source. These hold what it found. */
 describe('the guide, as checked against its sources', () => {
   const SOURCES = ['From Marriage to Parenthood', 'al-Kāfī', 'Biḥār al-Anwār', 'Makārim al-Akhlāq',
-    'Mustadrak al-Wasāʾil', 'Sistani', 'NHS', 'Aimen’s planner'];
+    'Mustadrak al-Wasāʾil', 'Sistani', 'NHS'];
+  // Acts with no written source found. Each has a "No written source" row in docs/SOURCES.md.
+  const UNSOURCED = ['m9a'];
   const acts = [];
   for (const m of Object.keys(MONTHS)) for (const a of MONTHS[m].acts) acts.push(a);
 
   it('says where every act comes from', () => {
-    for (const a of acts) ok(SOURCES.some((src) => a.s.includes(src)), a.id + ' names no source: ' + JSON.stringify(a.s));
+    for (const a of acts) {
+      if (UNSOURCED.includes(a.id)) continue;
+      ok(SOURCES.some((src) => a.s.includes(src)), a.id + ' names no source: ' + JSON.stringify(a.s));
+    }
     for (const m of Object.keys(MONTHS)) for (const x of MONTHS[m].also || []) {
       ok(SOURCES.some((src) => x.includes(src)), 'month ' + m + ' "also" names no source: ' + x);
     }
@@ -350,6 +355,14 @@ describe('the guide, as checked against its sources', () => {
     // so an act cannot ship without someone having looked for its source
     const doc = require('fs').readFileSync(require('path').join(__dirname, '..', 'docs', 'SOURCES.md'), 'utf8');
     for (const a of acts) ok(doc.includes('| ' + a.id + ' | '), a.id + ' has no row in docs/SOURCES.md');
+    for (const id of UNSOURCED) ok(new RegExp('\\| ' + id + ' \\|[^\\n]*No written source').test(doc), id + ' is unsourced but its row does not say so');
+  });
+
+  it('cites no planner as a source', () => {
+    // Aimen's feedback, 1 Oct 2026: the planner is not a source; its own sources are the books
+    const html = require('fs').readFileSync(require('path').join(__dirname, '..', 'index.html'), 'utf8');
+    const text = JSON.stringify(MONTHS) + JSON.stringify(DUA_TEXTS) + html.split('<script')[0];
+    ok(!/planner/i.test(text), 'a planner is cited again: ' + (text.match(/.{0,60}planner.{0,20}/i) || [''])[0]);
   });
 
   it('carries none of the citations that did not hold up', () => {

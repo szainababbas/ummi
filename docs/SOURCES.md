@@ -114,7 +114,7 @@ These are fixed to match From Marriage to Parenthood. If Aimen's sheet changed a
 | m7e | The five sūrahs after your prayers | Book only | After the daily prayers and the tasbīḥ of Sayyidah Fāṭimah (as): al-Ḥadīd (57), al-Ḥashr (59), aṣ-Ṣaff (61), al-Jumuʿah (62) and at-Taghābun (64). From Marriage to Parenthood, p.114. |
 | m7f | Sūrah al-Qadr (97) and al-Ikhlāṣ (112) in the daily prayers | Primary, in part | After al-Fātiḥah. Once you start al-Ikhlāṣ, finish it rather than switching (Sistani, Islamic Laws, ruling 974). From Marriage to Parenthood, p.114. |
 | m7g | Sūrah Yāsīn (36) over a quince | Primary, in part | Then eat it on an empty stomach. Quince for pregnant women: al-Kāfī, Vol. 6, p.22. From Marriage to Parenthood, p.114. |
-| m7h | Melon after your food | Primary, in part | After food rather than on an empty stomach (Imām al-ʿAskarī (as), Mustadrak al-Wasāʾil, Vol. 16, p.410). The pregnancy hadith, in Mustadrak Vol. 15, p.214, comes from a Sunni medical collection, so it is weak. Avoiding water with it is from Aimen’s planner. |
+| m7h | Melon after your food | Primary, in part | After food rather than on an empty stomach (Imām al-ʿAskarī (as), Mustadrak al-Wasāʾil, Vol. 16, p.410). The pregnancy hadith, in Mustadrak Vol. 15, p.214, comes from a Sunni medical collection, so it is weak. Avoid water with it: no written source; the planner citation was removed on 1 Oct 2026. |
 | m7j | Sūrah an-Naḥl (16) | Book only | From Marriage to Parenthood, p.114. |
 | m7i | Iron-rich foods | NHS | Red meat, beans and chickpeas, nuts, dried apricots and fortified cereals. Your iron is checked at booking and at 28 weeks, and you’ll be offered a supplement if it is low (NHS). |
 | m8a | Adhān and iqāmah before every prayer | Book only | With your hand on your stomach. From Marriage to Parenthood, p.114. |
@@ -128,8 +128,8 @@ These are fixed to match From Marriage to Parenthood. If Aimen's sheet changed a
 | m8i | Sweet yogurt and honey | Book only | From Marriage to Parenthood, p.115. |
 | m8j | A sweet pomegranate on an empty stomach | Primary source | On an empty stomach. al-Kāfī, Vol. 6, p.355: a pomegranate on Friday before food lights the heart, and sweet pomegranate “improves the child”. |
 | m8k | Vinegar in your food | Book only | Once a week, if you have no fear of harm from it. From Marriage to Parenthood, p.115. |
-| m9a | Ṣalawāt 140 times | Planner only | Allāhumma ṣalli ʿalā Muḥammadin wa Āli Muḥammad. From Aimen’s planner. |
-| m9b | Istighfār 70 times after each prayer | Primary, in part | Astaghfirullāha Rabbī wa atūbu ilayh. The Prophet (s) sought forgiveness seventy times a day (al-Kāfī, Vol. 2, p.505); after each prayer is from Aimen’s planner. |
+| m9a | Ṣalawāt 140 times | No written source | Allāhumma ṣalli ʿalā Muḥammadin wa Āli Muḥammad. Not found in From Marriage to Parenthood; the planner citation was removed on 1 Oct 2026 at Aimen's request, pending a source. |
+| m9b | Istighfār 70 times after each prayer | Primary, in part | Astaghfirullāha Rabbī wa atūbu ilayh. The Prophet (s) sought forgiveness seventy times a day (al-Kāfī, Vol. 2, p.505). "After each prayer" has no written source; the planner citation was removed on 1 Oct 2026. |
 | m9c | Sūrah al-ʿAṣr (103) and adh-Dhāriyāt (51) | Primary, in part | In the Ẓuhr and ʿAṣr prayers, one in each of the first two rakʿahs. adh-Dhāriyāt is long, so leave it out if time is short (Sistani, ruling 965). From Marriage to Parenthood, p.115. |
 | m9d | Sūrah al-Ḥajj (22) | Book only | From Marriage to Parenthood, p.115. |
 | m9e | Sūrah Fāṭir (35) | Book only | On Friday night, which is Thursday evening after Maghrib. From Marriage to Parenthood, p.115. |

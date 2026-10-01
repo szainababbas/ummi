@@ -232,7 +232,7 @@ label{display:block;font-size:.82rem;font-weight:600;color:var(--ink-soft);margi
     <div id="mo-groups"></div>
     <div class="card"><span class="cat">Physical activity</span><p id="mo-activity" style="font-size:.9rem;line-height:1.6;margin-top:6px"></p></div>
     <div class="card" id="mo-also" style="display:none"><span class="cat">Also recommended</span><ul class="blist" id="mo-also-list"></ul></div>
-    <div class="note">The month-by-month acts, foods and recitations come from the Shiʿi pregnancy planner Aimen compiled, with its own citations kept on each item. Weekly baby and body notes are NHS. These are recommended acts (mustaḥab); follow your own marjaʿ on specific rulings.</div>
+    <div class="note">The month-by-month acts, foods and recitations come from From Marriage to Parenthood (World Federation, 2006), with the source named on each item. Weekly baby and body notes are NHS. These are recommended acts (mustaḥab); follow your own marjaʿ on specific rulings.</div>
   </section>
 
   <!-- WEEK -->
@@ -451,7 +451,7 @@ const DUA_TEXTS = {
    ar:'أَسْتَغْفِرُ اللَّهَ رَبِّي وَأَتُوبُ إِلَيْهِ',
    tl:'Astaghfirullāha Rabbī wa atūbu ilayh',
    en:'I seek forgiveness from Allah, my Lord, and I turn to Him in repentance.',
-   sr:'The Prophet (s) sought forgiveness seventy times a day (al-Kāfī, Vol. 2, p.505). The counts in months four and nine are from Aimen’s planner.'},
+   sr:'The Prophet (s) sought forgiveness seventy times a day (al-Kāfī, Vol. 2, p.505).'},
  'tasbih':{lbl:'Tasbīḥ of Sayyidah Fāṭimah (as)',
    ar:'اللَّهُ أَكْبَرُ ٣٤ · الْحَمْدُ لِلَّهِ ٣٣ · سُبْحَانَ اللَّهِ ٣٣',
    tl:'Allāhu Akbar ×34, Alḥamdu lillāh ×33, Subḥānallāh ×33',
@@ -501,7 +501,7 @@ const MONTHS = {
   ],
   activity:'Start pelvic floor exercises. They help stop leaks when you cough, sneeze or laugh, now and after the birth. Squeeze the muscles you would use to stop a wee and hold in wind, a few quick squeezes first, then slow ones held for up to 10 seconds. Aim for 3 sets of 8 squeezes a day; a set at each meal helps you remember.'},
 
- 4:{from:13,to:16,note:'Eyes are working, facial muscles can make expressions and fingerprints are forming. Expect weight gain and a more pronounced belly, and possibly a blocked nose, bleeding gums, backache and more discharge. Imām ʿAlī (as) said to name children before they are born (al-Kāfī, Vol. 6, p.18); the planner suggests choosing by four months and ten days.',
+ 4:{from:13,to:16,note:'Eyes are working, facial muscles can make expressions and fingerprints are forming. Expect weight gain and a more pronounced belly, and possibly a blocked nose, bleeding gums, backache and more discharge. Imām ʿAlī (as) said to name children before they are born (al-Kāfī, Vol. 6, p.18); aim to choose by four months and ten days.',
   acts:[
    {id:'m4a',cat:'Recitation',t:'Sūrah al-Furqān 25:74',s:'The prayer for comfort in your family. From Marriage to Parenthood, p.112.',days:null,ayah:'25:74'},
    {id:'m4b',cat:'Recitation',t:'Istighfār 7 times',s:'Astaghfirullāha Rabbī wa atūbu ilayh. From Marriage to Parenthood, p.112.',days:null,dua:'istighfar'},
@@ -546,7 +546,7 @@ const MONTHS = {
    {id:'m7e',cat:'Sūrah',t:'The five sūrahs after your prayers',s:'After the daily prayers and the tasbīḥ of Sayyidah Fāṭimah (as): al-Ḥadīd (57), al-Ḥashr (59), aṣ-Ṣaff (61), al-Jumuʿah (62) and at-Taghābun (64). From Marriage to Parenthood, p.114.',days:null},
    {id:'m7f',cat:'Sūrah',t:'Sūrah al-Qadr (97) and al-Ikhlāṣ (112) in the daily prayers',s:'After al-Fātiḥah. Once you start al-Ikhlāṣ, finish it rather than switching (Sistani, Islamic Laws, ruling 974). From Marriage to Parenthood, p.114.',days:null,surah:112},
    {id:'m7g',cat:'Sūrah',t:'Sūrah Yāsīn (36) over a quince',s:'Then eat it on an empty stomach. Quince for pregnant women: al-Kāfī, Vol. 6, p.22. From Marriage to Parenthood, p.114.',days:null},
-   {id:'m7h',cat:'Food',t:'Melon after your food',s:'After food rather than on an empty stomach (Imām al-ʿAskarī (as), Mustadrak al-Wasāʾil, Vol. 16, p.410). The pregnancy hadith, in Mustadrak Vol. 15, p.214, comes from a Sunni medical collection, so it is weak. Avoiding water with it is from Aimen’s planner.',days:null},
+   {id:'m7h',cat:'Food',t:'Melon after your food',s:'After food rather than on an empty stomach (Imām al-ʿAskarī (as), Mustadrak al-Wasāʾil, Vol. 16, p.410). The pregnancy hadith, in Mustadrak Vol. 15, p.214, comes from a Sunni medical collection, so it is weak. Avoid water with it.',days:null},
    {id:'m7j',cat:'Sūrah',t:'Sūrah an-Naḥl (16)',s:'From Marriage to Parenthood, p.114.',days:[1]},
    {id:'m7i',cat:'Food',t:'Iron-rich foods',s:'Red meat, beans and chickpeas, nuts, dried apricots and fortified cereals. Your iron is checked at booking and at 28 weeks, and you’ll be offered a supplement if it is low (NHS).',days:null}
   ],
@@ -568,10 +568,10 @@ const MONTHS = {
   ],
   activity:'Keep going with walking, swimming and yoga. Only do what feels comfortable, and stop anything that adds to the discomfort. Ask your midwife if you have concerns.'},
 
- 9:{from:33,to:41,note:'Hearing is very sharp now and baby may recognise your voice. Expect a waddling walk as baby drops into the pelvis, and pelvic pain with it. The planner’s guide ends at month nine, so this block covers the remaining weeks up to 41.',
+ 9:{from:33,to:41,note:'Hearing is very sharp now and baby may recognise your voice. Expect a waddling walk as baby drops into the pelvis, and pelvic pain with it. The guide ends at month nine, so this block covers the remaining weeks up to 41.',
   acts:[
-   {id:'m9a',cat:'Recitation',t:'Ṣalawāt 140 times',s:'Allāhumma ṣalli ʿalā Muḥammadin wa Āli Muḥammad. From Aimen’s planner.',days:null,dua:'salawat'},
-   {id:'m9b',cat:'Recitation',t:'Istighfār 70 times after each prayer',s:'Astaghfirullāha Rabbī wa atūbu ilayh. The Prophet (s) sought forgiveness seventy times a day (al-Kāfī, Vol. 2, p.505); after each prayer is from Aimen’s planner.',days:null,dua:'istighfar'},
+   {id:'m9a',cat:'Recitation',t:'Ṣalawāt 140 times',s:'Allāhumma ṣalli ʿalā Muḥammadin wa Āli Muḥammad.',days:null,dua:'salawat'},
+   {id:'m9b',cat:'Recitation',t:'Istighfār 70 times after each prayer',s:'Astaghfirullāha Rabbī wa atūbu ilayh. The Prophet (s) sought forgiveness seventy times a day (al-Kāfī, Vol. 2, p.505).',days:null,dua:'istighfar'},
    {id:'m9c',cat:'Sūrah',t:'Sūrah al-ʿAṣr (103) and adh-Dhāriyāt (51)',s:'In the Ẓuhr and ʿAṣr prayers, one in each of the first two rakʿahs. adh-Dhāriyāt is long, so leave it out if time is short (Sistani, ruling 965). From Marriage to Parenthood, p.115.',days:null,surah:103},
    {id:'m9d',cat:'Sūrah',t:'Sūrah al-Ḥajj (22)',s:'From Marriage to Parenthood, p.115.',days:[4]},
    {id:'m9e',cat:'Sūrah',t:'Sūrah Fāṭir (35)',s:'On Friday night, which is Thursday evening after Maghrib. From Marriage to Parenthood, p.115.',days:[4]},

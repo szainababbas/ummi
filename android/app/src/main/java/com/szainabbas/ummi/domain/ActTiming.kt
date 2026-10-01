@@ -6,7 +6,7 @@ import java.time.LocalTime
 /** The part of the day Today groups an act under. */
 enum class DayPart(val label: String) {
     MORNING("Morning"),
-    PRAYERS("After each prayer"),
+    PRAYERS("With each prayer"),
     EVENING("Maghrib & ʿIshāʾ"),
     ANYTIME("Any time today"),
 }
@@ -19,6 +19,8 @@ enum class Anchor(val part: DayPart, val prayerLinked: Boolean) {
     FAJR(DayPart.MORNING, true),
     MORNING(DayPart.MORNING, false),
     PRAYERS(DayPart.PRAYERS, true),
+    /** Adhān and iqāmah, said before praying: rings at the adhān, not after it. */
+    BEFORE_PRAYERS(DayPart.PRAYERS, true),
     DHUHR(DayPart.PRAYERS, true),
     BEFORE_SUNSET(DayPart.EVENING, false),
     MAGHRIB(DayPart.EVENING, true),
@@ -56,6 +58,7 @@ object ActTiming {
             "maghrib" in all -> Anchor.MAGHRIB
             "before sunset" in all -> Anchor.BEFORE_SUNSET
             "ṣalātul layl" in title -> Anchor.NIGHT
+            BEFORE_PRAYER_WORDS.any { it in all } -> Anchor.BEFORE_PRAYERS
             PRAYER_WORDS.any { it in all } -> Anchor.PRAYERS
             "after your food" in all || "after food" in all -> Anchor.ANYTIME
             MORNING_WORDS.any { it in all } -> Anchor.MORNING
@@ -63,7 +66,8 @@ object ActTiming {
         }
     }
 
-    private val PRAYER_WORDS = listOf("every prayer", "each prayer", "daily prayers", "your prayers", "ṣalāh time")
+    private val BEFORE_PRAYER_WORDS = listOf("before every prayer", "before each prayer", "ṣalāh time")
+    private val PRAYER_WORDS = listOf("every prayer", "each prayer", "daily prayers", "your prayers")
     private val MORNING_WORDS = listOf("empty stomach", "morning", "breakfast")
 
     /** Today's list in the handoff's order: morning, after the prayers, evening, any time. Stable within a group. */
@@ -77,6 +81,7 @@ object ActTiming {
             Anchor.MORNING -> listOf(AnchorTime(MORNING_AT, "This morning"))
             // Shia practice joins Ẓuhr with ʿAṣr and Maghrib with ʿIshāʾ, so three times a day.
             Anchor.PRAYERS -> listOf(after(pt.fajr, "Fajr"), after(pt.dhuhr, "Ẓuhr"), after(pt.maghrib, "Maghrib"))
+            Anchor.BEFORE_PRAYERS -> listOf(AnchorTime(pt.fajr, "Fajr time"), AnchorTime(pt.dhuhr, "Ẓuhr time"), AnchorTime(pt.maghrib, "Maghrib time"))
             Anchor.DHUHR -> listOf(after(pt.dhuhr, "Ẓuhr"))
             Anchor.BEFORE_SUNSET -> listOf(AnchorTime(pt.sunset.minusMinutes(30), "Before sunset"))
             Anchor.MAGHRIB -> listOf(after(pt.maghrib, "Maghrib"))
@@ -91,6 +96,7 @@ object ActTiming {
         val times = times(anchor, pt)
         return when (anchor) {
             Anchor.PRAYERS -> "After each prayer"
+            Anchor.BEFORE_PRAYERS -> "Before each prayer"
             Anchor.WATER -> "Every 2 hours, 9 am to 7 pm"
             Anchor.MORNING, Anchor.ANYTIME, Anchor.NIGHT -> clock(times.first().time)
             else -> times.first().heading + " · " + clock(times.first().time)
@@ -99,7 +105,7 @@ object ActTiming {
 
     /** The Reminders screen's narrow time column: "7:30 am", "5:20 am", "Each prayer", "Every 2 hours". */
     fun shortWhen(anchor: Anchor, pt: DayPrayerTimes): String = when (anchor) {
-        Anchor.PRAYERS -> "Each prayer"
+        Anchor.PRAYERS, Anchor.BEFORE_PRAYERS -> "Each prayer"
         Anchor.WATER -> "Every 2 hours"
         else -> clock(times(anchor, pt).first().time)
     }

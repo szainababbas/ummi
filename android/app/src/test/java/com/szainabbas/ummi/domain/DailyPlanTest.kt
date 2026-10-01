@@ -50,6 +50,14 @@ class DailyPlanTest {
         assertNull(DailyPlan.upNext(abc, done = setOf("a", "b", "c"), skipped = emptySet()))
     }
 
+    @Test
+    fun `puts today's pinned act up next ahead of every-day ones, wherever it sits in the list`() {
+        val day = listOf(act("adhan", null), act("salah", null), act("surah", listOf(4)))
+        assertEquals("surah", DailyPlan.upNext(day, done = emptySet(), skipped = emptySet())?.id)
+        assertEquals("adhan", DailyPlan.upNext(day, done = setOf("surah"), skipped = emptySet())?.id)
+        assertEquals("adhan", DailyPlan.upNext(day, done = emptySet(), skipped = setOf("surah"))?.id)
+    }
+
     /** Presses "Later" [times] times and records what was up next before each press. */
     private fun pressLater(times: Int, done: Set<String>): List<String> {
         var skipped = emptySet<String>()
