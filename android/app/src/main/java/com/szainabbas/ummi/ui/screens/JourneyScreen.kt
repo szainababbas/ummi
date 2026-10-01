@@ -169,7 +169,7 @@ private fun MonthTab(data: UmmiData, currentMonth: Int, onOpenReader: (ReaderKey
                     }
                 }
             Text(
-                "Sources: the Shīʿī pregnancy planner, with citations kept on each act.",
+                "Sources: named on each act.",
                 fontSize = 13.sp,
                 color = Ummi.colors.ink2,
                 modifier = Modifier.padding(20.dp),
@@ -213,7 +213,7 @@ private fun FoodTab(data: UmmiData) {
         FoodCard("Everyday essentials", data.food.med)
         FoodCard("Best avoided", data.food.avoid, danger = true)
         Text(
-            "Sources: the Shīʿī pregnancy planner and NHS dietary guidance.",
+            "Sources: named on each item, and NHS dietary guidance.",
             fontSize = 13.sp,
             color = Ummi.colors.ink2,
             modifier = Modifier.padding(20.dp),
