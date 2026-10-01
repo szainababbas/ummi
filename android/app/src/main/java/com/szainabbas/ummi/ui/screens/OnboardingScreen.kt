@@ -317,7 +317,7 @@ private fun RemindersStep(o: Onboarding, onChange: (Onboarding) -> Unit) {
     }
     Text("Gentle reminders?", fontFamily = Literata, fontWeight = FontWeight.SemiBold, fontSize = 28.sp, lineHeight = 35.sp, color = Ummi.colors.ink, modifier = Modifier.padding(top = 18.dp))
     Text(
-        "A nudge in the morning, and after the prayer an act belongs to. Turn any of them off later.",
+        "A nudge in the morning, and at the prayer an act belongs to. Turn any of them off later.",
         fontSize = 15.sp,
         lineHeight = 22.sp,
         color = Ummi.colors.ink2,
@@ -332,7 +332,7 @@ private fun RemindersStep(o: Onboarding, onChange: (Onboarding) -> Unit) {
     ) {
         CheckRow("Morning summary", "7:30 am · today's dua and checklist", o.morning) { onChange(o.copy(morning = !o.morning)) }
         HorizontalDivider(color = Ummi.colors.line)
-        CheckRow("Prayer-linked acts", "A few minutes after each adhān", o.prayer) { onChange(o.copy(prayer = !o.prayer)) }
+        CheckRow("Prayer-linked acts", "At Fajr, Ẓuhr and Maghrib", o.prayer) { onChange(o.copy(prayer = !o.prayer)) }
         HorizontalDivider(color = Ummi.colors.line)
         CheckRow("Water", "Every 2 hours through the day", o.water) { onChange(o.copy(water = !o.water)) }
     }

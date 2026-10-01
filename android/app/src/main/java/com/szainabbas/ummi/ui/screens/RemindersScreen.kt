@@ -102,7 +102,7 @@ fun RemindersScreen(
         Eyebrow("Every day")
         ListCard {
             DailyRow(UmmiIcons.today, "Morning summary", "7:30 am · today's dua and checklist", settings.morning, onSetMorning)
-            DailyRow(UmmiIcons.timePrayer, "Prayer-linked acts", "A few minutes after Fajr, Ẓuhr and Maghrib", settings.prayer, onSetPrayer)
+            DailyRow(UmmiIcons.timePrayer, "Prayer-linked acts", "At Fajr, Ẓuhr and Maghrib", settings.prayer, onSetPrayer)
             DailyRow(UmmiIcons.water, "Water", "Every 2 hours, 9 am to 7 pm", settings.water, onSetWater, last = true)
         }
 
