@@ -360,11 +360,11 @@ private fun DuaBand(lbl: String, arabic: String, translit: String, meaning: Stri
             color = Ummi.colors.accentText,
         )
         Spacer(Modifier.height(12.dp))
-        Text(text = arabic, fontFamily = Amiri, fontSize = 30.sp, lineHeight = 60.sp, textAlign = TextAlign.Center, color = Ummi.colors.ink)
+        Text(text = arabic, fontFamily = Amiri, fontSize = 34.sp, lineHeight = 68.sp, textAlign = TextAlign.Center, color = Ummi.colors.ink)
         Spacer(Modifier.height(8.dp))
-        Text(text = translit, fontSize = 15.sp, color = Ummi.colors.accentText, textAlign = TextAlign.Center)
-        Spacer(Modifier.height(4.dp))
-        Text(text = meaning, fontSize = 15.sp, color = Ummi.colors.ink, textAlign = TextAlign.Center)
+        Text(text = translit, fontSize = 17.sp, lineHeight = 26.sp, color = Ummi.colors.accentText, textAlign = TextAlign.Center)
+        Spacer(Modifier.height(6.dp))
+        Text(text = meaning, fontSize = 17.sp, lineHeight = 26.sp, color = Ummi.colors.ink, textAlign = TextAlign.Center)
         Spacer(Modifier.height(16.dp))
         if (recited) {
             Button(onClick = onToggle, colors = ButtonDefaults.buttonColors(containerColor = Ummi.colors.primary, contentColor = Ummi.colors.onPrimary)) {

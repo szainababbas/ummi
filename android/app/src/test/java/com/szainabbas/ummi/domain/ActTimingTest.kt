@@ -23,12 +23,13 @@ class ActTimingTest {
             "m9e" to Anchor.MAGHRIB, // "Thursday evening after Maghrib"
             "m1f" to Anchor.BEFORE_SUNSET,
             "m4d" to Anchor.NIGHT, // Ṣalātul Layl, whose note mentions Fajr only as the end of its time
-            "m1a" to Anchor.PRAYERS, // "before every prayer"
+            "m1a" to Anchor.BEFORE_PRAYERS, // "before every prayer"
+            "m8a" to Anchor.BEFORE_PRAYERS, // "before every prayer"
             "m4c" to Anchor.PRAYERS, // "after each prayer"
             "m4g" to Anchor.PRAYERS, // "After the daily prayers"
             "m7e" to Anchor.PRAYERS, // "after your prayers"
-            "m5b" to Anchor.PRAYERS, // "at ṣalāh time"
-            "m3b" to Anchor.PRAYERS, // only its note says "Before each prayer"
+            "m5b" to Anchor.BEFORE_PRAYERS, // "at ṣalāh time"
+            "m3b" to Anchor.BEFORE_PRAYERS, // only its note says "Before each prayer"
             "salah" to Anchor.PRAYERS,
             "m7h" to Anchor.ANYTIME, // melon "after food rather than on an empty stomach"
             "m1c" to Anchor.MORNING, // dates "on an empty stomach"
@@ -59,6 +60,10 @@ class ActTimingTest {
             listOf(AnchorTime(LocalTime.of(5, 20), "After Fajr"), AnchorTime(LocalTime.of(12, 56), "After Ẓuhr"), AnchorTime(LocalTime.of(19, 13), "After Maghrib")),
             ActTiming.times(Anchor.PRAYERS, pt),
         )
+        assertEquals(
+            listOf(AnchorTime(LocalTime.of(5, 15), "Fajr time"), AnchorTime(LocalTime.of(12, 51), "Ẓuhr time"), AnchorTime(LocalTime.of(19, 8), "Maghrib time")),
+            ActTiming.times(Anchor.BEFORE_PRAYERS, pt),
+        )
         assertEquals(listOf(AnchorTime(LocalTime.of(12, 56), "After Ẓuhr")), ActTiming.times(Anchor.DHUHR, pt))
         assertEquals(listOf(AnchorTime(LocalTime.of(18, 17), "Before sunset")), ActTiming.times(Anchor.BEFORE_SUNSET, pt))
         assertEquals(LocalTime.of(7, 30), ActTiming.times(Anchor.MORNING, pt).single().time)
@@ -78,6 +83,8 @@ class ActTimingTest {
         assertEquals("7:30 am", ActTiming.whenLabel(Anchor.MORNING, pt))
         assertEquals("After Fajr · 5:20 am", ActTiming.whenLabel(Anchor.FAJR, pt))
         assertEquals("After each prayer", ActTiming.whenLabel(Anchor.PRAYERS, pt))
+        assertEquals("Before each prayer", ActTiming.whenLabel(Anchor.BEFORE_PRAYERS, pt))
+        assertEquals("Each prayer", ActTiming.shortWhen(Anchor.BEFORE_PRAYERS, pt))
         assertEquals("After Maghrib · 7:13 pm", ActTiming.whenLabel(Anchor.MAGHRIB, pt))
         assertEquals("4:00 pm", ActTiming.whenLabel(Anchor.ANYTIME, pt))
         assertEquals("Every 2 hours, 9 am to 7 pm", ActTiming.whenLabel(Anchor.WATER, pt))

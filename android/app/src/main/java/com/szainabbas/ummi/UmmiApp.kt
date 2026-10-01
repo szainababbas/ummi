@@ -296,7 +296,7 @@ private fun UmmiMainScaffold(
         },
         bottomBar = {
             NavigationBar {
-                UmmiDestination.entries.forEach { dest ->
+                UmmiDestination.bottomBar.forEach { dest ->
                     NavigationBarItem(
                         selected = currentRoute == dest.route,
                         onClick = {

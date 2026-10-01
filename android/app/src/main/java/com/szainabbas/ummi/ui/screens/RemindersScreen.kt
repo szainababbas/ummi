@@ -126,35 +126,30 @@ fun RemindersScreen(
             }
         }
 
-        Eyebrow("Visits")
-        ListCard {
-            if (visits.isEmpty()) {
-                Text(
-                    "No visit reminders. Pick one when you add a visit.",
-                    fontSize = 14.sp,
-                    color = Ummi.colors.ink2,
-                    modifier = Modifier.clickable(onClick = onOpenVisits).padding(16.dp),
-                )
-            }
-            visits.forEachIndexed { i, v ->
-                val at = Reminders.visitReminderAt(v)
-                Row(
-                    modifier = Modifier.fillMaxWidth().clickable(onClick = onOpenVisits).padding(horizontal = 16.dp, vertical = 14.dp),
-                    verticalAlignment = Alignment.CenterVertically,
-                ) {
-                    Icon(UmmiIcons.event, contentDescription = null, tint = Ummi.colors.primary, modifier = Modifier.size(24.dp))
-                    Spacer(Modifier.width(16.dp))
-                    Column(Modifier.weight(1f)) {
-                        Text(v.title, fontSize = 15.sp, color = Ummi.colors.ink)
-                        val whenText = at?.let { reminderWhen(it) }.orEmpty()
-                        Text(
-                            listOf(Visits.longWhen(v), "reminder $whenText").joinToString(" · "),
-                            fontSize = 13.sp,
-                            color = Ummi.colors.ink2,
-                        )
+        // Visits is off the bottom bar, so there is nowhere to add one; the section shows only for visits already saved.
+        if (visits.isNotEmpty()) {
+            Eyebrow("Visits")
+            ListCard {
+                visits.forEachIndexed { i, v ->
+                    val at = Reminders.visitReminderAt(v)
+                    Row(
+                        modifier = Modifier.fillMaxWidth().clickable(onClick = onOpenVisits).padding(horizontal = 16.dp, vertical = 14.dp),
+                        verticalAlignment = Alignment.CenterVertically,
+                    ) {
+                        Icon(UmmiIcons.event, contentDescription = null, tint = Ummi.colors.primary, modifier = Modifier.size(24.dp))
+                        Spacer(Modifier.width(16.dp))
+                        Column(Modifier.weight(1f)) {
+                            Text(v.title, fontSize = 15.sp, color = Ummi.colors.ink)
+                            val whenText = at?.let { reminderWhen(it) }.orEmpty()
+                            Text(
+                                listOf(Visits.longWhen(v), "reminder $whenText").joinToString(" · "),
+                                fontSize = 13.sp,
+                                color = Ummi.colors.ink2,
+                            )
+                        }
                     }
+                    if (i < visits.lastIndex) HorizontalDivider(color = Ummi.colors.line)
                 }
-                if (i < visits.lastIndex) HorizontalDivider(color = Ummi.colors.line)
             }
         }
         Spacer(Modifier.height(16.dp))

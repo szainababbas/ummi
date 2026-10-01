@@ -29,9 +29,15 @@ object DailyPlan {
     fun tasksFor(month: MonthEntry?, baseTasks: List<ActEntry>, date: LocalDate): List<ActEntry> =
         actsFor(month, date) + baseTasks
 
-    /** The "Up next" card: the first task neither done nor put off with "Later". */
-    fun upNext(tasks: List<ActEntry>, done: Collection<String>, skipped: Collection<String>): ActEntry? =
-        tasks.firstOrNull { it.id !in done && it.id !in skipped } ?: tasks.firstOrNull { it.id !in done }
+    /**
+     * The "Up next" card: the first task neither done nor put off with "Later".
+     * Acts pinned to today's weekday come before every-day ones, so the day's
+     * sūrah leads rather than the same adhān item every morning.
+     */
+    fun upNext(tasks: List<ActEntry>, done: Collection<String>, skipped: Collection<String>): ActEntry? {
+        val order = tasks.sortedByDescending { it.days != null }
+        return order.firstOrNull { it.id !in done && it.id !in skipped } ?: order.firstOrNull { it.id !in done }
+    }
 
     /**
      * "Later" on [current]: move on to the next open task, and once every open
