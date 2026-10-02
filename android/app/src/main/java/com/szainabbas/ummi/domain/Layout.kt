@@ -2,6 +2,9 @@ package com.szainabbas.ummi.domain
 
 /** Small layout sums kept out of the composables so they can be tested on the JVM. */
 object Layout {
+    /** Side gap between the screen edge and Today's content, so no card or band runs edge to edge. */
+    const val SCREEN_GUTTER_DP = 16
+
     /**
      * Āyah refs ("2:255") in Qurʾān order: by sūrah, then by āyah. Sorting
      * them as text put "2:255" after "25:74".
