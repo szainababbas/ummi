@@ -57,6 +57,8 @@ import com.szainabbas.ummi.ui.theme.UmmiIcons
 import com.szainabbas.ummi.ui.theme.Ummi
 import java.time.LocalDate
 
+private val Gutter = Layout.SCREEN_GUTTER_DP.dp
+
 @Composable
 fun TodayScreen(
     data: UmmiData,
@@ -103,7 +105,7 @@ fun TodayScreen(
             fontSize = 13.sp,
             color = Ummi.colors.ink2,
             textAlign = TextAlign.Center,
-            modifier = Modifier.fillMaxWidth().padding(horizontal = 20.dp, vertical = 8.dp),
+            modifier = Modifier.fillMaxWidth().padding(horizontal = Gutter, vertical = 8.dp),
         )
         Visits.next(appState.visits, today)?.let { visit ->
             Box(modifier = Modifier.fillMaxWidth().padding(bottom = 8.dp), contentAlignment = Alignment.Center) {
@@ -132,7 +134,7 @@ fun TodayScreen(
         }
 
         Row(
-            modifier = Modifier.fillMaxWidth().padding(horizontal = 20.dp, vertical = 12.dp),
+            modifier = Modifier.fillMaxWidth().padding(horizontal = Gutter, vertical = 12.dp),
             horizontalArrangement = Arrangement.SpaceBetween,
         ) {
             Text("Your day", fontFamily = Literata, fontWeight = FontWeight.SemiBold, fontSize = 20.sp, color = Ummi.colors.ink)
@@ -165,7 +167,7 @@ fun TodayScreen(
 
         Text(
             text = "Month $monthNo of the guide →",
-            modifier = Modifier.clickable(onClick = onOpenMonth).padding(20.dp),
+            modifier = Modifier.clickable(onClick = onOpenMonth).padding(Gutter),
             fontWeight = FontWeight.Bold,
             fontSize = 14.sp,
             color = Ummi.colors.primary,
@@ -182,7 +184,7 @@ private fun HeaderRow(name: String?) {
         fontWeight = FontWeight.SemiBold,
         fontSize = 16.sp,
         color = Ummi.colors.ink,
-        modifier = Modifier.fillMaxWidth().padding(horizontal = 20.dp, vertical = 12.dp),
+        modifier = Modifier.fillMaxWidth().padding(horizontal = Gutter, vertical = 12.dp),
     )
 }
 
@@ -217,7 +219,7 @@ private fun ProgressRing(week: Int, daysToGo: Int?, sizeDesc: String?) {
                 fontSize = 17.sp,
                 color = Ummi.colors.ink,
                 textAlign = TextAlign.Center,
-                modifier = Modifier.padding(start = 20.dp, end = 20.dp, top = 12.dp),
+                modifier = Modifier.padding(start = Gutter, end = Gutter, top = 12.dp),
             )
         }
     }
@@ -229,7 +231,7 @@ private fun WeekStrip(currentWeek: Int, onWeekClick: (Int) -> Unit) {
     val density = LocalDensity.current
     val itemPx = with(density) { 40.dp.roundToPx() }
     val gapPx = with(density) { 6.dp.roundToPx() }
-    val padPx = with(density) { 20.dp.roundToPx() }
+    val padPx = with(density) { Gutter.roundToPx() }
     BoxWithConstraints(modifier = Modifier.fillMaxWidth()) {
         val viewportPx = constraints.maxWidth
         fun centred(week: Int) = Layout.centredScroll(weeks.indexOf(week).coerceAtLeast(0), itemPx, gapPx, padPx, viewportPx)
@@ -243,7 +245,7 @@ private fun WeekStrip(currentWeek: Int, onWeekClick: (Int) -> Unit) {
         LazyRow(
             state = listState,
             horizontalArrangement = Arrangement.spacedBy(6.dp),
-            contentPadding = PaddingValues(horizontal = 20.dp),
+            contentPadding = PaddingValues(horizontal = Gutter),
             modifier = Modifier.fillMaxWidth(),
         ) {
             itemsIndexed(weeks) { _, w ->
@@ -267,13 +269,6 @@ private fun WeekStrip(currentWeek: Int, onWeekClick: (Int) -> Unit) {
             }
         }
     }
-    Text(
-        "Tap a week to read about it",
-        fontSize = 12.sp,
-        color = Ummi.colors.ink2,
-        textAlign = TextAlign.Center,
-        modifier = Modifier.fillMaxWidth().padding(horizontal = 20.dp, vertical = 4.dp),
-    )
 }
 
 @Composable
@@ -288,7 +283,7 @@ private fun UpNextCard(
     Column(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(horizontal = 16.dp, vertical = 8.dp)
+            .padding(horizontal = Gutter, vertical = 8.dp)
             .border(1.5.dp, Ummi.colors.primary, RoundedCornerShape(24.dp))
             .background(Ummi.colors.surface, RoundedCornerShape(24.dp))
             .padding(18.dp),
@@ -349,7 +344,11 @@ private fun UpNextCard(
 @Composable
 private fun DuaBand(lbl: String, arabic: String, translit: String, meaning: String, recited: Boolean, onToggle: () -> Unit) {
     Column(
-        modifier = Modifier.fillMaxWidth().background(Ummi.colors.ac).padding(24.dp, 20.dp),
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(horizontal = Gutter, vertical = 8.dp)
+            .background(Ummi.colors.dua, RoundedCornerShape(24.dp))
+            .padding(24.dp, 20.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
         Text(
@@ -386,7 +385,7 @@ private fun PartHeader(part: DayPart, pt: DayPrayerTimes) {
         DayPart.ANYTIME -> UmmiIcons.timeAnytime to null
     }
     Row(
-        modifier = Modifier.fillMaxWidth().padding(start = 20.dp, end = 20.dp, top = 14.dp, bottom = 6.dp),
+        modifier = Modifier.fillMaxWidth().padding(start = Gutter, end = Gutter, top = 14.dp, bottom = 6.dp),
         verticalAlignment = Alignment.CenterVertically,
     ) {
         Icon(icon, contentDescription = null, tint = Ummi.colors.accentText, modifier = Modifier.size(18.dp))
@@ -409,7 +408,7 @@ private fun TaskRow(
     Row(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(horizontal = 16.dp, vertical = 4.dp)
+            .padding(horizontal = Gutter, vertical = 4.dp)
             .border(1.dp, if (isUpNext) Ummi.colors.primary else Ummi.colors.line, RoundedCornerShape(16.dp))
             .background(Ummi.colors.surface, RoundedCornerShape(16.dp))
             .padding(start = 14.dp, top = 12.dp, bottom = 12.dp, end = 6.dp),
