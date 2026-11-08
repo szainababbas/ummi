@@ -1,9 +1,25 @@
 package com.szainabbas.ummi.domain
 
+import com.szainabbas.ummi.ui.theme.DarkUmmiColors
+import com.szainabbas.ummi.ui.theme.LightUmmiColors
 import org.junit.Assert.assertEquals
+import org.junit.Assert.assertNotEquals
 import org.junit.Test
 
 class LayoutTest {
+    @Test
+    fun `Today keeps a 16dp gap from the screen edge`() {
+        // Aimen liked the gap in the first design; the dua band had run edge to edge.
+        assertEquals(16, Layout.SCREEN_GUTTER_DP)
+    }
+
+    @Test
+    fun `dua card stays cream in light and is not the heavy brown in dark`() {
+        assertEquals(LightUmmiColors.ac, LightUmmiColors.dua)
+        assertNotEquals(DarkUmmiColors.ac, DarkUmmiColors.dua)
+        assertEquals(DarkUmmiColors.pc, DarkUmmiColors.dua)
+    }
+
     @Test
     fun `puts āyāt in Qurʾān order, not text order`() {
         val refs = listOf("14:40", "2:255", "25:74", "3:36", "37:100", "3:38", "20:26", "20:25", "94:5")
